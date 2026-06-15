@@ -1,0 +1,47 @@
+## Core LaTeX auxiliary files
+*.aux
+*.bcf
+*.blg
+*.bbl
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+## Intermediate documents and final builds
+## Uncomment the next line if you do not want to track your compiled PDFs
+# *.pdf
+
+## Package-specific auxiliary files (e.g., TikZ, hyperref, glossaries)
+*.acn
+*.acr
+*.alg
+*.ent
+*.glsdefs
+*.maf
+*.mtc
+*.mtc0
+*.nav
+*.snm
+*.vrb
+*-blx.bib
+
+## Editor-specific and system files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.bak
+*.sav
