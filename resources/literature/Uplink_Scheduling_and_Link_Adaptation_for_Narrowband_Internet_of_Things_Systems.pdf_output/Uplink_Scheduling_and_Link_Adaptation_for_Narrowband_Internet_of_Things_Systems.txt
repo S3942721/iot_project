@@ -1,0 +1,1498 @@
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-01..txt =====
+IEEE Access:
+
+utp: Rpl Rave! Open Ress our
+
+Received December 22, 2016, accepted January 25, 2017, date of publication February 6, 2017, date of current version March 13, 2017.
+
+Digital Object Identifier 10,1109/ACCESS.2017.2664418
+
+Uplink Scheduling and Link Adaptation for
+Narrowband Internet of Things Systems
+
+CHANGSHENG YU!?, (Member, IEEE), LI YU', YUAN WU!, YANFEI HE', AND QUN LU!
+
+‘College of Information Engineering, Zhejiang University of Technology, Hangzhou 310023, China
+2 Nokia Solutions and Networks System Technology, Co., Ltd,, Hangzhou 310000, China
+
+Corresponding author: C. Yu (flyyes@zju.edu.cn)
+
+ABSTRACT Narrowband Internet of Things (NB-IoT) is a new narrow-band radio technology introduced in
+the Third Generation Partnership Project release 13 to the Sth generation evolution for providing low-power
+systems, repeating transmission data or control signals has been considered as
+a promising approach for enhancing coverage. Considering the new feature of repetition, link adaptation
+for NB-IoT systems needs to be performed in 2-D, i.e., the modulation and coding scheme (MCS) and
+the repetition number. Therefore, existing link adaptation schemes without consideration of the repetition
+number are no longer applicable. In this paper, a novel uplink link adaptation scheme with the repetition
+number determination is proposed, which is composed of the inner loop link adaptation and the outer
+loop link adaptation, to guarantee transmission reliability and improve throughput of NB-IoT systems.
+In particular, the inner loop link adaptation is designed to cope with block error ratio variation by periodically
+adjusting the repetition number. The outer loop link adaptation coordinates the MCS level selection and the
+repetition number determination. Besides, key technologies of uplink scheduling, such as power control
+and transmission gap, are analyzed, and a simple single-tone scheduling scheme is proposed. Link-level
+simulations are performed to validate the performance of the proposed uplink link adaptation scheme. The
+results show that our proposed uplink link adaptation scheme for NB-IoT systems outperforms the repetition-
+dominated method and the straightforward method, particularly for good channel conditions and larger
+packet sizes. Specifically, it can save more than 14% of the active time and resource consumption compared
+with the repetition-dominated method and save more than 46% of the active time and resource consumption
+compared with the straightforward method.
+
+INDEX TERMS Narrowband Internet of Things (NB-IoT), coverage enhancement, low complexity, link
+adaptation.
+
+1. INTRODUCTION
+
+The Internet of Things (IoT) is a promising paradigm that is
+rapidly gaining ground in future wireless communications.
+The basic concept of IoT is the pervasive presence of a
+variety of things or objects around us, such as radio-frequency
+identification (RFID) tags, sensors, actuators, mobile phones,
+and so forth. These things or objects are able to interact with
+each other and cooperate with their neighbors to achieve com-
+mon goals through unique addressing schemes. However, the
+rapid growth of wireless communications and mobile inter-
+net services makes it necessary to improve the performance
+of current IoT technology to achieve requirements such as
+low cost, low complexity, coverage enhancement and so
+forth [1]-[5]. Techniques regarding IoT were well studied in
+current literatures. Specifically, in [4], the authors presented
+a systematical review about IoT which includes different def-
+initions, key technologies, open issues and major challenges
+
+of it. Furthermore, in [5], the authors provided a systematical
+survey regarding IoT in industry for the first time. It reviewed
+extensive researches, key enabling technologies, major IoT
+applications of IoT in industry, and identified research trends
+and challenges. Fig. 1 presents a comparison of different
+technologies for IoT and the evolution towards to 5G. Among
+these technologies, Narrowband Internet of Things (NB-IoT)
+is a novel narrowband radio technology specifically designed
+for IoT, which can be directly deployed in Global Sys-
+tem for Mobile Communications (GSM) or Long-Term
+Evolution (LTE) networks for reducing deployment costs [6].
+At a recent plenary meeting in South Korea, the Third
+Generation Partnership Project (3GPP) completed the stan-
+dardization of NB-IoT [7], in which NB-IoT is regarded
+to be a very important technology and a large step for
+5G IoT evolution. Industries, including Ericsson, Nokia, and
+Huawei, have shown great interests in NB-IoT as part of
+
+2169-3536 © 2017 IEEE. Translations and content mining are permitted for academic research only.
+
+1724 Personal use is also permitted, but republication/redistribution requires IEEE permission.
+
+VOLUME 5, 2017
+
+See http://www.ieee.org/publications_ standards/publications/tights/indexhtml for more information.
+
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-02..txt =====
+C. Yu et al: Uplink Scheduling and Link Adaptation for NB-loT Systems
+
+IEEE Access’
+
+SG systems, and spent lots of effort in the standardization
+of NB-IoT [8], which has been widely considered as a main
+technique for next-generation wireless communications.
+NB-IoT is expected to provide improved coverage, and
+support a massive number of low-throughput devices, low
+delay sensitivity, ultra-low device costs, and low device
+power consumption [9]. How to achieve these benefits,
+particularly improved coverage, bring great challenges.
+In 3GPP standardization, repeating transmission data and the
+sociated control signaling several times has been utilized as
+a base solution to achieve coverage enhancement for NB-IoT.
+Taking into account the new feature of repetition, link
+adaptation for NB-IoT systems need to be performed in two
+dimensions, i.e., the modulation and coding scheme (MCS)
+level selection as in traditional LTE systems, and the
+repetition number determination. The reasons are as follows.
+First, different MCS levels influence throughput of system
+directly, low MCS and high power will improve transmit reli-
+ability and enhance coverage, but reduce system throughput;
+Second, according to 3GPP Release 13, repeating transmit
+sion data or control signals has been selected as a promising
+approach to enhance coverage of NB-IoT systems, since
+more repetition number will enhance the transmission relia-
+bility, but cause spectral efficiency loss. Thus, link adaptation
+scheme needs to get trade-off between transmit reliability
+and throughput of system by selecting suitable MCS and
+repetition. Therefore, the existing link adaptation schemes
+without consideration of repetition number are no longer
+applicable. It is crucial to design an appropriate link
+adaptation scheme integrated with a proper selection of
+repetition number and MCS for NB-IoT systems, which is
+the objective of this paper. In this paper, we focus on ana-
+lyzing key technologies in uplink scheduling and designing
+an uplink link adaptation scheme for NB-IoT systems. The
+reason is that uplink transmission for NB-IoT systems is
+considerably more complicated than downlink transmission,
+which will be explained later. Furthermore, since the channel
+condition of NB-IoT systems is much more complicated,!
+which leads to rapid changes of the transmission Block Error
+Ratio (BLER), we introduce an inner loop link adaptation
+procedure that focuses on adjusting the repetition number
+based on periodically measured transmission BLER. The
+purpose of the inner loop link adaptation is to guarantee
+the transmission BLER to the target. Accordingly, we refer
+to the former as outer loop link adaptation, i.e., MCS level
+selection and repetition number determination.
+The contributions of this paper can be summarized as
+follows:
+« We provide a brief survey of NB-IoT, including protocol
+volume, key technologies of uplink scheduling, applica-
+tions, and several open issues.
+
+INB-IoT is new technology designed for Internet of Things whose appli-
+cations are very diverse, including smart cities, smart environment, smart
+water, smart metering, security and emergencies, retail, logistics, indus-
+trial control, smart agriculture, smart animal farming, domestic and home
+automation, eHealth and so on, Thus the channel condition is very compli-
+cated according to different application scenarios.
+
+VOLUME 5, 2017
+
++ We propose an uplink link adaptation scheme for
+NB-IoT systems. The proposed scheme is composed of
+the inner loop link adaptation and the outer loop link
+adaptation. The purpose of the inner loop link adaptation
+is to guarantee transmission BLER by adjusting the
+repetition number, and the outer loop link adaptation is
+to select the MCS level and repetition number based on
+ACK/NACKs.
+
+« Extensive simulation results are provided to evaluate
+the performance of the proposed uplink link adaptation
+scheme. The results show that our proposed scheme out-
+performs the repetition-dominated and straightforward
+methods.”
+
+A. LITERATURE REVIEW OF LINK ADAPTATION
+
+Link adaptation has been widely studied in different types of
+wireless communication systems. Link adaptation was first
+proposed in [10], in which an analytical outer loop power con-
+trol model was studied to handle the Signal-to-Interference
+Ratio (SIR) fluctuation. Li er al. [11] investigated the impact
+of uplink interference on the efficiency of link adaptation
+in heterogeneous networks, and they further proposed a
+cooperative uplink link adaptation scheme by exploiting the
+cooperation among base stations. Durn er al. [12] designed
+a novel self-optimization algorithm for improving the con-
+vergence speed of the outer loop link adaptation (OLLA)
+in the downlink of LTE systems. Xia et al. [13] proposed
+the Auto-Rate Fallback for High-Throughput (ARFHT)
+algorithm for the emerging high-throughput IEEE 802.11n
+wireless networks. ARFHT extends the legacy link adaptation
+algorithms for Single-Input-Single-Output (SISO) wireless
+networks to Multiple-Input-Multiple-Output (MIMO)-based.
+802.11n wireless networks. Cavalcante et al. [14] provided a
+system-level analysis of OLLA for IEEE 802.16e systems.
+Sarret et al. [15] proposed a dynamic OLLA (d-OLLA)
+algorithm to address the large Signal-to-Interference plus
+Noise Ratio (SINR) fluctuation for 5G of wireless commu-
+nication systems. Blanquez-Casado et al. [16] provided a
+thorough analysis of OLLA, including its dynamics and con-
+vergence conditions. Based on the analysis, they proposed an
+enhanced OLLA (eOLLA) scheme to adaptively modify the
+step size and to update the offset according to the reception
+conditions.
+
+Moreover, note that Mu er al. [17] investigated the
+downlink link adaptation scheme that coordinates the MCS
+selection and the repetition number determination with
+the consideration of low-complexity feature for LTE-based
+Machine-Type Communication (MTC) systems. This is the
+first time that repetition was taken into account in link
+adaptation in wireless communication systems. However, it
+is quite different from our work in this paper. First, we aim at
+
+?1n the repetition-dominated method, based on the feedback
+ACK/NACKs, we first adjust the repetition number and then update
+the MCS level. In the straightforward method, we always set the MCS level
+as 0 and use the maximum resource unit to transmit the packet, and we
+adjust the repetition number only.
+
+1725
+
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-03..txt =====
+IEEE Access’
+
+C. Yu et al: Uplink Scheduling and Link Adaptation for NB-loT Systems
+
+EC-GSM H
+
+WIFI BLE ZIGBEE SIGFOX LoRa LTE- NB-loT Hl 5G
+Pro Mi(eMTC) (Rel. 13) | (Rel. 13) 1 (targets)
+" : TigBee PSTrod Lo (Rekxt3) 1 ar !
+CED (enti yes, MEIN are ee | 5G
+1
+1
+Coverage 17-30+ 1-10+ 1-100+ <12km <10km <10km <15km | <15km i <12km
+Area (meters) (meters) (meters) 160 dB 157 dB 156 dB 164 dB , 164 dB ‘ 160 dB
+i I
+Spectrum 24G 24G 24G Unlicensed Unlicensed Licensed Licensed |! Licensed | Licensed
+Bandwidth 802.11 802.15.1 802.15.4 900MHz 900MHz 7-900MHz 8-900MHz | 7-900MHz ! 7-900MHz
+100Hz <500kHz 1.4 MHz shared 1! 200kHz H shared
+shared | shared H
+1
+!
+1
+Rate 150Mbps+ Mbps  250kbps <100bps_<10 kbps <1Mbps —10kbps_ 1 <50 kbps | <1 Mbps
+1
+1
+1
+I
+Terminal 4.00$ 4.00$ 3.00$ 4.00$ 4.00$ 5.00$ 4.5$ (2015)! 4$ (2015) 1 <$2
+Cost (2016) (2016) (2016) (2015) (2015) (2015) 2.97$ 12-3$ (2020) |
+2.64$ 2.64$ 3.30$ (2020) : 1
+(2020) (2020) (2020) H !
+1
+1
+1
+Network None None None Large Large ‘Small Moderate | Smallto 4 Requires
+Reforming (LTE , Moderate I 5G NWs
+reuse) | ‘
+Lf}
+FIGURE 1. Comparison of loT technologies.
+designing an uplink link adaptation scheme for 200KHz 10 ms-
+
+bandwidth NB-IoT systems, which is very different
+from downlink link adaptation for 1.4MHz bandwidth
+MTC systems. NB-IoT systems are defined with much
+narrower bandwidth and bigger repetition number than MTC
+systems, which thus can get considerable gains in coverage
+enhancement in comparison with that without repetition.
+Therefore, without repetition determination in NB-IoT
+systems violates the 3GPP purpose. Moreover, the pro-
+posed downlink link adaptation scheme in [17] is static for
+MCS level selection and repetition number determination.
+However, our work in this paper focus on dynamically
+choosing the MCS level and repetition number based on the
+real-time channel conditions. To the best of our knowledge,
+the uplink link adaptation specific to NB-IoT systems has
+not been previously studied, which is the objective of this
+paper.
+
+The remainder of this paper is organized as follows.
+In Section II, we provide a brief survey of NB-IoT. We inves-
+tigate the uplink link adaptation scheme for NB-IoT systems
+in Section III. Section IV provides the simulation results, and
+Section V concludes this paper.
+
+IL. BRIEF SURVEY OF NB-loT AND PROBLEM STATEMENT
+This section focuses on providing a brief survey of NB-IoT,
+including protocol volume, key technologies, applications,
+and several open issues. Then, we briefly introduce link
+adaptation technology and state the problem explored in this
+paper.
+
+1726
+
+NpuscH
+(B.ones)
+ams
+
+UL
+
+180 KHZ
+
+NPUSCH, single-lne Bs
+
+FIGURE 2. Uplink transmission for NB-IoT systems. NPUSCH represents
+narrowband physical uplink shared channel, and NPRACH represents
+narrowband physical random access channel.
+
+A. PROTOCOL VOLUME OF NB-loT
+
+1) DOWNLINK AND UPLINK TRANSMISSIONS
+
+NB-IoT systems require at least 180 kHz bandwidth for both
+downlink and uplink transmissions. The downlink transmis-
+sion is based on conventional Orthogonal Frequency Division
+Multiple Access (OFDMA) in LTE with 15 kHz subcarrier
+spacing. The slot, subframe, and frame durations are 0.5 ms,
+1 ms, and 10 ms [20], respectively. In essence, an NB-
+IoT carrier uses one LTE Physical Resource Block (PRB)
+in the frequency domain, which corresponds to 12 subcar-
+ries with each of 15kHZ. For the uplink transmission, both
+single-tone and multi-tone? transmissions (i.¢., 3, 6, and 12
+tones) are supported, as shown in Fig. 2. Single-tone trans-
+mission supports two numerologies: 15 kHz and 3.75 kHz.
+In 3GPP [20], one Resource Unit (RU) is a schedulable unit
+in Narrowband Physical Uplink Shared Channel (NPUSCH)
+transmission for the data, which consists of 15 kHz: | ms for
+
+3Tone means sub-carrier here.
+
+VOLUME 5, 2017
+
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-04..txt =====
+C. Yu et al: Uplink Scheduling and Link Adaptation for NB-loT Systems
+
+IEEE Access’
+
+LTE Carrier
+
+LTE Carrier
+
+GSM Carriers
+
+(a)
+
+(b)
+
+(c)
+
+FIGURE 3. Illustration of three different deployment operations for NB-IoT. (a) In-Band.
+
+(b) Guard-Band. (c) Stand-Alone.
+
+12 tones, 2 ms for 6 tones, 4 ms for 3 tones, 8 ms for a single
+tone, or 32 ms for a single tone of 3.75 kHz. The 15 kHz
+numerology is identical to LTE and thus achieves the best
+coexistence performance with LTE in the uplink. Multi-tone
+transmission is based on Single Carrier Frequency Division
+Multiple Access (SCFDMA) with the same 15 kHz subcarrier
+spacing, 0.5 ms slot, and 1 ms subframe as LTE. According to
+the NB-IoT standard [19], both single-tone and multi-tone are
+mandatory for the terminal, but User Equipment (UE) may
+indicate a lack of network interoperability testing for multi-
+tone mode in first implementation phase of NB-IoT systems
+and single-tone mode is always supported [19].
+
+2) DEPLOYMENT OPTIONS
+
+NB-IoT can be directly deployed in the GSM or LTE spec-
+trum to reduce deployment costs. In particular, it is designed
+to support three different modes of operation:
+
+« In-Band Operation: In this operation, NB-IoT is
+deployed inside an LTE carrier, as shown in Fig. 3(a).
+The narrowband consists of one resource block with
+180 kHz. LTE and NB-IoT share transmit power at the
+eNB.
+
+« Guard-Band Operation: In this operation, the NB-IoT
+channel is placed in a guard band of an LTE channel, as
+shown in Fig. 3(b). The NB-IoT downlink can share the
+same power amplifier as the LTE channel.
+
+« Stand-Alone Operation: In this operation, NB-IoT is
+deployed as a standalone with at least 180 kHz of the
+GSM spectrum, as shown in Fig. 3(c). All the transmit
+power at the base station can be used for NB-IoT, which
+thus significantly enhances the coverage.
+
+The deployment operations, namely, in-band, guard-band,
+and stand-alone, should be transparent to a UE when it is
+first turned on and searches for an NB-IoT carrier. Similar
+to existing LTE UEs, the channel raster is 100 kHz in all
+three operations.
+
+3) REPETITION
+
+Repetition is the key solution adopted by NB-IoT to achieve
+enhanced coverage with low complexity. Additionally, for
+one complete transmission, repetition of the transmission
+should be applied to both data transmission and the associated
+control signaling transmission. In NB-IoT systems, before
+each NPUSCH transmission, related control information,
+
+VOLUME 5, 2017
+
+‘max(3ms,time until the beginning
+of the next search space)
+»
+
+| NPDCCH repetition
+z! pe ‘ ' poccH
+H N
+H , a]
+
+' Time
+I Ti
+
+NPUSCH repetition ‘
+{8,16,32,64)ms as indicated in DCI
+
+"
+tims
+
+FIGURE 4. Illustration of repetition during one transmission. DCI means
+downlink control information.
+
+including RU number, selected MCS and repetition, should
+first be transmitted through a Narrowband Physical Down-
+link Control Channel (NPDCCH). In particular, repetition for
+NB-IoT can only be selected among {1, 2,4, 8, 16, 32,
+64, 128}, the number means the repetition number of the same
+transmission block. Fig. 4 presents an illustration of repetition
+in NB-IoT, where both NPDCCH and NPUSCH transmission
+block with same content are repeated four times during one
+transmission.
+
+B. KEY TECHNOLOGIES AND APPLICATIONS
+
+1) UPLINK SCHEDULING TECHNOLOGIES
+
+Uplink scheduling technologies primarily include NPRACH
+and NPUSCH scheduling. Lin er al. [18] studied NPRACH
+design and detection. Wang et al. [9] investigated several
+important technologies in NPUSCH uplink scheduling, such
+as timing and HARQ, but they did not mention how power
+control and uplink transmission gap will work. We pro-
+pose a simple single-tone scheduling scheme, in which
+eleven tones can be scheduled for data transmission with
+NPUSCH format | and another single tone can be scheduled
+as ACK/NACK feedback for downlink transmission with
+NPUSCH format 2, different UE schedule different tone
+from frequency dimension, and schedule different resource
+unit from time dimension. To achieve better uplink through-
+put performance and avoid radio link failure, uplink power
+control and transmission gap shall be considered.
+
+a: UPLINK OPEN LOOP POWER CONTROL
+
+NB-IoT only supports open loop power control in uplink
+according to [21] chapter 16, definition for low complexity.
+Open loop means UE can determine uplink transmission
+power according to MCS and RU, eNB can not send power
+control command to UE for its uplink transmission power.
+The UE transmit power Pypuscuc(i) for NPUSCH trans-
+mission in NB-IoT uplink slot i for serving cell ¢ is given
+
+1727
+
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-05..txt =====
+IEEE Access’
+
+C. Yu et al: Uplink Scheduling and Link Adaptation for NB-loT Systems
+
+1) Keep same tones, inctease PSD
+and increase MCS.
+
+: Perl
+PHRis positive, UE can
+
+increase power Number of tones
+
+LTT.
+
+Number of tones
+
+Power Spectral
+Density (PSD)
+
+2) Keep same PSD, increase
+Thumber of tones
+
+oO.
+
+Number of tones
+
+FIGURE 5. Illustration of power control.
+
+by [21] [22]: if the number of repetitions of the allocated
+NPUSCH RUs is less than 2,
+
+PypuscHe(@) = min{Pemax.c(i), 10 log jo(Mypuscuc(i))
++ Po_npuscHc(/) + &e(j)PLc},
+otherwise,
+
+Pypuscue(!) = Pemax.e(i).
+
+Pcmax.c(i) is the configured UE transmit power in NB-IoT
+uplink slot i for serving cell c, Mypuscu,c(i) values are
+{1/4, 1, 3,6, 12}, and Po_npuscHc(J) is a parameter com-
+posed of the sum of a component Po_NOMINAL_NPUSCH.c(J)
+provided from higher layers and a component
+Po_NOMINAL_NPUSCH,c(j) provided by higher layers for serv-
+ing cell c, where j = {1, 2}.
+
+Po_npusci.c(/) = Po_vE_NpuscHe()
++ Po_NOMINAL_NPUSCHe();
+
+whenj = 1, Po_uE_NpuscHe(1) and Po_NomINAL_NPUSCH (1)
+are configured by higher layers, where j = 1 is used for
+NPUSCH data (re)transmissions. When j 2, which is
+used for NPUSCH (re)transmissions corresponding to the
+random access response grant, Po_UE_NPUSCH.c(2) = 0 and
+Po_NOMINAL_NPUSCH.c(2) = Po_prRE + APREAMBLE_Msg3;
+where the parameters Po_pre and AprEAMBLE_Msg3 ate sig-
+naled from higher layers for serving cell c. For j = 1, a-(j)
+is configured by higher layers, and a.(j/) = 1 for j = 2.
+For NPUSCH transmitting ACK/NACK, @-(j) = 1. PLe is
+the downlink path loss estimate calculated in the UE for
+serving cell c. eNB shall schedule the correct tones and
+MCS according to the received Power Header Room (PHR)
+report; otherwise, power scaling in the UE side may occur.
+As shown in Fig. 5, when PHR is positive, it means that UE
+can increase power in the next round of transmission. There
+are two methods for eNB to select: the first is to increase
+the Power Spectral Density (PSD) and MCS, and the second
+is to select a larger number of tones. Therefore, eNB will
+make wrong MCS increasing and tone selection if UE has
+used maximum power and eNB has not received UE’s PHR
+report.
+In NB-IoT, NB-PHR is computed using [21] [22]:
+
+PH-(i) = Pomax(i) — {Po_vE_NPUSCH (1) + (1) - PLc},
+
+1728
+
+where Pcmaxc(i), Po_UE_NPUSCH (1), @(1) and PL, are
+defined as above. There will be 4 reportable values of
+[PH 1, PH2, PH3, PH4] dB. Therefore, eNB can schedule
+the correct RU and MCS according to PH, and the repetition
+number.
+
+b: UPLINK TRANSMISSION GAP
+
+Note that the delay target of 10 seconds is mentioned in
+3GPP [23] as appropriate for NB-IoT, measured at the appli-
+cation layer from the UE to the S1 interface. It needs to
+introduce uplink transmission gaps for long uplink (Le.,
+NPUSCH/NPRACH) transmissions. During uplink transmis-
+sion gaps, the UE may switch to the downlink and perform
+time/frequency synchronization. The uplink transmission gap
+is defined by a period X and a gap length Y. A minimum
+period Xmin is defined in the specifications [20], and Y > 0.
+All uplink transmissions with a duration greater than or equal
+to X ms apply a transmission gap with gap length Y and
+periodicity X until the uplink transmission completes. For
+NPUSCH, X = 256 ms and Y = 40 ms. For NPRACH,
+X = 64 « (preamble duration), and Y = 40 ms. In our uplink
+scheduling algorithm, we should take this transmission gap
+into account.
+
+2) APPLICATIONS AND OPEN ISSUES
+The NB-IoT, interconnection and communication between
+everyday objects, enables many applications in many
+domains. The application domain of NB-IoT can be divided
+into three main categories based on their focus: industry,
+environment, and society. Supply chain management, trans-
+portation and logistics, aerospace, aviation, and automotive
+are some of the industry-focused applications of NB-IoT.
+Telecommunication, medical technology, healthcare, smart
+building, home and office, media, entertainment, and ticket-
+ing are some of the society-focused applications of NB-IoT.
+Agriculture and breeding, recycling, disaster alerting, and
+environmental monitoring are some of the environment-
+focused applications. The applications mainly include smart
+cities, smart environment, smart water, smart metering, secu-
+rity and emergencies, retail, logistics, industrial control,
+smart agriculture, smart animal farming, domestic and home
+automation, and eHealth. Fig. 6 shows some of the main
+applications of NB-IoT. The vehicles, monitors and meters
+equipped with NB-IoT connectivity will grow up quickly
+after NB-IoT systems roll out in 2017. NB-IoT and other
+Lower Power Wide Area (LPWA) sytems will occupy 14%
+of connections in 2024 according to Machina Research
+estimation. Because of the diversity of NB-IoT applications,
+it can combine with extensive other technologies, such as cog-
+nitive radio, energy harvesting, and device-to-device (D2D)
+communications, among others.
+
+Since NB-IoT is a very new technology specifically
+designed for IoT, it has many open issues to explore.
+We briefly provide the following examples.
+
+« Standardization activity: Since NB-IoT is a very emerg-
+ing technology specific for IoT systems, the related
+
+VOLUME 5, 2017
+
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-06..txt =====
+C. Yu et al: Uplink Scheduling and Link Adaptation for NB-loT Systems
+
+IEEE Access’
+
+standardization activity about it is currently incomplete.
+Several contributions to the full deployment and stan-
+dardization of the NB-IoT paradigm are needed for the
+scientific community.
+
+« Heterogeneity: One of the main characteristics of
+NB-IoT is its ability to integrate many types of devices,
+technologies, and services. NB-IoT systems should sup-
+port a large variety of different applications whose
+requirements may be extremely diverse, in terms of
+bandwidth, latency, reliability, and so forth. These
+heterogeneity traits of the system make the design of a
+unifying framework a very challenging task.
+
+« Security and privacy: One major social concern related
+to NB-IoT systems is security and privacy. In NB-IoT
+systems, in addition to the obvious weakness of the radio
+channel with regard to eavesdropping, the heavily con-
+strained nature of the devices and the limited available
+bandwidth make it very challenging to provide effective
+security mechanisms via simple algorithms with limited
+room for message exchanges.
+
+« Energy management: Energy management, including
+harvesting, conservation and consumption, in NB-IoT
+systems is a major issue. Because of the very
+reduced bandwidth and considerably more complicated
+channel conditions for NB-IoT systems, the current
+power control technology is inadequate and the existing
+processing power and energy capacity are too low to
+meet future needs. The development of new and more
+efficient energy management technology will be the key
+factor for the roll out of future wireless smart systems.
+
+C. LINK ADAPTATION
+
+To improve the system capacity, peak data rate, and coverage
+reliability, LTE supports channel-dependent link adaptation,
+which is the adaptation of transmission settings (i.e., MCS
+and PRB) to the radio channel conditions. Based on periodic
+or aperiodic feedback from the UE regarding its channel
+qualities, eNB can select a transmission MCS level, as well
+as the resources (i.e., PRB) to allocate to the UE, to ensure
+that UEs can decode it with a transport BLER not exceeding
+10% and achieve maximum throughput.
+
+In the specification, an MCS table is utilized for the MCS
+determination. By reading the MCS index, UEs could derive
+the modulation scheme. Furthermore, combining the MCS
+level index and PRB allocation information, the size of the
+transmitted data can be obtained and the code rate can be
+calculated accordingly.
+
+D. PROBLEM STATEMENT
+With the support of repetition, link adaptation for NB-IoT
+systems should be conducted in at least two dimensions: the
+MCS level selection and the repetition number determination.
+Hence, existing LTE based link adaptation scheme can not be
+utilized any more. It’s crucial to design a new link adaptation
+scheme for NB-IoT by further considering the repetition.
+Furthermore, we should try all potential combinations
+of MCS level and repetition number and then select an
+
+VOLUME 5, 2017
+
+optimal combination for certain channel status if we want
+to get the global optimal combination. It is obviously diffi-
+cult to achieve or with high complexity, which violates the
+low-complexity feature for NB-IoT when performing the link
+adaptation. Besides, there may exist many potential combi-
+nations of MCS level and repetition number that satisfy the
+transmission BLER. To this end, we focus on designing a
+low-complexity uplink link adaptation scheme specific to
+NB-IoT systems in this paper.
+
+Two possible uplink link adaptation schemes with low
+complexity might exist. The first one is the MCS-dominated
+approach, in which we first adjust the MCS level based on
+feedback signals and then adjust the repetition number. The
+second one is the repetition-dominated approach, in which
+we first determine the repetition number and then focus on
+selecting the MCS level based on the currently determined
+repetition number. Our link-level simulations in Section IV
+demonstrate that the first scheme is better than the second.
+Therefore, in the next section, we focus on introducing the
+first scheme.
+
+Ill, PROPOSED UPLINK LINK ADAPTATION FOR NB-loT
+In this section, we formally propose our designed uplink link
+adaptation scheme for NB-IoT systems. Our proposed uplink
+link adaptation scheme includes the inner loop link adaptation
+and the outer loop link adaptation. In particular, the outer
+loop link adaptation is composed of MCS level selection and
+repetition number determination.
+
+A. INNER LOOP LINK ADAPTATION
+
+Since the channel conditions of NB-IoT systems are consid-
+erably more complicated than conventional LTE systems, the
+transmission BLER may rapidly change in NB-IoT systems.
+Therefore, in this subsection, we propose the inner loop
+link adaptation as an additional link adaptation method to
+cope with the fast transmission BLER variation. It works as
+follows: in one period T, all trans ion ACK/NACKs are
+calculated as BLER, and the inner loop link adaptation adjusts
+the repetition number for this transmission at the expired
+time of period T based on the current transmission BLER.
+Specifically, in LTE systems, the evaluation period of BLER
+(i.e., T) is approximately tens ms, whereas it is approximately
+hundreds of ms in NB-IoT systems, i.e., 300 ms. If the current
+BLER is less than 7%, we decrease the repetition number
+for this transmission; however, if the current BLER is greater
+than 13%, then we increase the repetition number.*
+
+B. OUTER LOOP LINK ADAPTATION
+1) MCS LEVEL SELECTION
+
+The LTE systems increase the MCS level if it successively
+decodes a certain number of ACKs and decrease the MCS
+
+4Since our purpose of link adaptation is to keep transmission BLER
+around 10% according to [22], we use 7% and 13% as thresholds for the
+inner loop link adaptation whose purpose is to periodically adjust the real-
+time transmission BLER based on the ACK/NACKs. Furthermore, these
+two thresholds are empirical values through our extensive link level
+simulations, and in LTE system there also exist these two empirical values
+when performing link adaptation,
+
+1729
+
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-07..txt =====
+IEEE Access’
+
+C. Yu et al: Uplink Scheduling and Link Adaptation for NB-loT Systems
+
+Mobile Video security
+
+(3
+C=.) ») a &
+
+Connected car
+
+FIGURE 6. Illustration of applications for NB-IoT.
+
+ac
+
+FIGURE 7. Illustration of FUG and EDG.
+
+level if it successively decodes a certain number of NACKs.
+Generally, the number of ACKs is more than that of NACKs
+to ensure a slow increase of the MCS level with ACK
+feedback and quick decrease of the MCS level with NACK
+feedback. Because of the narrowband and low data rate for
+NB-IoT systems, the settings for LTE systems might no
+longer be applicable. Specifically, we define two aperiodic
+and event-triggered actions of MCS: fast upgrade (FUG)
+and emergency downgrade (EDG). When the FUG action
+occurs, we increase MCS by one, and when the EDG action
+occurs, we decrease MCS by one. Furthermore, we will reset
+the BLER once an event (FUG or EDG) has been detected.
+To precisely quantify the FUG and EDG actions, we intro-
+duce a compensation factor AC(t) whose upper and lower
+limits are ACmax and ACmin, respectively. Fig. 7 provides
+an illustration of trigger event FUG and EDG. FUG shall be
+triggered whenever the compensation value AC reaches the
+value of ACmax, and EDG shall be triggered whenever the
+compensation value AC reaches the value of ACnin-
+
+During each uplink transmission, we perform the following
+calculation regarding AC(t) according to uplink transmission
+HARQ feedback:
+
+min{AC(t — 1) + Cstepup, ACmax},
+if HARQ feedback = ACK;
+
+max{AC(t — 1) — Cstepdowns ACmin},
+
+AC(t) =
+© if HARQ feedback = NACK;
+
+AC(t — 1),
+if HARQ feedback = N/A.
+
+1730
+
+2) ft
+
+Object tracking ‘Smart Home ‘Smart metering
+
+Connected health
+
+Smart city
+
+TABLE 1. Relationship between MCS level, resource unit (RU), and
+transmit block size (TBS). Note that for single-tone transmission, MCS
+levels 11 and 12 cannot be achieved.
+
+Number of resource units
+
+T z E] a 5 6 8 TO
+
+Te | 32 | 56 | 88 120_|_152_| 208 | 256
+24 [| 50 | 88 | 144 | 176 | 208 | 256 | 344
+32_[ 72 [144 | 176 [208 [256 | 328 | 424
+40_| os | 176 [208 | 256 [328 [440 | 568
+36_[ 120 | 208 | 256 [328 | 408 | 552 [680
+72_| 144 [224 | 328 [ 424 [| 504 | 680 | 872
+176 [| 256 [| 392 | 504 | 600 | 808 | 1000
+Tor [224 [328 [ 472 | 584 | 712 | 1000
+120 [256 | 392 | 536 | 680 | 808
+136 | 296 [456 | 616 716 936
+144 | 328 [504 | 680 872 1000
+176 [376 [ 584 | 776 | 1000
+T2__| 208 | 440 [| 680_| 1000
+
+MCS
+
+To] | of 3} oY ur} | eof 04] | o}
+
+where Cstepup and Cytepdown are incremental compensation
+step sizes, which obey the following formula:
+
+1 — BLERarget
+BLERurset
+
+N/A means discontinuous transmission (DTX), i.e., eNB does
+not detect the NPUSCH signal.
+
+Based on the above, we can continuously update the MCS
+level based on the compensation value AC. Furthermore,
+for each updated MCS level, we can determine the resource
+unit based on Table 1 by using a look-up table method. For
+example, when the transmission size is 600 and the current
+MCS level is 5, the resource unit should be 8 according to
+Table 1.
+
+Cstepdown = Cstepup
+
+2) REPETITION NUMBER DETERMINATION
+
+In this subsection, we continue to determine the repetition
+number to guarantee the transmission reliability (i.e., BLER
+less than 10%). The repetition number is strongly influenced
+by the channel status and the previously determined MCS
+level. For example, when the channel is bad and the selected
+MCS can not support the target BLER, we need to increase
+the repetition number. However, when the channel is rela-
+tively good and the selected MCS yields a BLER under 10%,
+we need to decrease the repetition number. Fig. 8 presents
+an example of the variation of the MCS level and repetition
+number when the UE moves from the cell center to the cell
+border and then moves back to the center. This figure shows
+
+VOLUME 5, 2017
+
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-08..txt =====
+C. Yu et al: Uplink Scheduling and Link Adaptation for NB-loT Systems
+
+IEEE Access’
+
+MCS level
+
+Repetition number
+
+FIGURE 8. Variation of MCS level and repetition number.
+
+that the number of repetitions changes only when we have to
+adjust the MCS level first.
+
+C. PROPOSED ALGORITHM (NBLA)
+
+Algorithm (NBLA) (please notice that “NBLA” stands for
+NarrowBand Link Adaptation) shows the details of the pro-
+posed uplink link adaptation scheme for NB-IoT systems.
+It contains two phases: inner loop link adaptation and outer
+loop link adaptation. The purpose of inner loop link adap-
+tation is to guarantee the transmission BLER by adjusting
+the repetition number in lines 2-8. Furthermore, outer loop
+link adaptation is given in lines 9-50. It mainly contains three
+cases based on the different values of MCS: minimum MCS
+level (i-e., L = L™"), maximum MCS level (i.e., L = L™*)
+and medium MCS level (i.e., L™" < L << L™*),
+
+o IfL™ <L < L™*, we first update the compensation
+value AC based on feadback signals ACK/NACKs in
+lines 10-14. Then, we check the actions FUG and EDG
+and update the MCS level accordingly in lines 15-19.
+It is obvious that in the medium MCS level case, we
+only adjust the MCS level but without any operation for
+repetition number.
+
+« If L = L™"” and the feedback is ACK, we focus on
+adjusting the MCS level if the current repetition number
+N = N™" in lines 22-26, and we decrease the repetition
+number by half if N > N™" in lines 27-29. However, if
+the feedback is NACK, we double the repetition number
+if N < N™*, Moreover, if N = N™*, this means that
+the channel condition is extremely bad in lines 31-35.
+
+« If L = L™* and the feedback is ACK, we decrease
+the repetition number by half if No > N™®; if
+N = N™", this means that the channel condition is
+extremely good in lines 38-43. However, if the feedback
+is NACK, we focus on adjusting that MCS level in
+lines 44-48.
+
+IV. SIMULATION RESULTS
+
+In this section, link level simulations are performed to vali-
+date the performance of our proposed Algorithm 1| uplink link
+adaptation scheme for NB-IoT systems.
+
+VOLUME 5, 2017
+
+Algorithm 1 (NBLA): Proposed Uplink Link Adaptation
+Algorithm for NB-IoT Systems
+
+1: Initialization: BLERtareer = 10%, Cstepup = 9.2,
+Capon = Cacpup BER, AC = 0, ACmax =
++5, ACmin = —5, MCS level L and its bounds L™*,
+L™", repetition number N and its bounds N™*, N™".
+We empirically initialize the MCS level and repetition
+number based on the channel condition.
+
+2: if period T expired out then
+
+3: if BLER < 7% then
+
+4 N=N/2.
+
+s: else if BLER > 13% then
+6: N=2N.
+
+7. end if
+
+8: end if
+
+9: ifL > L™™ &L < L™* then
+
+10: if HARQ feedback = ACK then
+Wl AC = min{AC + Cstepup, ACmax}-
+12: else if HARQ feedback = NACK then
+
+13: AC = max{AC — Cytepdown, ACmin}-
+14: endif
+
+15 if AC = ACnax then
+
+16; L=L+l.
+
+17 else if AC = ACnin then
+
+18: L=L-1.
+
+19: end if
+
+20: else if L = L™" then
+21 if HARQ feedback = ACK then
+
+22: ifN =N™" then
+
+23 AC = min{AC + Coepups ACmax}-
+24: if AC = ACwmax then
+
+25: L=L+1.
+
+26: end if
+
+27 else if N > N™" then
+
+28 N=N/2.
+
+29: end if
+
+30: else if HARQ feedback = NACK then
+31 if N = N™* then
+
+32: the current channel condition is extremely bad.
+33 else if N < N™* then
+
+34: N =2N.
+
+35: end if
+
+36: endif
+
+37: else if L = L™* then
+38: if HARQ feedback = ACK then
+
+39: ifN =N™" then
+
+40: the current channel condition is extremely good.
+41 else if V > N™" then
+
+42: N=N/2.
+
+43: end if
+
+44: else if HARQ feedback = NACK then
+45: AC = max{AC — Cotepdown, ACmin}-
+46: if AC = ACnin then
+
+47: L=L-1.
+
+48: end if
+
+49: endif
+
+50: end if
+
+1731
+
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-09..txt =====
+IEEE Access’
+
+C. Yu et al: Uplink Scheduling and Link Adaptation for NB-loT Systems
+
+TABLE 2. Parameter settings.
+
+System bandwidth 200 KHz
+Carrier frequency 900 MHz
+Subcarrier spacing 15 kHz
+
+Channel coding for NPDCCH | Tail biting convolution code
+
+Channel estimation for NPDCCH DMRS-based
+
+‘Aggregation level for NPDCCH 2 NCCE
+
+Channel coding for NPUSCH’ Turbo codes
+
+Interference Rejection Combiner MRC
+Number of Tx antennas T
+Number of Rx antennas. 2
+
+Number of tones T
+Frequency offset 200 Hz
+
+Time offset 25 us
+Channel model AWGN
+
+MCSO, RU=4, Repetition=1,TBS=88
+
+MCS4, RU=10, Repetition=1, TBS=696
+
+10 SS
+—O— 15 kHz, Tx time=2560ms
+—S~— 3.75 kHz, Tx time=2560ms
+& 07
+4 10
+a
+
+10 10?
+N66 itz, Tx time=1024ms -20 -18 -16 -14 -12 -10 -8 -6 -4 -2 0
++ 3.75 kHz, Tx time=1024ms SNR(dB)
+FIGURE 10. Relationship between BLER and SNR when MCS4, RU=10 and
+repetition=1.
+10
+& 0"
+ur 10
+a
+
+107
+“20-18 -16 -14 -12 -10 -8 -6 -4 -2 0
+SNR(AB)
+
+FIGURE 9. Relationship between BLER and SNR when MCSO, RU=4, and
+repetition=1.
+
+A. PARAMETER SETTINGS AND METRICS
+
+To evaluate the performance of the proposed uplink link
+adaptation scheme for NB-IoT, we set the system parameters
+as listed in Table 2 for our simulations.
+
+Transmission time and resource utilization are the main
+concerns in our simulations, low transmission time and high
+resource utilization rate can improve throughput of NB-IoT
+systems. To this end, we use the active time and consumed
+resources for transmitting a whole packet as the evaluation
+metrics. Active time is defined as the summation of transmis-
+sion time for both NPDCCH and NPUSCH. More transmit
+power will be consumed with a longer active time. There-
+fore, the active time could reflect the power consumption.
+Furthermore, consumed resources are the consumed
+resources for NPUSCH. More consumed resources lower
+the spectral efficiency. Thus, it could represent the spectral
+efficiency performance.
+
+B. SIMULATION RESULTS
+
+1) PERFORMANCE EVALUATION
+
+Fig. 9 and Fig. 10 show the relationship between BLER and
+Signal-to-Noise Ratio (SNR) with different simulation set-
+tings for NPUSCH single tone. The results show that BLER
+deceases with as the receive SNR increases (i.e., channel
+condition is better). Moreover, from the results in Fig. 9 and
+
+1732
+
+— 8 ~MCS4, RUS
+- 4-MCS4, RU10
+
+SNR
+ae
+
+‘3
+we
+SPR
+
+a
+A
+~o
+>
+
+20 40 60 80 100 = 120~=—«140
+Repetition
+
+FIGURE 11. Relationship between SNR and repetition with different
+numbers of RUs.
+
+Fig. 10, we can observe that when we receive ACK/NACK
+for a particular MCS level, RU and repetition settings. For
+example, when MCS=0, RU=4 and repetition=1 for 15 kHz
+spacing single tone, we can receive ACK when the SNR is
+larger than —13 dB.
+
+Furthermore, Fig. 11 shows the relationship between SNR
+and repetition with different numbers of RUs. The results
+show that when we use a larger number of repetition, we can
+correctly decode the message with worse channel conditions
+In addition, it can be observed that a message can be trans-
+mitted successfully with worse channel conditions when we
+use a larger number of RUs.
+
+2) PERFORMANCE ENHANCEMENT
+
+Based on the extensive link-level simulation results as
+shown in Fig. 9, Fig. 10, and Fig. 11, we continue to
+demonstrate the performance advantages of our proposed
+uplink link adaptation scheme (denoted as NBLA) in
+Fig. 12 and Fig. 13. For comparison, we use a straightfor-
+ward method (denoted as straightforward) and repetition-
+
+VOLUME 5, 2017
+
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-10..txt =====
+C. Yu et al: Uplink Scheduling and Link Adaptation for NB-loT Systems
+
+IEEE Access’
+
+Good (SNR=668)
+
+6000
+
+z
+= sooo
+i
+§ 200
+3
+Q
+Ea ‘00 2500 500
+Medium (R248)
+8000
+2
+“10000
+i
+3 sooo
+2 0!
+ca 1200 2500 3500
+sa Bad (SNR 1048)
+=
+E
+Fo
+E
+es
+
+‘500 1500, 2500 3500
+Packet size (bit)
+
+FIGURE 12. Active time comparison between proposed scheme,
+repetition-dominated method, and straightforward method.
+
+Good (SNR=648)
+
+§ 900) Cinata
+
+§ 200) Hii Repetion
+
+B | Straightforward
+
+E 100
+
+8 ol
+
+° ‘500 1500 +2500 3500
+
+Medium (SNR=~2dB)
+
+Consumed resource
+
+500 1500 2500 3500
+
+Bad (SNR=-10d8)
+
+15000
++0000)
+
+5009]
+
+Consumed resource
+
+500 1600 2500
+Packet size (bit)
+
+FIGURE 13. Consumed resource comparison between proposed scheme,
+repetition-dominated method, and straightforward method.
+
+dominated method (denoted as repetition). In the
+straightforward method, we always set the MCS level as 0
+and use the maximum RU to transmit the packet, and based
+on the channel status, we adjust the repetition number only.
+In the repetition-dominated method, based on the feedback
+ACK/NACKs, we first adjust the repetition number and then
+update the MCS level. In particular, we vary the packet
+size {500, 1500, 2500, 3500} bits and test three cases of chan-
+nel conditions based on the channel estimation of NB-IoT
+systems: good (SNR=6 dB), medium (SNR=—2 dB), and
+bad (SNR=—10 dB).
+
+Figs. 12 and 13 show the active time and con-
+sumed resources, respectively, of the proposed uplink
+link adaptation scheme, repetition-dominated method,
+and straightforward method. The results in Fig. 12 and
+Fig. 13 demonstrate that our proposed uplink link adaptation
+scheme outperforms the repetition-dominated method and
+straightforward method. Specifically, our proposed uplink
+link adaptation scheme can on average save 14.29% of
+
+VOLUME 5, 2017
+
+active time and 14.01% of resource consumption compared
+to the repetition-dominated method. Moreover, it can on
+average save 47.18% of active time and 46.35% of resource
+consumption compared to the straightforward method. The
+reason is that our proposed uplink link adaptation scheme
+can adaptively select the MCS level and repetition number
+with different channel conditions in comparison with the
+straightforward method. Furthermore, our proposed uplink
+link adaptation scheme focuses on selecting the MCS level
+first, which is more important than the repetition number
+in terms of spectral efficiency. Therefore, it outperforms the
+repetition-dominated method.
+
+Moreover, some insights are presented in Fig. 12 and
+Fig. 13: 1) More active time and resources can be saved
+when the packet size is larger. This is because for larger
+packets, our proposed uplink link adaptation scheme can
+select larger TBS, which thus reduces the active time and
+consumed resources; and 2) When the channel conditions are
+better, our proposed uplink link adaptation scheme can also
+save more active time and resources. This is because it can
+select a larger MCS level (thus with a larger TBS) to save
+active time and consumed resources.
+
+V. CONCLUSION
+In this paper, we provide a brief survey of NB-IoT, includ-
+ing protocol volume, key technologies of uplink scheduling,
+applications, and several open issues. Based on these factors,
+we design a novel uplink link adaptation for NB-IoT systems
+that contains the inner loop link adaptation and the outer
+loop link adaptation to guarantee the transmission BLER.
+The inner loop link adaptation is proposed to cope with
+the fast BLER variation by adjusting the repetition number
+based on periodically measured transmission BLER. More-
+over, the outer loop link adaptation includes MCS level selec-
+tion and repetition number determination. It first determines
+the MCS level based on the feedback signals ACK/NACKs
+and then determines the repetition number. Extensive link-
+level simulations are provided to validate the performance
+of our proposed uplink link adaptation scheme for NB-IoT
+systems. The results demonstrate that our proposed uplink
+link adaptation scheme can on average save more than 14%
+of active time and resource consumption in comparison with
+the repetition-dominated method and save more than 46% of
+active time and resource consumption in comparison with the
+straightforward method.
+
+In the future, we will conduct a performance analysis and
+setup system-level simulations of uplink link adaptation for
+NB-IoT systems.
+
+REFERENCES
+
+[1] L. Atzori, A. Tera, and G. Morabito, “The Internet of Things: A survey,”
+Comput. Nenw., vol. 54, no. 15, pp. 2787-2805, Oct. 2010.
+
+[2] C. Perera, A. Zaslavsky, P. Christen, and D. Georgakopoulos, “Context
+aware computing for the Internet of Things: A survey,” IEEE Commun.
+Surveys Tut., vol. 16, no. 1, pp. 414-454, Ist Quart,, 2014.
+
+(3) F. Liu, C. Tan, E. Lim, and B. Choi, “Traversing knowledge net-
+works: An algorithmic historiography of extant literature on the
+Internet of Things (IoT),” J. Manage. Anal., pp. 1-32, Aug. 2016,
+doi: 10.1080/23270012.2016.1214540.
+
+1733
+
+===== Uplink_Scheduling_and_Link_Adaptation_for_Narrowband_Internet_of_Things_Systems-11..txt =====
+IEEE Access
+
+C. Yu et al: Uplink Scheduling and Link Adaptation for NB-loT Systems
+
+10}
+
+uu
+
+(13)
+
+{14]
+
+us)
+
+16]
+
+17]
+
+[18]
+
+(19)
+
+[20]
+
+(21)
+
+[22]
+
+[23]
+
+and the IoT network.
+
+1734
+
+L. D. Xu, W. He, and S. Li, “Internet of Things in industries: A survey,”
+IEEE Trans. Ind. Informat., vol. 10, no. 4, pp. 2233-2243, Nov. 2014.
+S.Li, L. D. Xu, and S. Zhao, “The Internet of Things: A survey,” Inf. Syst.
+Frontiers, vol. 17, no. 2, pp. 243-259, 2015.
+
+A. Rico-Alvarino et al., “An overview of 3GPP enhancements on machine
+to machine communications,” IEEE Commun. Mag., vol. 54, no. 6,
+pp. 14-21, Jun. 2016.
+
+Introduction of NB-IoT in 36.331, 3GPP RP-161248, 3GPP TSG-RAN
+Meeting 72, Ericsson, Nokia, ZTE, NTT DOCOMO Ine., Busan, South
+Korea, Jun. 2016,
+
+Stubbs Agnes, “Intel, Nokia and Ericsson Collaborate on NB-LTE Wire-
+less for 1oT,” Capacity Magazine, Helsinki, Finland, Oct, 2015, pp. 1-5.
+Y.-P. E. Wang et al. (Jul. 2016). “A primer on 3GPP narrowband
+Internet of Things (NB-IoT).” [Online]. Available: htps://arxiv.org/
+fip/arxiv/papers/1606/1606.0417 pat
+
+A. Sampath, P. Sarath Kumar, and J. M. Holtzman, “On setting reverse link
+target SIR in a CDMA system,” in Proc. IEEE Veh. Technol. Conf, vol. 2
+1997, pp. 929-933
+
+Q Li, ¥. Wu, S. Feng, P. Zhang, and Y. Zhou, “Cooperative uplink link
+adaptation in 3GPP LTE heterogeneous networks,” in Proc. IEEE Veh.
+Technol. Conf. (VIC Spring), Jun. 2013, pp. 1-5.
+
+A, Duran, M. Toril, F. Ruiz, and A. Mendo, “Self-optimization algorithm
+for outer loop link adaptation in LTE,” JEEE Commun. Lett., vol. 19,
+no. 11, pp. 2005-2008, Nov. 2015
+
+Q Xia, M. Hamdi, and K. B. Letaief, “Open-loop link adaptation for next-
+generation IEEE 802.1 1n wireless networks,” [EEE Trans. Veh. Technol.,
+vol. 58, no. 7, pp. 3713-3725, Sep. 2009.
+
+A. M. Cavalcante, E. B. Souza, J. J. Bazzo, M. J. Souza, L. Kuru, and
+J. Moilanen, “On the system-level analysis of outer loop link adapta-
+tion for IEEE 802.16e systems,” J. Commun, Comput., vol. 9, no. 5,
+pp. 568-575, 2012
+
+M.G. Sarret, D. Catania, F. Frederiksen, A. F. Cattoni, G. Berardinelli, and
+P. Mogensen, “Dynamic outer loop link adaptation for the SG centimeter-
+wave concept,” in Proc. Eur. Wireless, 2015, pp. 1-6.
+
+F., Blanquez-Casado, G. Gomez, M. del Carmen Aguayo-Torres, and
+J.T. Entrambasaguas, “eOLLA: An enhanced outer loop link adapta-
+tion for cellular networks,” EURASIP J. Wireless Commun. Netw, no. 1,
+Dec. 2016.
+
+Q Mu, L. Liu, H. Jiang, K. Takeda, and R. Ma, “Investigation on link
+adaptation for LTE-based machine type communication,” in Proc. IEEE
+Veh. Technol. Conf. (VTC Spring), May 2016, pp. L
+X. Lin, A. Adhikary, and Y.-P. E, Wang, “Random access preamble design
+and detection for 3GPP narrowband IoT systems,” /EEE Commun. Lett.,
+vol. 5, no. 6, pp. 640-643, Dec. 2016.
+
+User Equipment (UE) Radio Transmission and Reception, 3GPP TS
+36.101, 2016, [Online]. Available: http://www.3gpp.org/ftp/Spees/archive
+136_series/36.101/36101-440.zip
+
+Evolved Universal Terrestrial Radio Access (E-UTRA); Physical Chan-
+nels and Modulation, 3GPP TS 36.211, 2016. [Online]. Available:
+hitp://vww.3gpp.org/fip/Specs/archive/36_series/36.21 1/3621 1-d20.zip
+Evolved Universal Terrestrial Radio Access (E-UTRA); Physical Layer
+Procedures, 3GPP TS 36.213, 2016. [Online]. Available: http://www.
+3gpp.org/ftp/Specs/archive/36_series/36.211/36213-d20.zip
+
+Evolved Universal Terrestrial Radio Access (E-UTRA); Multiplexing and
+Channel Coding, 3GPP TS 36.212, 2016. [Online]. Available: http://www.
+3gpp.org/ftp/Specs/archive/36_series/36.211/36212-d20.zip
+
+Cellular System Support for Ultra Low Complexity and Low Throughput
+Internet of Things, 3GPP TR 45.820 v13.1.0, Nov. 2015. [Online]
+
+Available: http://www.3gpp.org/ftp/Specs/archive/45_series/45.820/45820-
+d10.zip
+
+CHANGSHENG YU (M’ 15) received the master’s
+degree from Zhejiang University, Hangzhou,
+China, in 2005, and the Ph.D. degree in control
+science and engineering from Zhejiang University
+of Technology, Hangzhou, China, in 2013.
+
+He was with the Nokia Wireless Network
+Department, where he researched and developed
+the algorithm for MAC scheduler for LTE/LTE-A
+and recent NB-IoT protocol analysis. His major
+interests focus on 5G, heterogeneous networks,
+
+LI YU received the B.S. degree in control theory
+from Nankai University, Tianjin, China, in 1982,
+and the M.S. and Ph.D. degrees in control theory
+from Zhejiang University, Hangzhou, China, in
+1988 and 1999, respectively.
+
+He is currently a Professor with the College
+of Information Engineering, Zhejiang University.
+He has authored or co-authored three books and
+more than 200 journal or conference papers. His
+research interests include wireless sensor net-
+works, networked control systems, and motion control.
+
+YUAN WU received the Ph.D. degree in
+electronic and computer engineering from The
+Hong Kong University of Science and Technology.
+: Hong Kong, in 2010.
+
+He was a Post-Doctoral Research Associate
+
+Ady with The Hong Kong University of Science and
+
+_ Technology from 2010 to 2011. He was a Visiting
+~~, Scholar with Princeton University, Princeton, NJ,
+( USA, from 2009 to 2010, Georgia State University,
+7 USA, in 2013, and the University of Waterloo,
+Canada, from 2016 to 2017. He is currently an Associate Professor with
+the College of Information Engineering, Zhejiang University of Technology,
+Hangzhou, China. His research interests focus on radio resource allocations
+for wireless communications and networks, cognitive radio networks, data
+offloading, device-to-device communications, and smart grids.
+
+Prof. Wu received the Distinguished Young Faculty Award from Zhejiang
+University of Technology in 2013, and the scholarship under the State
+Scholarship Fund of China Scholarship Council for Visiting Scholars in
+2015. He was a co-recipient of the Second-Class Outstanding Research
+Award for Zhejiang Provincial Universities in 2012.
+
+YANFEI HE js currently pursuing the M.S. degree
+with the College of Information Engineering,
+Zhejiang University of Technology, Hangzhou,
+China. His research interests focus on radio
+resource allocations for wireless communica-
+tions and networks and mobile data offloading
+networks.
+
+QUN LU received the B.S. degree in mechanical
+engineering from the Yancheng Institute of Tech-
+nology in 2011 and the M.S. degree in 2013. He is
+currently pursuing the Ph.D. degree in control sci-
+ence and engineering. His major interests focus on
+wireless sensor network, computer vision, robot
+control, and machine learning.
+
+VOLUME 5, 2017
+

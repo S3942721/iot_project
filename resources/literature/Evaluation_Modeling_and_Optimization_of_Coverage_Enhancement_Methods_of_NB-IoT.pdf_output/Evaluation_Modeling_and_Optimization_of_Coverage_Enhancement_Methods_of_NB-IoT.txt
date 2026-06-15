@@ -1,0 +1,883 @@
+===== Evaluation_Modeling_and_Optimization_of_Coverage_Enhancement_Methods_of_NB-IoT-1..txt =====
+2019 IEEE 30th Annual International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC): Track 2: MAC
+
+and Cross---Layer Design
+
+Evaluation, Modeling and Optimization of
+Coverage Enhancement Methods of NB-IoT
+
+Sahithya Ravi*!, Pouria Zand*, Mohieddine El Soussi* and Majid Nabi!
+* Holst Centre / IMEC-NL, Eindhoven, The Netherlands
+t Electrical Engineering Department, Eindhoven University of Technology, Eindhoven, The Netherlands
+Email: Sahithya.ravi@imec.nl, pouria.zand@imec.nl, mohieddine.elsoussi@imec.nl, m.nabi@tue.nl
+
+Abstract—Narrowband Internet of Things (NB-IoT) is a
+new Low Power Wide Area Network (LPWAN) technology
+released by the Third Generation Partnership Project
+(3GPP). The primary goals of NB-IoT are enhanced cov-
+erage, low cost, and long battery life. In order to enhance
+coverage, NB-IoT has new features, such as increasing
+transmission repetitions, decreasing bandwidth, and adapt-
+ing the Modulation and Coding Scheme (MCS). In this
+paper, we present an implementation of these three features
+of NB-IoT in NS-3, an end-to-end network simulator. Using
+the developed simulation framework, the influence of the
+coverage enhancement features on network reliability and
+latency is evaluated. Furthermore, we propose a hybrid
+link adaptation strategy based on all three features, which
+tries to achieve optimal latency and coverage. To achieve
+this, we formulate and solve an optimization problem that
+finds the optimal value of repetitions, bandwidth and MCS
+such that the latency is minimum and the reliability is
+maintained. Based on the hybrid link adaption strategy, a
+new scheduler is implemented and evaluated in the NS-
+3 simulator. Through numerical results we show that the
+hybrid link adaptation method achieves lower latency and
+higher coverage than any of the coverage enhancement
+techniques. We also show that the proposed optimization
+method achieves the same performance as the exhaustive
+search method but with lower complexity.
+
+Index Terms—NB-IoT, Coverage enhancement, Link
+adaptation, Optimization, NS-3.
+
+I. INTRODUCTION
+
+The Internet of Things (oT) refers to the idea of
+connecting everyday objects to the Internet, enabling
+them to send and receive data. There is a wide range
+of applications for IoT in the areas of smart cities, asset
+tracking, smart agriculture, health monitoring and so on.
+The IoT landscape consists of wireless technologies that
+operate in licensed or unlicensed bands, achieving ranges
+from less than ten meters up to tens of kilometers with
+data rates from a few bps to Mbps. Low Power Wide
+Area Network (LPWAN) targets low-power and long-
+range applications with data rates from 10 bps up to
+a few kbps. Narrowband-IoT (NB-IoT) [1] is a licensed
+LPWAN technology, which was standardized in 2016 by
+the Third Generation Partnership Project (3GPP). NB-
+IoT uses a new physical layer design that facilitates a
+wide range of IoT applications in the licensed spectrum
+that require long range, deep indoor penetration, low
+
+978-1-5386-8110-7/19/$31.00 ©2019 IEEE
+
+cost, low data rate, low power consumption, and massive
+capacity [2].
+
+Among the aforementioned requirements, this paper
+focuses on uplink coverage enhancement. Many solu-
+tions are proposed in the standard to achieve coverage
+enhancement for NB-IoT. The first solution, referred as
+tones, is to reduce the bandwidth and to perform resource
+allocation based on tones (or subcarriers) instead of Re-
+source Blocks (RBs). A lower number of tones enables
+the User Equipment (UE) to transmit in a narrower
+bandwidth. The second solution is repetitions, which
+refers to repeating the data transmission multiple times.
+The last solution is Modulation and Coding Scheme
+(MCS), which is already used in LTE to achieve better
+coverage [3]. Considering the new features of tones and
+repetitions, uplink link adaptation needs to be performed
+in three dimensions - using tones, repetitions and MCS.
+In this paper, we focus on uplink scheduling and design-
+ing a hybrid link adaptation scheme for NB-IoT systems.
+The contributions of this paper can be summarized as
+follows:
+
+« Implementation of the coverage enhancement fea-
+tures i.e., tones, repetitions and MCS in NS-3.
+
+« Evaluation of the impact of these features on relia-
+bility and latency through NS-3 simulations.
+
+« Design, implementation and evaluation of the
+scheduler which performs hybrid link adaptation in
+NS-3.
+
+A. Background
+
+NB-IoT has a bandwidth of 180 kHz which corre-
+sponds to one RB of LTE. In the uplink, the bandwidth of
+180 kHz can be distributed among 12 subcarriers or tones
+with 15 kHz spacing, or 48 subcarriers with 3.75 kHz
+spacing. The subframe duration for 3.75 kHz spacing is
+4 ms, which is four times that of 15 kHz spacing [4].
+
+NB-IoT supports single-tone and multi-tone communi-
+cation in the uplink. In case of multi-tone, there are three
+options with 12, 6 and 3 subcarriers. In case of single-
+tone, there is only | subcarrier with either 15 kHz or
+3.75 kHz spacing. A higher number of tones is used to
+provide higher data rates for devices in normal coverage,
+while a lower number of tones is used for devices that
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:55 UTC from IEEE Xplore. Restrictions apply.
+
+===== Evaluation_Modeling_and_Optimization_of_Coverage_Enhancement_Methods_of_NB-IoT-2..txt =====
+2019 IEEE 30th Annual International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC): Track 2: MAC
+
+and Cross---Layer Design
+
+need extended coverage. A single packet of a fixed size
+is transmitted over 1 ms in case of 12 tones, 2 ms in
+case of 6 tones, 4 ms in case of 3 tones, 8 ms in case
+of 1 tone (15 kHz spacing) and 32 ms in case of | tone
+(3.75 kHz spacing) [5].
+
+MCS is the feature that influences the type of mod-
+ulation and code rate. MCS is directly proportional to
+the code rate and Transport Block Size (TBS) and can
+take values from 0 to 12 [6]. As the channel quality
+deteriorates, the MCS becomes lower and thus the code
+rate and TBS become lower. MCS, tones and repetitions
+are assigned based on channel quality. Repetitions of
+uplink data can take values of 1, 2, 4, 8, 16, 32, 64 and
+128. When channel quality is poor, tones and MCS are
+decreased and repetitions are increased.
+
+B. State-of-the-art
+
+Constituting a relatively new technology, there are
+a lot of open issues that need to be investigated for
+NB-IoT, such as performance analysis, link adaptation,
+design optimization, and co-existence with other tech-
+nologies. The performance of NB-IoT with respect to
+coverage, capacity, and co-existence with LTE has been
+studied in, for instance, [7], [8], [9] and [10]. The focus
+of our paper is towards implementation and evaluation
+of coverage enhancement techniques and link adaptation
+based on coverage enhancement methods.
+
+NS-3 is an open source network simulator and the
+NS-3 LTE module is well-tested and can be used as
+a base for developing the NB-IoT module. The work
+on NB-IoT module in NS-3 began in [11], in which
+the authors modified downlink signaling traffic such as
+the Master Information Block (MIB) and the System
+Information Block (SIB) to comply with NB-IoT spec-
+ification. In [12], the authors restricted the bandwidth
+to one Resource Block (RB) which is 180 kHz and
+separated the control and data channels. This paper aims
+to extend [12], by implementing the single and multi-
+tone uplink features, including repetitions in the uplink
+and implementing a hybrid scheduler that allocates tones,
+repetitions and MCS.
+
+With respect to uplink link adaptation of NB-IoT, the
+authors of [13] propose a 2D link adaptation strategy
+based on MCS and repetitions and use link-level simu-
+lations to evaluate the performance of their solution. In
+this paper, however, we use a system and network level
+simulator (NS-3) to evaluate our solution through end-to-
+end simulations. Further, they do not take tones into ac-
+count, which is an important dimension to be considered
+for link adaptation. Furthermore, they do not consider
+a hybrid solution instead they fix one parameter while
+varying the other. In [14], the authors derive analytic
+equations that model the impact of repetitions, tones and
+MCS. They also propose an exhaustive search method
+that searches all possible combinations of repetitions,
+tones, and MCS to minimize the transmission latency.
+
+However, their analysis of the coverage enhancement
+features is entirely based on analytic models and they do
+not perform network simulations or experiments. In this
+paper, we analyze the coverage enhancement features
+theoretically and also implement these features in the
+NS-3 simulator. The implementation in NS-3 facilitates
+the use of end-to-end simulations to evaluate these
+features, by including factors such as scheduling and
+network delays. Furthermore, instead of an exhaustive
+search method, we propose a closed-form solution which
+achieves the same result with lower complexity.
+
+II. NB-IOT IMPLEMENTATION AND EVALUATION
+
+The authors of [12] implemented the basic features for
+eMTC and NB-IoT modules using the LTE module of
+NS-3. Based on the NB-IoT module described in [12],
+we implement the uplink coverage enhancement features
+which can be found on github!.
+
+A. Implementation of tones and repetitions
+
+In order to implement tones, modifications are made in
+both time domain (extending a packet according to tone)
+and frequency domain (transmitting over a narrower
+bandwidth). It is know that reducing bandwidth improves
+the Signal-to-Noise Ratio (SNR) as the transmitted
+power spectral density increases. In order to support
+bandwidth lower than 180 kHz (1 RB), the existing
+resource allocation is modified from RB-based allocation
+to subcarrier-based allocation.
+
+In order to implement repetitions, major modifications
+are made in the time domain (repeating a data packet).
+Whenever repetition is used, the subsequent repetitions
+of the same data are aggregated at the eNodeB. Hence,
+the resulting SNR after the aggregation is the sum of the
+SNRs of each received repetition. Therefore, repetition
+of two results in an improvement of approximately 3 dB
+in SNR [14]. In order to achieve this behavior, we have
+modified the physical layer of the base station in NS-3
+to aggregate all the repetitions, and use the final sum of
+SNR as input to the error model described in [15].
+
+B. Implementation of link adaptation
+
+Link adaptation is performed based on the SNR re-
+ceived from the Secondary Reference Signal (SRS). SRS
+is a signal that is sent periodically by the UE. Fig. 1
+shows the link adaptation mechanism. The SNR received
+from the SRS is provided as input to the error model of
+NS-3 to find the Block Error Rate (BLER) corresponding
+to the SNR [15]. If the BLER is less than the target
+BLER of 0.1, the MCS and tones are fixed to the highest
+value (12 tones) and repetitions are fixed to the lowest
+value (1 repetition). If the target BLER is not met, MCS,
+tones and repetitions are adapted and re-evaluated using
+the error model. This process is repeated until a BLER
+
+"https://github.com/imec-idlab/NB-IoT
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:55 UTC from IEEE Xplore. Restrictions apply.
+
+===== Evaluation_Modeling_and_Optimization_of_Coverage_Enhancement_Methods_of_NB-IoT-3..txt =====
+2019 IEEE 30th Annual International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC): Track 2: MAC
+
+and Cross---Layer Design
+
+Fig. 1: The link adaptation mechanism.
+
+of 0.1 or less is reached. The final value of the MCS,
+
+tones or repetitions that resulted in the BLER of 0.1 or
+
+less is assigned to the UE. Three independent methods
+of link adaptation are performed:
+
+1) MCS value is adapted based on SNR (repetitions
+
+value is fixed to 1 and tones value is fixed to 12).
+
+2) Tones value is adapted based on SNR (repetitions
+
+value is fixed to 1 and MCS value is fixed to 12).
+
+3) Repetitions value is adapted based on SNR (MCS
+
+value is fixed to 12 and tones value is fixed to 12).
+
+C. Evaluation
+
+The performance evaluation is carried out for two
+scenarios: open area and urban. In open area, the eNodeB
+is located in the center and UE’s are arranged in a
+random fashion at different distances from the eNodeB.
+In urban scenario, we include buildings and we assume
+that 80-90% of the users are located inside the buildings.
+For a given distance, SNR is relatively lower inside a
+building than outside. Based on the distance, the nodes
+are grouped among 16 zones at different distances from
+the eNodeB as indicated by Table I. The simulation
+parameters for these scenarios are shown in Table II.
+
+TABLE I: Coronas or division based on distance
+
+Zone | Distance (m) |[ Zone | Distance (m)
+T 0-200 9 2750-3000
+
+2 200-400 10 3000-3500
+
+3 400-600 TI 3500-4000
+
+a 600-800 12 [ 4000-5000
+
+3 800-1000 13 5000-6000
+
+6 1000-2000 14 [ 6000-8000
+
+T 2000-2500 15 8000-10000
+8 2500-2750 16 10000-40000
+
+TABLE II: Simulation parameters
+
+Parameter Value
+Number of UE T00 - 600
+UEs distribution | random
+
+‘Okumura-Hata(Open areay
+Hybrid building(Urban)
+DL: 925 MHz, UL: 880 MHz
+
+Propagation model
+
+Frequency Band
+
+Tx Power eNodeB: 46 dBm, UE: 20 dBm
+Packet Size T2 bytes
+
+# Runs 100 runs
+
+Tater-packet interval | 10 seconds
+
+Fig. 2(a) shows the average value of the assigned
+MCS, repetitions and tones in different zones. It is
+
+important to note that, the farther the zone, the lower
+the value of SNR. We can observe that due to indoor
+deployment in urban scenario the values of MCS, tones
+and repetitions are modified at closer distances. In urban
+scenario, UE’s that are located inside buildings have very
+low values of SNR compared to the open area and the
+MCS, repetitions and tones are adapted more rapidly in
+order to improve reliability.
+
+Similarly, as shown in Fig. 2(b), the reduction in
+Packet Delivery Ratio (PDR) is steeper in urban scenario.
+We can observe from the PDR graph that MCS starts to
+fail in zone 7-8 in the open areas while it starts to fail in
+zone 4-5 in urban areas. Tones start to fail in zone 12-13
+for open areas and zone 7-8 in urban areas. Repetitions
+start to fail at zone 14-15 in open areas and zone 12-
+13 in urban areas. None of the link adaptation methods
+were successful in zone 16. Repetitions have the best
+performance in both urban and open areas. However,
+an increase in repetitions has to be traded off for a
+corresponding increase in the energy consumption.
+
+Fig. 2(c) shows the average delay or latency at dif-
+ferent zones. We can observe that the delay starts to
+increase at a lower distance for urban compared with
+open area. This clearly shows that the latency of trans-
+mission increases as we move from open areas to urban
+areas. The delay follows the adapted value and increases
+towards farther zones. Based on the above results, we can
+conclude that the improvement in coverage comes at the
+cost of a higher delay.
+
+Ill. HYBRID LINK ADAPTATION
+
+The link adaptation strategies described in the previ-
+ous section adapt only one of the three coverage en-
+hancement parameters, which result in saturation before
+achieving a good coverage. However, a more useful
+solution will be to adapt all three of them and extend the
+coverage. When MCS, tones or repetitions are adapted to
+improve the reliability of a UE that has a poor coverage,
+there is a corresponding increase in the transmission
+delay of the UE. Therefore, in our hybrid solution,
+tones, repetitions and MCS are evaluated in an optimized
+manner such that the delay per user is minimal, while
+the reliability is not compromised.
+
+We formulate an optimization problem, with trans-
+mission delay per user as the objective function, and
+the reliability as the constraint. Then, we implement the
+solution to the optimization problem as a new hybrid
+scheduler in NS-3 in order to allocate tones, repetitions
+and MCS in an optimized manner.
+
+The delay of a UE is composed of synchronization
+delay, Random Access Channel (RACH) delay and data
+transmission delay. In this paper, we only consider the
+data transmission delay, as it is the delay that can
+stretch in time based on the amount of data. The uplink
+data transmission delay per UE consists of Downlink
+Control Information (DCI), transmission of data, and
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:55 UTC from IEEE Xplore. Restrictions apply.
+
+===== Evaluation_Modeling_and_Optimization_of_Coverage_Enhancement_Methods_of_NB-IoT-4..txt =====
+2019 IEEE 30th Annual International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC): Track 2: MAC
+
+and Cross---Layer Design
+
+‘Open area: MCS adapted
+Urban: MCS adapted
+
+‘Open area: Tone adapted
+Urban: Tome adapted
+
+= Open area: Repetition adapted
+Urban: Repetition adapted
+
+wath
+
+a
+SSS
+
+(a) Assigned value vs zone
+
+(b) Achieved PDR vs zone
+
+7 7
+
+(c) Achieved delay vs zone
+
+WET
+
+Fig. 2: Performance of link adaptation in open area and urban scenarios.
+
+transmission and reception of the acknowledgment. The
+data transmission delay per UE for the uplink (UL)
+transmissions is obtained from [12] and can be written
+as,
+
+Delay =TL x |
+
+where TL is the transmission latency, Datalength is the
+data size per user and TBS is the transport block size.
+TL depends on the duration of a single transmission
+of DCI (tppccxH), repetitions of control transmission
+(RLDC), downlink to uplink switching delay (tpus),
+duration of a single subframe (tpusc1), the time factor
+(t), number of repetitions of the data transmissions
+(RLUS) and time taken for acknowledgement (tack)
+as shown in Fig. 3. The Narrowband Physical Uplink
+Shared Channel (NPUSCH) is used for uplink data
+transmission and the Narrowband Physical Downlink
+Control Channel (NPDCCH) is used for downlink con-
+trol transmission. Hence, TL can be written as,
+
+TL=RLDC x tppccn + tous
++ RLUS xt x tpuscu
++tups + RLUC x tack. (2)
+
+The time factor ¢ depends on the number of tones
+ned to the UE and can take values as 1, 2, 4, 8, and
+32 for 12, 6, 3, 1 tones of 15 kHz spacing and | tone of
+3.75 kHz spacing, respectively. The acknowledgement
+and retransmissions are disabled to better analyze the
+performance of our solution i.e., fyps and tack are
+set to zero. For simplicity, we assume that there are no
+repetitions in the DCI (RLDC = 1) and that the number
+of resource units is one (RU = 1).
+
+Let us denote tpuscy by Ko, Datalength by K2
+and RLUS by r. Hence, we can rewrite (1) as follows,
+
+K>
+TBS(m) 1 ®
+
+where r is the number of repetitions, t is the time factor,
+Ky is the datalength, A and Ay are constants and TBS
+is the transport block size that depends on MCS denoted
+
+Delay = (Ki + Ko xr xt)[
+
+RLDC=1 RLUS =2
+pel Data Data ACK
+N N|[N N
+ptpus | tf tups P
+@ sis ©
+ig c|\e @
+Hu Hin H
+‘pec ‘PUSCH tack
+
+Fig. 3: Uplink transmission latency in NB-loT
+
+by m. The table showing the relationship between MCS
+and TBS is specified in [1]. Considering the delay
+expression given in (3), the optimization problem can
+be formulated as,
+
+min Delay(r,t,m)
+s.t. SNR > SNRr(m) (4)
+
+réR,té€T,meM,
+
+where SNRqp(7m) is the threshold SNR value that de-
+pends on MCS. m is an integer value that belongs
+to the set M = {0,1,2...,12}, r, representing rep-
+etitions, is an integer value that belongs to the set
+R = {1,2,4,8, 16,32, 64, 128} and ¢, representing the
+time factor, is an integer value that belongs to the set
+T = {1,2,4,8, 32}. In order to achieve good reliability,
+the received SNR should be above SNRt(m). The
+received SNR depends on propagation loss, repetitions
+and tones and is given by,
+
+SNR = K3 x f xr, (5)
+
+where K3 = Ppx/(180kHz x No x PL), Ppx is
+the transmitted power, No is the noise power spectral
+density, PL is the pathloss and f is the frequency factor.
+The frequency factor, f, can take values of 1, 2, 4, 12,
+and 48 for 12, 6, 3, 1 tones of 15 kHz spacing and 1
+tone of 3.75 kHz spacing, respectively.
+
+The SNR obtained in (5) should be greater than a
+given threshold (SNRp,(77)) to achieve a good reliability
+and low BLER. The value of SNRrp(m) depends on
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:55 UTC from IEEE Xplore. Restrictions apply.
+
+===== Evaluation_Modeling_and_Optimization_of_Coverage_Enhancement_Methods_of_NB-IoT-5..txt =====
+2019 IEEE 30th Annual International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC): Track 2: MAC
+
+and Cross---Layer Design
+
+MCS and it can be obtained from the NB-loT BLER
+curves generated for each MCS. Fig. 4 shows the gen-
+erated BLER curves on the uplink for different MCS
+values under Additive White Gaussian Noise (AWGN)
+channel. Hence, SNR (™m), for all m, can be obtained
+from Fig. 4 by setting the value of BLER to be 0.1.
+
+ANIM
+
+Fig. 4: BLER curves for AWGN channel.
+
+The obtained SNRry(m) needs to be met in order to
+guarantee that the packet is received at the base station
+without any corruption. Using the expressions given in
+(3) and (5), the optimization problem can be written as:
+
+Ko (Ky + Kort)
+TBS(m)
+
+Kg x f xr > SNRq(m)
+
+réR,teT,meM.
+
+rtm
+
+(6)
+
+s. t.
+
+Note that the ceiling in (1) is dropped since it will
+not alter the outcome of the optimization. The objective
+function given in (6) is non-convex and it is hard to
+solve. In order to solve the optimization problem and to
+have a closed-form solution, we simplify it by fixing the
+value of MCS, m. Thus, for each value of m € M, we
+search for the optimum values of r and t, and then select
+the value of m, r and ¢ that yield the minimum delay.
+We also relax the integer constraint on r and t.
+
+We should note that the objective function is based
+on ¢ whereas the SNR is based on f. The parameters
+f and ¢ are both based on the number of tones and
+are interrelated. For example, for a 15 kHz single-tone,
+t is equal to 8 and f is equal to 12. Hence, in order
+to further simplify the optimization problem, we create
+an expression that relates f to ¢ using the curve fitting
+function in MATLAB and it is given by,
+
+f=pit® +pot? +pstt pa, (7)
+
+where p; = —0.004994, p2 = 0.2031, ps = 0.08811,
+and py = 0.834. The mean square error between the
+actual and the approximated function is very small and
+is equal to 0.015. Based on the approximation described
+in (7), the optimization problem for a given m, can be
+re-written as,
+
+min D2 (Ki + Kort)
+
+nyt TBS(m)
+
+K3r (pit? + pot? + pst +p)
+—SNRm(m) > 0
+
+O<r< 128, 0<t<32.
+
+s. t.
+
+The optimization problem in (8) is convex and it can be
+solved using Lagrangian method. Hence, we can define
+the Lagrangian (L) as:
+Ko (Ki + Kort)
+
+TBS(m)
+—AKgr (pt? + pot? + pst + ps)
++ ASNRt(™), (9)
+
+where r, ¢ and the Lagrangian multiplier \ are the
+variables or unknowns. Hence, in order to find the
+optimum value of r, t and A, the partial derivatives of the
+Lagrangian (L) are calculated for r, t and \ as shown
+below:
+
+L=
+
+OL aL aL
+Wn HA BAe OO
+Ko Kot 3 2
+FBSGp) 7 Kad (pi? + pot? + pst + pa) =
+TBS) ~ BBA (mE + pat? + pst + pe
+ay
+Kokoro,
+TBS) — Kydr (3p. ? + 2pat + ps) =0. (12)
+SNRqn(m) — Kr (pit? + pot? + pst + pa) = 0.
+(13)
+Solving (11) and (12) for ¢ for a given m, we get
+2nit? ot? —
+Port + pat? Pa _ 9 a4)
+
+3pit? + 2pot + ps
+In order to get t, we solve 2p;t? + pot? — py = 0 such
+that 3p;t? + 2pet + p3 # 0. Solving these equations for
+the given parameters p;, we get the following
+t = —1.936, 2.142, 20.128.
+t A —0.215, 27.327.
+
+(5)
+(16)
+
+Out of these t values, the negative value is discarded and
+the only possible values are 20.128 and 2.142. We can
+obtain r by substituting the values of ¢ in (13). Then, we
+search for the integer combination of r and ¢ that gives
+minimal delay and a SNR value higher than SNR».
+The value of m is chosen by performing an exhaustive
+search and obtaining the values of t and r for each value
+of m. The optimum solution is obtained by choosing
+the combination r, ¢ and m that yield the lowest delay,
+while achieving good reliability, ie, SNR>SNRm. This
+algorithm is implemented and evaluated in the NS-3 sim-
+ulator. Furthermore, the scheduler in NS-3 is modified
+to include the new hybrid link adaptation strategy.
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:55 UTC from IEEE Xplore. Restrictions apply.
+
+===== Evaluation_Modeling_and_Optimization_of_Coverage_Enhancement_Methods_of_NB-IoT-6..txt =====
+2019 IEEE 30th Annual International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC): Track 2: MAC
+
+and Cross---Layer Design
+
+IV. NUMERICAL RESULTS
+
+In order to evaluate the proposed optimization algo-
+rithm, we compare it with the exhaustive search method
+in terms of complexity and the achieved minimum delay.
+This method is implemented by searching for all possible
+combinations of m, r and ¢ and then selecting the
+combination that yields the smallest delay and satisfies
+the SNR constraint.
+
+In order to allocate tones, repetitions and MCS, the
+base station needs to perform the link adaptation at
+runtime for all the UE’s, whenever there is a change
+in SNR. Hence, the speed of the optimization algorithm
+is an important factor to be considered. The exhaustive
+method has a complexity of O(MxT x N), where M, R,
+T refer to the possible number of values of MCS, tones
+and repetitions respectively and N represents the number
+of UE’s. The Lagrange method has a lower complexity
+of O(M x N). In terms of execution time, Lagrange
+method was about eight times faster than the exhaustive
+approach. Finally, the mean square error of the delay
+obtained using the Lagrange approach compared to the
+delay obtained using the exhaustive approach was found
+to be 1028 x 10-4 (no units), which is minimal. Hence,
+the Lagrange method is as accurate as the exhaustive
+approach but has a lower complexity.
+
+In order to evaluate the proposed hybrid scheduler,
+we compare it with the basic scheduler that adapt one
+of the enhancement coverage techniques, i.e., tones, rep-
+etitions or MCS. The same random deployment scenario
+described above for open areas in II-C is used to per-
+form the comparisons in NS-3. Fig.5a depicts the delay
+obtained by adapting MCS, adapting tones, adapting
+repetitions and adapting all the three parameters, i.e.
+hybrid scheduler based on Lagrange method in NS-3, for
+different zones. In the zoomed part of Fig. 5a, we can
+observe that between zones 5 and 15, the hybrid solution,
+"Lagrange (NS-3)’, gives the lowest delay among the
+other methods and yields similar delay value at closer
+zones. Furthermore, the repetitions-only approach starts
+to fail at zone 14. Based on Fig. 5b, the hybrid solution
+is able to deliver a good amount of packets in zone 16
+(i.e. 40 km). Thus, hybrid solution offers better network
+efficiency, lower delay or latency per user which also
+means lower energy consumption.
+
+In addition to latency and reliability, we also evaluate
+the network performance in terms of scalability. The
+maximum number of users that can be supported in a
+network is obtained from [12] and is given by,
+
+_ | Reporting Period |
+~ Delayu p
+
+17
+aa a7
+is the total number of subcarriers available
+for allocation, Delayyrp is the average delay per user
+obtained in (1), and SCU is the number of subcarriers
+allocated to one user. The Reporting Period is assumed
+
+7
+
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+
+\
+\ ‘
+
+(a) Delay (b) PDR
+
+Fig. 5: Hybrid approach
+
+to be the same for all users. Fig. 6 depicts the results
+obtained using NS-3 simulator and using the theoretical
+expression given in (17) for the different aforementioned
+methods.
+
+Fig. 6 shows the maximum number of users that
+can be supported when Ngoc is 24, ie., number of
+RBs is two, and the reporting period is 10 s. We can
+observe that the hybrid method has the highest maximum
+number of users, mainly because it is optimized to
+achieve lower delay per user (Delayyz). Furthermore,
+in tone and hybrid approaches, resource allocation is
+performed in terms of subcarriers (SC) and multiple
+users can share the same RB whereas, in repetition and
+MCS approaches, the resource allocation is performed
+in terms of resource blocks (RB). It can be observed
+that there is a huge difference between theoretical and
+NS-3 results for the tone and hybrid approaches. This
+is because it is difficult to simulate beyond 600 users
+in NS-3 due to memory and processing constraints. In
+a practical scenario, this limitation will not occur and
+hybrid strategy will support the same number of users
+as the theoretical result shown.
+
+MCS Tone Rep
+Method
+
+Hybrid
+
+Fig. 6: Scalability for reporting period of 10s.
+
+V. CONCLUSION
+In this paper, we describe an implementation of uplink
+coverage enhancement methods of NB-IoT in NS-3
+simulator. We evaluate the performance of tones, rep-
+etitions and MCS with respect to reliability and latency.
+We show that, an improvement in reliability at longer
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:55 UTC from IEEE Xplore. Restrictions apply.
+
+===== Evaluation_Modeling_and_Optimization_of_Coverage_Enhancement_Methods_of_NB-IoT-7..txt =====
+2019 IEEE 30th Annual International Symposium on Personal, Indoor and Mobile Radio Communications (PIMRC): Track 2: MAC
+
+and Cross---Layer Design
+
+ranges comes at the cost of a corresponding increase
+in latency. In order to achieve improved coverage and
+lower latency, we propose a hybrid strategy and formu-
+late an optimization problem that allocates the different
+enhancement coverage features in such a way that the
+latency is minimum and the reliability is maintained.
+‘We compare our proposed optimization method with the
+exhaustive search method in terms of achieved latency
+and complexity. The proposed method for hybrid link
+adaptation has a lower complexity than the exhaustive
+search approach and yields similar latency. Furthermore,
+we showed that the hybrid solution achieves a range of
+40 km for open areas and has better scalability than
+optimized tone, optimized repetition and optimized MCS
+approaches.
+
+VI. ACKNOWLEDGMENT
+
+This work was partially funded by the Flemish FWO
+SBO S004017N IDEALIoT (Intelligent DEnse And
+Long range IoT networks) project and the SCOTT
+project (SCOTT (www.scott-project.eu) has received
+funding from the Electronic Component Systems for
+European Leadership Joint Undertaking under grant
+agreement No 737422. This Joint Undertaking receives
+support from the European Unions Horizon 2020 re-
+search and innovation programme and Austria, Spain,
+Finland, Ireland, Sweden, Germany, Poland, Portugal,
+Netherlands, Belgium, Norway).
+
+REFERENCES
+
+[1] 3GPP Technical Specification, 36.213 (2017)
+
+[2] Rapeepat Ratasuk, Nitin Mangalvedhe, Yanji Zhang, “Overview of
+narrowband [oT in LTE Rel-13”, [EEE conference on standards
+for communication and networking, pp. 1-7, Nov. 2016.
+
+[11] Samuele Foni, Tommaso Pecorella, Camillo Carlini, Maria-
+Gabriella Di Benedetto, “Evaluation methodologies for the NB-
+IOT system: issues and ongoing efforts”, in AEIT International
+Annual Conference.IEEE, Italy, October 2017
+
+[3] A. D. Zayas, P. Merino, “The 3GPP NB-IoT system architecture
+for the Internet of Things”, 20/7 IEEE ICC Workshops, pp. 277-
+282, 2017.
+
+[4] Y. P. E, Wang, X. Lin, A. Adhikary, A. Grovlen, Y. Sui, Y.
+Blankenship, J. Bergman, and H. S. Razaghi, “A primer on 3GPP
+narrowband internet of things”, EEE Communications Magazine,
+vol. 55, no. 3, pp. 117-123, March 2017.
+
+[5] "NB-IoT whitepaper by Rohde and Schwarz”, Application Note:
+IMA266.
+
+{6
+
+Alberto Rico-Alvarino, Madhavan Vajapeyam, Hao Xu, Xiaofeng
+Wang, “An Overview of 3GPP Enhancements on Machine to Ma-
+chine Communication”, EEE Communications Magazine, vol.54,
+no.6, pp. 14-21,2016.
+
+[7] Adhikary, X. Lin, and Y. P. E. Wang, “Performance Evaluation of
+NB-IoT Coverage ", in 2016 JEEE 84th VIC-Fall, Sept 2016, pp.
+1-5.
+
+[8] M. Lauridsen, I. Z. Kovacs, P. Mogensen, M. Sorensen, and S.
+Holst, “Coverage and Capacity Analysis of LTE-M and NB-IoT
+in a Rural Area”, in 2016 EEE 84th VIC-Fall, Sept 2016, pp.
+15.
+
+[9] Mads Lauridsen, Huan Nguyen, Benny Vejlgaard, “Coverage
+comparison of GPRS, NB-IoT, LoRa, and SigFox in a 7800 km2
+area”, Nokia Bell Labs, Denmark, 2017
+
+[10] N. Mangalvedhe, R. Ratasuk, A. Ghosh, “NB-IoT deployment
+study for low power wide area cellular oT”, EEE 27th PIMRC
+symposium, pp. 1-6, Sep. 2016.
+
+[12] M. El Soussi, P. Zand, F. Pasveer and G. Dolmans, “Evaluating
+the Performance of eMTC and NB-loT for Smart City Applica-
+tions,” 2018 IEEE International Conference on Communications
+(ICC), Kansas City, MO, 2018, pp. 1-7.
+
+[13] Changsheng Yu, Li Yu, Yuan Wu, Yanfei He and Qun Lu,
+“Uplink Scheduling and Link Adaptation for Narrowband Internet
+of Things Systems”, EEE Access, vol. 5, pp. 1724 - 1734, China,
+December 2016.
+
+[14] Pilar Andres-Maldonado, Pablo Ameigeiras, Jonathan Prados-
+Garzon, Juan J, Ramos-Munoz, Jorge Navarro-Ortiz, Juan M.
+Lopez-Soler, “Analytic Analysis of Narrowband ToT Coverage
+Enhancement Approaches”, 2018 GloTS conference. University of
+Granada, Spain, May 2018
+
+[15] M.Mezzavilla, M.Miozzo, M. Rossi, N.Baldo, M.Zorzii, “A
+Lightweight and Accurate Link Abstraction Model for the System-
+Level Simulation of LTE networks in NS-3, in 15th ACM
+International Conference.NY, USA: ACM, 2012, pp. 55-60.
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:55 UTC from IEEE Xplore. Restrictions apply.
+

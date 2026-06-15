@@ -1,0 +1,1503 @@
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-01..txt =====
+Ad Hoc Networks 114 (2021) 102440
+
+Contents lists available at ScienceDirect z :
+id Hoc.
+Networks]
+Ad Hoc Networks
+ELSEVIER journal homepage: www.elsevier.com/locate/adhoc
+Design and performance analysis of joint control and shared channel site
+scheduler for downlink in 3GPP narrowband-IoT
+Pavan Reddy M. *, Abhinav Kumar, Kiran Kuchi
+Department of Electrical Engineering, Indian Institute of Technology Hyderabad, India
+ARTICLE INFO ABSTRACT
+Keywords: Narrowband-IoT (NB-IoT) is a low power wide area network technology introduced by the 3rd Generation
+3GPP Partnership Project (3GPP) in Release 13 specifications. The NB-IoT aims at providing cellular connectivity to
+
+Control channel
+Joint scheduling
+NB-oT
+Repetitions
+Shared channel
+
+low cost, low throughput, delay-tolerant devices, and hence, is a key technology for smart connected living.
+‘The NB-loT specifications continue to evolve as part of SG New Radio (NR), and the technology is expected
+to co-exist with 5G NR. A transmission bandwidth of 180 KHz is required to deploy the NB-IoT. In NB-IoT,
+the duration of the physical downlink control channel (NPDCCH) and the physical downlink shared channel
+(NPDSCH) changes dynamically. When the base station broadcasts the NPDCCH region, all the active NB-oT
+devices try to decode it. Hence, to reduce the power consumption of the NB-loT devices, more number of
+NB-IoT devices have to be scheduled in each scheduling attempt. For each payload in NPDCCH, there is
+a respective payload in NPDSCH. Thus, a base station should schedule the devices simultaneously in both
+NPDCCH and NPDSCH to reduce resource wastage. The time-frequency resources in NB-IoT are limited and
+valuable. Further, the NB-IoT devices have low battery power constraint. Thus, scheduling the devices by
+considering the above constraints has a significant impact on the NB-IoT system performance. Motivated by
+this, we propose a joint scheduling algorithm for both NPDCCH and NPDSCH. Further, we propose an adaptive
+repetition allocation algorithm and present a receiver design for NB-IoT. We also define performance metrics
+to evaluate the impact of the proposed scheduler and then present bounds on the performance gains with
+the proposed scheduler. With system-level and link-level simulations, we show that the proposed scheduler
+significantly outperforms the current state-of-the-art algorithms.
+
+1. Introduction The NB-loT has three physical channels in the downlink, namely
+physical broadcast channel (NPBCH) for transmitting the base station
+
+The Narrowband Internet of Things (NB-IoT) is a low power wide __ related information, physical downlink control channel (NPDCCH) for
+area network technology introduced by the 3rd Generation Partnership conveying the downlink/uplink scheduling grants, and physical down-
+Project (3GPP) in Release 13 [1-4]. The NB-IoT devices are low cost, _link shared channel (NPDSCH) to carry the data intended for the NB-IoT
+low throughput, and delay-tolerant. The technology aims at providing device. Downlink control information (DCI) is the payload transmitted
+cellular connectivity for various use cases like smart metring, object in NPDCCH. The DCI conveys all the information required to decode
+tracking, and connecting industrial appliances. The NB-IoT specifica- the data transmitted in NPDSCH. However, the NB-IoT device does not
+tions continue to evolve as part of 3GPP 5G New Radio (NR), and the know the location of DCI, and hence, it does blind decoding in the
+technology is expected to co-exist with 5G NR. The NB-IoT has the — pyccH region for the DCI. To reduce these blind decoding attempts
+physical layer design similar to that of Long Term Evolution (LTE). at the device, GPP specifies that a DCI can be scheduled only at
+
+It requires a transmission bandwidth of 180 KHz and can operate ec oribed subframes inside NPDCCH. Further, the NB-IoT devices can
+in three modes, namely Standalone, Guardband, and In-band mode. i" : .
+operate in poor signal coverage, and hence, the data is repeated over
+
+In Standalone mode, NB-IoT operates at any carrier frequency with , °
+many subframes in NPDCCH and NPDSCH for a successful reception.
+
+180 KHz bandwidth. In Guardband mode, NB-loT operates in the a ; PDCCH - ‘ F
+resources available in the guard band of LTE, For In-band mode, NB-IoT With each device requiring different repetitions and with the previously
+mentioned 3GPP constraints, there are possibly many ways to allocate
+
+co-exists with LTE/SG-NR and operates in one single physical resource
+block of LTE/5G-NR [4,5]. resources to devices in the downlink.
+
+* Corresponding author.
+E-mail addresses: ec14resch11005@iith.ac.in (Pavan Reddy M.), abhinavkumar@ee.iith.ac.in (A. Kumar), kkuchi@ee.iith.ac.in (K. Kuchi).
+
+https://doi.org/10.1016/j.adhoc.2021.102440
+
+Received 11 May 2020; Received in revised form 20 January 2021; Accepted 21 January 2021
+Available online 28 January 2021
+
+1570-8705/© 2021 Elsevier B.V. All rights reserved.
+
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-02..txt =====
+Pavan Reddy M. et al.
+
+The time-frequency resources in the NB-IoT are limited. For the In-
+band mode, the NB-IoT operates in the resources of LTE/SG-NR, and
+hence, the time-frequency resources are valuable. The NB-IoT devices
+require long-lasting battery power, and hence, the devices should con-
+sume less power. Thus, resource utilization and power consumption of
+the devices are the key performance indicators of the NB-IoT system.
+The set of subframes constituting NPDCCH and NPDSCH is broadcast
+to the devices by the base station and is called an NPDCCH period
+(NP). As per 3GPP specifications [3], if the base station schedules DCI
+of an NB-IoT device in NPDCCH of an NP, then the NPDSCH of the
+same NP should carry the data for the corresponding device. Hence, to
+reduce the resource wastage, there is a need for allocating resources to
+the devices by simultaneously considering both NPDCCH and NPDSCH
+requirements. Further, when the base station broadcasts the NP, all the
+active NB-IoT devices in the system try to decode the NP. As per 3GPP
+constraints [3], an NP can accommodate a maximum of eight NB-IoT
+devices. Thus, more the number of devices scheduled in an NP, less
+is the overall power consumption of the devices. The joint scheduling
+of NB-IoT devices in NPDCCH and NPDSCH, considering the 3GPP
+constraints is a challenging problem and can improve the resource
+utilization and power consumption of the devices. In the direction,
+the joint scheduling problem for NB-IoT has been considered in [6].
+However, the adaptation of repetition allocation for the NB-IoT devices
+has not been considered in [6]. Further, the essential aspect of receiver
+design is also missing in [6]. Motivated by this, the main contributions
+of this work (as an extension of [6]) are as follows.
+
+1. We propose an adaptive repetition allocation algorithm and
+present a receiver design for the downlink in NB-IoT.
+
+2. We define performance metrics to evaluate the proposed sched-
+uler and present the bounds on the performance gains with the
+proposed scheduler.
+
+3. We perform system-level and link-level simulations, and show
+that the proposed algorithm significantly outperforms the state-
+of-the-art algorithms.
+
+The rest of the paper is organized as follows. In Section 2, we
+present the related work in the literature. Section 3 describes the
+scheduling procedure in NB-IoT as per 3GPP constraints. In Section 4,
+we define performance metrics, propose the joint scheduling algorithm,
+repetition algorithm, and receiver design. In Section 5, we present the
+simulation results. Section 6 discusses some concluding remarks and
+possible future works.
+
+2. Related work
+
+In [7], joint resource and power allocation for control channel of
+3GPP-LTE has been discussed. The number of resources to be allocated
+for a user is varied with the power allocated to that user. This way,
+irrespective of the user density, the power and resource optimization
+is achieved at the base station. Further, in [7,8], simple sorting based
+algorithms have been presented for scheduling the users in the control
+channel of LTE. In [9,10], authors have presented a novel rate matching
+scheme for the downlink control channel, which reduces the power
+consumption of the devices in LTE-M1 technology. In [11], optimal
+resource allocation of the control channel has been performed for
+3GPP-LTE. To achieve this, authors have formulated resource alloca-
+tion as a set-packing problem. With Monte-Carlo simulations, authors
+have shown that the optimization significantly increases the system’s
+cell-edge performance. In [12], various scheduling algorithms have
+been discussed in the context of LTE. The authors have considered
+guaranteed bit rate, constraints from random access-procedure, and
+real-time traffic models while evaluating the proposed scheduler de-
+signs. Through system-level simulation results, authors have shown that
+the proposed algorithms improve the QoS for real-time traffic. In [13],
+various scheduling procedures and respective trade-offs between en-
+ergy efficiency, spectral efficiency, and fairness have been analysed for
+
+Ad Hoc Networks 114 (2021) 102440
+
+the cloud radio access network architectures. In [14], authors have pre-
+sented low complexity scheduling algorithms for OFDMA systems with
+guaranteed fairness. In [15], authors have proposed a new remapping
+strategy based on a linear transformation matrix for the LTE PDCCH.
+Through simulation results, authors have shown that the proposed
+scheme has better resource utilization and less probability of blocking.
+In [16], authors have presented a scheduling algorithm based on the
+radio network temporary identifier of the user. Further, authors have
+shown that the system performance improves significantly in terms of
+resource utilization, allocation delay time, and probability of blocking.
+However, all these algorithms are in the context of 3GPP-LTE, and
+cannot be directly applied to NB-IoT.
+
+In [17], the constraints and the scheduling process for the downlink
+physical layer of 3GPP NB-IoT have been discussed. The problem of
+delay assignment for the optimal UE scheduling has been explained
+and some heuristic solutions have been provided. However, the issue of
+deciding the length of NP has not been addressed. In [18], an optimal
+scheduling algorithm for the NPDSCH has been proposed. However,
+the authors have assumed that the information of the NPDCCH region
+and the NB-IoT devices to be scheduled in each NPDCCH region are
+available a priori. The problem of defining the NPDCCH region has not
+been addressed in [18]. In [19], an optimal control channel scheduling
+algorithm has been presented for NPDCCH. The scheduling problem
+of the control channel is formulated with 3GPP constraints and is
+optimized for better resource utilization and power consumption of
+the NB-IoT devices. However, none of these existing works address
+the issue of joint scheduling of both control and data channel regions.
+[6] is the first attempt to consider the resource requirements of each
+NB-IoT device in both control and shared channel while scheduling
+the devices. Further, in this paper, we calculate the optimal length
+of the NP, and then, solve an optimization to schedule the devices
+in NPDCCH and NPDSCH of the NP. For performance comparison, we
+have implemented the scheduling algorithms presented in [19]. Next,
+we present the scheduling in NB-IoT and the constraints as per 3GPP
+specifications. Further, for ease of reading, a list of acronyms used in
+this paper is presented in Table 1.
+
+3. Scheduling in NB-IoT
+
+Whenever an NB-IoT device is switched on, it initially performs
+the cell search and synchronization procedure to get connected to
+the base station. For this synchronization, the device uses NB-loT
+primary and secondary synchronization signals termed as NPSS and
+NSSS, respectively. As shown in Fig. 1, the base station transmits
+NPSS in every 6th subframe of each radio frame and NSSS in 10th
+subframe of every alternate radio frame. In case the NB-loT device
+is successful in the synchronization procedure, it starts decoding the
+NPBCH. The base station transmits NPBCH on SF 0 of every radio
+frame, as shown in Fig. 1. Then, for the NB-IoT device to communicate
+with the base station or vice-versa, the device needs to know the
+region over which it can transmit or receive the data. For this purpose,
+the base station transmits DCI in the NPDCCH. The DCI carries all
+the information required by the NB-IoT device to decode the data in
+NPDSCH. It carries the information about the exact location of the
+downlink grants, modulation and coding scheme, and downlink data
+duration. All the subframes excluding the NPSS, NSSS, and NPBCH are
+available for NPDCCH/NPDSCH, as shown in Fig. 1. However, the base
+station conveys the duration of NPDCCH and NPDSCH to the NB-IoT
+devices. The base station announces only the NPDCCH region, and thus,
+the exact location of the DCI is not known a priori to the NB-IoT device.
+In the NPDCCH region, the NB-IoT device performs a blind search for
+the DCI. However, 3GPP constraints limit the number of such blind
+decodings. In case the DCI is successfully decoded, the NB-IoT device
+then decodes the actual data intended for it in the NPDSCH. Next, we
+explain the scheduling of the devices in NPDCCH in detail.
+
+
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-03..txt =====
+Pavan Reddy M. et al.
+
+Radio Frame 1
+
+Ad Hoc Networks 114 (2021) 102440
+
+Radio Frame 2
+
+a a 2 ce
+NPSS
+a a 1s 1617 8 1920s | NSS
+DCI for device 1
+Rmax = 4G = 3; (R=1, Rnas=4)
+NPDCCH Period 1 ; 5
+Total NPDCCH+NPDSCH region =12 valid subframes NPDCCH Period 2
+delay 4ms Valid NPDSCH region for Device 1
+Valid NPDSCH region
+yg for Device 2
+Fig. 1. Scheduling of NPDCCH and NPDSCH in NB-IoT.
+
+Table 1 NB-IoT devices do not know the exact location of the DCI, they blindly
+List of Acronyms. decode the entire region. To reduce the blind decoding attempts by the
+
+GPP we Generation Partnership Project eof NB-IoT device, 3GPP specifies certain constraints [3] on the scheduling
+
+@ ‘unable parameter to achieve various trade-offs aan ,
+
+? ‘Threshold for blockerror rate of the devices in NPDCCH as shown in (1)-(2).
+
+1 Number of devices scheduled per NP R € (1,2, 2048) qa)
+
+a Resource utilization max va
+
+BLER Block Error Rate Rina
+
+CCEs Control Channel Elements RE { Ryaxs a (2)
+
+CDF Cumulative Distribution Function
+
+cRC Cyclic Redundancy Check
+
+cp Cyclic Prefix In an NPDCCH region with R,,,. subframes, only devices requiring
+
+css Common Search Space R as per (2) can be scheduled. Note that this restriction helps in
+
+DCI Downlink Control Information
+
+G Parameter to define the NP duration
+
+IFFT Inverse Fast Fourier Transform
+ky Delay between control and shared channel
+
+LTE Long Term Evolution
+
+cs Modulation and Coding Scheme
+
+Ney Repetition required for the shared channel data
+Nor Subframes of data required by the device
+NB-loT Narrowband Internet of Things
+
+NP NPDCCH Period
+
+NPBCH Narrowband Physical Broadcast Channel
+NPDCCH Narrowband Physical Downlink Control Channel
+NPDSCH Narrowband Physical Downlink Shared Channel
+NR New Radio
+
+OFDM Orthogonal Frequency Division Multiplexing
+OLLA Outer-Loop Link Adaptation
+
+PRB Physical Resource Block
+
+RE Resource Element
+
+RNTI Radio Network Temporary Identifier
+
+RRC Radio Resource Control
+
+R Repetition required for the control channel data
+
+Row Number of subframes in a search space
+SINR Signal-to-Interference plus Noise Ratio
+1B Transport Block
+
+uss UE Specific Search Space
+
+3.1. NPDCCH scheduling
+
+In NB-IoT, a resource element (RE) is the smallest time-frequency
+resource consisting of one subcarrier during one symbol. A physical
+resource block (PRB) comprises of 14 OFDM symbols over 12 sub-
+carriers and consists of 168 REs. The NB-loT operates with 180 kHz
+of transmission bandwidth, and thus, has one PRB in 1 ms. The REs
+available in one PRB form two control channel elements (CCEs). In
+NPDCCH, the DCls of the NB-IoT devices get scheduled in units of
+CCEs [1]. Further, to ensure the successful reception to a device in the
+poor coverage, the scheduled DCI may repeat over (R) subframes, The
+number of CCEs and R for each device are decided based on the channel
+conditions of the NB-IoT device. When the base station announces the
+NPDCCH region over a certain number of subframes (Ryjgx) [3], all the
+active NB-IoT devices start decoding the region for the DCI. Since the
+
+reducing the blind decoding attempts by the NB-loT device to four
+repetition values. In the absence of such restriction, the NB-IoT device
+must blindly search for all the configurations of R € {1,...,2048}. Fur-
+ther, the NB-IoT device requiring R repetitions can be scheduled only
+after every Rth subframe location in R,,,, subframes. This constraint
+is explained with an example as follows. Consider an NPDCCH region
+with R,,qx = 4 subframes, and two NB-IoT devices requiring repetitions
+of R = 1,2 subframes. Let the base station schedule the device with
+R = 1 in the first subframe. Now, the second NB-IoT device which
+requires R = 2, cannot be scheduled starting from the second subframe.
+As per the 3GPP constraints, the device with R = 2 can be scheduled
+only after every 2 subframes. Thus, the DCI for the second NB-loT
+device is scheduled from the third subframe, as shown in Fig. 1. These
+constraints limit the number of blind decoding attempts that an NB-IoT
+device has to perform [19]. However, as explained later in Section 3.2,
+in case of improper NPDCCH scheduling, these constraints can result in
+a significant resource wastage and power consumption by the NB-IoT
+devices.
+
+3.2, NPDSCH scheduling
+
+The base station can schedule the data intended for the NB-loT
+device in NPDSCH only after four subframes from the end of its
+corresponding DCI in NPDCCH. The NB-IoT devices are assumed to
+be capable of performing one blind decoding in 1 ms. As explained
+in [19], to perform the blind decoding in all possible positions, the NB-
+IoT device requires an additional 4 ms of time. Hence, a four subframe
+gap is allowed between the data in NPDCCH and NPDSCH. Further, for
+an NB-loT device, apart from this four subframe gap, there can be an
+additional configurable delay (Kk) for some DCI types. For the example
+scenario considered earlier, the DCI for the two NB-IoT devices, their
+NPDCCH regions, and the valid NPDSCH regions are shown in Fig. 1.
+In case the scheduling of the devices is not carried out optimally, this
+4 subframe gap for each device can cause significant under-utilization
+of the resources.
+
+The base station has the information about number of subframes
+of data (Ns,-) that an NB-oT device requires, and the repetition
+
+(R.N,p) with which it needs to transmit that (control, shared channel)
+
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-04..txt =====
+Pavan Reddy M. et al.
+
+Scenario 1:
+NP = Rmax XG = 16
+
+Fins gap
+sap
+
+Scenario 2:
+NP = Rmax XG = 12
+
+Rinax = 8
+"max “" ___y,
+
+Finsigap
+
+ins gap
+
+Fig. 2. Scheduling options for the two devices considered in the example.
+
+information. The possible values of Ns, N,.p, and a constant G as per
+3GPP [3,20] are shown in (3)-(5).
+
+Ngp € (1,2,3,4,5,6,8, 10}. (3)
+Nyep = (1.2.4, --.,2048). (4)
+G = {15,2,4,8,...,64}. 6)
+
+The scheduler at the base station has to decide the R,,,, and G
+values based on the data and the repetition requirement by the NB-IoT
+devices. The base station then broadcasts NP as the region of subframes
+that the NB-IoT devices have to look for the NPDCCH and NPDSCH. The
+NP is formulated based on these two factors, as shown in (6).
+
+NP = Rygx X G- (6)
+
+Readers unfamiliar with the NPDCCH and NPDSCH can refer [17,
+18] for further details. Next, we explain the need for joint scheduling
+of NPDCCH and NPDSCH with an example, as follows.
+
+Example
+
+We consider two devices D1, D2 requiring DCI repetitions of R = 2,1
+subframes, and the shared channel data of Ny x Ne» = 2,4 subframes,
+respectively. In Fig. 2, we present two of the various possible schedul-
+ing scenarios. Scenario 1 considers NPDCCH scheduling followed by
+NPDSCH scheduling, whereas, Scenario 2 considers joint scheduling of
+NPDCCH and NPDSCH. In Scenario 1, we first schedule the devices in
+NPDCCH within the least possible number of subframes. Considering
+the constraints (1)-(2), the least R,,,,. Value that can accommodate both
+the DCIs with R = 2.1 is Rygy = = 4, to schedule the
+devices in NPDSCH, as per (5), the least possible value of G is 4. In
+Scenario 2, we consider both NPDCCH and NPDSCH resource require-
+ments and schedule the devices with R,,,. = 8.G = 1.5 while satisfying
+all the 3GPP constraints (1)-(6). Note that the number of subframes not
+utilized is 7 in Scenario 1, and 3 in Scenario 2. Thus, the scheduling
+algorithm that simultaneously considers the joint resource allocation
+can reduce the unallocated subframes and comparatively pack more
+devices in a radio frame. These factors significantly impact resource
+utilization and device battery power; and are the key motivations for
+this work. Next, we present the proposed scheduling algorithm. We
+try to optimize the resource utilization and power consumption of the
+devices while performing joint scheduling of NPDCCH and NPDSCH in
+the proposed algorithm.
+
+4. Proposed algorithms
+
+In this section, we initially propose an adaptive resource allocation
+algorithm. We define the performance metrics for evaluating the NB-
+IoT scheduling algorithms and propose the joint scheduling algorithm.
+We also discuss the existing NB-IoT scheduling algorithms that we
+use for comparison. We then present a receiver design for the NB-IoT
+systems.
+
+Ad Hoc Networks 114 (2021) 102440
+4.1. Adaptive repetition allocation algorithm
+
+The base station has information about the operating signal to
+interference-plus-noise ratio (SINR) of each NB-IoT device. Motivated
+by the Modulation and Coding Scheme (MCS) procedure in LTE and
+the resource allocation scheme presented in [10], we propose a novel
+method to choose R and N,,, for control and shared channel, re-
+spectively. For the allocation of repetitions, we rely on the link-level
+simulations carried out for all possible repetition values over a wide-
+range of SINR values. The DCIs in NB-IoT are meant for either a
+particular NB-IoT device or a group of devices. The DCIs meant for
+individual NB-IoT devices are transmitted in UE-specific Search Space
+(USS) of the control channel region, whereas, the DCIs meant for a
+group of NB-IoT devices are transmitted in Common Search Space
+(CSS) of the control channel region. We ially define a reference
+SINR as follows. For the DCI transmitted in USS, the reference SINR is
+same as the operating SINR of the NB-IoT device, whereas, for the DCI
+transmitted in CSS, the reference SINR is the least SINR among all of the
+NB-IoT devices. We initially carry-out link-level simulations for each
+repetition value and tabulate the block error rate (BLER) for varying
+SINR values. Now, for each DCI with a reference SINR, we assign a
+repetition value R such that the BLER at the reference SINR is smaller
+than f [10]. Typically, p is decided by the industry operator based on
+the type of service (for example, # = 0.1 can be used for regular sensor
+data, whereas, f = 0.001 can be used for emergency/critical services,
+etc.). Similarly, for a payload of Ns, of data in the shared channel, we
+choose N,,,, such that the BLER at the reference SINR is smaller than
+f. Note that the SINR of a device changes over time because of the
+varying channel propagation, interference characteristics, network sce-
+narios, etc. This SINR (which includes the impact of channel model and
+network scenario) is used for mapping repetition-levels to any device.
+Hence, irrespective of the network scenario, the proposed algorithm
+ensures that the probability of failed transmissions over time converges
+to the chosen threshold (). Thus, the link-performance (BLER) varies
+with the selected threshold, but the adaptive nature of the proposed
+mechanism is independent of the network scenario. After assigning
+repetition values R and N,,, for each NB-IoT device, the scheduler
+then decides the devices that are to be allocated with resources in each
+subframe. Next, we present the performance metrics and then propose
+the scheduler design.
+
+4.2. Performance metrics
+
+4.2.1. Resource utilization (7)
+
+As discussed in Section 3.2, there are possibly many ways to perform
+the scheduling (or deciding the NP). There can be resource wastage
+because of the various repetition requirements R, R,,qx, and G configu-
+rations, and the configurable delay between the NPDCCH and NPDSCH.
+A good scheduler should minimize the number of resources wasted.
+Hence, we consider resource utilization (y) as a performance metric
+and define it as the ratio of the number of subframes allocated to the
+number of (#) subframes available in the NP.
+
+_ # subframes allocated to the NB-IoT devices
+a # subframes in the NP
+A larger value of y, closer to 1, indicates a better resource utilization.
+Note that the maximum value of x is 1, where, all the subframes in an
+NP are allocated to the NB-IoT devices.
+
+4.2.2, Number of devices scheduled per NP (n)
+
+The NB-IoT devices do not know the exact location of the DCI in the
+NPDCCH. Hence, when the base station broadcasts the NP, all the active
+devices start decoding the NPDCCH region for their DCI. However,
+as per 3GPP specification [3], a maximum of eight devices can be
+scheduled in any NPDCCH. The number of scheduled devices in each
+NP is inversely proportional to the overall power consumption of the
+
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-05..txt =====
+Pavan Reddy M. et al.
+
+NB-IoT devices under that base station. Hence, we consider the average
+number of devices scheduled per NP (7) as a performance metric.
+
+n = Average number of devices scheduled per NP.
+
+A larger value of indicates the average power consumption of devices
+will be less, and thus, a better scheduling algorithm. The maximum
+permitted value of 1 as per the constraints in [3] is 8.
+
+4.3. Proposed joint scheduler
+
+4.3.1. Scheduler design and algorithm
+
+We pick the first NB-IoT device in the order from the scheduling
+list and calculate all the possible configurations of forming an NP
+as per (1)-(6). For each configuration of NP, we try to fit the other
+NB-IoT devices by maximizing the formulated objective function (¢,
+in (7)). We then consider the configuration which has the maximum
+value for objective function (¢,,) and schedule the NB-IoT devices. The
+scheduling procedure is explained in detail as follows.
+
+1. We initially sort the NB-IoT devices in the order of scheduling
+(based on device priority, if any). We pick the first NB-IoT device
+in the sorted list and let the repetition required by that NB-
+ToT device for transmitting DCI in NPDCCH be R;. As per 3GPP
+constraints presented in (1)-(2), the DCI for the device can be
+scheduled only in limited R,,,. and G values. For each possible
+configuration u, we calculate corresponding R,,,,,, and G;,, values
+for the chosen R,, and consider only these configurations while
+maximizing the objective function.
+
+2. We formulate the objective function as a set-packing problem
+to achieve optimal resource utilization (y) and maximize the
+number of devices scheduled per NP (7). For each possible con-
+figuration of Ryygx,, mentioned in (1)-(2) and for each value of
+G;,, mentioned in (5), we fit the devices in the NP by maximizing
+the following objective function.
+
+Siu = marley +1 = 0) ZX
+
+st. Ai Xin S 1 ea)
+
+where, Aj, is the constraint matrix constructed to meet (1)-(6),
+X;,, is the scheduler output for the uth configuration of the ith NP,
+ij, and 7, are row vectors constructed to prioritize the devices
+based on the performance metrics 7 and y for the configuration
+u of the ith NP, 1, is a column vector of length r with all ones,
+and a(2 0) is the parameter to achieve various trade-offs between
+nand y. With a smaller a, the objective function schedules the
+devices that maximize the resource utilization in the NP, and with
+a larger a, the objective function maximizes the number of devices
+in the NP. Thus, by tuning a, the network operator can achieve a
+trade-off between 4 and y.
+
+3. We calculate ¢,, for all possible configurations. We then choose
+the configuration u, which has the maximum ¢j, value and per-
+form the scheduling of the devices in ith NP. Note that, along
+with Ryqx,, and G;,,. the scheduler also gives the optimal NB-IoT
+devices selection in X,,.
+
+Next, we explain the procedure for the implementation of the
+algorithm in detail.
+
+4.3.2. Solving the objective function
+
+‘The set-packing problem is a well-investigated topic, and there are a
+wide variety of efficient algorithms available in the literature to solve
+it [21-23]. Further, in [11], the authors have formulated and solved
+the scheduling in LTE as a set-packing problem. We follow a similar
+procedure, as mentioned in [11] for solving the objective function in
+this paper. We explain the formulation of the constraint matrix A,,, and
+objective function ¢,, with an example as follows.
+
+Ad Hoc Networks 114 (2021) 102440
+
+Consider two devices with the first device requiring R = 1, Nyep =
+1, Nsp = 1, and the second device requiring R = 2, Nyep = 1,
+Nsp = 1. The possible configurations for scheduling the first device
+as per (1)-(6) are Rygx, = {1.2.4.8}, G = (1.5,2,...,64}. Consider
+the configuration Ryax,, = 4 and G,,, = 2. As per constraint (6),
+NP = Ryax,,, Gy = 8. We form a resource allocation matrix Sy for
+each device, with each row representing a subframe in the chosen NP,
+and each column representing possible ways of allocating resources for
+the NB-IoT device, as shown in (8).
+
+R=1 has 4 possible
+
+R=2 has 2 possible
+
+locations locations
+
+1000 - 10
+
+0100]|3 10
+
+0010||*) 01
+
+0001 eS 01)/Z @)
+5; =|0000 b&b » So=]00]|e
+
+1000 00
+
+0100 10
+
+0010 00
+
+0001 01
+
+When NP = 8, there will be at least one subframe not valid for
+NPDCCH and NPDSCH, as shown in the frame structure in Fig. 1. We
+consider a total of 9 subframes with 8 valid subframes, and hence,
+each S, has 9 rows. In these 9 rows, the first 4 rows of each Sy
+represent the NPDCCH, 5th row represents an invalid subframe for
+NPDCCH/NPDSCH, and the last 4 rows represent the NPDSCH. For each
+possible way of scheduling the device, ie., in each column of S, in (8),
+1 implies the subframe allocated for the device, 0 implies subframe not
+allocated for the device. Device 1 requires R = 1 subframe in NPDCCH,
+Ns¢ X N,ep = 1 subframe in NPDSCH, and there are four such possible
+combinations within the NP. Device 2 requires R = 2 subframes in
+NPDCCH, and Ns XN, = 1 subframe in NPDSCH, and there are two
+such possible combinations within the NP. Note that there is a 4 ms gap
+between the data in NPDCCH and NPDSCH for each NB-loT device.
+
+The vector X;, for the configuration R, G,,, is constructed as
+
+follows. “e
+Xu =u Aaa Anas
+Aum Want Hum2 -* HamKyls
+Haanj ©(0 1) ®)
+
+where, M is the number of active devices, K,, is the number of possible
+locations for scheduling mth device in the given NP, and p4,,j = 1
+represents that the jth location is chosen for scheduling the mth device
+in the configuration u. Note that X*, is the resultant vector obtained
+by maximizing the objective function ¢,,. Thus, based on (8)-(9), we
+formulate the resource constraints of allocating a subframe to only one
+device in the NP as follows.
+
+BuXiy Slyps
+
+Bi, =[S, Sy. S, (10)
+
+where, I1yp is a column vector with all ones of length NP and Sj’s are
+the matrix for each device as discussed in (9). Further, we formulate
+the constraint of scheduling a device only once in the NP as follows,
+
+CuXiu SMa
+Tf .
+ok of,
+ee gt
+or br an
+vr . T
+a ra
+
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-06..txt =====
+Pavan Reddy M. et al.
+
+Ad Hoc Networks 114 (2021) 102440
+
+List of the new NB-IoT devices requiring data
+
+DCls in USS
+
+DCls in CSS
+
+Ref. SINR = device
+SINR
+
+Ref. SINR = Least
+among all the devices
+
+Choose the R, Nrep such
+that BLER < B at Ref.
+SINR
+
+Choose the R, N;ep such
+that BLER < B at Ref.
+SINR
+
+Performed once for each
+
+Performed once for group
+of NB-IoT devices Update the list with new
+
+devices to be scheduled
+
+DCT payload and user data of devices with repetitions
+Rand Nyep respectivel
+
+Sort the DCIs in the priority order (Eg.: order of arrival)
+
+Pick the first device in the list with DCI repetition R
+Calculate all possible Rinax,. » Gisu
+
+Caloulate iu = max [iim +1 @Riu]Xias $.6. AiwXiw $ Ip
+fh
+
+devices from the list
+
+Remove the scheduled
+
+devices from the list
+
+Choose Xjy, St. Zi has the maximum value
+
+Schedule the devices as per Xiu
+
+‘Any new NB-loT
+devices require
+scheduling
+grants?
+
+1
+
+i
+H
+i
+i
+' Remove the scheduled
+i
+H
+!
+'
+H
+!
+
+hheduling Algorithm
+
+YES
+
+Fig. 3. End-to-end procedure of Repetition Allocation and Joint Scheduling Algorithm.
+
+We then stack the constraints (10)-(11) into a single matrix A,, as
+follows.
+
+S Su
+Vk, Oy
+fe ts
+
+Au =| %, OK
+a r
+0%, View
+
+Thus, 4;,X;, < ,, where, r= N P+M, captures all the 3GPP constraints
+for scheduling the NB-IoT devices in an NP. Next, we explain the
+formulation of the objective function.
+
+We formulate 7, as 1, = 17 to maximize the number of devices
+scheduled in the NP. With ,, = 17, maximizing 7,,X;, is the same as
+
+maximizing Y j1,.,;, which in turn maximizes the number of devices
+
+scheduled in'the NP. We formulate 74, a8 74, = [01,03,-.-.0;], where
+o, is the sum of elements in the jth column of B,, matrix. Thus,
+maximizing 7,,X,, is the same as maximizing the number of resources
+utilized in an NP. However, the range of values is different in »,, and
+Zu and hence, we use the normalized 7, and 7, while maximizing
+
+the objective function ¢,,. A pictorial representation for the end-to-end
+procedure of resource allocation and scheduling is presented in Fig. 3.
+Next, we briefly discuss some of the NB-IoT scheduling algorithms from
+the existing literature that we have implemented for the numerical
+comparison and performance evaluation of the proposed scheduler.
+
+4.4, State-of-the-art NB-IoT scheduling algorithms
+
+In [19], authors follow a sorting procedure and schedule the NB-
+IoT devices in the control channel. We have implemented the maxi-
+mum repetition (Max-R,), minimum repetition (Min-R,), and baseline
+schedulers proposed in [19] for the comparison.
+
+4.4.1. Max-R, scheduler
+
+The scheduler sorts the devices in the descending order of their
+repetition requirements R;. This sorting helps in stacking the devices
+that fit in an R,,,,, side-by-side. Then, the scheduler picks devices from
+the sorted list and fits them in a suitable R,,,. by minimizing the
+resource wastage. Note that this scheduling procedure maximizes only
+
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-07..txt =====
+Pavan Reddy M. et al.
+
+the NPDCCH resource utilization. The size of NP is later decided based
+on the chosen R,,,... Further, the algorithm ignores the priority or order
+of scheduling the devices as it schedules the devices based on the sorted
+list.
+
+4.4.2, Min-R, scheduler
+Except for sorting the devices in the ascending order, the scheduling
+procedure is similar to Max-R, scheduler.
+
+4.4.3, Baseline scheduler
+
+In the baseline scheduler, the base station picks the devices in the
+priority order from the list of devices. The scheduler checks for the
+Ryge and G values which give minimum NP such that the NP can
+accommodate R subframes in NPDCCH and Ns, subframes of the data
+with N,., repetitions in NPDSCH.
+
+4.5. Analysis of the scheduling algorithms
+
+In this section, we derive the upper and lower bounds on the
+performance gains with the proposed scheduler. In Lemma 1, we prove
+that the performance of the proposed scheduler in terms of resource
+utilization with a = 0 is same or better than the remaining schedulers.
+Further, we quantify the maximum performance gain we achieve with
+the proposed scheduler. Note that a larger value of y is better and
+corresponds to a better resource utilization.
+
+Lemma 1. Let Za/gorinm denote the resource utilization of a scheduling
+algorithm. Then, for any configuration of NB-IoT device distribution, the
+following holds:
+
+64
+ARemaining Schedulers S XProposed|qan S 3g % Remaining Schedulers
+
+Proof. For any R, consider the configuration C = {R, 8R, 64R, 512R),
+where each element of the C represents the resource requirement by
+an NB-IoT device for transmitting a DCI. This resource requirement
+configuration forms the worst-case scenario for the proposed scheduler.
+With this configuration, as per the constraint (2), no two devices can
+be grouped together into a single search space by any scheduler, and
+hence, all the schedulers have the same resource utilization. Thus,
+
+XPraposed|qay = %Remaining Schedulers
+
+For any R, consider the configuration C = (£,£) and 5 = (30R,R),
+where each element of the C and S represents the resource requirement
+by an NB-IoT device for transmitting a DCI and a transport block,
+respectively. This resource requirement configuration forms the best-
+case scenario for the proposed scheduler. With this configuration, all
+the existing schedulers initially try to group the two devices in a search
+space of length R,,,. = R. Then, the least possible G that could fit
+the resources is G = 64. However, the proposed scheduler with « = 0,
+schedules the devices separately in two search spaces Ryu, = £,G =
+16, and R,,qx, = £,G) = 64. Note that the total resources used by the
+other schedulers is 64R, whereas, the proposed scheduler with a = 0
+uses 2R + 32R = 342. Thus,
+
+best
+
+_ 64
+
+This completes the proof of Lemma 1.
+
+As shown in Lemma 1, the proposed scheduler has better resource
+utilization when compared to the remaining schedulers. Thus, it can
+accommodate more number of NB-IoT devices when compared to other
+schedulers, and thus, achieve better system capacity.
+
+In Lemma 2, we quantify the performance of the proposed scheduler
+in terms of 7. Note that a larger value of 1 is better and corresponds to
+lower power consumption by the devices.
+
+Ad Hoc Networks 114 (2021) 102440
+
+Rymace is obtained from RRC |.
+messages
+
+Next Gycie
+
+All possible R are
+calculated for Rmax
+
+For each aggregation level,
+perform soft combining
+over R subfiames
+
+Perform de-rate matching,
+Viterbi decoding, RNTI
+unmasking
+
+Increase R
+
+Yes
+
+Based on DCI, decode the
+corresponding TB.
+
+Wait for next RRC |_!
+messages
+
+Fig. 4. Blind Decodings in NB-IoT.
+
+Lemma 2. Let najgoriinm denote the number of devices scheduled per NP
+by a scheduling algorithm. Then, for any configuration of NB-loT device
+distribution, the following holds:
+
+"Remaining Schedulers S "Proposedlgai < 4"Remaining Scheduters
+
+Proof. For any R, consider the configuration C = {R, 8R, 64R, 512R},
+where each element of the C represents the resource requirement by
+an NB-IoT device for transmitting a DCI. This resource requirement
+configuration forms the worst-case scenario for the proposed scheduler.
+With this configuration, as per the constraint (2), no two devices can
+be grouped together into a single search space by any scheduler, and
+hence, all the schedulers have the same number of devices per NP.
+Thus,
+
+Worst
+Npropocedlgay = "Remaining Schedulers
+
+For any R, consider the configuration C = (2,2, 4,8) and S =
+{8R,8R,8R,8R)}, where each element of the C and S' represents the
+resource requirement by an NB-IoT device for transmitting a DCI and a
+transport block, respectively. This resource requirement configuration
+forms the best-case scenario for the proposed scheduler. With this
+configuration, all the existing schedulers initially try to group the four
+devices in a search space of length R,,,,. = &. However, no choice of
+G could fit all the resources, and hence, they drop users and try for a
+feasible G. They end up scheduling the devices individually in separate
+search spaces. The proposed scheduler with a = 1, ingeniously picks
+Ryax = R.G = 64, which fits all the devices’ resource requirements.
+Thus,
+
+Np rosed|gay = 4 Remaining Sehedulers
+This completes the proof of lemma 2.
+
+As shown in Lemma 2, the proposed scheduler with a = 1 accommo-
+dates more number of devices per NP, when compared to the remaining
+schedulers, and thus, results in lower power consumption of the NB-IoT
+devices. Next, we present the adaptive repetition allocation algorithm.
+
+4.6. Receiver design for NB-IoT
+
+In NB-IoT system, the device does not know the repetition and the
+location of the DCI in a search space. Hence, the device has to consider
+
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-08..txt =====
+Pavan Reddy M. et al.
+
+Ad Hoc Networks 114 (2021) 102440
+
+Generate the
+fading for
+each device
+
+Scheduler
+(Section 4.1, 4.3)
+
+Configure the
+simulation
+parameters
+
+Device
+deployment
+
+& BS-attach
+
+H
+
+Proposed Allocation &
+
+HARQUOLLA.
+procedures
+
+H
+
+Calculate
+the SINR of
+
+the devices
+
+Fig. 5. Block diagram of system-level simulation with proposed algorithms.
+
+Table 2
+Simulation Parameters.
+
+Parameter Value
+
+Bandwidth 180 KHz (1 PRB)
+
+BS transmit Power 44 dBm
+
+Carrier frequency 900 MHz,
+
+Cellular Layout Hexagonal Grid, 7 sites, 3 sectors per site
+
+G (15, 2,
+Inter-site distance 1732 m
+NB-loT device location 1000 devices dropped uniformly in entire cell
+NB-loT Mode of Operation Standalone (used in link-abstractions)
+
+. 64)
+
+Nowy {1 2... 2048)
+Noe a, + 10)
+
+Pathloss model 1=120.9 + 37.6log10(R)
+Roux (1, 2, 2, 2048)
+
+UE transmit Power 23 dBm
+
+all the possible configurations and perform blind decoding for DCI.
+In this section, we present a receiver design and explain the blind
+decodings of NB-IoT in detail.
+
+Initially, the device will obtain the search space length of the
+control channel, Ryng, from RRC messages. Then, the device calculates
+all possible configurations of R, as mentioned in (2). For each con-
+figuration, the device performs demodulation and descrambling of R
+subframes, and soft combines the data present in these R subframes.
+The device then performs the other physical layer procedures like de-
+rate matching, Viterbi decoding, and CRC check. If the CRC results
+in a zero-remainder, then the device assumes the DCI to be valid.
+The DCI carries the scheduling information about the transport block
+transmitted in the shared channel. Thus, the NB-IoT device obtains the
+scheduling related information from DCI and decodes the actual data
+transmitted in the shared channel. In case the CRC is failed, then it
+increases the repetition value R and performs the decoding procedure
+for all possible configurations again. This procedure is repeated until
+all possible configurations of R are exhausted or a successful CRC
+check. If CRC is failed for all the configurations, then either the DCI
+for the device was not transmitted in the search space or the repetition
+level transmitted was not sufficient for the device to decode the data.
+In both cases, the NB-IoT device has to wait for the next RRC messages.
+A pictorial representation of the procedure is presented in Fig. 4. Next,
+we present the simulation results,
+
+5. Results and discussion
+5.1. System level simulations
+
+A pictorial representation of the simulation procedure is presented
+in Fig. 5. We initially configure the simulation parameters [24], as
+mentioned in Table 2. We then deploy the NB-IoT devices randomly
+in the sector and perform a device-attach to the base station based
+on the received signal power. We generate the channel between each
+NB-IoT device and base station link for every subframe. We implement
+the proposed repetition allocation scheme presented in Section 4.1 to
+assign repetitions to each device. Based on the SINR of each NB-IoT
+device, the repetition for control channel R and shared channel N,,.,
+are selected assuming BLER threshold of 0.01. Further, for each NB-
+IoT device, we chose the NPDSCH data Ns, randomly from the set
+{1,2,..., 10}. We then perform the scheduling of the devices by solving
+
+the objective function presented in Section 4.3. The proposed scheduler
+picks the first device in the order and calculates all possible Rngx,,»
+and G;,, values. The scheduler computes the objective function ¢, for
+all these configurations. Then, the scheduler chooses the Ryygx,, and Gi,
+configuration which has the largest ¢,, value, and schedules the devices.
+To solve the objective function, we use the MATLAB built-in function
+intlinprog. We then calculate the SINR and perform the appropriate
+Hybrid ARQ and outer-loop link adaptation (OLLA) procedures for the
+scheduled devices. We continue these procedures for a pre-configured
+simulation time and evaluate the performance metrics. The proposed
+joint scheduling algorithm is run for a = 0.1,0.5,0.9. For the same set
+of devices, we run the Max-R;, Min-R;, and the baseline scheduler. We
+calculate the mean number of devices scheduled in each NP (i) and the
+average resource utilization (7) for each of these scheduling algorithms.
+
+In Fig. 6, the cumulative distribution function (CDF) of (7) is
+presented, and in Fig. 7 the mean of number of devices scheduled
+in an NP (q) is plotted. With larger a, the objective function (¢,,)
+tries to maximize the number of devices scheduled in each NP. Thus,
+the proposed scheduler with a = 0.9 has a larger number of devices
+scheduled in Fig. 7. However, the scheduler does not prioritize to
+minimize resource wastage and aggressively schedules more devices.
+Hence, the scheduler with « = 0.9 has poor resource utilization as
+shown in Fig. 6. With decreasing a, the resource utilization (7) is
+maximized as shown in Fig. 6, and the number of devices scheduled
+in an NP (j) is minimized as shown in Fig. 7.
+
+The baseline scheduler always schedules a single device, and hence,
+n=1. The Max-R, and Min-R, algorithms sort the devices and sched-
+ule more number of devices compared to baseline scheduler. Even
+though the algorithms maximize the NPDCCH resource utilization, the
+schedulers cannot fit the data for all these devices in the available NP
+sizes. Hence, these schedulers give minimal gains in terms of number
+of devices scheduled per NP. The average resource utilization (7) of
+the Max-R,, Min-R,, and the baseline scheduler are significantly lower
+than the proposed scheduler for various values of a. The median of
+resource utilization (7) is 0.6 in the Max-R, scheduler, and is close to
+0.9 with the proposed scheduler (for « = 0.1). Thus, with the proposed
+scheduler, 50% additional resources can be utilized, or three times the
+number of scheduled devices (7) can be achieved with suitable selection
+of a.
+
+In Table 3, a numerical analysis of all the schedulers across vari-
+ous performance metrics is presented. The schedulers having the best
+performance metrics are highlighted in the table for a better under-
+standing. The proposed scheduler with a = 0.1 takes the least time to
+schedule all the devices and has the least number of physical resource
+blocks unutilized. The proposed scheduler with various « outperforms
+all the existing schedulers. Note that the Max-R, scheduler has the best
+performance among all the NB-IoT schedulers from the literature, and
+our proposed scheduler with a = 0.1 performs five times better in terms
+of resource utilization when compared to the Max-R; scheduler.
+
+The number of NPs broadcast is directly proportional to the power
+consumption of the devices. The baseline scheduler broadcasts one NP
+for every device and thus, has 1000 NPs broadcast. The Max-R, and
+Min-R, algorithms comparatively schedule more number of devices in
+an NP, and hence, take less number of NPs to schedule all the devices.
+The proposed scheduler with various a outperforms all the existing
+schedulers. The proposed scheduler with a = 0.9 takes one-third of
+the NPs compared to the Max-R, scheduler. Further, it schedules three
+
+
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-09..txt =====
+Pavan Reddy M. et al.
+
+Ad Hoc Networks 114 (2021) 102440
+
+"Pe Proposed Scheduler o=09
+0.9 Proposed Scheduler a=0.5]
+| Proposed Scheduler 0=0.1
+* Max-Ri Schedueler
+0.7}}+Min-Ri Scheduler
+
+|} +-Baselii heduler
+
+0 0.1 0.2 03 04
+
+05°06 ~207°~«08)~=«(09
+Resource Utilisation (%)
+
+Fig. 6. CDF of resource utilization (7) for various scheduling algorithms.
+
+3.5
+
+Mean Number of devices per NP (n)
+&
+
+9}
+
+sProposed Scheduler a:
+
+Proposed Scheduler «=0.5|
+Proposed Scheduler o=0.1
+IMax-Ri Schedueler
+Min-Ri Scheduler
+[Baseline Scheduler
+
+3b
+2.5b
+ab
+| :
+OE
+t
+
+a@=09 a=0,
+
+a
+
+@=01
+
+Fig. 7. Histogram of mean number of devices per NP for various scheduling algorithms,
+
+Max-Ri Min-Ri__ Baseline
+
+05 T T T T
+0.4
+0.3
+0.2
+
+o¢*
+O1F
+
+0
+
+[@ Proposed Scheduler]
+*Max-Ri Schedueler
+}@Min-Ri Scheduler
+
+= Baseline Scheduler
+
+0.5 0.55 0.6 0.65 0.7
+
+Average Number of devices per NP (ij)
+
+Average Resource Utilisation (¥)
+
+075 08 085 09
+
+0.95 1
+
+Fig. 8. Trade-off between average resource utilization (7) and average power consumption (j) for various scheduling algorithms.
+
+times more the number of devices in an NP when compared to other
+schedulers. Note that the main reason for the poor performance of the
+existing NB-IoT schedulers is that they do not consider the resources in
+both NPDCCH and NPDSCH simultaneously.
+
+In Fig. 8, we present the trade-off between resource utilization and
+the number of scheduled devices. The proposed scheduler performs
+significantly better than all the existing scheduling algorithms. Further,
+the proposed scheduler allows the network operator to choose the « to
+achieve various trade-offs between resource utilization and the number
+of devices scheduled.
+
+5.2. Exhaustive link simulation and analysis
+
+We have implemented the whole transmitter and receiver algo-
+rithms of control and shared channels of NB-IoT as per the 3GPP
+specifications [1-3]. We have then integrated the proposed repetition
+allocation algorithm, along with the proposed joint scheduling algo-
+rithm and an exhaustive link simulation, as shown in Fig. 9 is carried
+out as follows.
+
+We consider 1000 users for the simulation. We then assign an
+arbitrary SINR to each user by randomly picking from a uniform
+distribution ranging from —12 to 15 dB. For each user, the DCI and
+
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-10..txt =====
+Pavan Reddy M. et al.
+
+Table 3
+
+Ad Hoc Networks 114 (2021) 102440
+
+Detailed numerical analysis of various performance metrics for all the scheduling algorithms.
+
+Scheduler type Time taken by the base Number of NPs Mean number
+station to schedule all the broadcast by the of devices per
+devices base station NP
+Subframes Minutes
+
+Proposed Scheduler « = 0.9 2ASL x 10° 40.851 740.72 x 10° 328 323
+
+Proposed Scheduler « = 0.5 2166.6 x 10° 36.11 456.28 x 10° 432 2.53
+
+Proposed Scheduler a = 0.1 1884.2 x 10° 314 173.65 x 10° 800 1.54
+
+Max-R, Scheduler 2652.8 x 10° 44.214 942.49 x 10° 890 LAs
+
+Min-R, Scheduler 2734.8 x 10° 45.58 1024.5 x 10" 970 1.06
+
+Baseline Scheduler 2823.7 x 10° 47.061 1113.3 x10" 1000 1
+
+DCI & RC RNTI ‘Convolution Rate Proposed Repetition
+TBs Attachment Masking Coding Matching Allocation
+(Section 4.1) —-*
+~ = Scheduler
+DClsand TBs of other J —$} (Section 4.3)
+NB-loT devices —
+__i IFFT/CP Resource Modulation Scrambling Multiplexing in a
+i Attachment Mapping (QPSK) (Cell 1D) search space
+I
+I
+I
+i
++
+FFrce |_ J Resource Soft Descrambling Blind Decoding, DCI &
+Removal Demapping Demodulation (Cell ID) TBs
+
+Fig. 9. Block diagram of exhaustive link simulation with transmitter and receiver chain along
+
+the transport block (TB) undergo the physical layer processing like
+cyclic redundancy attachments, convolution coding, rate matching,
+etc., as per the 3GPP specifications [1-3]. The resultant data is fed
+to the proposed repetition allocation algorithm, which decides the
+repetition required for each payload, as mentioned in Section 4.1. All
+these payloads with various repetition requirements are then fed to
+the proposed joint control and shared channel scheduling algorithm.
+The algorithm selects the users to be multiplexed in a search space,
+as mentioned in 4.3. The multiplexed data undergoes further physical
+layer processing like scrambling, modulation, and is then mapped to
+the resource elements of a resource grid. In the end, the resource
+grid is converted to set of OFDM symbols by using IFFT and a cyclic
+prefix (CP) attachment. The noise is added to each OFDM symbol based
+on the SINR of each user scheduled in that symbol. At the receiver,
+the corresponding signal processing is carried out, which involves,
+FFT operation, CP removal, resource de-mapping, soft demodulation,
+and descrambling. However, the receiver does not know the repetition
+used for the DCI. Hence, it carries out blind decoding for all possible
+repetition sizes, which involves de-rate matching, Viterbi decoding, and
+cyclic redundancy check (CRC). If the CRC is passed, we consider the
+payload to be successfully decoded.
+
+We have performed the above simulation procedure for various
+scheduling algorithms discussed earlier, and for each scheduling al-
+gorithm, we have calculated the resource utilization (y), the mean
+number of devices per NP (77), and the block error rate. Note that these
+metrics evaluate the performance of the proposed joint scheduler and
+the repetition allocation algorithm. A summary of the results has been
+presented in Table 4, Since the resource allocation algorithm considers
+1% BLER as a reference for allocation, all the scheduling algorithms
+have close to 1% BLER. Further, the proposed scheduler with any a has
+a better y and 7 when compared with the state-of-the-art algorithms.
+
+configurations of R
+
+th proposed algorithms.
+
+Table 4
+
+Summary of results with exhaustive link-level simulations.
+Scheduler Type x n BLER
+Proposed Scheduler, « = 0.9 0.65 27 15%
+Proposed Scheduler, a = 0.5 O71 18 1.1%
+Proposed Scheduler, a = 0.1 0.82 14 1.2%
+Max-R, Scheduler 0.58 12 1.6%
+Min-R, Scheduler 0.52 Ll 0.9%
+Baseline Scheduler OSI 1 0.9%
+
+With a = 0.9, the proposed scheduler has better » and with a = 0.1, it
+has better y.
+
+6. Conclusion and future work
+
+In this paper, we have explained the rationale for jointly scheduling
+the NB-IoT devices in both control and shared channel. We have
+formulated the resource allocation as a set packing problem and pro-
+posed a joint scheduling algorithm. We have also proposed an adaptive
+repetition allocation algorithm and presented a receiver design for
+NB-IoT. Further, we have defined performance metrics to evaluate
+the scheduling algorithms in NB-IoT and presented the performance
+bounds of the proposed scheduler. We have evaluated and compared
+the performance of the proposed scheduler using system-level and
+link-level simulations. The simulation results have shown that the
+proposed scheduler significantly outperforms the current state-of-the-
+art algorithms. With the proposed scheduler, the network operators
+can choose a suitable trade-off between resource utilization and power
+consumption of the NB-IoT devices. In future, we will implement the
+proposed scheduler for an NB-IoT system and evaluate the performance
+on hardware testbeds.
+
+===== Design_and_performance_analysis_of_joint_control_and_shared_channel_scheduler_for_downlink_in_3GPP_narrowband-IoT-11..txt =====
+Pavan Reddy M. et al.
+
+Declaration of competing interest
+
+The authors declare that they have no known competing finan-
+cial interests or personal relationships that could have appeared to
+influence the work reported in this paper.
+
+References
+
+oy
+[2]
+[3]
+[4]
+
+[5]
+
+{6
+
+(71
+
+[3]
+
+(9)
+
+0)
+
+ou
+
+22)
+
+3)
+
+tay
+
+5)
+te]
+
+7)
+
+8)
+
+fy
+
+Physical channels and modulation, 2019, 3GPP TS 36.211, v 15.5.0.
+Multiplexing and channel coding, 2019, 3GPP TS 36.212, v 15.5.0.
+
+Physical layer procedures, 2019, 3GPP TS 36.213, v 15.5.
+
+NB-IoT: A Sustainable Technology for Connecting Billions of Devices, Tech. Rep.,
+Ericsson, 2016.
+
+X. Lin, et al, Random access preamble design and detection for 3GPP
+narrowband IoT systems, IEEE Wirel. Commun. Lett. 5 (2016) 640-643.
+
+M.P. Reddy, et al., Joint control and shared channel scheduling for downlink
+in 3GPP narrowband-IoT, in: 2020 International Conference on COMmunication
+Systems NETworkS, COMSNETS, 2020, pp. 476-483.
+
+P. Hosein, Resource allocation for the LTE physical downlink control channel,
+in: Proc. IEFE Globecom Workshops, Honolulu, 2009, pp. 1-5.
+
+Y. Chen, Resource allocation for the LTE physical downlink control channel, i
+Proc. 7th International Conference on Wireless Communications, Networking and
+Mobile Computing, Wuhan, 2011, pp. 1-4.
+
+M.P. Reddy, et al., Novel rate matching scheme for downlink control channel
+in 3GPP massive machine type communications, in: Proc. 10th International
+Conference on Communications Systems and Networks, COMSNETS, 2018, pp.
+183-190.
+
+MP. Reddy, et al., Improved physical downlink control channel for 3GPP massive
+machine type communications, in: Communication Systems and Networks -
+Extended Selected Papers, 2018, pp. 1-25.
+
+Balamurali, Optimal downlink control channel resource allocation for LTE
+systems, in: Proc. Intemational Conference on Signal Processing and
+Communications, SPCOM, Bangalore, 2010, pp. 1-5.
+
+T.P.C. de Andrade, et al., Allocation of control resources for machine-to-machine
+and human-to-human communications over LTE/LTE-A networks, IEEE Internet
+Things J. 3 (3) (2016) 366-377.
+
+Y. Li, et al, Green heterogeneous cloud radio access networks: Potential
+techniques, performance trade-offs, and challenges, IEEE Commun. Mag. 55.,
+no. 11 (2017) 33-39.
+
+Y. Li, et al., Energy-efficient subcarrier assignment and power allocation in
+OFDMA systems with max-min fairness guarantees, IEEE Trans. Commun. 63.,
+no, 9 (2015) 3183-3195.
+
+B.A. Salihu, et al, New remapping strategy for PDCCH scheduling for
+LTE-advanced systems, J. Commun. 9 (7) (2014) 563-571.
+
+X.C. H.en, Novel resource allocation schemes in LTE PDCCH, in: Proc. IBEE
+International Conference on Communication Technology, 2011, pp. 1-4.
+
+R. Boisguene, et al., A survey on NB-loT downlink scheduling: Issues and
+potential solutions, in: Proc. 13th International Wireless Communications and
+Mobile Computing Conference, IWGMG, Spain, 2017, pp. 547-551.
+
+Y.J. Yu, SC. Tseng, Downlink scheduling for narrowband internet of things
+(NB-IoT) systems, in: Proc. IEEE 87th Vehicular Technology Conference, VIC
+Spring, Porto, Portugal, 2018, pp. 1-5.
+
+MP. Reddy, et al., Downlink control channel scheduling for 3GPP narrowband-
+IoT, in: Proc. IEEE 29th Annual International Symposium on Personal, Indoor
+and Mobile Radio Communications, Bologna, Portugal, 2018, pp. 1-7.
+
+[20]
+[21]
+
+[22]
+
+[23]
+
+[24]
+
+Ad Hoc Networks 114 (2021) 102440
+
+Radio resource control (RRC), 2019, 3GPP TS 36.331, v 15.5.0.
+X. Gandibleux, et al., An ant colony optimisation algorithm for the set packing
+problem, in: Ant Colony Optimization and Swarm Intelligence, in: LNCS, vol.
+3172, Springer, 2004, pp. 49-60.
+
+S-H. Kim, K-K. Lee, An optimisation-based decision support system for ship
+scheduling, Comput. Ind. Eng. 33 (1997) 689-692.
+
+F, Rossi, 8. Smriglio, A set packing model for the ground holding problem in
+congested networks, European J. Oper. Res. 131 (2) (2001) 400-416.
+
+Cellular system support for ultra-low complexity and low throughput internet of
+things (cloT), 2015, 3GPP TR 45.820.
+
+Pavan Reddy M. received the B.Tech. degree from the ACE
+Engineering College, India, in 2014, and the M.Tech. degree
+in electrical engineering from IT Hyderabad, Hyderabad,
+India, in 2018. He is currently a Ph.D. student at IIT
+Hyderabad. His research interests include physical-layer
+algorithms and the development of prototypes for fifth-
+generation systems. He was a recipient of the Excellence
+in Research Award at IIT Hyderabad in 2018.
+
+Abhinav Kumar (S'04-M’14) received the B.Tech. degree in
+electrical engineering and the M-Tech. degree in information
+and communication technology and the Ph.D. degree in
+electrical engineering from the IIT Delhi, New Delhi, in
+2009 and 2013, respectively, where he was a Research
+Associate in 2013. From 2013 to 2014, he was a Post-
+Doctoral Fellow with the University of Waterloo, Canada. He
+has been as an Assistant Professor with the Indian Institute
+of Technology Hyderabad, Hyderabad, India, since 2014.
+His research interests are in the different aspects of wireless
+communications and networking.
+
+Kiran Kuchi received the B.Tech. degree in electronics
+and communications engineering from the Sri Venkateswara
+University College of Engineering, Tirupati, India, in 1995,
+and the M.S. and Ph.D. degrees in electrical engineering
+from The University of Texas at Arlington, Arlington, TX,
+USA, in 1997 and 2006, respectively. From 2000 to 2008, he
+was with Nokia Research, Irving, TX, where he contributed
+to the development of global system for mobile commu-
+nication/EDGE, WiMax, and long-term evolution systems.
+From 2008 to 2011, he was with the Centre of Excellence
+in Wireless Technology, where he led fourth-generation
+research and standardization efforts. He was also an Adjunct
+Faculty with the Department of Electric Engineering, IT
+Madras, Chennai, India. He is currently a Professor with the
+Department of Electrical Engineering, IIT Hyderabad, Hyder-
+abad, India, He holds more than 20 U.S. patents. His current
+research interests include physical-layer algorithms and the
+development of prototypes for fifth-generation systems.
+
+

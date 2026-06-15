@@ -1,0 +1,181 @@
+Coverage and Deployment Analysis of Narrowband Internet of Things in the Wild
+PDF
+Konstantinos Kousias; Giuseppe Caso; Ozgu Alay; Anna Brunstrom; Luca De Nardis; Maria-Gabriella Di Benedetto
+All Authors
+
+Abstract
+Document Sections
+
+    Introduction
+    Technology Description
+    Experimental Design
+    Performance Evaluation
+    Conclusion
+
+Authors
+Figures
+References
+Citations
+Keywords
+Metrics
+Abstract:
+Narrowband Internet of Things (NB-IoT) is gaining momentum as a promising technology for massive machine type communication. Given that its deployment is rapidly progressing worldwide, measurement campaigns and performance analyses are needed to better understand the system and move toward its enhancement. With this aim, this article presents a large-scale measurement campaign and empirical analysis of NB-IoT on operational networks, and discloses valuable insights in terms of deployment strategies and radio coverage performance. The reported results also serve as examples showing the potential usage of the collected dataset, which we make open source along with a lightweight data visualization platform.
+Published in: IEEE Communications Magazine ( Volume: 58, Issue: 9, September 2020)
+Page(s): 39 - 45
+Date of Publication: 06 October 2020
+ISSN Information:
+DOI: 10.1109/MCOM.001.2000131
+Introduction
+
+As part of beyond-4G and 5G systems, the machine type communication (MTC) paradigm provides the ideal substrate toward cellular Internet of things (IoT), and is leading to a shift in cellular network design and deployment. On one hand, MTC introduces a novel degree of heterogeneity, given that the things, that is, autonomous devices with novel features and requirements, must be integrated into the mobile network, which was originally designed for serving humans with their peculiar traffic. On the other hand, it requires long-term performance analyses for stable network deployment, in particular when its massive nature (mMTC), in terms of the unprecedented number of devices, is considered [1], [2].
+
+A relevant step toward enabling mMTC is represented by the 2016 Release 13 (Rel-13) standard by the 3rd Generation Partnership Project (3GPP), where three technologies were proposed: Extended Coverage Global System for Mobile Communications (EC-GSM), GSM IoT (EC-GSM-IoT), Long Term Evolution (LTE) for MTC (LTE-M), and narrowband IoT (NB-IOT) [2]. These represent the cellular options for so-called low-power wide area networks (LPWANs), which aim to deliver massive IoT services over wide areas (i.e., several kilometers) with low cost and power consumption [3].
+The authors present a large-scale measurement campaign and empirical analysis of NB-IoT on operational networks, and disclose valuable insights in terms of deployment strategies and radio coverage performance. The reported results also serve as examples showing the potential usage of the collected dataset.
+
+Since Rel-13, and considering the advances in Rel-14 (2017) and Rel-15 (2018), NB-IoT is triggering significant attention across researchers and operators as one of the most appealing LPWANs [4]–​[6]. Hence, the theoretical aspects of NB-IoT are being formalized and analyzed, while several mobile operators are launching and making operational NB-IoT networks worldwide [7].
+
+As the NB-IoT deployment is progressing at a rapid pace, field trials and measurement campaigns become of extreme interest, considering that these are the very first attempts of enabling IoT services on the cellular architecture, and thus a closer empirical look is needed to better understand and optimize the system. To this end, data-driven analyses are crucial for both researchers and operators, as they allow identifying correlations and causalities between deployment choices and performance, highlight encountered challenges, and derive guidelines for further research and development. However, extensive measurement campaigns are often scarcely available to researchers, and rather costly and time consuming for operators, which may thus opt for less expensive but sub-optimal alternatives. These include simulation-based studies [8], which provide general analyses that cannot perfectly match real scenarios.
+
+Considering the above motivations, this article presents a large-scale measurement campaign of NB-IoT coverage for two Norwegian and three Italian operators, conducted in the cities of Oslo and Rome during 2019. To the best of our knowledge, this represents the first empirical analysis of NB-IoT performance on operational networks, which considers coverage aspects across heterogeneous scenarios and environments. The main contributions of this article are:
+
+    We conduct an analysis of the strategies being adopted for deploying NB-IoT, aiming to highlight implementation trends and derive takeaways for improvement.
+
+    We assess NB-IoT coverage, depicting how the current system deployment reflects in service availability across urban scenarios.
+
+    We conduct a comparison between two NB-IoT spectrum operation modes, in-band and guard-band, to understand NB-IoT's coexistence with LTE.
+
+    We open source our dataset, comprising NB-IoT and LTE coverage measurements in Oslo and Rome, to support the discovery of new insights and research. We also provide a web platform for geo-referenced visualization of the collected data [9].
+
+NB-IoT is a radio interface implemented over the cellular licensed spectrum. It offers high deployment flexibility and integration with the existing architecture, minimizing costs and complexity at network and device sides, and providing performance in line with mMTC expectations.
+
+The article is organized as follows. A brief description of NB-IoT technology is first provided, followed by an overview of the experimental design. We then discuss our findings and conclude our work.
+Technology Description
+
+NB-IoT is a radio interface implemented over the cellular licensed spectrum. It offers high deployment flexibility and integration with the existing architecture, minimizing costs and complexity at the network and device sides, and providing performance in line with mMTC expectations. Below, we describe NB-IoT operation modes, possible deployment strategies, and coverage aspects, which are the focus of this article. Moreover, we mention the main features in Rel-13 [4], since this Release is mostly deployed, as confirmed by our measurement campaign. We refer the reader to [2], [10] for the analysis of NB-IoT advances in Rel-14 and Rel-15.
+Operation Modes and Deployment Strategies
+
+NB-IoT devices operate over either a 200 kHz GSM-like channel or an LTE physical resource block (PRB) of 180 kHz, allowing coexistence with both GSM and LTE. Three different operation modes are defined:
+
+    Standalone, which uses a 200 kHz channel obtained by refarming the GSM spectrum
+
+    In-band, which uses a single PRB within a set of PRBs used by LTE, selected in order to minimize interference from/to LTE
+
+    Guard-band, which leverages a PRB within a guard band among different sets of LTE PRBs
+
+After selecting one of the modes, the operators can provide NB-IoT services via a software upgrade of their infrastructure, that is, enhancing the capabilities of their E-UTRAN Node Bs (eNBs) and cells, at least in areas where these are already present for serving broadband users.
+
+The operators can select several deployment strategies and differently leverage the trade-off between costs and performance. In particular, given a broadband area (e.g., an urban environment), operators may either activate an NB-IoT carrier in all already deployed LTE eNBs and cells, or select some of them. The first option is somehow simpler, since it does not require in-depth analysis for coverage optimization. However, it may increase the operational costs, including energy consumption, and result in redundant deployment when NB-IoT use cases and coverage enhancement techniques are considered (see later in this section). The second option requires more careful planning, but may lead to a better trade-off between costs and quality of service (QoS).
+
+Specifically for the in-band mode, the coexistence with LTE is another aspect to consider when deciding between the two aforementioned options. On one hand, NB-IoT activation in specific eNBs/cells leads to possible interference from/to LTE, since the LTE-only eNBs/cells may use the PRB dedicated to NB-IoT for their traffic. On the other hand, NB-IoT full deployment leads to sub-optimal resource usage, since a specific PRB is exclusively dedicated to infrequent and sporadic NB-IoT traffic, at the expense of LTE end users. Moreover, in areas with low-to-null broadband coverage (e.g., rural and deep indoor environments), the operators may a priori install dedicated but costly eNBs, or first check whether NB-IoT CE techniques allow the reuse of the existing infrastructure, triggering the installation only in cases of negative response.
+CE Techniques
+
+NB-IoT targets service reliability and delay-tolerant uplink (UL) data exchange. Hence, advanced modulation and coding schemes are not supported. Rather, CE techniques are used, aiming to favor connectivity in harsh environments, such as dense urban and deep indoor. A first CE effect is obtained by narrowing down the bandwidth with respect to LTE, since this focuses the transmitted power on smaller bands, at the cost of reducing the data rate. Moreover, NB-IoT standards allow repeated transmissions, which increase the probability of correct reception. In particular, downlink (DL) and UL signals can be repeated up to 2048 and 128 times, respectively. The number of repetitions depends on radio conditions and operator configurations, the latter transmitted in master information block (MIB) and system information block (SIB) messages. Repetition settings are given in SIB2 messages.
+
+The device estimates its coverage conditions during the random access (RA) procedure, which triggers the connection to a cell, that is, the one detected with highest reference signal received power (RSRP), expressed in dBm. The comparison between RSRP and operator-defined thresholds allows estimation of a coverage level (CL) [11]. Up to two thresholds can be defined, leading to three possible CLs: CLO represents LTE-like radio conditions, while CL1 and CL2 apply to challenging scenarios requiring more repetitions. During consecutive RA attempts, the device can adjust its CL estimate and move to higher CLs if it experiences connection failures in the first attempts.
+Other Features
+
+DL and UL resources are accessed in frequency-division duplex (FDD) mode. Orthogonal frequency-division multiple access (OFDMA) is applied in DL, with 15 kHz subcarrier spacing. The PRB is divided into seven OFDM symbols of 12 subcarriers each, and occupies 0.5 ms. Single-carrier frequency-division multiple access (SC-FDMA) is applied in UL, with a subcarrier spacing of 15 kHz or 3.75 kHz.
+
+NB-IoT devices can be idle and connected. Idle devices are not functionally connected to the network, and actuate the procedures for switching into connected, including cell selection and tracking of control messages (paging monitoring). After selecting a cell, the devices transit from idle to connected via RA, and exchange data while continuing paging monitoring.
+
+Targeting energy efficiency and long device battery lifetime, NB-IoT standards introduce extended discontinuous reception (eDRX), which allows paging monitoring to be performed more infrequently compared to LTE, and power saving mode (PSM), which allows idle devices to disconnect the radio and minimize energy consumption [12].
+Comparison with Other LPWANs
+
+NB-IoT plays a leading role across LPWANs, with constantly increasing market shares [3], [13]. Compared to other 3GPP technologies, NB-IoT shares some features and use cases with EC-GSM-IoT, but provides lower device complexity and better integration with GSM, LTE, and 5G. NB-IoT and LTE-M target complementary applications, with LTE-M having higher device complexity and costs. Considering LPWANs in the unlicensed spectrum, NB-IoT has a competitor in Long-Range Wide Area Network (LoRaWAN). They provide comparable throughput and latency performance, and adopt different security mechanisms. NB-IoT outperforms LoRaWAN in terms of communication reliability due to the use of licensed spectrum and well-established infrastructures [2].
+Table 1. Network deployment statistics with regard to number of eNBs and EARFCNs per technology. eNBs % is defined as the ratio between the number of LTE/NB-IoT eNBs and the total number of eNBs. Absolute numbers are provided in parenthesis.
+Table 1.- Network deployment statistics with regard to number of eNBs and EARFCNs per technology. eNBs % is defined as the ratio between the number of LTE/NB-IoT eNBs and the total number of eNBs. Absolute numbers are provided in parenthesis.
+
+Experimental Design
+
+In the above overview, we highlight NB-IoT deployment and coverage aspects discussed in this article. We now present our measurement campaigns and analyses. Specifically, in this section we describe the adopted hardware and software components, and summarize experimental setup and collected dataset. Finally, we introduce our data visualization framework.
+Measurement System
+
+For the NB-IoT measurements in Oslo and Rome, we used the Rohde&Schwarz (R&S) TSMA6 toolkit, an Exelonix Narrowband (NB) USB device, and a global positioning system (GPS) antenna. TSMA6 is a system integrating:
+
+    A spectrum scanner, for passive measurement of 3GPP technologies up to 6 GHz, including 5G New Radio (NR). It supports NB-IoT signal detection and decoding in in-band, guard-band, and standalone.
+
+    A laptop, where the controlling software, named ROMES4, is installed. Combined with scanner and device, that is, the Exelonix module in our case, and exploiting GPS geo-reference, ROMES4 provides an overview of coverage, interference, and QoS measurements.
+
+We leveraged two further features from TSMA6, that is, the automatic channel detection, which performs automatic detection of active channels for all technologies in the specified spectrum, and the base transceiver station position estimation, which combines passive measurements and GPS to estimate the position of the cells forming the operators' infrastructures.
+Designing and implementing a platform that enables interactive geo-spatial visualization is beneficial for discovering operators' eNBs spatial deployment and pinpointing at a glance areas with limited coverage. Thereby, we design an open-source visualization platform showing eNB placement and coverage for each operator under test.
+
+The Exelonix module is a Qualcomm-based device supporting NB-IoT and LTE-M. We embedded the module with NB-IoT SIM cards from the operators under test, and used it to monitor the radio conditions of the serving cell and execute repeated connections to the operators' networks. Hence, we are able to analyze the RA procedure, including the CL estimation, aiming to reveal further aspects related to operator-specific configurations, for example, how the RSRP thresholds adopted in the CL estimation impact the perceived coverage.
+Measurement Campaigns
+
+We performed two measurement campaigns. The first campaign was designed to explore city-wide coverage and deployment aspects under heterogeneous scenarios, and covered a period of three weeks during summer 2019 in Oslo, Norway. We enabled the scanner to perform passive measurements on four LTE bands (including guard bands), that is, Bands 1, 3, 7, and 20, and detected three LTE operators, denoted in the following as Opk,N, where k identifies the operator and N stands for Norway. To guarantee reliability and completeness, we conducted measurements in various city areas and different scenarios, which we label as deep indoor (DI) (14), for basements and deep enclosed spaces, indoor (I) (48), for houses and multi-floor buildings, outdoor walking (OW) (8), for being outdoors while walking, and outdoor driving (OD) (14), for being outdoors while on public transport. Numbers in parenthesis represent the number of sub-campaigns for each scenario. We replicated a subset of our measurements over time (i.e., morning vs. afternoon vs. evening, and week vs. weekend) to account for temporal effects.
+
+In the second campaign we collected a smaller dataset composed of three sub-campaigns (one for I and two for OD scenarios), within a couple of days in 2019 in Rome, Italy, to compare the performance between in-band and guard-band modes. The dataset features measurements related to three operators (Opk,l, where k identifies the operator and N stands for Italy) in Band 20. At the time of the collection, Op2,1 and Op3,1 were deploying NB-IoT in guard-band, while Op1,1 was testing the in-band option. This makes the dataset fitting for a comparison between the two modes. We report that, as confirmed by the following tests, Op1,1 has moved toward a guard-band deployment. However, the dataset remains valid for comparing the two modes.
+
+The complete dataset consists of 1.2 million LTE and 1.4 million NB-IoT passive scans for Oslo, and 121,000 LTE and 51,000 NB-IoT passive scans for Rome. The list of collected attributes is provided in [9]. To anonymize the operators' identity, mobile network code (MNC), E-UTRA absolute radio frequency channel number (EAR-FCN), and cell ID (CID) are given as references and not associated with real values.
+Visualization
+
+Designing and implementing a platform that enables interactive geo-spatial visualization is beneficial for discovering operators' eNBs spatial deployment and pinpointing at a glance areas with limited coverage. Thereby, we design an open source visualization platform showing eNB placement and coverage for each operator under test [9]. We implement the platform using an R interface to Leaflet, an open source JavaScript library for mobile-friendly maps. Users can exploit several features, from controlling which layers they see on the map to dynamically altering the observed coverage based on the zoom level. We include additional plugins and add-ons to enhance end-user experience.
+Performance Evaluation
+
+The deployment of the cellular radio access network (RAN) is driven by the need to optimize the coverage and make the service accessible to end users. This aspect is more challenging for cellular IoT technologies, as they are expected to mostly leverage the existing infrastructure, which is, however, tailored for broadband services. In this section, we present the results of our measurement analysis, which contrast deployment strategies and coverage performance for the two operators currently providing NB-IoT in Oslo. We also study the implications of deploying NB-IoT in in-band or guard-band, by leveraging the dataset collected in Rome.
+Network Deployment Strategy
+
+RAN deployment is a challenging optimization task [14]. The targets of the operators include to ensure sufficient coverage, to satisfy QoS requirements, and to efficiently deal with energy and cost constraints. Hence, they aim to optimize the eNB placement by considering environmental characteristics (i.e., density and structure of surrounding buildings). However, business expenses, radiation safety levels, and interference between cells, are some aspects that limit the qualified spots for installing an eNB, hence favoring alternative locations. Next, we empirically analyze the deployment strategies for operators providing NB-IoT in Oslo.
+Deployment Statistics
+
+Table 1 provides per-operator statistical insights with respect to the number of detected eNBs and EARFCNs used for NB-IoT and LTE. We observe that, across the monitored bands, Op1,N and Op2,N have activated one NB-IoT carrier each in the guard bands of Band 20. Considering the infrastructure, Op1,N is dominant in terms of number of eNBs for both technologies, implying a denser deployment compared to Op2,N. Both operators leverage the existing LTE infrastructure for deploying NB-IoT, with no additional eNBs installed. In this regard, nearly 86 percent of the detected LTE eNBs have been reconfigured for NB-IoT.
+
+The few NB-IoT-only eNBs detected for Op1,N could be explained by considering the more penetrating nature of NB-IoT, or should be appointed to other causes that prevent LTE detection. We also observe that the eNBs not supporting NB-IoT are in 90 percent of the cases operating at a band other than Band 20. This indicates that almost all eNBs operating in Band 20 support NB-IoT. Finally, we highlight that the operators leverage a different number of EARFCNs for LTE, but only one for NB-IoT.
+Deployment Optimality
+
+RSRP is a key metric for handover and cell (re-)selection phases; hence, it is a critical parameter when evaluating how radio coverage is affected by the network infrastructure. In the following, we evaluate deployment optimality, which assumes that given a location, the closest eNB would offer the highest RSRP under ideal propagation and environmental scenarios; we also assume constraintless eNB placement. In practice, though, several factors may inhibit this situation, particularly in dense urban environments, such as multipath propagation, network congestion and interference, and constrained eNB placement.
+
+Figure 1 shows whether the operators are close to an optimal NB-IoT deployment in Oslo. For each location in a sub-campaign, we compute the distance toward the eNB detected with highest RSRP and the distance toward the nearest eNB, both in meters. Then, for each sub-campaign, we average across all locations. In an optimal deployment situation, we expect a linear relationship between the two distances. Thereby, the deviation from the diagonal represents how far the deployment refrains from being optimal. We observe that both operators approach deployment optimality in several indoor scenarios, while slightly deviating in outdoor sub-campaigns. In particular, Op1,N mostly works in a short distance regime (i.e., less than 150 m) due to its dense infrastructure. Op2,N deviates from the identity line more frequently, and several sub-campaigns present distances exceeding 150 m, thus hinting at sub-optimal deployment. For both operators, a negative joint impact of propagation conditions and deployment sub-optimality is highlighted by large deviations observed for specific DI and I sub-campaigns.
+Figure 1. - Scatterplot between average distance to the eNB with highest RSRP and average distance to the nearest eNB for $\text{Op}_{1,N}$ (left) and $\text{Op}_{2,N}$ (right). Different colors represent different scenarios.
+Figure 1.
+
+Scatterplot between average distance to the eNB with highest RSRP and average distance to the nearest eNB for Op1,N (left) and Op2,N (right). Different colors represent different scenarios.
+
+Takeaways
+
+In initial deployment phases, the operators are actuating rather dense NB-IoT deployment strategies, with large amounts of pre-existing eNB snow supporting NB-IoT. This solution is sub-optimal in terms of operational costs, and leads to increased carbon emissions, to which the RAN is already the main contributor across network functions [13]. The analysis of real deployments can support the derivation of optimization strategies, for example, dynamic (de-) activation of specific eNBs, moving toward green cellular IoT.
+Radio Coverage
+
+We now analyze NB-IoT coverage for both operators, showing how it changes across scenarios, and exploiting the LTE dataset for comparison. As above, due to its importance in cellular systems, we consider RSRP as a key indicator. In particular, for each measurement location in a sub-campaign, the coverage for an operator is defined as the highest RSRP perceived among all the CIDs detected for that operator. We then express the sub-campaign average coverage by averaging the RSRP across locations.
+Technology and Scenario Comparison
+
+Figure 2 depicts the distribution of average RSRP in a boxplot format with sub-campaigns grouped per scenario and colored by operator and technology. We validated the statistical significance by leveraging the Kruskal-Wallis and Dunn's tests, aiming to identify which distributions have statistically different mean values. Due to space limitations, we report the results in [9].
+Figure 2. - Sub-campaign average coverage in terms of RSRP [dBm], grouped by scenario and divided by a combination of operator ($\text{Op}_{1,N},\text{Op}_{2,N}$) and technology (LTE, NB-IoT).
+Figure 2.
+
+Sub-campaign average coverage in terms of RSRP [dBm], grouped by scenario and divided by a combination of operator (Op1,N,Op2,N) and technology (LTE, NB-IoT).
+
+We observe that, compared to LTE, NB-IoT provides statistically significant RSRP boosts of 11.73, 12.29, 12.06, and 16.71 dB on average for each scenario, respectively. This result is in line with the power boosting expected by 3GPP TS 36.104 [15], which is at least +6 dB when evaluated as the difference between the power of the entire NB-IoT carrier (180 kHz) and the average power over all carriers (LTE and NB-IoT).
+
+We also compare NB-IoT average RSRP across scenarios. In particular, a statistically significant increase of 36.36 and 35.70 dB for Op1,N and Op2,N, respectively, is observed when comparing I with DI scenarios. This shows the negative effect of DI on signal propagation, which needs to be compensated by CE techniques. The deviation between outdoor scenarios to I is instead reduced, with an average increase of 1.43 dB for Op1,N and 5.82 dB for Op2,N. Comparing the operators, Op1,N consistently provides better NB-IoT coverage (3.95 dB on average, and statistically significant for the I scenario), which ties back to the results on deployment statistics and optimality.
+Coverage Levels
+
+To better understand how coverage is affected by operators' configurations, we report in Table 2 the ratio of being in a specific CL, grouped per scenario and split by operator. We retrieve the CL readings by monitoring via TSMA6 the RA attempts performed by the Exelonix module. We then evaluate the ratio as the number of readings for a CL divided by the total number of CL readings. By decoding SIB2 messages, we observe that the operators apply different RSRP thresholds for the CL estimation, 5 dB more conservative for Op2,N, which is thus more likely to work at higher CLs. When combined with RSRP values of the serving CID, the different thresholds explain the main results in Table 2. First, Op2,N in general has lower coverage than Op1,N, and thus tries to enhance NB-IoT reliability by operating at higher CLs more, at the cost of higher energy consumption and more repetitions. This is evident in DI, where Op2,N works predominantly in CL1, while Op1,N exhibits a high ratio of operating at CLO. Second, operations at CLO are predominant in I, OW, and OD scenarios, showing that, in generic urban environments, NB-IoT is likely to work at radio conditions similar to LTE. Finally, we observe that outdoor scenarios increase the ratio of being at higher CLs when compared to the indoor case, even though higher average RSRP is observed for the former (Fig. 2). We argue that this effect is due to the higher heterogeneity of the outdoor scenarios in terms of radio and mobility aspects. The result suggests that in more heterogeneous and dynamic scenarios, the current CL estimate procedure may be sub-optimal and cause several attempts before the RA succeeds, leading to energy inefficiency.
+Takeaways
+
+NB-IoT results in significant coverage improvements with respect to LTE, but operators' configurations have a direct impact on how devices perceive the coverage, execute their operations, and perform in terms of QoS. Empirical data can be used to refine the models adopted in previous work [8], resulting in better modeling NB-IoT coverage and propagation, which can pave the way to optimize deployments, configurations, and QoS.
+In-Band and Guard-Band Deployment
+
+In this subsection, we perform a comparison between in-band and guard-band modes, quantifying their impact on coverage. As mentioned before, the in-band mode may challenge NB-IoT/LTE coexistence in the case of partial NB-IoT deployment across the LTE infrastructure.
+
+We hence focus on in-band mode, and look into the Italian dataset to find a situation of partial NB-IoT deployment for operator Op1,I. Our goal is to study the characteristics of the NB-IoT signal around an LTE-only eNB, denoted as eNBr, toward discovering and quantifying potential interference from the LTE signal. Hence, we consider eNBr and an NB-IoT-enabled eNB, denoted as eNBx. We then draw two circles around eNBr and eNBx, and isolate all RSRP readings from eNBx, captured in the intersection of the two. We repeat the process by increasing the radius around eNBr, and appending new RSRP readings each time.
+
+We compare this scenario with a similar topology for Op1,I, where, however, both eNBr and eNBx are NB-IoT-enabled. To provide a fair comparison, we select almost symmetric configurations, with analogous distance between the two eNBs. Last, we repeat the same analysis for the guard-band operator Op2,I.
+
+Figure 3 shows the NB-IoT RSRP distribution as a function of the radius around eNBr between 100 and 500 m (the radius around eNBx is fixed to the distance between the two eNBs), grouped by scenario (i.e., LTE-only vs. LTE-NB-IoT eNBr) for an in-band deployment of OP1,I. We observe that the effect of interference from LTE is visible, especially in close proximity to eNBr, while it diminishes as the radius increases and finally vanishes at around 500 m. Contrarily, we observe no interference impact at different radii for the guard-band deployment of Op2,I, confirming that there is no visible interference for the guard-band deployment. We observe similar trends for the guard-band deployment of Op3,I. In the supplementary material [9], we show the analyzed topology, present guard-band results, and also validate the statistical significance of the results.
+Table 2. Ratio of being in a specific CL, grouped by scenario, for Op1,N and Op2,N. The ratio is evaluated as the number of readings for a CL divided by the number of readings for all CLs.
+Table 2.- Ratio of being in a specific CL, grouped by scenario, for Op1,N and Op2,N. The ratio is evaluated as the number of readings for a CL divided by the number of readings for all CLs.
+Figure 3. - Network deployment performance evaluation in terms of RSRP [dBm] for the in-band Op1, I deployments.
+Figure 3.
+
+Network deployment performance evaluation in terms of RSRP [dBm] for the in-band Op1, I deployments.
+
+Takeaways
+
+The in-band mode poses coexistence challenges that need to be carefully considered. The empirical assessment of interference is key for the derivation of improved mitigation schemes, also in light of near future transition to 5G, which leads to further coexistence challenges [13].
+Conclusion
+
+In this article, we present the first publicly available measurement campaign and analysis of NB-IoT on operational networks, focusing on aspects related to network deployment strategies and coverage. By leveraging the collected dataset, we first focus on network deployment, highlighting that empirical studies can pinpoint sub-optimal deployments and pave the way for better deployments with decreased costs and energy consumption. We then show that a dense reuse of the LTE RAN for deploying NB-IoT results in a significant coverage increase with respect to LTE, across heterogeneous scenarios and environments. We also analyze how operator-specific configurations affect end devices' operations, leading to different estimates of the coverage quality. Finally, we assess the impact of in-band and guard-band modes in terms of LTE interference, showing a non-negligible negative effect of the former, and pinpointing how empirical measurements can help to assess interference and derive mitigation schemes. The open source nature of our dataset and visualization platform enables further data exploration toward the discovery of new insights and research perspectives.
+ACKNOWLEDGMENTS
+
+This work is partially funded by EU H2020 5GEN-ESIS (815178) and by the Norwegian Research Council project MEMBRANE (250679).

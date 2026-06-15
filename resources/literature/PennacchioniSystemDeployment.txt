@@ -1,0 +1,164 @@
+NB-IoT system deployment for smart metering: Evaluation of coverage and capacity performances
+PDF
+Marco Pennacchioni; Maria-Gabriella Di Benedette; Tommaso Pecorella; Camillo Carlini; Pietro Obino
+All Authors
+
+Abstract
+Document Sections
+
+    I.
+    Introduction
+    II.
+    Technology and Scenario
+    III.
+    Analysis and Simulations
+    IV.
+    Results
+    V.
+    Conclusions
+
+Authors
+Figures
+References
+Citations
+Keywords
+Metrics
+Abstract:
+Internet of Things offers a wide spectrum of opportunities for innovative applications designed to improve our life quality. In the energy sector, the developing of smart metering networks allows operators and companies to improve the production efficiency and to offer an enhanced service to customers. 3GPP introduced in Release 13 Narrowband Internet of Things (NB-IoT) as a new cellular technology for providing wide-area coverage for Internet of Things (IoT) and Machine Type Communication (MTC). In this paper, we propose a deployment analysis of a NB-IoT system for smart metering. Estimated number of UE that this system can serve and coverage enhancement considerations with respect to LTE technology are provided.
+Published in: 2017 AEIT International Annual Conference
+Date of Conference: 20-22 September 2017
+Date Added to IEEE Xplore: 28 December 2017
+ISBN Information:
+DOI: 10.23919/AEIT.2017.8240561
+Conference Location: Cagliari, Italy
+SECTION I.
+Introduction
+
+The increased spread of Internet of Things (IoT) is leading to a deep process of change in all aspects of the everyday life. The aim is to blur the boundaries between digital and physical world, creating a wide network of connected devices, endowed with artificial intelligence. The plethora of opportunities offered by IoT services includes health-care, smart metering, tracking, remote monitoring and mantainance. In this context, leading enterprises are discovering great opportunities to use highly connected device to improve business performance and user life quality.
+
+Most of the above applications are based on Machine Type Communication (MTC), that implements communication between devices without (or only limited) human interaction. In this way devices are able to automatically generate, exchange and process data. MTC does not simply creates a passive data collection point, but also an intelligent inter-machine coordination ecosystem.
+
+This paper focuses on a MTC application for smart metering. Many industries will be transformed with respect to their business process, resulting from the changes driven by the spreading of MTC. In particular, in the energy sector, smart metering increases business efficiency and decreases operational expenses for companies. Key features of a smart metering system are low power consumption, no mobility, time delay tolerance, and infrequent transmission of small amount of data.
+
+3GPP introduced in Release 13 Narrowband IoT as a new radio-access technology, supporting narrowband machine type comunications over LTE functionalities.
+
+This work analyzes the performance of NB-IoT in a Massive MTC scenario focusing on the evaluation of coverage and system capacity. The goal is to study how an operator can satisfy customer demands with this new functionality, while reusing the infrastructure of existing LTE technology. The paper is organized as follows. In Section II we discuss the technology and the deployment scenario. Section III provides a description of methods and simulations, while in Section IV obtained results are presented. Conclusions are drawn in Section V.
+SECTION II.
+Technology and Scenario
+
+One of the main features of Machine Type Communication is the large number of capabilities. For example, devices for meter reading like water, electricity and gas consumption are often stationary (thus they have no need for handovers), and sent small amount of data, in most cases only in Uplink. The transmission is delay tolerant, due to the wide transmission period. The number of this kind of devices may become very high, even up to high order of magnitude in a dense urban scenario. Due to this huge amount of required devices, they have to be in low cost range. Furthermore, these devices are often placed and installed without power supply: an optimized power consumption becomes essential in order to guarantee an adequate working time to the devices. Yet, the coverage is often quite poor, so that it has to be significantly improved.
+
+3GPP Rel-13 [1] defines technical specification for NB-IoT. NB-IoT can be deployed in three different operation modes-(1) In-Band using resource blocks within an LTE carrier, (2) Guard Band leveraging the unused resource blocks within an LTE carrier's guard band, and (3) Stand Alone using a dedicated carrier. This work focuses on the first operation mode, aiming to allow an operator to introduce NB-IoT using a small portion of the existing spectrum: the communication stands in a single Physical Resource Block (PRB) of 180 kHz within an LTE carrier [2]. In Uplink, within a resource block OFDM can be applied using 15 kHz or 3.75 kHz subcarrier spacing with normal cyclic prefix. As a result, in case of 15 kHz spacing a single slot is divided into 7 OFDM symbols, each one composed of 12 subcarriers. In time domain, the overall time slot occupies 0, 5 ms. For 3, 75 kHz subcarrier spacing, each OFDM symbol is composed of 48 subcarriers, leading to an overall slot time duration of 2 ms. The air interface is optimized to achieve coexixtence with LTE, although not compromising the performance of both technologies: only determined PRB are allowed to be used for NB-IoT cell connection [3], each separated by a 10 kHz guard-band at each side.
+
+The targets for this technology are the support of massive numbers of low-throughput devices and the improvement of coverage level. The goal is to achieve an extended coverage of 20 dB compared to legacy GPRS. This is equivalent to improving the Maximum Coupling Loss (MCL) from the standard LTE value of 144 dBm to a target MCL of 164 dBm. The coverage enhancement can be reached also thanks to the 180 kHz NB-IoT bandwidth: the node maintains the same transmission power as in LTE case (43 dBm) but concentrates it in a reduced frequency interval. This results in an higher Power Spectral Density (PSD) that allows the node to reach higher covered distance with respect to the GSM case. As reported in [4], this leads to the definition of 3 Coverage Enhancement (CE) Level separated by 10 dB from each other, from CEO, that represents standard LTE coverage, to CEI and CE2, as worst case. In the additional coverage levels, despite the worse channel conditions with respect to the LTE case, the reception of data by the network is allowed by the implementation of repetitions in uplink transmission: depending on the measured CE levels, the UE will choose a different number of repetitions, up to 128.
+
+In NB-IoT, an UE starts a Random Access Procedure to achieve initial access when it needs to establish a radio link. The RACH procedure always starts with the transmission of a Random Access Preamble. One preamble consist of 4 symbol groups, and each symbol group is composed by a cyclic prefix CP and 5 symbols, each modulated on a 3.75 kHz subcarrier. The EnodeB provides a set of 48 preambles each RACH period: an UE in order to start the Random Access Procedure chooses a preamble and transmits it over Narrowband Physical Random Access Channel NPRACH. Than the UE, depending on its channel conditions receives from the node a Random Access Response (RAR). In case of RAR is not received, the UE knows that the preamble transmission was not successful and transmits another one: this process is valid up to a maximum number of repetitions, depending on the CE level. If the UE reaches this maximum number of preamble transmission without obtaining the RAR, it proceeds to the next CE level if it is configured, or eventually reports a failure connection message to the RRC. Message3 (msg3) is sent after the reception of the Random Access Response in order to start the contention resolution process, in case of a collision on NPRACH: a collision occurs when two (or more) UE initiates the Random Access Procedure at exactly the same time and both of them happen to pick the same preamble of the set provided by the node. In this case the node guarantees the connection to the device that results in better coverage conditions. Once the contention is resolved, a Contention Resolution message is transmitted to the UE and the RACH procedure is successful completed.
+Fig. 1. - Cel activation
+Fig. 1.
+
+Cel activation
+
+We consider the results of tests made on a NB-IoT prototype connected to a commercial cellular network, to verify the activation of additional coverage levels CE 1 and CE2 during Random Access Procedure: the UE assesses its channel conditions according to the measured RSRP level. When RSRP drops below-110 dBm, CE1 activation is detected, as shown in Figure 1; CE2 guarantees coverage up to an RSRP value of-133 dBm as reported in Figure 2. The thresholds for activating coverage levels and the corresponding number of repetitions are manufacturer-specified information.
+
+The aim of this analysis is the performance evaluation of a Massive Narrowband-IoT system. The selected case study is a smart metering system placed in a dense urban scenario: we want to simulate an urban area, supposing to have a device every four people. Checking the population density of the main European cities results in an average value of 15000/km2 leading to an UE density of 3750/km2 for a single smart metering use case. The network is composed of five sites, each characterized by three sectors and an average radius of 550 m, leading to an overall coverage area of 4.5 km2 (0.9 km2 per site). Since we are considering a smart metering system, communication is mainly based on the uplink side. The devices communicate with a fixed transmission periodicity. In particular, in this work we consider three different classes of smart metering devices, each characterized by a different transmission frequency and consequently by a different periodic inter-arrival time.
+
+    1. Class A-Energy metering (e.g. Gas metering): this class of user equipment is placed in a deep indoor scenario, so they are affected by an additional pathloss with respect to the outdoor propagation, caused by the attenuation due to metal screen or underground areas; after the installation, their position is fixed.
+    Fig. 2. - Ce2 activation
+
+Fig. 2.
+
+Ce2 activation
+
+    2. Class B-Air quality metering: this class of meters aims monitoring the air quality in an households or in public spaces; they are assumed to be stationary and placed in outdoor areas.
+
+    3. Class C-Outdoor smart parking: these devices are sensors placed on columns or poles in order to monitor the behavior of an outdoor parking area; their position is fixed and they are assumed to be not affected by any additional pathloss.
+
+As described in [5], we assume for these class of devices fixed periodic inter-arrival time of 1 day, 2 hours and 1 hour respectively. According to these values, the simulation time is fixed to 24 h. As in [5], UE should have the following payload size distribution: Pareto distribution with shape parameter of 2.5 and minimum application payload size of 20 bytes with a cutoff of 200 bytes (payloads higher than 200 bytes are assumed equal to the cutoff). In the simulation, we can assume for the devices a fixed packet size of 200 bytes, according to what happens in a real commercial network case. The UE antenna transmits with a maximum power of 23 dBm and works over the LTE frequency band of 800 MHz. Channel propagation is modelled as in [6] in case of a dense urban scenario.
+
+SECTION III.
+Analysis and Simulations
+
+This work aims to evaluate the performance of a NB-IoT system, assessing the ability to serve all users in the considered area. In a given period, each transmitting UE must be able to access the cell and disposing of the IP traffic, according to the predetermined traffic model. In particular, we are interested in evaluating how the implementation of coverage enhancement levels and repetitions affects the system capacity and the performances of the overall transmission. We define the Efficiency η as the ratio between the number of packets correctly received by the nodes within the considered period CR, and the number of packets that the overall set of UE has transmitted to the core network CT.
+η=CRCT(1)
+View SourceRight-click on figure for MathML and additional features. Since NB-IoT devices have no mobility and fixed transmission frequency, the randomness in the scenario is only due to the time instant in which j-th UE starts transmitting tj0, for which we can consider an uniform probability density function. CT and CR are defined as:
+CTCR=S∑j=1N∑i=1PTmaxj(tj0,fjt)PTi,j(tj0)=S∑j=1N∑i=1PTmaxj(tj0,fjt)PRi,j(tj0)(2)(3)
+View SourceRight-click on figure for MathML and additional features. P(i,j)T represents the i-th packet sent by the j-th UE to the core network; S is the packetsize, N the number of UE and fjt the transmission frequency relative to the j-th UE.
+Fig. 3. - Simulation scenario: Site location and cell-site orientation
+Fig. 3.
+
+Simulation scenario: Site location and cell-site orientation
+
+We provide a simulation of this scenario using ns-3, a discrete-event network simulator for Internet systems [7]. N s-3 is organized in modules representing the main functionalities and layers of a mobile network. Since ns-3 is not yet available for a dedicated NB-IoT module, we have developed our system over the LTE module, implementing on it the NB-IoT key features along with necessary assumptions. Since we work on the LTE module, is not possible use in transmission a single PRB: the minimum number of PRBs that we can physically use in the broadcast is 7, as with a smaller number an UE fails to complete the random access procedure and cannot connect to the network. In the simulation, we use 12 PRBs in order to maintain frequency proportionality with the 12 subcarriers used in NB-IoT uplink. This implementation choice is allowed since we are simulating a NB-IoT in inband operation mode without implementing at the same time an LTE system: no frequency resources that are in general dedicated to LTE are used and consequently we can use them for NB-IoT transmission. This leads to a distribution of the packets that we have to transmit on a greater bandwidth: we must compensate this effect introducing in the packetsize a normalization factor 12.
+
+We placed 500 UE per site randomly distributed, leading to a total number of 2500 UE in the considered scenario. Each cell has an average radius of 550 m, corresponding to an average area of 0.9 km2: this results in an UE density of 555.6 /km2. It is not possible in the simulator to implement a higher number of UE, since the maximum SRS periodicity value of 320 ms represents an upper bound for it. We assume a simulation time of 24 seconds, scaling the values of inter-packet interval of each UE class respectively to-(1) Class A: 24 s, (2) Class B: 2 s, and (3) Class C: 1 s. With the settings just described, the resulting effective simulation time is equal to 10 hours.
+
+The massive number of transmitting devices represents a critical limitation for NB-IoT. Since the random access procedure is contention based, the collision on PRACH impacts on system performance affecting the number of connected UE [8]. Random Access Procedure in ns-3 is non-contention based: in case of a collision between two UE, the node discards both of them not allowing the connection to the network. In this way, the amount of traffic estimated by the simulations lacks in the data sent by all the users that in a real network met a collision and won the contention resolution. In order to assess how this percentage of transmissions influences the traffic of a NB-IoT system, we evaluated the probability that a collision occurs on the Random Access Channel. With the simulation settings described, in case of 48 preambles provided by the node each 0.71 ms, the probability to have a collision during a RACH occasion is
+Pr(collision)≃3.3⋅10−6(4)
+View SourceRight-click on figure for MathML and additional features. leading to a total of ≃ 0.11 collision in 24 s, over the number of RACH occasions NRACH=35294. The number of additional transmissions is a minimal percentage with respect to their total number, so we can assume to ignore it. The probability remains the same even in case of increased traffic. Another drawback is represented by coverage extension: coverage enhancement can be achieved by increasing the number of repetitions [9], both in the RA procedure and in data transmission over the Physical Uplink Shared Channel. This increases the amount of packets sent by UE, while the useful transmitted information remains the same.
+SECTION IV.
+Results
+
+The overall set of UE is placed in a rectangular area of 2000. 1700 m. The features of the network nodes are set according to the features of a commercial cellular network: the obtained coverage is shown in Figure 4. In this coverage scenario, an average percentage of UE equal to 75% is served by the core network and succeeds in correctly transmitting uplink data. The remaining devices cannot access the network since their bad channel conditions. We get a low percentage value as we include boundary effects: different nodes will actually serve those areas that in this case are not in good coverage conditions.
+Fig. 4. - SINR level map and UE allocation
+Fig. 4.
+
+SINR level map and UE allocation
+
+We studied the coverage measured for a single UE in order to find the distance at which it lose its connection to the network: the maximum measured coverage distance is dmax=962  m, corresponding to SINRmin=4.6218  dB. Single user analysis results show how in in our simulation scenario each UE has to be considered in LTE standard coverage (CEO in NB-IoT). The simulation aim consists in evaluating the impact of the coverage enhancement on the capacity and the efficiency of the communication system. To make this effect emerge from simulations, we consider Class A representing devices designed for energy metering. These UE are placed in a deep indoor scenario: they suffer an additional pathloss as they are installed in most cases in underground floors, basements or behind metal screen. So we assume for this kind of device an additional pathloss of 6 dB: the equivalent SINR level at which the UE loose its connection will be SINR′min=10.6218 dB. The measured distance and consequently the equivalent CEO extension for Class A devices becomes d′max=639 m.
+
+Since NB-IoT devices are stationary and operate very short-lived transmissions, we can assume that channel conditions do not change during a single transmission: this allow us to implement repetitions based on the measured distance between the UE and the node from which it is served. In particular repetitions are implemented by increasing the size of trasmitted packets. Then, Class A devices at a distance greater than 640 m from the serving node have to repeat packets in UL N times. Since the simulator reports an upper bound of 8000 bytes transmitted in uplink by an UE, we should always keep single transmissions under this limit: its saturation would lead to unrealistic results.
+Fig. 5. - Efficiency $\eta$ for $Packetsize=240B, N_{rep}=32$
+Fig. 5.
+
+Efficiency η for Packetsize=240B,Nrep=32
+
+The aim is to analyze the efficiency of this communication system, changing its initial condition (packetsize, number of repetitions): in order to understand how coverage enhancement influence this value in all simulated cases, two different device class distributions are set:
+
+    1. 30% Class A-40% Class B-30% Class C;
+
+    2. 80% Class A-10% Class B-10% Class C.
+
+In first analyzed case, initial conditions are:
+Packetsize=12⋅20=240B,Nrep=32(5)
+View SourceRight-click on figure for MathML and additional features. As explained previously, we must multiply each data flow for a factor 12 since we are using 12 times the frequency resource that are dedicated to NB-IoT: this assumption is valid for all cases. Then we analyze RLC level stats, measuring at each time instant the number of bytes sent in UL by each UE and the number of bytes correctly received by the node; the ratio between the sum of these two parameters provides the system efficiency, that in case of 30% class A devices is:
+η30%=0.98681(6)
+View SourceRight-click on figure for MathML and additional features. while increasing the percentage of class A users up to 80%, it becomes
+η80%=0.99123(7)
+View SourceRight-click on figure for MathML and additional features. With 30% of Class A devices, a good percentage of the ones appertaining at Class B and C result in poor radio conditions. These devices suffer a deterioration in transmission efficiency, differently from Class A case where poor channel condition are compensated by redundancy introduced by repetitions. Increasing the percentage of Class A UE corresponds to passing in this class a percentage of those in Class B and C: this way those B and C users who were previously lost in transmission now benefiting from the repetition effect succeed in completing it correctly their broadcasts. For this reason efficiency measured in the second case is higher than the previous one.
+Fig. 6. - Efficiency $\eta$ for $Packetsize=480B, N_{rep}=16$
+Fig. 6.
+
+Efficiency η for Packetsize=480B,Nrep=16
+
+Fig. 7. - Efficiency $\eta$ for $Packetsize=1920B, N_{rep}=4$
+Fig. 7.
+
+Efficiency η for Packetsize=1920B,Nrep=4
+
+We then analyze an intermediate situation, in which UE transmits more data with respect to the previous case, balancing the increase on total data flow by decreasing the number of repetitions that Class A devices in CE1 must perform.
+Packetsize=12⋅40=480B,Nrep=16(8)
+View SourceRight-click on figure for MathML and additional features. We apply in this case the same evaluation and post-processing criteria considered for the previous simulations, obtaining the following results:
+η30%η80%=0.98667=0.99084(9)(10)
+View SourceRight-click on figure for MathML and additional features. Even in this case while passing a greater number of devices in Class A, the efficiency increases. The measured behavior is very similar to those obtained with a packetsize of 20 B: this trend is valid until the channel is unloaded.
+
+In order to show how the system behave when it sees a congestion of the channel, we finally analyze the extreme case in which every UE transmits a high amount of uplink data:
+Packetsize=12⋅160=1920B,Nrep=4(11)
+View SourceRight-click on figure for MathML and additional features. This leads to the following measured values for system efficiency:
+η30%η80%=0.98413=0.96251(12)(13)
+View SourceRight-click on figure for MathML and additional features.
+
+The trend revealed by previous cases is no longer valid. Passing from 30% to 80% the percentage of Class A user equipment, those Class B and C devices who previously suffered a loss in the broadcast due to their poor channel conditions now benefit from repetitions and then succeed in successfully completing the broadcasts. However that 20% devices remaining in Class B and C suffer the conditions of the channel, which results now overloaded: 80% of the devices are sending a number of bytes near to the maximum transmittable number, and a consistent percentage of these UE is also repeating the packets, making the overall uplink transmission close to its physical limit. Consequently, the beneficial effect of Class A repetitions is overwhelmed by channel congestion worsening: this leads to a total system efficiency decreasing.
+
+In a smart metering system, considering a single use case we can assume to have a device every four people. Checking the population density of the main European cities results in an average value of 15000 /km2 for a massive dense urban scenario. This leads to an UE density of 3750/km2 for a single smart metering use case (11250 /km2 for three use cases, as in considered scenario). The actual UE density we placed in the simulation scenario, due to physical limits of the simulator, is equal to ≃556 /km2. Developed simulations shows that the average duration of an uplink transmission is ≃0,96 s (e.g. evaluated in case of 20B transmitted at 2 kbit/s): this time interval is valid for a single transmission even if we consider an overall observation time of 24 h, instead of the 24 s simulation time.
+
+We have simulated a peak situation transmission. Scaling the observation time up to 24 h the shortest considered inter-packet interval becomes equal to 1 h. Repeating this transmission pattern several times, shifted at uniformly spaced 30 s intervals, we can consider up to 116 equivalent transmissions patterns. This equates to consider the same transmission scheme developed by a larger number of users. With this time scale the served UE density becomes ≃48256/km2. Then we can state that the NB-IoT system implemented can simultaneously serve multiple smart metering cases in a typical high dense urban scenario.
+SECTION V.
+Conclusions
+
+The rapid spread of Internet of Things along with the plethora of offered development opportunities brought an increasing interest on this technology and its possible applications. 3GPP defines NB-IoT as the standard from which to start the development of MTC devices in 5G optic: first commercial modules and devices are available from the first half of 2017.
+
+In this paper, an evaluation of the performances of a massive NB-IoT system for smart metering in terms of capacity and system efficiency was presented. The number of UE that this technology is able to serve in a dense urban area was estimated. We studied several deployment scenarios in order to assess the effect of coverage enhancement on the transmission. The main work was the implementation of the NB-IoT functionality on ns-3 LTE Module: we needed to modify the processes implemented in the simulator to fit the Narrowband 3GPP specification by creating new features and circumventing obvious limits due to the nature of the used model.
+
+Measured data show how the technical features of NB-IoT technology allow a mobile operator to serve customers with this new functionality without the need for installing new network equipment, and reusing the pre-existing portion of spectrum dedicated to LTE, while maintaining the fairness with this technology. Moreover, the measured efficiency values show how this system ensures high performance, suitable for considered use cases. Results we obtained show that NB-IoT coverage enhancement brings an improvement in system performance, until the channel is not congested: repetitions applied to uplink traffic, introducing redundancy, allow reaching successful broadcasts to those devices that in LTE would be out of coverage. Conversely, increasing the traffic developed by each UE the trend is reversed: the effect of enhancement brought by coverage enhancement is overshadowed by the worsening due to channel congestion, resulting in a consequent degradation of the system efficiency.
+
+In a general smart metering system, considering a single use case we can assume to have a device every four people. Obtained results show how NB-IoT performance allow the operators to serve the customers with one or several metering use cases, without exceeding the measured capacity of the system.

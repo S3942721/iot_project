@@ -1,0 +1,862 @@
+===== A_Framework_for_the_Design_and_Deployment_of_Large-Scale_LPWAN_Networks_for_Smart_Cities_Applications-1..txt =====
+| | HOMSSI_LAYOUT.indd 53
+
+®
+
+FOCUS ON SMART CITIES
+
+fl FRAMEWORK FOR THE DESIGN AND
+DEPLOYMENT OF LARGE-SCALE LPWAN
+NETWORKS FOR SMART CITIES APPLICATIONS
+
+Bassel Al Homssi, Akram Al-Hourani, Kagiso Magowe, James Delaney, Neil Tom, Joan Ying, Hans Wolf, Simon Maselli,
+Sithamparanathan Kandeepan, Ke Wang, and Karina Mabell Gomez
+
+ABSTRACT
+
+The Internet of Things (loT) enables the connectivity of massive numbers of sensors to facilitate the delivery of immense sets of data. This
+valuable data promotes higher productivity, effectiveness, and sustainability. With the accelerating global urbanization, many cities and sub-
+urbs are expected to face increasing challenges related to urban planning, resources and livability. These challenges stimulate new oppor-
+tunities for communities and governments to collaboratively incubate new planning and development strategies relying on the insightful
+loT data. This concept is commonly referred to as smart cities. Accordingly, a wave of smart cities implementations is currently emerging.
+However, the underlying loT network deployments are developed in silos, and thus require more harmonization. In this paper, we present
+a design and deployment framework for large-scale low power wireless access networks (LPWAN) in order to harmonize and guide the
+end-to-end process. This framework is derived from the acquired expertise and learned lessons from the largest open-access LPWAN deploy-
+ment in Australia. The framework includes various aspects related to the state-of-the-art design techniques, smart cities use-case scenarios,
+project development and implementation, network management, and finally a robust performance testing mechanism for quality of service
+assurance. All these components were put into rigorous verification and testing under this realistic large-scale loT network deployment.
+
+INTRODUCTION ed battery life of several years. A widely deployed LPWAN
+
+technology is LoRaWAN, supported by the LoRa Alliance
+More than 68 percent of the world’s population is projected which is an association of more than 500 member companies.
+to live in urban cities by 2050 [1] almost doubling the number LoRaWAN utilizes a proprietary modulation and coding scheme
+of their residents. Growth of this magnitude would certainly based on a chirp spread spectrum (CSS) technique which
+provide many economic opportunities, but will equally present spreads over a lager radio spectrum for better interference
+several challenges including higher traffic congestion, more pres- immunity. Signals with different spreading factors can coexist in
+sure on natural resources, and increased levels of CO, emissions ___ the channel. Moreover, increasing the spreading factor enhanc-
+and other pollutants. This projection has led many governments __es the communication link budget, making the signal more
+around the world to adopt a transformative smart cities vision to resilient to remote deployments. However, a higher spreading
+address these arising challenges. The renewed focus on smarter _ factor also lowers the data rate, leading to longer transmission
+cities will not only lead to a better utilization of infrastructure time and increasing energy drainage [5].
+
+and improvements in energy efficiency and services, but will Over the past few decades, the deployment of large-scale
+also ensure that cities remain globally competitive and attractive. __ networks was almost always associated with large telco oper-
+Smart cities include many application scenarios which have ators. However, with the advent of simpler LPWAN technol-
+particularly been of a great interest to local governments [2] ogies, emergent network deployments can be carried out by
+
+ranging from smart parking, pollution monitoring, occupancy smaller sized new comers to the market or by the end-users
+estimation, smart lighting, smart metering, asset tracking, waste themselves. Accordingly, the harmonization and integration of
+management to waterevel monitoring. Among the many smart such deployments becomes of utmost importance to allow the
+cities technology drivers is the Internet of Things (loT) that plays LPWAN to provide a seamless continuum and avoid unnec-
+a major role in shaping smart cities and their future road-map _ essary capital investment. The harmonization needs to be
+[3]. At the heart of the smart city model, a massive number of accounted for not only in the technology, but also in the way
+
+loT sensors collect data from their surroundings to enable back-__ the network is designed, tested, and in the quality assurance.
+end analytics [4]. These analytics draw insightful understand- Ongoing standardization efforts for loT data network infrastruc-
+ing of the current state of a city and project different solutions _ tures exist [6]; nevertheless, standardization for the network
+based on the evolving Artificial Intelligence (Al). design and implementation phases is still underexplored.
+
+To cater to battery-powered loT wireless devices, several In this article, we present an end-to-end framework based
+technologies have been proposed, collectively referred to as__on the lessons learned from the deployment of a large-scale
+low power wide area networks (LPWAN) aiming for an extend- —_ LPWAN for smart cities application in Melbourne, Australia. The
+
+framework provides a blueprint to guide the process of network
+Bassel Al Homssi, Akram Al-Hourani, Kagiso Magowe, James Delaney, Neil Tom, development all the way from the use-case scenario creation,
+Sithamparanathan Kandeepan, Karina Mabell Gomez, and Ke Wang are with the to the radio design methodology, network architecture, net-
+School of Engineering, RMIT University. work management, implementation and finally the testing and
+Hans Wolf and Joan Ying are with the City of Whittlesea Council and Banyule City quality assurance. The framework is developed and put into
+Council, respectively. action through the development of the Northern Melbourne
+Simon Maselli is with Minnovation Australia, Smart Cities Network (NMSCN) project, which is the largest
+Corresponding author A. AFHourani: e-mail: akram.hourani@rmit.edu.au single deployment of an open-access LPWAN network in Vic-
+Digital Object denier: 10.1109/107M.001.2000179 toria, Australia. The NMSCN network has already integrated
+IEEE Internet of Things Magazine * March 2021 2576-3180/21/$25.00 © 2021 IEEE 53
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 12,2026 at 06:38:00 UTC from IEEE Xplore. Restrictions apply.
+
+seare sav au | |
+
+===== A_Framework_for_the_Design_and_Deployment_of_Large-Scale_LPWAN_Networks_for_Smart_Cities_Applications-2..txt =====
+oT gateway Hy
+ToT device a
+
+Coverage a)
+
+FIGURE 1. loT Smart city concept in different urban environments where radio coverage largely depends on the interference levels and
+
+the propagation conditions.
+
+48 LoRaWAN gateways and 294 sensors across the five con-
+tributing local council areas. The framework underscores the
+network design, radio frequency testing, connectivity testing,
+and quality assurance of the network. Ultimately, the frame-
+work is aimed to help network planning engineers, researchers
+and decision makers alike to gain insightful understanding of
+the challenges and opportunities of large scale deployments,
+as well as facilitate better harmonization in future loT networks
+and expansions.
+
+NORTHERN MELBOURNE SMART CITIES NETWORK
+
+The Australian Government launched the smart cities plan in
+2016 as a long-term framework to support the growth of the
+cities and suburbs. The aim of this framework is to achieve high-
+er sustainability, better productivity, and more liveable cities.
+One of the main pillars of this plan is the use of Smart Technok-
+ogy to drive investment and policies [7]. Smart Technology is
+a broad term, but the plan has further emphasized the impor-
+tance of open and real time data for informing better policies
+and planning, To kick start the plan, AUD $50 million (around
+USD $35 million) were awarded in the form of competitive
+grants to the bidding councils.
+
+The bid to build the NMSCN network was successfully select-
+ed and the project was awarded AUD $1.5 million to build an
+open loT network covering spots across the five contributing
+councils [8]. The network is purposed to gather sensor data
+to support further analytics required to monitor and improve
+the efficiency of existing services and to ultimately support the
+potential of new service delivery. The NMSCN is overarching a
+diverse combination of inner city, interface, and rural councils
+as illustrated in Fig. 1. To offer services to their respective com-
+munities, the contributing local councils maintain many assets
+such as public buildings, parks, footpaths, roads, playgrounds,
+public toilets, and public BBQs, among many others. However,
+prior to the Australian Government initiative, councils invested
+a considerable amount of time and money in the construction
+and maintenance of public assets with little data showcasing
+their actual usage. Hence, one of the main objectives of the
+NMSCN project is to enable the collection of data on the usage
+of public assets by the community. This enables councils to pro-
+mote the following objectives:
+
+Offer new services such as advising the community about air
+quality and water levels in the local creeks.
+
+Develop trigger-based alert systems for both public safety and
+internal staff use.
+
+Understand community demands and better allocate assets
+and services.
+
+Invest in future services based on data trends and community
+behavior prediction.
+
+Motivate innovation by allowing open-access to the network
+by the public.
+
+The technical objective of the NMSCN project is to establish
+an open-access LoRaWAN network consisting of an initial roll
+out of 48 gateways and 294 sensors. Nevertheless, the ultimate
+goal of the project is for the network to be scalable and engulf
+more sensors managed by the councils or the community in the
+short-term future. The choice of the sensors was based on the
+overwhelming interest shown by the councils in five use-cases
+during the initial consultation phases of the project:
+
+Waste management sensors to capture the bin usage and
+determine trends of usage over time across the community.
+
+Water level sensors to monitor the levels of water in creeks
+and alert councils in the case of flooding and to monitor levels
+in regional area fire fighting water towers.
+
+Occupancy estimation sensors to anonymously capture
+data of pedestrian traffic in shopping strips, public parks and
+other public areas of interest.
+
+Environmental sensors as a new service to understand local-
+ized air quality, humidity, temperature and other environmental
+parameters.
+
+Asset tracking sensors to better track mobile council ser-
+vices such as street sweepers, mowers and council vehicles to
+better allocate these resources.
+
+In total, eight organizations were working together to
+deliver this largest open-access loT network in Victoria. The
+project is a manifestation of the collaboration work between
+councils, universities and industry. Please refer to the official
+web page of the project for more details about the contrib-
+uting partners. Five Councils came together to be part of the
+NMSCN project: City of Whittlesea Council (lead council),
+Banyule City Council, Moreland City Council, Mitchell Shire
+Council and Nillumbik Shire Council. Royal Melbourne Insti-
+
+54
+
+IEEE Internet of Things Magazine * March 2021
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 12,2026 at 06:38:00 UTC from IEEE Xplore. Restrictions apply.
+
+| | HOMSSI_LAYOUT.indd 54
+
+seare sav au | |
+
+===== A_Framework_for_the_Design_and_Deployment_of_Large-Scale_LPWAN_Networks_for_Smart_Cities_Applications-3..txt =====
+ser Plane
+
+_——— Control Plane
+
+LoRaWAN Gateway control functions
+
+‘LoRaWAN payload data
+
+(C)
+
+LoRaWAN Gateway
+
+= =
+
+LoRaWAN Sensors 4G Sensors
+
+LoRaWAN
+
+janagement System
+
+LoRaWAN data
+forwarding
+
+LoRaWAN and 4G
+data forwarding I
+
+Data Analytics
+
+== = 4G connectivity (via cellular network)
+
+—— _ LoRaWAN connectivity
+
+=== Internet backbone
+
+FIGURE 4. Cellular loT model network architecture adopted in NMSCN.
+
+tute of Technology (RMIT) University is a partner responsible
+for grant preparation, network design, testing and quality
+assurance. La Trobe University is another partner respon-
+sible for the data analytics and visualization. Minnovation
+Australia is the chosen partner responsible for the supply of
+the sensors and gateways along with all associated installa-
+tion services as well as hardware maintenance and support.
+This project attracted two prestigious industry awards from
+Municipal Association of Victoria (MAV) Technology Awards
+for Excellence 2020, and loT Alliance Australia (loTAA)
+Smart Cities Award for 2020.
+
+DESIGN FRAMEWORK
+
+NETWORK ARCHITECTURE
+
+In principle, the adopted layout in NMSCN follows the typical
+cellular network topology, where loT devices communicate
+directly with their serving LoRaWAN gateways. The network
+primarily utilizes LTE backhaul over commercial telecom oper-
+ators. In some cases, where the LoRaWAN coverage becomes
+inadequate, specifically when the loT devices are quite sparse,
+4G LTE radio modules are utilized such that the loT traffic is
+handled directly by the commercial telecom operators. Figure 2
+illustrates the end-to-end connection and highlights the adopted
+network architecture in NMSCN which is constituted of the
+following:
+
+loT Devices: having different types of sensors as indicated in
+the previous section, equipped with the radio network access
+modules.
+
+LoRaWAN Gateways: responsible for the reception, demod-
+ulation and decoding of the LoRaWAN transmissions. LORaWAN
+Gateways relay the aggregated traffic via LTE backhaul.
+
+LoRaWAN Management Network: used for extracting the
+payload data sent from the gateways. For this project, an open
+platform, The Things Network (TTN), is utilized to enable public
+access to community users.
+
+Network Management System (NMS): developed by the
+industry partner, the platform is called Alpha-X'. The platform
+monitors and manages the health of the network and its ele-
+ments through the control plane. The NMS reduces the man-
+agement workload and classifies and predicts battery usage
+based on consumption trends. It also provides tools that allow
+the user to set up templates of device types and network types
+to efficiently assign those settings to multiple devices optimizing
+
+the management in large-scale loT networks. In addition to con
+trol plane management, the developed NMS is also responsible
+for the aggregation of the payload from both the TTN and LTE
+networks, where the aggregated payload data is forwarded to
+the data analytic/visualization platform.
+
+Cloud Data Platform: utilized for data storage, analytics,
+and visualization. The cybersecurity of the LoRa network is
+managed by TTN, whereas that of the 4G network is managed
+by the LTE provider. The authentic security of the gateways and
+devices is managed by Minnovation instead.
+
+DESIGN METHODOLOGY
+The main objective of the radio access network design phase
+is to determine suitable locations for the gateways. Figure 3
+illustrates the network design process that was developed in
+NMSCN. Ideally, each gateway is expected to serve multiple
+sensors to optimize the cost-effectiveness of the deployment.
+Hence, optimal gateway locations are those nearest to clusters
+of sensors. Geographical areas that include clusters of sensors
+are referred to as sites. To determine the optimal location of
+the gateway for a given site we propose the following scheme:
+
+Site survey: Performing site visits is a crucial step to identify
+candidate locations for installing the gateways and sensors. For
+instance, it is preferred to install the gateway in an open area
+that maximizes the line-of sight probability with the sensors [9].
+
+RF Ray Tracing: After identifying the candidate locations, we
+further optimize the selection based on iterative RF ray-tracing
+simulations. In addition to the candidate locations, the simulator
+also incorporates two important geographic data: (i) the terrain
+data, often called digital elevation model (DEM), and (ii) the
+building geometry and heights, often referred as the buildings
+footprint which is a 2.5D data-set.
+
+Coverage Mapping: The coverage of radio service is
+determined by the ability of the receiver to decode the
+transmitted message correctly. This is dependent on both
+the received signal power and the surrounding noise and
+interference. Thus, in addition to the ray-tracing simulation
+it is important to get the interference statistics (or at least
+the average interference power) around the selected sites
+because the network is operating in the license-free ISM
+band. See the references cited herewith for further details
+about interference modeling [10]-[12]. The power level at
+which an acceptable success rate is maintained is called the
+sensitivity of the gateway and is dependent on the utilized
+
+IEEE Internet of Things Magazine * March 2021
+
+55
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 12,2026 at 06:38:00 UTC from IEEE Xplore. Restrictions apply.
+
+| | HOMSSI_LAYOUT.indd 55
+
+seare sav au | |
+
+===== A_Framework_for_the_Design_and_Deployment_of_Large-Scale_LPWAN_Networks_for_Smart_Cities_Applications-4..txt =====
+GIS data H Physics
+r H {Rectification
+
+Use oe ; RSSI Coverage [Simulated 1 J Network |_[ tnstattaion |_ J .
+cases Site survey RF tay tracing ‘mapping [coverage *) locations [7] deployment QA Completion
+
+' Gateway Sensitivity H
+
+H specifications threshold H
+
+H Average ‘ ==
+
+H iH cd Tterference ; | Saas
+
+' RE Optimization J
+
+FIGURE 3. Network design methodology utilized in NMSCN to achieve the the design objectives.
+
+spreading factors in LoRa modulation [5]. Higher spreading
+factors provide better coverage, but require longer time-on-
+air, which shortens the device's battery lifetime. Hence, it is
+desirable to utilize the lowest spreading factor to lower the
+operational costs arising from battery replacement. It is sim-
+pler to communicate the outcome of this step as a coverage
+contour, similar to the one in Fig. 6. Radio coverage design
+is typically an iterative process since the obtained coverage
+by simulation is still an estimate and cannot incorporate pre-
+cisely all real-wold factors, including surface materials and
+foliage, among many more. Thus, some sites may require
+optimization post-installation using radio frequency (RF) test-
+ing, which is further discussed in a later section.
+
+IMPLEMENTATION
+
+The industry partner developed the majority of the loT
+devices by integrating commercially available modules and
+in-house developed firmware. The integration also includes
+the mechanical housing of loT devices and the battery man-
+age.ment system. The gateways and some sensors required
+larger rechargeable batteries with solar power system inte-
+gration. The rooftop installations of the gateways typically
+require 60 minutes to complete onsite since the gateways
+themselves are self-contained packages that are specifically
+designed to minimize site installation. Similarly, each sensor
+requires around 45 minutes to install since the sensors are
+also self-contained units, whereas larger sensors that require
+an external solar panel each needed approximately 1.5 hours
+to complete.
+
+One of the main challenges of the project is the stringent
+installation timeline in addition to the COVID-19 pandemic that
+restricted the typical access to sites and imposed certain work
+restrictions. Some installations also included hurdles such as sun
+shading which limited the flexibility for solar panel installations
+and did not always coincide with the optimal location for cover-
+age. Figure 4 illustrates the implementation phase and highlights
+examples of the different installation types completed in the
+network.
+
+The implementation process started with the installation of
+the gateways first in order for the coverage testing to take place
+and validate the sensor locations. Accordingly, the results from
+the testing are utilized to feedback the design phase in order to
+sustain the gateway connectivity.
+
+COVERAGE VALIDATION AND QUALITY ASSURANCE
+
+RF TESTING AND OPTIMIZATION
+The validation of the radio network performance is an import-
+ant part of the overall verification and quality assurance since
+only field measurements can reveal the real performance of
+the network in comparison to the expected performance in
+the design phase. The proposed methodology utilized for
+the testing is illustrated in Fig. 5 where we utilize a hanc-held
+
+LoRaWAN device referred to as a packet tester and further
+explained hereafter.
+
+Packet tester: A device we developed at RMIT University in
+order to facilitate the radio coverage validation. This device sends
+LoRaWAN frames to the deployed network and logs the proper-
+ties of these frames including geographic coordinates, spreading
+factor, transmit power, and frame sequence number. The devel-
+oped device is shown in Fig. 5 alongside the basic end-to-end
+architecture of the network testing system. The testing mech-
+anism utilizes similar infrastructure to the gateways deployed
+along with an additional cloud-based server to extract and store
+the data received from the testing device via the LoRaWAN
+network. The packet tester is primarily built using available off-
+the-shelf modules to achieve better interoperability with common
+LoRaWAN network server and/or application server. The param-
+eters of testing scenarios are highly configurable, providing the
+flexibility to configure the LoRaWAN serial keys as well as the
+spreading factor, transmit power, frequency sub-band, and finally
+the total number of frames to send for a specific test.
+
+Pin-point test: The first test is to perform pin-point measure-
+ments. The packet tester is configured to send a fixed number
+of frames once it is positioned at the potential locations of the
+loT sensors. The ratio of the number of successful frames to
+the total number of frames is used to estimate the probability
+of frame success rate. If the probability is higher than a certain
+threshold, the sensor location is approved for installation. If that
+is not the case, another location is proposed instead.
+
+Coverage test: The second test is conducted via a drive
+around the gateway location. The packet tester is configured
+to continuously transmit LoORaWAN frames while in-motion on
+a selected route. The drive routes are selected to account for
+various distances around the gateway as depicted in Fig. 5.
+
+The geographic coordinates are also logged by the packet
+tester in order to identify the locations from where the frames
+where transmitted. The transmitter log is extracted from the
+packet tester, whereas the receiver log is obtained from the
+cloud server. Both logs are compared in order to identify the
+lost and successful frames.
+
+To expand the measured coverage to a larger grid, we fur-
+ther use these frames to tune the simulation-based coverage
+model. This is done by tuning the simulated coverage such that
+the discrepancy between the simulation and measurements are
+minimized, in particular by minimizing the root mean square
+error (RMSE) [13]. The resulting coverage of the gateways in
+the NMSCN project is depicted in Fig. 6 for data rates DRO and
+DRS (spreading factors SF12 and SF7 respectively), The overall
+coverage guides the councils to direct future candidate locations
+of new sensors as well as identifying black spots where the cov-
+erage requires enhancement using future gateway installations.
+
+INSTALLATION QUALITY ASSURANCE AND TROUBLESHOOTING
+Quality assurance is performed to assess the implementation
+and ensure the connectivity of the different loT radio network
+
+56
+
+IEEE Internet of Things Magazine * March 2021
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 12,2026 at 06:38:00 UTC from IEEE Xplore. Restrictions apply.
+
+| | HOMSSI_LAYOUT.indd 56
+
+seare sav au | |
+
+===== A_Framework_for_the_Design_and_Deployment_of_Large-Scale_LPWAN_Networks_for_Smart_Cities_Applications-5..txt =====
+End-to-End Connectivity
+
+Packet Tester
+Device
+
+oy) _ »)
+
+LoRaWAN Gateways
+
+((9))
+) — §—
+
+LoRaWAN Network
+
+Management Server Cloud-based data sink
+
+test and sensor location for pin-point test
+
+LoRaWAN gateway ———
+(9)
+i Cutoff Rss! /¢—Eeedback to minimize error
+% Packet Tester __
+i device ; ;
+By Ray tracing ‘Simulation Maximum
+5 RSSI coverage Likelihood
+5 Pack
+racket tester
+Success /Fail [>] Test coverage
+= LoRaWAN gateway ——-
+. = Packet Tester | Acceptit
+i probability is
+a @ a Packet tester
+above 70%
+g . cal Success
+3 - Probability
+z Clery Packet tester Ra Thee
+5 total packets different
+jem _| Jocation if not
+(a) Maps representing drive route for coverage (b) Test methodology schematic diagram — | (c) Post-processing
+
+FIGURE 4. Installation photos for all the different network elements included in the NMSCN project.
+
+elements. The quality assurance employed in the NMSCN proj-
+ect is based on two key criteria:
+
+Connectivity status of network elements: In addition to
+the radio coverage verification, we further test the end-to-end
+connectivity of gateways and sensors with the NMS. A trouble-
+shooting plan is developed to tackle the connectivity issues that
+may arise due to coverage limitations or intermittent connec-
+tion. The plan also includes troubleshooting steps which include
+tuning the spreading factor, transmit power, frequency sub-
+band as well as identifying hardware and software deficiencies.
+If the issue persists, a 4G module is proposed to substitute the
+LoRaWAN module.
+
+Quality of installation: A procedure conducted to ensure
+that the physical installation is following the project specifica-
+tions and the different international and national organizations’
+requirements. This includes the verticality of the antennas, RF
+and electrical cabling ratings such as UV protection, as well as
+battery performance, PV panels’ performance, cable conduits,
+enclosure ratings among many other standards and regulations.
+
+PROJECT MANAGEMENT OF NETWORK DEPLOYMENT
+
+The overall timeline of the project spanned over 18 months
+to achieve the following key milestones: (i) smart cities net-
+work design, (ii) procurement of gateways, sensors and installa-
+tion services, (iii) implementation of the network elements, (iv)
+implementation of data visualizations, and (v) broader engage-
+ment with the community. The project was managed using
+PRINCE2 project management methodology and processes.
+Product-based planning is utilized to identify and document a
+list of activities to ensure clear communication among the team.
+Due to the collaboration of eight different project partners,
+monthly team meetings to communicate the project progress,
+discuss issues, plan for activities and make decisions were con-
+ducted. Furthermore, the goal of this project is to change the
+councils’ conventional methodology from reactive to proac-
+tive decision making to provide services which are now driven
+through data and trends. On the other hand, to raise interest
+
+and awareness, the technical project partners delivered multi-
+ple informative workshops followed by targeted meetings to
+engage the councils. During the final stages of the project, sev-
+eral training sessions have been conducted to provide the coun-
+cil staff with expertise to manage the network prior to handover.
+
+LESSONS LEARNED
+
+This project has provided a great opportunity to get detailed
+insights both on the technical level and the administrative level
+when deploying large-scale loT networks.
+
+TECHNICAL LESSONS
+
+Lesson 1-Conduct a thorough radio plan When
+deploying loT networks in urban environments it is import-
+ant to validate the marketing claims of many loT technologies
+in regards to the distance and performance, as most of the
+marketing figures do not report the success rate or the level
+of interference at which the measurements are conducted.
+Thus, radio planning is a crucial step for successful planning
+and dimensioning of the networks, especially for large-scale
+multi-gateway networks. This was one of the key success factors
+on the project.
+
+Lesson 2-Get the right sensor: With the hype associated
+with loT, it is important to frame the targeted outcome from
+the collected data, because the choice of the type of sensors
+is crucial in achieving the desired outcomes. For instance, an
+loT motion detection sensor still cannot provide occupancy
+data whereas a sensing camera can. This project leveraged the
+strength of the industry partner in developing custom-made sen-
+sors and was another key success factor.
+
+Lesson 3-Develop a clear quality assurance process: A
+quality assurance process is a paramount framework aiming
+to ensure complete implementation, quality installation and
+reliable connectivity of loT devices according to the planned
+use-cases and network design. This process has both technical
+and financial implications and thus needs to be clearly devel-
+oped based on industry best practices. In this project, a clear
+
+IEEE Internet of Things Magazine * March 2021
+
+v7
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 12,2026 at 06:38:00 UTC from IEEE Xplore. Restrictions apply.
+
+| | HOMSSI_LAYOUT.indd 57
+
+seare sav au | |
+
+===== A_Framework_for_the_Design_and_Deployment_of_Large-Scale_LPWAN_Networks_for_Smart_Cities_Applications-6..txt =====
+“Gateway Installation
+
+Electrical power cable
+inside UV conduit
+
+LoRaWAN gateway
+inside enclosure
+
+Electrical feed
+
+ISM-band monopole
+antenna
+
+Solar panel to provide
+
+Mechanical support for
+solar panel
+
+4G asset tracking sensor
+powered via car battery
+
+LoRaWAN bin sensor
+powered with battery
+
+4G water level sensor
+wered with by
+
+jebbouine
+
+WOE MOISE MEOE | TaeASE MASE
+Longitude
+
+roa
+
+the coverage for DR5.
+
+QA process was continuously developed and visited that has
+ensured high quality standards.
+
+ADMINISTRATIVE LESSONS
+
+Lesson 4-End-users’ engagement: The end-user engage-
+ment is imperative to enable a more directed and timely project
+delivery. In this project, the councils were fully engaged, facil-
+itating a seamless transition between different project phases
+which has led to a timely project delivery.
+
+Lesson 5-Inclusive project management: The importance
+of having periodical meetings that involve different stakeholders
+(contractor, network designers, data scientists, and clients) leads
+to adaptive and robust decision making. This project followed
+inclusive decision making that has led to its agile roll-out and
+timely completion.
+
+FIGURE 6. Overall NMSCN outdoor coverage map. The light green represents the coverage for DRO while the dark green represents
+
+ADVANCEMENT TO 5G TECHNOLOGIES AND DEPLOYMENT
+
+On one hand 5G, formally known as the IMT-2020 stan-
+dard, includes three classes of use cases: (i) mobile broad-
+band, (ii) ultra reliable low latency (URLL), and (iii) massive
+machine-type communications (mMTC) with a focus on tel
+co-deployed networks which sustain a controlled level of
+interference and quality of service. On the other hand, unli-
+censed LPWAN such as LoRaWAN particularly complement
+MMTC use case in 5G by empowering end-users to deploy
+their own networks (similar to the amalgam of LoRaWAN
+and 4G deployed in this project). This hybrid approach in
+having complementary systems, i.e. 5G-mMTC and LPWAN,
+is significantly accelerating loT innovation and addresses a
+wider range of techno-economic needs. This complementary
+nature is akin to the very successful legacy co-existing of
+cellular and wireless local area network (WLAN) technolo-
+
+58
+
+IEEE Internet of Things Magazine * March 2021
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 12,2026 at 06:38:00 UTC from IEEE Xplore. Restrictions apply.
+
+| | HOMSSI_LAYOUT.indd 58
+
+seare sav au | |
+
+===== A_Framework_for_the_Design_and_Deployment_of_Large-Scale_LPWAN_Networks_for_Smart_Cities_Applications-7..txt =====
+gies that is continuing to play a major roll in last-mile access
+through 5G and Wi-Fi.
+
+CONCLUSION
+
+The deployment of a large-scale network has almost always
+been associated with large telecom operators. However, with
+the introduction of simplified loT access technologies, the
+deployment of large-scale networks is now the responsibility
+of broader entities using free-access radio bands. Therefore,
+it is crucial to develop a harmonized framework that can
+facilitate the different aspects of network deployments. In
+this article, we detailed some of the lessons learned from a
+large-scale deployment of an open loT radio access network,
+where we presented the developed framework for design-
+ing, implementing, testing and managing this deployment.
+We highlighted the different challenges faced in the project
+on both technical and management levels. Moreover, the
+NMSCN project attracted two prestigious industry awards
+from Municipal Association of Victoria (MAV) Technolo-
+gy Awards for Excellence 2020, and loT Alliance Australia
+(loTAA) Smart Cities Award for 2020.
+
+REFERENCES
+
+[1] A. Zanella et al,, “Internet of Things for Smart Cities,” IEEE J. Internet of Things,
+vol. 1, no. 1, Feb. 2014, pp. 22-32.
+
+[2] A. Solanas et al, “Smart Health: A Context-aware Health Paradigm within
+‘Smart Cities,” IEEE Commun. Mag,, vol. 52, no. 8, 2014, pp. 74-81
+
+[3] W. Ejaz et al,, “Efficient Energy Management for the Internet of Things in
+Smart Cities,” IEEE Commun. Mag., vol. 55, no. 1, 2017, pp. 84-91
+
+[4] Y. Mehmood et al, “Internet-of-Things-based Smart Cities: Recent Advances
+and Challenges,” IEEE Commun. Mag,, vol. 55, no. 9, 2017, pp. 16-24.
+
+[5] B. Al Homssi et al, “On the Bound of Energy Consumption in Cellular loT Net-
+works,” IEEE Trans, Green Commun. and Networking, pp. 1-1, 2019.
+
+[6] “IEEE Standard for an Architectural Framework for the Internet of Things
+(loT),” IEEE Std 2413-2019, 2020, pp. 1-269.
+
+[7] Australian Government, Department of the Prime Minister and Cabinet,
+“Smart Cities Plan,” Australian Government, May 2016, [online]. Available:
+https://www.infrastructure.gov.au/cities/smart-cities/plan/ files/Smart Cities
+Plan.pdf [Accessed: May 2, 2020].
+
+[8] Australian Government, Department of Infrastructure, Re.gional Development
+and Cities, “Northern Melbourne Smart Cities Network, enabling data to drive
+change,” [online]. Available: https://www. infrastructure. gov.au/cities/smart-cit-
+ies/collaboration-platform/northern-melbourne-smart-citiesnetwork.aspx
+
+[9] A. A-Hourani, “On the Probability of Line-of-Sight in Urban Environments,”
+IEEE Wireless Commun. Lett., 2020, pp. 1-1.
+
+[10] B. Al Homssi et al,, “Free Spectrum for loT: How Much Can It Take?” in 2018
+IEEE International Conference on Communications Workshops (ICC Work-
+shops), May 2018, pp. 1-6.
+
+[11] B. A. Homssi et al, “Machine Learning Framework for Sensing and Modeling
+Interference in loT Frequency Bands,” in IEEE J. Internet of Things.
+
+[12] A. AFHourani, “Interference Modeling in Low-altitude Unmanned Aerial Vehi-
+cles,” IEEE Wireless Commun. Lett., 2020.
+
+[13] R. J. Rossi, Mathematical Statistics : An Introduction to Likelihood Based Infer-
+ence. Newark: John Wiley & Sons, 2018.
+
+BIOGRAPHIES
+Basset. AL HOMsst is currently working toward his Ph.D. degree in the School of
+Engineering, RMIT University, Melbourne, Australia. His research interests are
+focused on wireless sensor networks, the Internet of Things, and the practical
+deployment of large-scale IoT networks.
+
+‘AKRAM ALHOURANI is the lead investigator on this project at RMIT University. He
+is a senior lecturer and the program manager for the Master of Engineering (Tele-
+communication and Networks) at the School of Engineering, RMIT University,
+Melbourne, Australia. He completed the Ph.D. degree in 2016 from RMIT U
+versity. He has extensive industry/government engagement as a chief investigator
+in multiple research projects related to the Internet-of-Things, smart cities, and
+satellite/wireless communications.
+
+Kaciso MAGows holds a doctoral degree in electronics and telecommunications
+engineering and is currently a research fellow with the School of Engineering,
+RMIT University. His research interests include communication theory, informa-
+tion theory, statistical signal processing, application of linear algebra, cognitive
+radios, localization, Internet of Things, and the application of machine learning,
+
+JAwes DELANEY is currently working toward his master of engineering at the School
+of Manufacturing, Materials and Mechatronics Engineering, RMIT University,
+Melbourne, Australia. He received a bachelor of engineering in 2018 also from
+RMIT University, specializing in electrical and electronic engineering. His current
+research interests include Internet of Things, smart cities, and machine learning for
+wireless communications.
+
+Net Tom completed his master of engineering specialized in telecommunications
+and networks from RMIT University in 2019. He graduated with a bachelor of
+technology in 2017 specialized in electronics and communication engineering.
+His current work and interests focus on the field of loT.
+
+JOAN YING is the IT Infrastructure Project Manager at the Banyule City Council
+and a project manager of the Northern Melbourne Smart Cities Network project.
+With a master’s degree in information technology and over 10 industrial certiti-
+cations, she has successfully delivered many projects, including cloud migrations,
+network deployments, security services and unified communication solutions.
+
+HANS WOLF holds a masters of business (information technology). He is the Chief
+Information Officer at the City of Whittlesea and sponsor of the Northern Mel
+bourne Smart Cities project. He has led technology teams in various public and
+private sector organizations ensuring stakeholder value by leveraging technology.
+
+SIMON MASEL! is the founder and CEO of Minnovation Australia (the industry
+partner in this project). His Australian based company manufactures loT and
+telemetry products that have been deployed across Australia and New Zealand,
+South East Asia and Europe for dozens of global brands.
+
+SITHAMPARANATHAN KANDEEPAN is a full professor and the Discipline Leader for
+Telecommunications and Photonics, School of Engineering, RMIT University. His
+areas of expertise include communication engineering, signal processing and
+networks. He has extensive experience in working with the industry for bringing,
+research to practice as well as conducting fundamental research.
+
+Ke WANG is a senior lecturer and Australian Research Council (ARC) DECRA
+Fellow at the School of Engineering, RMIT University. He has published more than
+120 papers, including more than 20 invited papers. His research interests mainly
+include optical wireless communications, underwater wireless communications,
+optical interconnects, and silicon photonic integration.
+
+KARINA MABELL GOMEZ is a network project manager at Milano Teleport, Italy. In
+2015, she served as a senior lecturer at the School of Engineering at RMIT Univer-
+sity, where her role was to coordinate several networking courses and supervise
+several Ph.D. and master students. She obtained her Ph.D. degree in telecommu-
+nications from the University of Trento, Italy.
+
+FOOTNOTES
+
+This work was parially funded by the Smart Cites and Suburbs Program, Deparment of Iniastucure, Transport,
+Regional Development and Communications, Austalian Goverment, Under the project, Norther Melbourne
+Saatt Cities Network, Enabling Data to Drive Change, grant numer SCS69259,
+
+" hp/alphax.com.au/
+
+IEEE Internet of Things Magazine * March 2021
+
+59
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 12,2026 at 06:38:00 UTC from IEEE Xplore. Restrictions apply.
+
+| | HOMSSI_LAYOUT.indd 59
+
+seare sav au | |
+
+

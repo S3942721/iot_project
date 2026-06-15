@@ -1,0 +1,507 @@
+===== EVALUATION_OF_PREDICTION_ACCURACY_FOR_THE-1..txt =====
+q
+
+University of
+HUDDERSFIELD
+
+University of Huddersfield Repository
+
+Lazaridis, Pavlos, Bizopoulos, Aristotelis, Kasampalis, Stylianos, Cosmas, John and Zaharis,
+Zaharias D.
+
+Evaluation of prediction accuracy for the Longley-Rice model in the FM and TV bands
+Original Citation
+
+Lazaridis, Pavlos, Bizopoulos, Aristotelis, Kasampalis, Stylianos, Cosmas, John and Zaharis,
+Zaharias D. (2013) Evaluation of prediction accuracy for the Longley-Rice model in the FM and
+TV bands. In: XI International Conference — ETAI 2013, 26-28 September 2013, Lake Ohrid, FYR
+of Macedonia.
+
+This version is available at http://eprints.hud.ac.uk/id/eprint/21830/
+
+The University Repository is a digital collection of the research output of the
+University, available on Open Access. Copyright and Moral Rights for the items
+on this site are retained by the individual author and/or other copyright owners.
+Users may access full items free of charge; copies of full text items generally
+can be reproduced, displayed or performed and given to third parties in any
+format or medium for personal research or study, educational or not-for-profit
+purposes without prior permission or charge, provided:
+
+* The authors, title and full bibliographic details is credited in any copy;
+¢  Ahyperlink and/or URL is included for the original metadata page; and
+* The content is not changed in any way.
+
+For more information, including our policy and submission procedure, please
+contact the Repository Team at: E.mailbox@hud.ac.uk.
+
+http://eprints.hud.ac.uk/
+
+===== EVALUATION_OF_PREDICTION_ACCURACY_FOR_THE-2..txt =====
+EVALUATION OF PREDICTION ACCURACY FOR THE
+LONGLEY-RICE MODEL IN THE FM AND TV BANDS
+
+Pavlos Lazaridis', Aristotelis Bizopoulos', Stylianos Kasampalis”
+
+John Cosmas’, and Zaharias Zaharis*
+
+‘Alexander Technological Educational Institute of Thessaloniki, Dept. of Electronics, Sindos
+
+57400, Thessaloniki, Greece.
+
+Brunel University West London, School of Engineering and Design, London UB8 3PH, UK.
+$Aristotle University of Thessaloniki, GR-54124, Thessaloniki, Greece.
+
+Abstract- Accurate geographical coverage predictions
+maps for FM and TV are needed for channel and
+frequency allocations and in order to avoid unwanted
+interferences. The Longley-Rice model has been used
+for this purpose over the last four decades and still
+being used almost exclusively by the FCC in the
+United States. In this work a comparison is presented
+between the relative accuracy of this model in the
+VHE-FM and UHE-TV frequency bands. Simulations
+were made with accurate and up to date input data
+(antenna height, location, gain, transmit power, etc.)
+for the FM-TV stations provided by the ERT S.A.
+public broadcaster in the region of Thessaloniki —
+Greece. Finally, the calculated -— simulated results
+were confronted to field measurements using a Rohde
+& Schwarz FSH3 portable spectrum analyzer and
+high precision calibrated biconical and log-periodic
+antennas, and the errors between predictions and
+measurements were statistically analyzed in the two
+frequency bands. It has been found in this study that
+the Longley-Rice model, in general, overestimates
+field-strength values, but this overestimation is much
+higher in the VHF - FM radio band (88-108 MHz)
+than in the UHF-TV band (470-790 MHz).
+
+Index terms—VHF-UHF measurements, __field-
+strength, FM-TV coverage prediction, Longley-Rice,
+biconical antenna, log-periodic antenna, spectrum
+analyzer.
+
+1. INTRODUCTION
+
+The Longley-Rice model originally used for the
+planning of analogue TV broadcasting and channel
+allocation in the US in the 1960s, is still being used to
+date, [1]. In fact, it is the method of choice in the United
+States, and almost exclusively used in FCC (Federal
+Communications Commission) calculations. The FCC’s
+Office of Engineering and Technology (OET) has
+recently released an updated version of the model to
+calculate TV station coverage and potential interference
+in an attempt to repack the TV stations coverage areas.
+
+The analogue switch-off is now a reality in many
+European countries and in the United States, but the
+question of accurate coverage prediction is still open.
+Digital TV (DTV) makes the demand for accurate
+coverage prediction more important as operators of
+digital TV stations must ensure that their transmissions
+do not cause interference to other stations or to mobile
+telephony operators in nearby frequency channels
+(digital dividend). All these issues make the accurate
+coverage prediction and DTV transmitter distribution
+critical facts for the proper deployment of digital
+terrestrial television, [1-10]. Furthermore, the accurate
+prediction of FM radio coverage is also very important
+to FM broadcasters in order to impose them the correct
+maximum ERP (Effective Radiating Power) and to avoid
+long-distance (DX) interferences between stations using
+the same frequencies.
+
+In order to correctly evaluate the accuracy of a
+propagation model, and more specifically in this case, of
+the Longley-Rice model, extensive field measurements
+are required, and their confrontation to simulation
+results obtained by the propagation model, [1-4]. This is
+exactly the scope of this study, i.e. to compare accur
+field-strength measurements with simulation resu!
+the Thessaloniki-Greece area and evaluate the precision
+of the propagation model in various circumstances. Also
+in [4] some comparisons between measurements and the
+Longley-Rice model have been presented in the case of
+UHF DVB-T and, in a limited number of points, FM
+broadcasting. In this study, the coverage prediction maps
+and field-strength calculations were produced by the
+Radio Mobile software, [10] using the classic Longley —
+Rice ITM (Irregular Terrain Model), [1]. Therefore, in
+first place, an introduction of the propagation model and
+the required inputs will be made. Consequently, the
+measurements equipment and their precision will be
+described, followed by Tables comparing measured to
+simulated results, their statistical analysis, and, finally,
+the conclusions about the relative accuracy of the
+Longley-Rice model in the VHF-FM radio band and in
+the UHF-TV band.
+
+in
+
+Proceedings of the XI International Conference ETAI 2013, 26th -28th of September 2013, Ohrid, Republic of Macedonia
+
+===== EVALUATION_OF_PREDICTION_ACCURACY_FOR_THE-3..txt =====
+2. PROPAGATION MODEL AND SOFTWARE
+
+2.1 The Longley — Rice Propagation Model
+
+The Longley-Rice model is a radio propagation model
+for predicting the attenuation of radio signals for a
+telecommunication link in the frequency range of 20
+MHz to 20 GHz. The Longley-Rice model is also known
+as the Irregular Terrain Model (ITM) because it takes
+into account the terrain elevation and irregularities,
+(hills, mountains, etc.). It was created for the needs of
+frequency planning in television broadcasting in the
+United States in the 1960s and 1970s, and was
+extensively used for preparing the tables of channel
+allocations for VHF/UHF broadcasting. The Longley-
+Rice model has two calculation modes: a mode for
+predictions over an area and a mode for point-to-point
+link predictions. Like all other propagation models (e.g.
+ITU-R P.1546-4, [5-7]), the Longley-Rice model
+requires the input of certain general parameters needed
+for the propagation calculations. These are: the
+operating frequency, the length of the path, the
+polarization of antennas (the model considers that both
+antennas, transmit and receive, have the same
+polarization, vertical or horizontal), the heights of the
+antennas, the refractivity of the atmosphere, the effective
+earth curvature, the conductivity of the soil, the relative
+permittivity or dielectric constant of the ground and the
+climatic conditions. These parameters are sufficient for
+the calculation of the free-space loss, the ground
+reflection coefficients, the Fresnel parameters of knife-
+edge diffraction and thus the total electrical field
+strength.
+
+2.2. The Radio Mobile software
+
+The Longley — Rice model is implemented within the
+Radio Mobile software. Radio Mobile is a freeware able
+to calculate a wireless coverage map and point-to-point
+propagation loss, [10].
+
+The program obtains data for the terrain elevation from
+databases that are freely accessible through the internet.
+The main database is the STRM (Shuttle Radar
+Topography Mission) with a resolution of approximately
+90 metres for Europe and a much better resolution for
+the US.
+
+3. MEASUREMENTS-SIMULATIONS RESULTS
+
+The basic idea of this study is to compare simulated
+results with measurements at 11 points around the
+broadcasting site and at varying distances and angles.
+The measurements points are chosen in order to be
+
+representative of all kinds of propagation conditions
+from short to long distance and from Line-Of-Sight
+(LOS) unobstructed to severely obstructed. The signal-
+strength measurements were performed during the
+second half of 2012, and before the analogue TV switch-
+off of the Hortiatis mountain broadcasting site, that is
+serving the region of the city of Thessaloniki in northern
+Greece. The analogue TV stations were used in this
+study because their signal strength was much higher
+
+than the corresponding DTV signals (due to much
+higher ERP), and so the measurements results are more
+accurate.
+
+Table |
+A POINT-TO-POINT ANALYSIS FOR GRI PUBLIC ANALOGU
+(CH27 (519.25 MHz). COMPARISON BETWEEN MEASUREME!
+LONGLEY-RICE MODEL
+
+‘Analogue TV
+
+Measurements srs
+
+LAT: 0av7688
+
+LONG: 23099793
+1 [Rourtsi2m  Jaossanis oss] eo | ae | 20
+2 [CARREFOUR-II™ | so gsorgs| mossone| a1 | ane | a
+3 fouotanizasm loser |asanase| 1029 | re | oar
+4 [TEI som) |s06ss267 [22805705] rors | ost | sae
+5 rRoHMA6im Yiososura [rerio 669 | ota | as
+6 faetnonisim login |rsnm| 97a | war | ara
+7 fxonmosim loans |msieo| via | ome | as
+s fevzontiiém —Jrosiaio |zesseieo| 724 | sma | tar
+9 freniasnm ious |mmseso| os | 2 | xa
+tw [Peatamonss. | ogngsez|zasosen | ans | oa | an
+ur [iourRaKtasio | osgaiso| zai] aes | ws | ano
+
+Average error = +2.7 dB
+Standard deviation = 6.6 dB
+
+Table 2
+IS FOR GREEK PUBLIC FM RADIO, ERT-102.0
+EN MEASUREMENTS & THE LONGLEY-RICE,
+
+A POINT-TO-POINT ANAL!
+MHz. COMPARISON BE1
+MODEL.
+
+FM Radio
+Measurements srs
+Nop eee, [EAT | LONG. “Mesure Venaley: | Error
+1 Roumestn  Tanacass [zsosawe | woes | neo | aa
+2 [CARREFOUR SH Tapoarzes [z20860m | roa | ase | ara
+5 [ouoramzasn Yas [asaonco | oss | ose | a
+4 4.635267 | 22805703 | 87.7 28 451
+5 [ronan [osm [zearsve | ser | 7 | site
+6 [uetoxtcon lagagos [zee | ver fm | so
+7 [Rgunosin lasso [zaasae | ne | ats | ae
+8 [EVZoNtA14m | sr ogiaio | 22588160 | 63.0 163 +133
+» [veniasem —laeanw [nee | a2 | as | ass
+vo [reatamonssn lanoaysa fazsimers | aa | esa | sto
+ur frourmastasin [anaes [args | oer | 67 | sina
+
+Average error = +6.1 dB
+Standard deviation = 5.9 dB
+
+Proceedings of the XI International Conference ETAI 2013, 26th -28th of September 2013, Ohrid, Republic of Macedonia
+
+
+===== EVALUATION_OF_PREDICTION_ACCURACY_FOR_THE-4..txt =====
+In Tables 1 and 2, the simulations and measurements
+results for 11 different locations in the region around the
+city of Thessaloniki are presented. In all cases the
+broadcasting site was at the Hortiatis mountain antenna
+park, and more specifically the ERT S.A. public
+broadcaster’s antenna tower (N  40.597648-E
+23.099793), around 13 km south-east of Thessaloniki
+city centre at an altitude of 868m. Both TV and FM
+stations transmit from an antenna tower that has a
+height of 80m.
+
+The TV antenna UHF panels are located at the top of the
+tower at an average height of 70m on the tower while
+the VHF-FM panels are below them at an average height
+of around 50m on the same tower. The TV antenna
+system is a 6 bay — 3 directions UHF panel arrangement
+in horizontal polarization with a net gain of 14 dBd
+(after cable losses have been subtracted). The FM
+antenna system is a 6 bay — 3 directions FM panel
+arrangement in mixed (horizontal-vertical) polarizations
+with a net gain of 5 dBd in each polarization. Both
+antenna’s main lobe is at an azimuth of 285° towards the
+city centre. The TV transmitter has a power of 10 kW
+and an ERP of 54 dBW (250 kW), and the FM
+transmitter has a power of 20 kW and an ERP of 48
+dBW (63 kW).
+
+The simulation results are compared with highly
+accurate field measurements in Table | for TV and
+Table 2 for FM radio. The measurement equipment
+consists of a Rohde & Schwarz FSH-3 portable
+spectrum analyzer, factory calibrated with + 0.7dB
+accuracy, two high-precision calibrated biconical
+antennas by Schwarzbeck, SBA 9113 (SOOMHz -
+3GHz) and BBVU 9135 (30MHz - 1000MHz), a log-
+periodic precision calibrated Schwarzbeck antenna
+USLP 9143 (0.25 — 6 GHz), factory calibrated with +
+1.0dB accuracy, and low-loss cable Suhner GX-07272-
+D, 1.8 meters long with N-type connectors.
+
+The sample standard deviation was calculated between
+measured field-strength values and those predicted by
+the Longley-Rice model using the following commonly
+used equation with Bessel's correction:
+
+s= Xo
+
+where:
+
+N: number of measured data points (N=11)
+
+x;: Error between predicted and measured field-
+strength (dB) for data point i,
+
+ut: Average value of error (dB)
+
+In all presented simulations the antenna height was
+varied from 0.5m to 2.5 m and the value where the
+signal is maximum was held. The measurements with
+the spectrum analyzer were made with the MAX-HOLD
+option on and a corresponding change in the height of
+the receiving antenna, between 0.5 and 2.5 m from the
+ground, in order to have a correct correspondence
+between measurements and simulations procedures. This
+
+option is the simplest and fastest to implement, and it is
+also similar to the approach of a user moving his
+antenna trying to maximize his received FM-TV signal.
+
+For the above results, we took into account the operating
+frequencies, the transmission power P (kW), the
+Effective Radiated Power (ERP), the height of the
+
+antenna mast (m) and the type and gain of the
+transmitting antenna system (dBd or dBi).
+Minimum signal levels according for satisfactory
+
+coverage of analogue TV and average signal levels for
+DVB-T, and FM Stereo are shown in Table 3.
+
+Table 3. MINIMUM SIGNAL LEVELS FOR SATISFACTORY RECEPTION
+
+Analogue UHF-TV 70 dBuV/m
+Digital UHF-TV, DVB-T 47 dBuVim
+FM STEREO 54 dBuV/m
+
+4, COVERAGE MAPS
+
+Coverage maps were created using the “Single Polar
+Coverage” option of the software with 0.01° step size
+and with the correct antenna radiation pattern, as
+interpolated from the antenna manufacturer’s data, and
+with an azimuth of 285°, thus directed to the city centre.
+The ‘Cartesian Coverage’ option was not used because it
+was found to result in inaccuracies depending on the
+software version utilized.
+
+Google
+
+Fig. I. ET-3 TV station coverage map (for a receiving antenna
+
+height of 10m) from the Longley-Rice model along with the 11
+measurements points.
+
+Fig. 2. Coverage map of ERT FM Station 102 MHz, from
+Hortiatis mountain) for a receiving antenna height of 10m.
+
+Proceedings of the XI International Conference ETAI 2013, 26th -28th of September 2013, Ohrid, Republic of Macedonia
+
+
+===== EVALUATION_OF_PREDICTION_ACCURACY_FOR_THE-5..txt =====
+A much broader coverage area is predicted by the
+Longley-Rice model for the FM station transmitting
+from the same tower as the TV station. However, this
+prediction seems overly optimistic and could be
+misleading in the case of long-range (DX) interference
+studies. It should be noted that the colours in the two
+figures above do not correspond to the same field-
+strength values. Thus, the figures are just indicative of
+the general coverage area in the two cases.
+
+5. DISCUSSION
+
+Comparing the point measurements made with the
+spectrum analyzer and the simulation results, it is seen
+that the simulation is very near to the measured results
+(to within 2 dB) in the very short distance and
+unobstructed Line-of-Sight (LOS) point 1 for both FM
+and TV stations and similarly at point 2 that is also
+unobstructed LOS but at a larger distance. In the: eS
+the free-space propagation model is applicable. Points 4,
+6, 7, 10, 11 are, progressively, longer distance but fairly
+unobstructed LOS points. At these points it is seen that
+the Longley-Rice model clearly overestimates field-
+strength in the FM case, and this cannot be due to the
+calculation of diffraction losses. Most probably, this is
+due to the much stronger reflection of lower frequency
+PM radio signals leading to destructive vector addition
+at the measurement points, after a certain distance.
+
+It also is clearly seen by the statistical analysis of the
+results presented in the Tables above that the Longley-
+Rice model overestimates, in general, the measured
+field-strength (positive average values), However, the
+overestimation is much bigger for the lower frequencies
+of the VHF-FM band (much bigger average values of
+error than in the UHF-TV band). The standard deviation
+values are slightly higher in the UHF-TV band, most
+probably due to the higher diffraction losses in this case.
+
+6. CONCLUSIONS
+
+The measurements and simulation results using the
+Longley-Rice propagation model indicate that, when
+there is no significant obstruction of the Fresnel ellipsoid
+in the propagation path the model, that in this case is
+reduced to essentially the simple free-space propagation
+model, accurately predicts the field-strength values, at
+least at relatively short distances. As the distance
+increases, the accuracy gradually gets worse, especially
+for points 10 and 11, where an overestimation of the
+order of 10 dB by the model in the FM band shows the
+shortcomings of the free-space model for long distances
+at lower VHF frequencies. A 2-ray model with a break-
+point distance depending upon the antenna heights
+would be preferable in this case. On the other hand, for
+propagation paths with large obstructions of the Fresnel
+ellipsoid leading to substantial attenuations of the order
+of 15 — 30 dB (measurement points 2, 5, and 8) the
+Longley-Rice model seems again to underestimate the
+obstruction loss in the vast majority of cases (and mainly
+in the FM long distance cases). Consequently, there is a
+
+need for correcting the model, especially in the large-
+distance (DX) mode, and in the coverage limit zone,
+because as it is, its behaviour is overly optimistic and
+particularly in the FM band where, even in the absence
+of obstructions and in longer distances, the calculated
+values can be 10 dB higher than the measured field-
+strength values.
+
+ACKNOWLEDGMENT
+
+This work is sponsored by NATO's Public Diplomacy
+Division in the framework of "Science for Peace"
+through the SfP-984409 ORCA project.
+
+7, REFERENCES
+
+[1] P. L. Rice, A. G. Longley, K. A. Norton, and A. P.
+Barsis, “Transmission loss predictions for tropospheric
+communications circuits,” Technical Note 101, U.S.
+Dept. of Commerce NTIA-ITS, 1967.
+
+[2] ‘A survey of wireless path loss prediction and
+coverage mapping methods’, by C. Phillips, D. Sicker,
+and D. Grunwald, IEEE Communications, Surveys,
+Tutorials, vol. 15, 1, pp. 255-270, 2013.
+
+[3] ‘Comparison of UHF measurements with the
+propagation model of Recommendation ITU-R P.1546’,
+the Radiocommunications Agency Netherlands, 2010.
+[4] ‘Comparison of Longley-Rice, ITM and ITWOM
+propagation models for DTV and FM broadcasting’, S.
+Kasampalis, P.I. Lazaridis, Z.D. Zaharis, A. Bizopoulos,
+S. Zettas, and J. Cosmas, GWS-2013 conference,
+Atlantic City, NJ, USA, June 2013.
+
+[5] ITU-R Recommendation P.1546-4 (10/2009),
+‘Method for point-to-area predictions for terrestrial
+services in the frequency range 30 MHz to 3000 MHz’.
+[6] ITU-R Report BT.2137, ‘Coverage prediction
+methods and planning software for digital terrestrial
+television broadcasting (DTTB) networks’, 2008.
+
+[7] ‘New SEAMCAT Propagation Models: Irregular
+Terrain Model and ITU-R P. 1546-4’, Dariusz Wiecek
+
+and Dariusz Wypior, National Institute of
+Telecommunications, Wroclaw, Poland, Journal of
+Telecommunications and Information Technology,
+
+3/2011, pp. 131-140.
+
+[8] BBC R&D White Paper WHP 048, ’UK planning
+model for digital terrestrial television coverage’, P.G.
+Brown, K. Tsioumparakis, M. Jordan, and A. Chong,
+
+Sept. 2002.
+[9] ‘Accurate coverage prediction and optimization for
+digital broadcasting’, Bachir Belloul and Simon
+
+Saunders, EBU technical review, April 2004.
+[10] Radio Mobile software, http://www.cplus.org/rmw.
+
+Proceedings of the XI International Conference ETAI 2013, 26th -28th of September 2013, Ohrid, Republic of Macedonia
+

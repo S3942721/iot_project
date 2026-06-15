@@ -1,0 +1,717 @@
+===== A_comprehensive_survey_of_electromagnetic_propagation_models-1..txt =====
+International Conference on Communication and Signal Processing, April 6-8, 2017, India
+
+A Comprehensive Survey of ElectroMagnetic
+Propagation Models
+
+Veluru Sai Anusha, Nithya G K and Sethuraman N Rao
+
+Abstract—Path loss is caused by the _ propagation
+characteristics and the obstacles between transmitter and receiver
+due to which signal strength is reduced in wireless
+communication. Analysis based on path loss models provides good
+initial estimate of the signal characteristics. Propagation models
+are used to determine the path attenuation based on parameters
+such as carrier frequency, transmitter-receiver distance,
+basestation antenna height, receiver antenna height and terrain
+profile (e.g. rural, suburban and urban). Propagation models are
+used for path loss estimation which is important for planning the
+deployment of base-stations and area of coverage. In this paper,
+different Propagation models such as Okumura’s Model, Hata
+Model, Longley rice Model, Free Space Propagation Model,
+COST 231 Extension to Hata Model, COST 231 Walfisch
+Ikegami Model, Stanford University Interim (SUI) Model and
+Hata-Okumura Model are surveyed. A comparative analysis of
+these models is provided which can serve as a valuable guide for
+selecting the appropriate model for a specific application
+scenario.
+
+Index Terms—Okumura’s Model, Hata Model, Line of Sight
+(LoS), COST 231 Model, Stanford University Interim (SUI)
+Model, Non Line of Sight (NLoS), Path Loss
+
+I. INTRODUCTION
+
+Wireless Communication systems provide good quality, high
+speed data exchange using portable devices. In wireless
+technologies, information is delivered by electromagnetic
+waves. As a result of obstructions like trees, buildings, hills,
+mountains, the radio waves cannot directly reach the receiver
+since they are obstructed along the Line of Sight (LoS) path.
+The loss of signal strength which occurs between basestation
+and receiver is known as path attenuation. Path attenuation is
+
+Veluru Sai Anusha is with Amrita Center for Wireless Networks &
+Applications (AmritaWNA), Amrita School of Engineering, Amritapuri,
+Amrita. Vishwa Vidyapeetham, Amrita University, India (e-mail:
+anushachowdary966@gmail.com).
+
+Nithya GK is with Amrita Center for Wireless Networks & Applications
+(AmritaWNA), Amrita School of Engineering, Amritapuri, Amrita Vishwa
+Vidyapeetham, Amrita University, India (e-mail: nithyagk@am.amrita.edu).
+
+Sethuraman N Rao is with Amrita Center for Wireless Networks &
+Applications (AmritaWNA), Amrita School of Engineering, Amritapuri,
+Amrita Vishwa Vidyapeetham, Amrita University, India (e-mail:
+sethuramanrao@am_amrita.edu).
+
+978-1-5090-3800-8/17/$31.00 ©2017 IEEE
+
+defined as the difference between transmit power and receive
+power as expressed below [11]:
+P, (AB) =Pre + Gre + Gre — Prem Loe - Lee
+Where Prg and Ppp represent transmit power and receive
+power
+Grp and Gee represent gain of transmit and receive antennas
+Lyr and Lye represent Feeder losses
+
+Line of Sight (LoS)
+
+Transmitter
+
+Fig. 1. Line of Sight (LoS) Communication
+
+Non Line of Siglit (NLoS)
+
+Transmitter
+rT i
+4}
+
+Fig. 2. Non Line of Sight (NLoS) Communication
+
+Path attenuation may be affected by the following
+mechanisms
+> Absorption
+» Refraction
+» Reflection
+» Diffraction
+> Scattering
+Absorption losses occur if the wave passes through
+obstacles such as trees, buildings. Refraction loss occurs when
+an electromagnetic wave travels from one medium to another
+medium with different refractive indices, results in change of
+velocity and change of direction. Reflection losses occur when
+the transmission path between transmitter and receiver is
+blocked by surfaces such as ground, walls, etc., and from
+furniture (tables, chairs, desks).
+
+IEEE
+
+‘Advancing Technology
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:43:16 UTC from IEEE Xplore. RestrictidAe"aopAY
+
+1457
+
+===== A_comprehensive_survey_of_electromagnetic_propagation_models-2..txt =====
+Diffraction loss occurs when there is an obstacle in the
+transmission path and signal bends around an object.
+Scattering is a physical procedure where moving particles,
+sound or light are made to diverge from a direct path by one or
+more limited non-uniformities in the medium through which
+they travel. Scattered waves are caused by obstacles and
+irregular surfaces [1].
+
+Fig. 3. Phenomena of Diffraction, Reflection and Scattering
+
+For wireless communication systems, propagation path loss
+models play a key role in determining the signal strength,
+outdoors as well as indoors. Path loss can be calculated in
+different terrain profiles such as rural, sub-urban and urban
+with the help of path loss models. During the beginning stage
+of the deployment, path loss models are used for conducting
+practical studies. As the deployment proceeds, propagation
+models are also helpful for preforming interference studies.
+Some of the technical challenges of path loss modelling are
+accounting for spectrum limitations, user mobility and
+multipath propagation. Selection of an appropriate propagation
+path loss model is the first step in the network design.
+Propagation path loss models can be classified into two
+categories:
+
+i) Indoor Propagation models
+ii) Outdoor Propagation models
+
+Indoor Propagation models are used to estimate the signal
+strength when the Transmitter-Receiver Separation is small, of
+the order of a few hundred meters, typically indoors. This
+model is influenced by particular features such as building
+type, construction materials and layout of the building.
+Outdoor Propagation models are used to estimate the signal
+strength at a particular area and based on standard
+interpretation of measured data acquired from the environment
+{4]
+
+Propagation path models represent a set of algorithms and
+mathematical equations that are used for signal strength
+estimation in a particular terrain profile. Propagation models
+can be classified into three types of models i.e. Empirical
+models, Deterministic models and Statistical models.
+
+|
+
+Fig. 4. Classification of Propagation Models
+
+Empirical models use a set of equations obtained from
+results of several measurements. These models give accurate
+results and are used more often in practical applications when
+compared to Deterministic and Statistical models.
+Deterministic Models use reflection & diffraction laws which
+govern electromagnetic signal propagation to calculate the
+received signal strength at a particular location and need an
+entire 3-Dimensional map of the propagation area. The
+deterministic models may require computational efficiency and
+algorithms used by these models are extremely complex [1].
+Deterministic models are based on fixed geometry (streets,
+buildings). Statistical models model the terrain profile as a
+series of random variables and depend on probability analysis
+to predict path loss. These models need least information
+about the terrain profile and are least accurate.
+
+There are three different area types, namely, Rural, Sub-
+Urban and Urban.
+
+Rural Area— no obstacles like big trees or buildings in the
+signal propagation path, influence of terrain height
+
+Sub-Urban Area — village covered with houses and trees.
+Interference near the mobile not very overcrowded
+
+Urban Area- large cities with huge buildings of several floors
+or larger village scattered with thickly-grown tall trees.
+
+Our University’s Parent NGO has adopted 101 villages
+across the various states of India. Research on affordable
+technology options for rural connectivity is currently underway
+
+at our research center [17]. Our center is also conducting
+research on antennas such as coplanar Pentagonal Antenna,
+CPW fed Monopole, Dual Beam Pentagonal Patch Antenna,
+Rectangular Microstrip Antenna and Dielectric Resonator
+Loaded Microstrip Antenna [6][7][8]. A project to provide
+internet connectivity to marine fishermen far into the sea is
+currently in progress [9][10]. This work provides a
+comparative analysis of various propagation models which can
+serve as a valuable guide for selecting the appropriate model
+for a specific application scenario.
+
+The rest of this paper is organized in the following sections.
+Section II discusses different propagation models for path loss
+estimation. Section III presents comparative study of path loss
+models based on parameters such as frequency range, type of
+terrain, etc. and lists the advantages and disadvantages. The
+work is concluded in section IV.
+
+Il. DESCRIPTION OF PROPAGATION MODELS
+This section discusses different empirical path loss models
+briefly. Some of the models are limited to the lower
+frequencies, Different propagation path attenuation models are
+suitable for different types of terrain profile like rural, sub-
+urban and urban.
+
+A. Okumura Propagation Model
+
+Okumura’s model is the simplest and gives best accuracy in
+path loss estimation in land mobile radio and cellular systems.
+This model is used for determining the path loss in the
+frequency range of 150MHz to 1920MHz. Antenna height of
+base station can be in the range 30-1000m and antenna height
+of mobile station antenna can be 1-10m [5].
+
+Path loss equation for Okumura model is:
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:43:16 UTC from IEEE Xplore. Restrictions apply.
+
+1458
+
+===== A_comprehensive_survey_of_electromagnetic_propagation_models-3..txt =====
+Leo (dB) = Lis (d) +Arma (frer 4) — Gy (recy Gin (hos) - Gar
+Where Lo», = 50" percentile median value of path loss
+L,, (d) = free space propagation loss = 20log (4*PI*d*fic)
+fe = frequency, c= speed of light, d = distance
+
+G, (h,.) = Antenna height of transmitter gain factor
+
+Gn (rec) = Antenna height of mobile station gain factor
+Gar = Correction gain factor (type of environment)
+
+Ana (f, d) = median attenuation in addition to free space model
+[13]
+
+=13dB from curve @2.4GHz
+
+Gin (Dyecy = 20 log (h,/3) 10m > hye. >3m
+
+= 10 log (hy/3) Tyee < 3m
+Gz (hy,) = 20 log (hy/200) —-1000> hy, >30m.
+= 10 log (hy, /200) hy,< 30m
+
+B. Hata Propagation Model
+
+This model provides many formulas for path loss with
+various types of environments and carrier frequency ranging
+from 150MHz to 1.8GHz. The Antenna height of receiver is in
+the range of 1-10m and the Antenna height of transmitter is in
+the range of 30-200m. In this model, Link distance is 1-10km.
+This model is fit for huge-cell mobile systems, but this model
+is not suited for personal communication.
+The path attenuation equation in urban environment is [13]
+P, (urban) = 26.6 log (f.) — 13.82 log (Ips) —a (Hyec) + 69.55 +
+(44.9-6.55 log (hy,)) log (d)
+Where a (hyec) = (1.11 log (f)-0.7) byec — (1.56 log (f,) — 0.8)
+
+The path attenuation equation in sub-urban environment is
+P, (sub-urban) = P; (urban) — {log (f,/28}-5.4
+The path loss equation in rural terrain is
+
+Pross = Py (urban) — 4.78(log f.) * 2 — 40.94 +18.33 log (f.)
+
+C. Stanford University Interim (SUI) Propagation Model
+
+Stanford University Interim (SUI) Propagation model is
+evolved as a part of IEEE 802.16 by Stanford University and
+is derived from Multipoint Microwave Distribution system.
+This model uses frequency spectrum between 2.5GHz and
+2.7GHz. In this model, Antenna height of base station is
+between 15m to 40m and Antenna height of receiver is
+between 2m to 10m. SUI model covers three categories of
+terrain profile namely Category A, Category B and Category C
+Category A — Presents high path loss and suitable for hilly
+environment with moderate to heavy tree densities [12]
+Category B — distinguished with either flat terrains or hilly
+areas with rare vegetation or flat terrain with high vegetation
+Category C — Presents low path loss and useful for flat terrain
+with moderate to heavy densities [2]
+
+The path attenuation equation is as follows:
+PL =F, +10y log[d/d0] + Xi + Xa + Sy for d0<d
+
+Where d = distance between Access Point and Customer
+
+Premise Equipment
+
+dO = reference distance 100(m)
+
+F, = free-space path loss
+
+y = Path attenuation exponent value
+
+X= frequency correction factor
+
+Xha = Receiving antenna correction factor
+Sh = correction factor for shadowing (dB)
+The parameter F, is calculated by
+F, = 20 logy (4nd0/A)
+Y= ag-bo hys + (Co/hys)
+
+ys for indoor propagation
+3<y<5 for urban Non Line of Sight (NLoS) environment
+y=2 for free space path loss
+
+For Terrain Category A and Category B
+Xha= -10.8 logo (hy/2000)
+
+X 4 = 6 logio (f/2000)
+
+For Terrain Category C
+
+Xa = -20 logo (hye/2000)
+
+Where f is the frequency
+
+hy. is the Antenna height of CPE
+
+hy, is the Antenna height of base station
+
+TABLE I
+PARAMETERS VALUES FOR SUIIN DIFFERENT TYPES OF TERRAINS
+
+Parameter | Category A Category B Category C
+ao 4.6000 4.000 3.600
+bo 0.0075 0.0065 0.05
+Co 12.600 17.10 20.00
+Sh 10.6 9.6 8.2
+
+D. COST 231 Extension to Hata Propagation Model
+This model is used to determine the path loss for the
+
+distance from basestation to receiver upto 20km. This model
+requires that the transmitter antenna is higher than all rooftops.
+The Antenna height of transmitter is between 30m to 200m
+and Antenna height of receiver ranging from 1m to 10m.
+The path loss equation in urban environment is
+Poss (dB) = 33.9 log f. — 13.82 hy — aye + (44.9-6.55) log hy)
+log d+ C,, + 46.3
+Correction factor for urban environment is
+
+ahj. = 3.20(logio (11.75h,.)) 7=4.79
+Correction factor for sub-urban and rural areas is
+
+ahye = (1.1 1logio (f,)-0.7) bye - (1-5logo (f,)-0.8)
+
+Cm = 0dB for sub-urban areas and medium cities
+
+= 3dB for Cosmopolitan areas
+
+E. COST 231 Walfisch-Ikegami Propagation Model
+
+COST 231 W-I Model is the most suitable model for sub-
+urban and rural terrain profiles which have uniform building
+height and gives accurate path attenuation estimation. Antenna
+height of transmitter is between 4 to 50m and Antenna height
+of receiver is between | to 3m
+The path attenuation equation for LoS Communication [16] is
+
+PLios= 20log (f,) + 42.6 +26 log (d)
+
+The path loss equation for Non Line of Sight (NLoS)
+Communication is
+
+PLytos = Les + Las (fer Wer Aims ®) + Linsa lips, (Altos, d, fe, bs)
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:43:16 UTC from IEEE Xplore. Restrictions apply.
+
+1459
+
+===== A_comprehensive_survey_of_electromagnetic_propagation_models-4..txt =====
+Lys = free space propagation path loss
+Lats represents diffraction from rooftop to street
+= -10 log (w) - 16.9+ 10 log (f,) + 20 log (hy-h,.)
+tLorie
+Lorie represents diffraction loss due to multiple obstacles
+Linsa = multi-diffraction loss
+=Losn + Ha + Ha logio [d] + Hrlogio (f [MHz]) - 9 logio (b)
+
+F. Longley Rice Path Loss Model
+
+Longley Rice Model is useful for Point to Point
+communication for different kinds of terrain and frequency
+range is 40MHz to 100MHz. There are two modes of
+operation in Longley Rice Model.
+Point to Point Prediction: If the terrain profile is accessible,
+particular path parameters are calculated based on some
+measurements
+Area Mode Prediction: If the terrain profile is not accessible,
+Longley Rice Path loss model provides techniques (geometric
+optics, Knife-edge diffraction) to calculate certain parameters
+[4].
+G. Free Space Propagation Model
+
+Path attenuation in Free Space model defines the extent of
+signal strength lost in the time of signal propagation from
+transmitter to receiver [15]. The path attenuation equation for
+this model is
+PL (dB) = 32.45 + 20 logig (d) + 20logio (f.)
+Where f, is the frequency (MHz) and d is the Distance between
+basestation and Customer Premise Equipment (CPE)
+
+H. Two Ray Ground Path Loss Model
+Two ray Ground Model is based on geometric optics and
+considers both ground reflected propagation path and direct
+path between transmitter and receiver. For mobile radio
+systems, this model is accurate for predicting the signal
+strength over larger distances of several kilometers. The
+formula for two ray ground model is expressed below
+
+P,*G,* G,* (H,*2 *H,"2)
+
+P, dsl
+
+Where L=I (system loss)
+P, = Transmit Power (w)
+P, = Receive Power (w)
+G, = transmit gain
+G, = receive gain
+
+I. Hata-Okumura Model
+
+Hata-Okumura is a very popular model and can provide
+predictions upto 2GHz. This model is used by computer
+simulation tools and quite accurate. This model is useful for
+large cell coverage.
+
+The path attenuation formula in urban environment is
+
+P, (dB) = 26.16 log f, — 13.82 logyo hy + (44.9- 6.55logio hys)
+R-H+ 69.55
+
+For large cities f, > 300MHz, H = 3.2(log (11.7554hn.)) 2-
+4.97
+
+For large cities f,< 300MHz, H = 8.29(log (1.54hy,)) 7-11
+
+For medium to small cities H = (1.1 logiof, -0.7) hys-(1.56 log
+£,-0.8)
+The path attenuation in sub-urban environment is
+P, (dB) = 26.16 log f -13.82 logiohys + (44.9-6.55logjohy.)
+logio R -2(logio (f,/28)) °+5.4 + 69.55
+The path loss in rural terrain is
+Pros (dB) = 26.16 logiof, — 13.82 logioh,, + (44.9-
+6.55logiohys) R — 4.78(logiof) 7 + 18.33logiof: + 40.94 +
+69.55
+Where h,, is the Antenna height of transmitter above
+height of local terrain
+h,,; is the Antenna height of receiver above height of local
+terrain
+R= x 10° represents circle distance between basestation
+and receiver
+
+J. Ericsson 9999 Path Loss Model
+
+Ericsson 9999 path loss model is developed by Ericsson
+as an enhancement of Hata Model. Ericsson model uses
+frequency range up to 1900MHz. In this model, adjustment
+of the factors is possible as per the given environment [1].
+The path loss in Ericsson model is calculated as
+PLexiesson = bot by log (d) +b3 log (hye) +b3 log (h,.).log d —
+3.2(log (11.75) > +h (fo)
+Where h (fy) = 44.49 log (f,) — 4.78 (log (f,)) >
+
+TABLE II
+PARAMETERS VALUES OF ERICSSON IN DIFFERENT TYPES OF TERRAINS.
+
+Parameters Rural Area Sub-Urban Area | Urban Area
+bo 45.95 43.0 36.2
+bi 100.6 68.93 30.2
+b 12.0 12.0 12.0
+bs 0.1 0.1 0.1
+
+III. COMPARATIVE ANALYSIS OF PROPAGATION MODELS
+
+This section provides a comparative study of different
+propagation path attenuation models based on factors such as
+frequency range, type of terrain, advantages and
+disadvantages.
+
+Based on the comparative analysis, it is found that the SUI
+model is suitable for all the three regions i.e. rural, sub-urban
+and urban. Okumura Model is generally used in urban
+environment. Hata model is a very good model for first
+generation cellular systems. COST 231 Hata path loss model is
+suitable for estimating path attenuation in wireless mobile
+systems. The COST 231 Walfish-Ikegami (W-I) path loss
+model is useful for urban areas and flat suburban areas which
+have regular building height. The Longley- Rice model gives
+accurate results over rough terrain since it does not account for
+foliage and buildings. The Hata-Okumura model has vast
+applications in a rural environment but its application is
+limited in urban (built up) areas.
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:43:16 UTC from IEEE Xplore. Restrictions apply.
+
+1460
+
+===== A_comprehensive_survey_of_electromagnetic_propagation_models-5..txt =====
+TABLE IIT
+
+COMPARATIVE ANALYSIS OF VARIOUS PROPAGATION MODELS
+
+Slow
+response to
+150MHz | Urban, Best Model quick
+to Suburban | for dense terrain
+1950MHz | &Rural — | ities profile
+changes
+and not
+good in
+rural areas
+Suitable for | Not so
+Urban, large cell | good for
+150MHz to | Sub-urban mobile rural hilly
+1500MHz & Rural system terrains
+Metropolit Does not
+150MHz to | an areas, Fairly model
+1.5GHz small and | accurate | propagation
+‘medium | Pathloss | in cellular
+el estimation | systems
+cities, sub- with higher
+WeEMGT frequencies
+rural areas
+Used to | Does not
+estimate the | divide
+Hilly and signal terrain
+2.5GHzto | Flat strength in | profile into
+2.7GHz TST allthree | the rural,
+terrain | suburban
+profiles like | and urban.
+urban, | This can be
+suburban | additional
+and rural. | source of
+calculation
+incorrectne
+ss
+Applicable | Plane earth | Usefuland | Results are
+to any Simple less
+Frequency model for | satisfactory
+propagation | for shorter
+overlong | distances
+distances
+Path-
+specific Does not
+parameters | provide a
+Point to can be way of
+Point easily calculating
+20MHzto | communic | calculated | correction
+20GHz ation over | whenthe | due to
+different | detailed environmen,
+terrains terrain tal factor
+profile is
+available
+
+Suited for
+predictions
+1500MHz Urban, | in Graphical
+to 2GHz microcells | expressions
+given that are not
+transmit practical
+antennas are
+above roof
+top
+
+Sub-urban
+and Rural
+
+This model
+distinguishe | More
+800MHz | Flaturban | Sbetween | complex
+
+to lean LoS and
+2000MHz NLoS
+Extensive
+test
+‘measureme
+Urban, nts are
+1900MHz | cih-urban | Very fast | carried out
+and Rural in order to
+collect the
+data
+
+IV. CONCLUSION
+
+In this work, we surveyed different propagation path models
+to calculate path attenuation in different areas i.e. rural, sub-
+urban and urban. It is clearly observed that selection of an
+appropriate propagation model is critical in determining how
+many base stations are required to provide proper coverage for
+a network
+
+ACKNOWLEDGMENT
+
+We sincerely thank our chancellor and world-acclaimed
+spiritual leader, Dr. Mata Amritanandamayi Devi, popularly
+referred to as Amma, for the immense motivation, support and
+encouragement provided for this research work. This research
+is partially funded by Information Technology Research
+Agency (ITRA), Ministry of Electronics and Information
+Technology (MeitY), Government of India
+
+REFERENCES,
+
+[1] M. Kumari, T. Yadav, P. Yadav, P. K. Sharma and D. Sharma,
+“Comparative Study of Path Loss Models in Different Environments”,
+WEST, vol. 3, no. 4, (2011) April, pp. 4683-4690.
+
+(2) P. K. Sharma and R. K. Singh, “Comparative Analysis of Propagation
+Path Loss Models with Field Measured Data”, JEST, vol. 2, no. 6,
+(2010), pp. 2008-2013.
+
+[3] V.S. Abhayawardhana LJ. Wassell, D. Crosby, M.P. Sellars, M.G.
+Brown, Cambridge Broadband Ltd., Selwyn House, Cowley Rd.,
+Cambridge CB4 OWZ, UK “Comparison of Empirical Propagation Path
+Loss Models for Fixed Wireless Access Systems” IEEE..
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:43:16 UTC from IEEE Xplore. Restrictions apply.
+
+1461
+
+===== A_comprehensive_survey_of_electromagnetic_propagation_models-6..txt =====
+[4]
+
+[6]
+
+U7]
+
+[8]
+
+[9]
+
+[10]
+
+Pooja Rani, Vinit Chauhan, Sudhir Kumar Dinesh Sharma,, A Review
+on Wireless Propagation Models,, International Journal of Engineering
+and Innovative Technology (IJEIT), Volume 3, Issue 11, May 2014.
+Ranjeeta Verma, Garima Saini,,Different Propagation Modeling Tools
+used for Various Indoor and Outdoor Scenarios,,International Journal of
+Electrical and Electronic Engineering and Telecommunications, Volume
+1.July 2015
+
+S. K. Menon, Aanandan, C. K., and Mohanan, P., “Rectangular
+in Antenna with PRG Strnetured Ground Plane” 2004 [EEE
+Antennas and Propagation Society International Symposium. 2004.
+Anand R, Jose, J. Alphonsa, M, K. Anju, and Menon, S. K., “Analysis
+of Dual Beam Pentagonal Patch Antenna”, International Conference on
+Computer and Communication Technologies. Hyderabad, India, 2015.
+S. K. Menon, Sasikumar, S., .Lalu, G., Nair, V., and P, A. A., “Design
+and Development of on Chip Open Loop Resonator Filter”, in
+International Conference on Microwaves, Antennas, Propagation &
+Remote Sensing ICMARS-2011, 2011.
+
+Sethuraman N Rao, Maneesha V Ramesh, Venkat Rangan, “Mobile
+Infrastructure for Coastal Region Offshore Communications and
+Networks,” IEEE Global Humanitarian Technology Conference,
+Octobter 2016
+
+Sethuraman N Rao, Dhanesh Raj, Aiswarya S$ and Siddharth Unni,
+“Realizing Cost-Effective Marine Internet for Fishermen,” 14th
+International Symposium on Modelling and Optimization in Mobile, Ad
+
+Microst
+
+O11)
+
+[12]
+
+(13)
+
+[14]
+
+(15)
+
+[16]
+
+(17)
+
+Hoc, and Wireless Networks (WiOpt), 2016
+Krunoslay Bejuk. "Comparison of Propagation Models Accuracy for
+WiMAX on 3.5 GHz" , 2007 14th IEEE International Conference on
+Electronics Circuits and Systems, 12/2007
+
+Ajose, S.O., and A.L. Imoize. "Propagation measurements and
+modelling at 1800 MHz in Lagos Nigeria" , International Journal of
+Wireless and Mobile Computing, 2013.
+
+Nimavat, Vishal D., and G. R. Kulkarni. "Simulation and performance
+evaluation of GSM propagation channel under the urban, suburban and
+rural environments" , 2012 International Conference on Communication
+Information & Computing Technology (ICCICT), 2012.
+
+Z. Nadir. "Modification of an Open Area Okumura-Hata Propagation
+Model Suitable for Oman" , TENCON 2005 - 2005 IEEE Region 10
+Conference, 11/2005
+
+Mad. Didarul Alam; Sabuj Chowdhury and Sabrina Alam. "Performance
+Evaluation of Different Frequency Bands of WiMAX and Their
+Selection Procedure" , International Journal of Advanced Science &
+Technology, 2014.
+
+K. V. S. Hari. "Channel Models for Wireless Communication Systems" ,
+International Series in Operations Research & Management Science,
+Veluru Sai Anusha, Nithya G K, Sethuraman N Rao, “Comparative
+Analaysis of Wireless Technology Options for Rural Connectivity”, 7"
+IEEE International Advance Computing Conference (IACC-
+2017),2017.,in press
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:43:16 UTC from IEEE Xplore. Restrictions apply.
+
+1462
+

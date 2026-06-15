@@ -1,0 +1,853 @@
+ Abstract:
+Low-Power Wide-Area Networks (LPWANs) have become fundamental to the Internet of Things (IoT), with NB-IoT (Narrowband Internet of Things) standing out due to its seamless integration with cellular infrastructure, enhanced coverage, and support for dense deployments. Despite its commercial proliferation, SDR-based physical layer (PHY) exploration for NB-IoT remains limited, particularly in addressing unique complexities such as narrowband signal processing, cellular-specific synchronization sequences, and stringent link budget requirements. This paper bridges this gap by presenting a comprehensive tutorial on SDR-based NB-IoT PHY implementation, focusing on three pillars: robust time-frequency synchronization under severe fading and interference, efficient channel estimation for coherent detection, and experimental performance validation in real-world scenarios. We introduce a first-of-its-kind end-to-end SDR implementation supporting both single-tone and multi-tone transmissions, leveraging commercial off-the-shelf (COTS) platforms. Our novel signal processing workflow achieves synchronization through NPSS-based auto-correlation and NSSS-driven cell-ID detection while incorporating CFO estimation and compensation to mitigate oscillator mismatches. For uplink processing, we detail preamble detection and demodulation, addressing coverage enhancement (CE) levels and adaptive subcarrier spacing configurations. Extensive experiments conducted in both indoor (LOS/NLOS) and outdoor environments demonstrate reliable performance, with Bit Error Rate (BER) and Block Error Rate (BLER) metrics validating resilience under varying repetition counts and propagation conditions. The tutorial offers actionable insights for optimizing PHY-layer design, validated against 3GPP specifications, and lays the foundation for next-generation NB-IoT systems in emerging applications, such as smart cities and industrial automation.
+Published in: IEEE Communications Surveys & Tutorials ( Volume: 28)
+Page(s): 4458 - 4484
+Date of Publication: 15 January 2026
+ISSN Information:
+DOI: 10.1109/COMST.2026.3654924
+Funding Agency:
+SECTION I.
+Introduction
+
+In recent years, Low-Power Wide-Area Networks (LPWANs) have emerged as a cornerstone of the Internet of Things (IoT), enabling cost-effective, long-range connectivity for massive deployments of energy-constrained devices. Driven by applications in smart cities, industrial automation, and environmental monitoring, LPWAN technologies such as LoRa [1], Sigfox [2], and NB-IoT (Narrowband Internet of Things) [3] have witnessed exponential growth. Among these, NB-IoT, standardized by 3GPP [4], [5], stands out for its seamless integration with existing cellular infrastructure, enhanced coverage, and support for dense device deployments.
+
+The physical layer (PHY) design of LPWAN systems is critical to achieving their promised performance, particularly in synchronization robustness [6], channel estimation accuracy [7], and energy efficiency [8]. The establishment of end-to-end SDR-based NB-IoT physical layer communication system enables comprehensive protocol stack validation across all layers, while facilitating empirical validation of congestion control mechanisms, collision resolution algorithms, and AI-enhanced demodulation techniques through fully-instrumented experimental frameworks. While software-defined radio (SDR)-based PHY research has gained traction for its flexibility in prototyping and algorithm validation, existing studies have predominantly focused on non-cellular LPWANs like LoRa. For instance, recent works have demonstrated SDR implementations of LoRa PHY [9], [10], [11], [12], [13], [14], [15], [16], addressing challenges such as time-frequency synchronization and interference mitigation. In contrast, despite NB-IoT’s commercial adoption, its SDR-based PHY exploration remains limited, with few studies [17], [18], [19] tackling its unique complexities, such as narrowband signal processing, cellular-specific synchronization sequences, and stringent link budget requirements. The similarities and differences between infrastructure-based NB-IoT and SDR-based NB-IoT are illustrated in Fig. 1.
+Fig. 1. - Similarities and differences between infrastructure-based NB-IoT and SDR-based NB-IoT.
+Fig. 1.
+
+Similarities and differences between infrastructure-based NB-IoT and SDR-based NB-IoT.
+
+This gap motivates our work. As NB-IoT evolves to support emerging applications (e.g., healthcare [20]), a systematic tutorial on its PHY implementation becomes indispensable for researchers and practitioners. As shown in Table. I, recent research works have discussed various issues related to NB-IoT. However, none of them provides a comprehensive signal processing pipeline, SDR implementation and validation for NB-IoT PHY. This paper provides a comprehensive SDR-based NB-IoT PHY tutorial, focusing on three pillars:
+TABLE I Summary of Important Surveys and Tutorials on NB-IoT
+Table I- Summary of Important Surveys and Tutorials on NB-IoT
+
+∙ Robust synchronization under severe fading and interference:
+
+Time-frequency synchronization is a critical step in NB-IoT signal processing, forming the foundation for all subsequent operations. Achieving synchronization solely through the signal itself without relying on higher-layer resource allocation poses significant challenges. Time offset (TO) occurs when the signal arrival time is not accurately estimated. NB-IoT uses Timing Advance (TA) from the Evolved Packet Core (EPC) that describes the signal propagation delay to estimate the signal arrival time [3]. However, without EPC, we need to achieve time synchronization based on the received NB signal. Additionally, sampling clock frequency offset (SFO) arises due to oscillator mismatch between transceivers, leading to errors during fast Fourier transform and causing a notable degradation in communication performance [26]. This issue is particularly pronounced in low-cost SDR platforms with unstable oscillators. We design a signal processing workflow that accomplishes time-frequency synchronization for various signals in NB-IoT [17]. We achieve this by performing downlink (DL) synchronization using synchronization signal and uplink (UL) synchronization based on Cyclic Prefix (CP) and reference signal.
+
+∙ Efficient channel estimation for coherent detection: Radio Frequency (RF) signals will be interfered by the channel environment, multi-path effect, and other factors during transmission [27]. In wireless communication systems, channel estimation plays a pivotal role in achieving reliable signal reception by compensating for multi-path fading and interference effects [28]. For UL and DL, we use different reference signals defined in protocols for channel estimation and channel equalization, respectively.
+
+∙ Experimental performance validation in real-world scenarios: We implement our system with various commercial off-the-shelf (COTS) SDR platforms, i.e., USRP N210 (5,185 with UBX-40 as RF daughter board), HackRF One (350), RTL-SDR (33, RX only) in various cases including short/long distance and outdoor/indoor. Experimental results demonstrate that our system achieves reliable NB-IoT signal transmission and reception across diverse real-world channel scenarios. Take the indoor interior case as an example, the system exhibits robust performance with Bit Error Rates (BER) below 1×10−2 and 0% Block Error Rates (BLER).
+
+By integrating theoretical analysis with practical microbenchmarks, we bridge the gap between NB-IoT standards and their SDR-based implementations, offering actionable insights for optimizing PHY-layer performance. Our contributions are further validated through comparative benchmarks against 3GPP specifications, demonstrating the feasibility of SDR in prototyping next-generation NB-IoT systems. To illustrate, this tutorial bridges critical gaps in practical NB-IoT PHY layer implementation by delivering three key contributions:
+
+    We present a first-of-its-kind end-to-end implementation of a fully functional SDR-based NB-IoT PHY supporting both single-tone and multi-tone transmission. This will contribute to NB-IoT researchers’ comprehension of the fundamental mechanisms underlying physical layer signal transmission
+
+    We design an effective and robust signal processing pipeline to improve the transceiving performance of NB-IoT PHY channels and signals across different classes of SDR platforms.
+
+    We extensively validate the performance of our system under various conditions, demonstrating the robustness of the signal processing flow. Furthermore, we provide a rigorous analysis of intermediate signal processing results, e.g., Carrier Frequency Offset (CFO) and constellation chart, to investigate the fundamental limitations of NB-IoT communication range.
+
+This tutorial delivers a comprehensive NB-IoT signal processing pipeline, complemented by detailed performance analysis for individual processing stages and end-to-end system evaluation. While certain algorithms adhere to 3GPP specifications or existing literature, others represent our optimized designs derived from comparative analysis. Furthermore, this work offers significant practical insights for SDR deployment. Given NB-IoT’s sensitivity to frequency offsets and the inherent limitations of SDR hardware (e.g., sampling rate inaccuracies, ADC quantization effects, clock instability), our implementation incorporates substantial SDR-specific adaptations beyond conventional signal processing chains. These include robust frequency offset compensation mechanisms and hardware-aware synchronization strategies, ensuring reliable operation under real-world non-ideal conditions.
+
+The remaining sections of this article are organized as follows. § II gives a primer of NB-IoT, § III and § IV demonstrate the core signal processing pipeline of SDR-based NB-IoT, § VI is the microbenchmarks of the system, VII discusses probable researches regarding the system and § VIII goes the conclusion. Fig. 2 shows the structure of the paper, Table. II contains the list of all the acronyms used throughout this paper.
+TABLE II List of Acronyms
+Table II- List of Acronyms
+Fig. 2. - Organization of the paper.
+Fig. 2.
+
+Organization of the paper.
+
+SECTION II.
+NB-IoT Primer
+
+NB-IoT is an LPWAN technology specifically engineered for low energy consumption, extensive coverage, and massive connectivity. Through power-saving techniques including Power-Saving Modes (PSM) and extended Discontinuous Reception (eDRX) [29], NB-IoT achieves ultra-low power operation with device standby durations extending up to 10 years, while supporting over 50,000 terminal connections per cell [30]. Its network architecture comprises terminal devices, radio access networks, core networks, and IoT platforms, with data transmission schemes optimized through enhancements to the control plane and user plane. During signaling procedures, User Equipment (UE) may initiate non-IP connections through attachment processes without establishing conventional Packet Data Network (PDN) connections, enabling data transfer via Non-Access Stratum (NAS) messages. The operational states, including connected, idle, and PSM modes, are managed through timer-based state transitions to balance energy efficiency and network responsiveness. In practical implementations, NB-IoT modules can be controlled through Python serial port libraries (e.g., pySerial) using AT commands, while MQTT/CoAP protocols facilitate cloud-based data interactions.
+
+In an NB-IoT network, the UE, typically deployed as low-power IoT devices like smart meters or sensors, initiates communication by establishing a Radio Resource Control (RRC) connection with an enhanced NodeB (eNodeB) base station. This connection serves as the foundation for subsequent interactions with the EPC. Fig. 3, provides a general overview of the NB-IoT network.
+Fig. 3. - General overview of NB-IoT.
+Fig. 3.
+
+General overview of NB-IoT.
+
+A. Overview of NB-IoT Phy
+1) Bandwidth:
+
+The UL and DL of NB-IoT happen on different frequency bands. The UL of NB-IoT takes 180kHz bandwidth in total, and supports 15kHz or 3.75kHz subcarrier spacing. The DL of NB-IoT occupies 12 subcarries of 15kHz each, only supports a 15kHz subcarrier spacing [5].
+2) Operation Modes:
+
+NB-IoT is designed to coexist with LTE carriers without compromising LTE network performance. It achieves this through three primary deployment modes as summarized in Fig. 4:
+Fig. 4. - Three operation modes.
+Fig. 4.
+
+Three operation modes.
+
+∙ In-Band Mode: NB-IoT operates embedded within the LTE spectrum by occupying a single Physical Resource Block (PRB), ensuring resource-sharing compatibility with existing LTE infrastructure.
+
+∙ Guard-Band Mode: Deployed within the unused guard bands of LTE carriers, this mode prevents interference with LTE’s primary frequency while utilizing otherwise wasted spectrum resources.
+
+∙ Standalone Mode: Dedicated 180kHz bandwidth is allocated from legacy global system for mobile communication (GSM) systems’ 200kHz kHz carriers, with 10kHz guard bands on both sides to mitigate adjacent channel interference.
+3) Framing:
+
+The NB-IoT radio frame structure consists of 10 subframes (SFs) spanning a total duration of 10ms , maintaining temporal alignment with LTE specifications. As depicted in Figure 1, the DL frame format partitions each 1ms subframe into two equal 0.5ms slots, each containing 7 OFDM symbols with 15kHz subcarrier spacing. This configuration ensures backward compatibility with legacy LTE physical layer parameters while optimizing for narrowband operations.
+
+For UL transmissions, the frame structure demonstrates subcarrier-dependent adaptability. When employing 15kHz spacing, the UL maintains identical slot and symbol configurations to the DL through Single Carrier Frequency Division Access (SC-FDMA) modulation. However, under 3.75kHz subcarrier spacing, a distinctive NB-IoT enhancement, the resource element (RE) mapping undergoes fundamental restructuring. Specifically, each 2ms time unit contains 7 SC-FDMA symbols, eliminating conventional subframe partitioning and enabling extended symbol durations for improved coverage. This adaptive resource grid configuration optimizes power efficiency in challenging propagation environments while maintaining spectral containment within the 180kHz channel bandwidth.
+B. Signals and Channels
+
+There are several kinds of signals and channels in the PHY of NB-IoT as defined in 3GPP Release 13 [4]. The summary of signals and channels of NB-IoT PHY is presented in Fig. 5. These channels and signals serve different purposes and employ various modulation methods. The details of each channels and signals in both DL and UL will be elaborated as following.
+Fig. 5. - Signals and channels of NB-IoT PHY (Release 13 [4]).
+Fig. 5.
+
+Signals and channels of NB-IoT PHY (Release 13 [4]).
+
+1) DL Case:
+
+The DL in NB-IoT refers to the unidirectional communication path from the eNodeB to UE, which is fundamental for delivering control signaling and user data in cellular IoT systems. Operating within a narrow bandwidth of 180kHz , NB-IoT downlink leverages Orthogonal Frequency Division Multiple (OFDM) with a subcarrier spacing of 15kHz , ensuring compatibility with existing LTE infrastructure while optimizing spectral efficiency for low-power IoT applications. The physical layer adopts Quadrature Phase Shift Keying (QPSK) modulation, balancing robustness and energy efficiency in diverse channel conditions, particularly in deep-coverage scenarios. The signals and channels of NB-IoT DL are defined in [4] as:
+
+∙ Narrowband Primary Synchronization Signal (NPSS). NPSS serves as a critical downlink synchronization reference in NB-IoT systems, UE to achieve time and frequency alignment with the serving cell. Defined in 3GPP TS 36.211 [31], the NPSS employs a Zadoff-Chu sequence of length 11 mapped to 11 contiguous subcarriers within the 180kHz bandwidth, transmitted across 11 consecutive OFDM symbols in subframe #5 of every radio frame. Unlike LTE PSS, the NPSS omits frequency-domain shifting to avoid interference in in-band deployment scenarios while maintaining backward compatibility. Its fixed subcarrier spacing of 15kHz and absence of cell-specific scrambling facilitate low-complexity UE implementations, crucial for energy-constrained IoT devices.
+
+∙ Narrowband Secondary Synchronization Signal (NSSS). NSSS is a fundamental DL reference signal in NB-IoT systems, designed to facilitate frame timing synchronization and physical cell identity (PCI) detection. Also, defined in [31], the NSSS employs a length-131 Zadoff-Chu sequence modulated with a cell-specific cyclic shift and a binary phase shift keying (BPSK) scrambling sequence. This signal occupies 11 consecutive OFDM symbols across 12 subcarriers (180kHz bandwidth) in subframe #9 of every even-numbered radio frame, ensuring orthogonality with the NPSS in subframe #5 . The NSSS supports 504 unique PCIs through a combination of 126 root sequence indices and 4 cyclic shift values, enabling robust cell identification even under severe channel conditions.
+
+∙ Narrowband Reference Signal (NRS). NRS is a critical demodulation reference for the DL of NB-IoT, enabling channel estimation for coherent detection of physical channels. The NRS employs frequency-domain Zadoff-Chu sequences with a configurable cyclic shift (0−5 ) and cell-specific scrambling derived from the PCI.
+
+∙ Narrowband Physical Broadcast Channel (NPBCH). In NB-IoT, NPBCH is responsible for broadcasting critical system information to enable initial cell access and network synchronization. The NPBCH carries the Master Information Block (MIB) with a fixed Transport Block Size (TBS) of 34 bits, modulated using QPSK and protected by a 16-bit Cyclic Redundancy Check (CRC) for error detection. The channel employs a 640 ms transmission periodicity, distributed across 64 consecutive radio frames (64×10ms ) to support extended coverage through time diversity.
+
+∙ Narrowband Physical Downlink Control Channel (NPDCCH). NPDCCH is the primary control channel in NB-IoT, responsible for transmitting Downlink Control Information (DCI) to UE for resource scheduling and system operation coordination. Defined in [31], the NPDCCH supports two DCI formats: Format N0 for UL grants and Format N1 for DL assignments, both modulated using QPSK with configurable code rates.
+
+∙ Narrowband Physical Downlink Shared Channel (NPDSCH). NPDSCH functions as the primary data transport mechanism for NB-IoT in DL, responsible for delivering user-plane data and system information blocks (SIBs) to UE. The NPDSCH employs QPSK modulation with TBS ranging from 16 to 680 bits, configurable through 8-bit DCI in the NPDCCH.
+2) UL Case:
+
+In the NB-IoT architecture, the UL transmission refers to the communication path from user UE to the eNodeB, enabling data and control signaling delivery for IoT applications. The uplink design in NB-IoT is optimized for low-power, low-data-rate scenarios while ensuring extended coverage and massive connectivity. A fundamental characteristic of NB-IoT UL lies in its flexible resource allocation mechanism, which supports two subcarrier spacing options: 15 kHz and 3.75 kHz. The 15 kHz configuration maintains backward compatibility with legacy LTE systems, whereas the narrower 3.75 kHz subcarrier spacing enhances spectral efficiency and coverage by concentrating transmit power within a reduced bandwidth. This dual-mode approach allows dynamic adaptation to diverse IoT requirements, balancing transmission latency and energy consumption.
+
+∙ Demodulation Reference Signal (DMRS). Actually, DMRS is widely used in wireless communication system. For NB-IoT, DMRS is a dedicated pilot signal integrated into the physical UL channels transmitting data or control commands.
+
+∙ Narrowband Physical Random Access Channel (NPRACH). NPRACH is the random access channel in NB-IoT, designed to facilitate low-power, coverage-enhanced random access procedures for IoT devices initiating UL synchronization or connection requests. Defined in [31], NPRACH preambles consist of four symbol groups, each containing a CP and five identical symbols.
+
+∙ Narrowband Physical Uplink Shared Channel (NPUSCH). NPUSCH serves as a fundamental UL transmission mechanism in NB-IoT, specifically engineered to support energy-efficient and coverage-optimized data transfer for IoT applications. NPUSCH is structured to accommodate two distinct transport formats: Format 1 for UL shared channel (UL-SCH) data transmission and Format 2 for hybrid automatic repeat request (HARQ) acknowledgment feedback. Unlike conventional LTE PUSCH, NPUSCH operates within a narrowband 180kHz bandwidth, utilizing either single-tone or multi-tone transmissions with configurable subcarrier spacing (3.75kHz or 15kHz ) to address varying coverage requirements and channel conditions. For single-tone operation, NPUSCH employs π2BPSK or π4QPSK with SC-FDMA modulation with low peak-to-average power ratio (PAPR), minimizing energy consumption for devices in extreme coverage scenarios (e.g., deep indoor or underground deployments). Multi-tone configurations, supporting up to 12 subcarriers, enhance spectral efficiency for latency-tolerant applications in moderate coverage conditions.
+
+To establish a SDR-based NB-IoT PHY platform, we need to process all these signals and channels to achieve accurate demodulation. The signal processing chain for UL and DL cases is shown in Fig. 6.
+Fig. 6. - Processing chain for NB-IoT PHY.
+Fig. 6.
+
+Processing chain for NB-IoT PHY.
+
+SECTION III.
+DL Processing
+
+The DL processing chain comprises sequential physical layer operations including signal synchronization, cell identity (Cell-ID) detection, system information decoding, and payload data recovery. Critical components in this process are the NPSS for time-frequency synchronization, NSSS for Cell-ID detection, NPBCH for MIB acquisition, and NPDCCH for resource allocation signaling. Fig. 7 shows the frame structure of NB-IoT DL in Guard-band or Stand-alone operation mode. Considering that the frame structure of the in-band operation mode exhibits only subtle deviations from the two aforementioned deployment modes, with negligible impact from a signal demodulation perspective, the frame configurations of these two modes are adopted as representative examples in this analysis. The pipeline of NB-IoT DL signal processing is demonstrated in Fig. 8. This section systematically examines the signal processing pipeline from initial RF signal acquisition through to final data extraction, addressing the unique challenges posed by NB-IoT’s reduced bandwidth (180kHz ) and enhanced coverage requirements. The following subsections will dissect each critical component of this pipeline. To validate the effectiveness of each step, we will present both the algorithmic description and its corresponding intermediate performance results.
+Fig. 7. - NB-IoT DL frame structure for Guard-band/Stand-alone operation mode.
+Fig. 7.
+
+NB-IoT DL frame structure for Guard-band/Stand-alone operation mode.
+
+Fig. 8. - The pipeline of NB-IoT DL signal processing.
+Fig. 8.
+
+The pipeline of NB-IoT DL signal processing.
+
+The DL reception initiates with NPSS-based synchronization, where auto-correlation techniques are employed to estimate TO and compensate for CFO. Subsequent to achieving symbol-level alignment, the received waveform undergoes subframe boundary detection using NPSS’s known position in subframe #5 of every radio frame. This temporal segmentation enables systematic identification of NSSS in subframe #9 , whose Zadoff-Chu sequence properties permit robust Cell-ID (504 unique IDs) determination through maximum likelihood detection under extended coverage conditions. With established time-frequency synchronization and cell-specific parameters, the receiver proceeds to demodulate NPDCCH and NPUSCH using QPSK constellation mapping.
+A. Synchronization With NPSS
+
+The NPSS, constructed upon ZC sequences [22], is specifically designed for DL time synchronization in NB-IoT UE. The ZC sequence, denoted as cl,k , is mathematically expressed as:
+cl,k=ale−jπuk(k+1)11,(1)
+View SourceRight-click on figure for MathML and additional features.where l∈{3,4,5,…,13} indexes orthogonal frequency-division multiplexing (OFDM) symbols within the subframe, k∈{0,1,2,…,10} represents subcarrier indices, {a3,a4,a5,…,a13}={1,1,1,1,−1,−1,1,1,1,−1,1} denotes the phase rotation coefficients, and u=5 specifies the ZC root sequence index. Due to the zero correlation between ZC sequences and their non-periodically shifted versions, they are employed as preamble sequences in modern communication systems such as LTE, to facilitate signal synchronization and channel estimation.
+1) Time-Domain Synchronization:
+
+Time-domain synchronization refers to the process of detecting the position of the NPSS within the received waveform to establish a timing reference for subframe alignment [32], [33]. In NB-IoT systems, the NPSS exhibits a deterministic time-domain structure with a fixed repetition interval, enabling robust detection even under severe coverage conditions. Synchronization accuracy hinges critically on exploiting the inherent properties of NPSS. Maximum-likelihood (ML) estimation emerges as the preferred approach owing to its asymptotic efficiency in synchronization tasks [34], [35], [36]. While both auto-correlation [37] and cross-correlation methodologies are theoretically viable for NPSS detection, the cross-correlation [38] technique, despite being ML-optimal, imposes impractical computational complexity and requires a priori knowledge of the reference sequence. Consequently, we employ auto-correlation-based detection, capitalizing on the intrinsic self-correlation property of ZC sequences that exhibits robustness against frequency/phase offsets.
+
+To alleviate computational demands, the received sequence is downsampled to 240kHz . The auto-correlation metric is formulated as:
+A(x)=∣∣∣∑i=1NS−lc[i]∑j=1lens[x+j]s¯¯¯[x+j+lag]∣∣∣,(2)
+View SourceRight-click on figure for MathML and additional features.where A(x) quantifies the correlation magnitude at sample index x . Parameter NS=11 results from excluding the first 3 null symbols in subframe #5 , while len=17 corresponds to the composite length of a downsampled OFDM symbol and its CP. The sequence {c1,…,c11}={1,1,1,1,−1,−1,1,1,1,−1,1} adheres to 3GPP Release 13 definitions [5], with s denoting the resampled baseband signal and lag=51 samples (equivalent to 3 subframes) defining the correlation window. In the context of downlink synchronization, the strategy of utilizing auto-correlation instead of cross-correlation leverages the property that a ZC sequence exhibits zero correlation with its non-integer periodically shifted versions. This approach effectively mitigates synchronization failures caused by frequency offsets, which are common in communications involving multiple SDR devices. The computational cost for each sliding window is len complex multiply-accumulate (MAC) operations. Consequently, the total complexity amounts to O(N×len×NS) , which remains within an acceptable range for SDR platforms.
+
+To evaluate the robustness of this auto-correlation-based synchronization method under noisy conditions, we measure its performance across a range of SNRs. As shown in Fig. 9, the distinct correlation peaks demonstrate reliable NPSS detection. Experimental results demonstrate reliable NPSS detection through distinct correlation peaks, maintaining ≥99% success rate at SNR levels above −15dB. This detection threshold provides a 3.2dB margin beyond the 3GPP-specified minimum SNR requirement of −11.8dB for NB-IoT demodulation [39]. The observed stability in synchronization performance confirms robustness against channel impairments, particularly in low-power IoT deployment scenarios where signal integrity frequently approaches theoretical detection limits.
+Fig. 9. - Synchronization performances with different SNRs.
+Fig. 9.
+
+Synchronization performances with different SNRs.
+
+B. Cell-ID Detection With NSSS
+
+In the DL process, UE performs cell search through detection of the NSSS. The NSSS construction combines a ZC sequence with a Hadamard sequence through element-wise multiplication:
+dn=bq(m)e−2jπθfne−jπun′(n′+1)131,(3)
+View SourceRight-click on figure for MathML and additional features.where the cyclic shift parameter θf is computed as:
+θf=(33132⋅nf2)mod4=(14⋅nf2)mod4,(4)
+View SourceRight-click on figure for MathML and additional features.
+
+with nf denoting the even-numbered system frame index. The remaining parameters in (3) are defined as:
+n′muq=nmod131,=nmod128,=(NCellIDmod126)+3,=⌊NCellID126⌋,(5)
+View SourceRight-click on figure for MathML and additional features.where NCellID∈[0,503] specifies the physical cell identity. The binary Hadamard sequence bq(m)∈{±1} follows 3GPP Release 13 specifications [31].
+
+The parameter space generates 2,016 unique NSSS sequences (each containing 132 elements), corresponding to all possible cell identity and cyclic shift combinations. The detection algorithm computes cross-correlations using:
+CiStfhs=∣∣∣∣∑sym=010∑c=011Gi[12sym+c]⋅Ssym[c]∣∣∣∣,=FFT(symbolt∗fhs)[58:70],=e−jπ(−lcp+i)128,(6)
+View SourceRight-click on figure for MathML and additional features.where Ci represents the correlation metric between the i -th candidate sequence Gi , the demodulated subcarriers Ssym , fhs represents the half-subcarrier compensation fot i=1-(128+lCP) . As defined in [4], the length of the CP varies depending on the relative position of the symbol in the time slot. For symbol #0 , extended CP is adopted and the latency of CP is 5.2μs , while the rest 6 symbols adopt normal CP with a latency of 4.7μs . The maximum correlation value identifies both the cell identity NCellID and the correct frame timing. The design of the NSSS primarily addresses the challenge of significant frequency offsets in NB-IoT. Its 10ms duration and the deliberate phase inversion between consecutive radio frames enable robust frame synchronization and accurate frequency offset estimation simultaneously. This long observation window improves signal detection at low SNRs. Furthermore, the hybrid structure, combining a ZC sequence with a binary scrambling code, efficiently generates the 504 unique cell identities required by the standard. Each frame requires 2016 cross-correlations of length 132, yielding a complexity of O(M×L2) , where M=2016 and L=132 correspond to the number of cell-IDs and the NSSS sequence length, respectively.
+
+Prior to OFDM demodulation, critical preprocessing involves CP removal for both extended and normal CP configurations. Subsequently, Fast Fourier Transform (FFT) processing converts the time-domain samples into frequency-domain subcarriers. Following the aforementioned detection algorithm, Fig. 10a presents the spectral signature of a demodulated NSSS symbol, which clearly shows the 12 active subcarriers. The distinguishing spectral signature manifests that for even frames with NSSS, there are 12 discrete spectral components corresponding to the 12 active subcarriers. Additionally, according to the definition of NSSS, these 12 spectral components share the same amplitude, and demonstrate approximate amplitude after demodulation due to the introduction of noise.
+Fig. 10. - Demodulate NSSS with FFT and get the constellation figure (with $5{\,}\text {dB}$ noise).
+Fig. 10.
+
+Demodulate NSSS with FFT and get the constellation figure (with 5dB noise).
+
+The demodulation process exclusively considers subcarrier indices 1-12 , as specified in the narrowband allocation scheme. Fig. 10b demonstrates consistent symbol magnitude preservation across both transmitted and received constellations, confirming uniform power distribution among the 12 NSSS subcarriers.
+
+To evaluate detection robustness, we analyze the cross-correlation performance under varying channel conditions: SNR∈{+5dB,−5dB,−15dB,−25dB} . As evidenced in Fig. 11, the algorithm achieves reliable Cell-ID detection under a SNR≥−25dB .
+Fig. 11. - Cross-correlation level with different SNRs.
+Fig. 11.
+
+Cross-correlation level with different SNRs.
+
+Furthermore, the exhaustive search over all 2,016 possible NSSS sequences through brute-force cross-correlation poses significant computational challenges for resource-constrained SDR platforms. To address this limitation, we leverage the ubiquitous hardware/software acceleration support for FFT operations available across heterogeneous SDR platforms. We propose an FFT-accelerated cross-correlation method for NSSS-based cell search, which significantly enhances computational efficiency while maintaining detection performance. The correlation metric for the i -th candidate sequence is computed as:
+Ci=∣∣∣∣∑sym=010FFT(Gi[0:N])⊙FFT(Gi[0:N])∣∣∣∣,(7)
+View SourceRight-click on figure for MathML and additional features.where N denotes the cut-off length. Our FFT-optimized implementation achieves reliable detection at an SNR of −15dB with N=16 , reducing the computational complexity to O(KNlogN) , where K=11 represents the number of symbols.
+C. CFO Estimation and Compensation
+
+In SDR communications, CFO is often more pronounced than in dedicated hardware. This is primarily due to the discrete nature of sampling frequencies in SDRs. For instance, the USRP N210, with a main clock of 100 MHz, derives its sampling rate by integer division (e.g., 100MHz/52≈1.923077MHz ), preventing an exact match to the standard 1.92 MHz rate. While devices like the USRP B210 (with a 61.44 MHz clock) can achieve exact rates, others such as RTL-SDR dongles and the HackRF One face similar constraints. Furthermore, voltage and temperature variations exacerbate sampling clock instability, collectively making CFO a particularly severe issue in SDR-based systems. CFO estimation is performed by exploiting the time-domain structure of the NPSS, which provides phase coherence across its repeated sequences. Following initial time-domain synchronization, the CFO is quantified through cross-correlation analysis between the received NPSS waveform and its locally generated reference. The phase rotation observed over the NPSS subframes is used to derive a coarse CFO estimate via LS algorithms. Given that the NPSS is transmitted in the subframe #5 , which is located in the middle of NB-IoT DL frame, NPSS is a good representation of the CFO of the whole frame [32].
+
+The sequence of phase rotation is mathematically expressed as:
+pi=arg{si∗ni¯¯¯¯¯},(8)
+View SourceRight-click on figure for MathML and additional features.where pi∈(−π,π ] represents the phase rotation between standard sequence NPSS ni and received NPSS sequence si . It should be noted that, under constant frequency offset, the parameter pi should exhibit a linear temporal variation, where the slope of this linear relationship directly corresponds to the magnitude of the frequency offset inherent in the signal transmission process. However, practical implementations must account for channel-induced noise contamination. To mitigate the adverse effects of noise on frequency offset estimation accuracy, a sliding median filtering operation is conventionally applied to the pi sequence prior to parameter extraction. This nonlinear filtering approach demonstrates superior robustness in suppressing impulsive noise components compared to linear smoothing techniques.
+
+The frequency offset Δf can be estimated through linear regression of the phase sequence {pi} . Due to phase representation constraints pi∈[−π,π ), discontinuous jumps occur when the true phase progression exceeds ±π between consecutive samples. Define the phase difference:
+Δpi=14(∑j=−30pi+j−∑j=03pi+j)mod2π.(9)
+View SourceRight-click on figure for MathML and additional features.When |Δpi|>1.5π , we configure that the phase jump occurs and we perform ±2π to compensate for this discontinuous jump. Considering that the phase can be influenced by noise and synchronization error, we compare the mean value of pi to decide whether the jump occurs.
+
+The effectiveness of this CFO estimation and compensation approach is validated through simulation. Fig. 12 illustrates the stabilization of the phase sequence after filtering and jump compensation, enabling accurate CFO estimation. We can find that the pi sequence tends to stabilize after sliding median filtering and jump compensation, which enables CFO estimation. We can generate the CFO compensation sequence as:
+sCFO[i]sCOM=ejki,=s∗sCFO,(10)
+View SourceRight-click on figure for MathML and additional features.where k represents the slope of the primary function obtained by fitting the processed phase difference sequence and i=0,1,…,19200 is the length of DL frame.
+Fig. 12. - Output of CFO estimation.
+Fig. 12.
+
+Output of CFO estimation.
+
+As CFO keeps stable within a sub-frame, we can neglect it in NPSS processing as the auto-correlation method offsets the effect triggered by CFO. Specifically, a comparative analysis of the NPBCH demodulation performance was conducted with and without CFO compensation, as illustrated by the constellation diagrams presented in Fig. 13. The results unequivocally demonstrate the critical importance of CFO compensation in achieving accurate signal demodulation, evidenced by the distinct constellation point convergence post-compensation compared to the scattered symbol distribution observed under uncompensated conditions.
+Fig. 13. - Demodulation with/without CFO compensation.
+Fig. 13.
+
+Demodulation with/without CFO compensation.
+
+D. NPBCH, NPDCCH, NPDSCH Demodulation
+
+As the core elements of NB-IoT downlink communication, the NPBCH, NPDCCH, NPDSCH collectively enable critical functionalities such as system information dissemination, resource scheduling, and user data transmission. Demodulating these channels requires meticulous handling of their unique signal structures, modulation schemes, and protocol-specific constraints.
+
+Following the initial synchronization and frequency offset correction derived from the NPSS, the downlink signal is segmented into its constituent physical channels (NPBCH, NPDCCH, and NPDSCH) based on the synchronized timing hierarchy. Leveraging the NRS embedded within each subframe, channel estimation is performed to characterize the multipath propagation and residual phase errors inherent in NB-IoT’s low-complexity transceivers. This subframe-level processing ensures robust symbol recovery despite severe fading and ultra-low SNR conditions, adhering to the repetition and scrambling mechanism. The demodulated outputs are then forwarded to higher-layer protocols for further decoding and system operation.
+1) CP Remove:
+
+CP refers to a prefix of a symbol with a duplicate ending in an OFDM wireless system. The receiver is typically configured to drop a cyclic prefix sample CP that can be used to counteract the effects of multipath propagation. In NB-IoT systems, we use CP to eliminate inter-symbol interference. According to the design of NB-IoT PHY, the length symbol varies from 137−138 samples, with the length of CP varies from 9−10 samples. Therefore, we need to remove the CP for each symbol and retain the 128-sample-length symbol. For the first symbol in a slot, the CP occupies 10 samples and occupies 9 samples for the rest 6 symbols in the slot.
+2) OFDM Demodulation:
+
+For NB-IoT downlink transmissions, the multi-tone option is the only possible one in which the 12 available subcarriers are used. We perform demodulation by 128-point FFT:
+S[i][0:12]=FFTshift(FFT(symi))[58:70],(11)
+View SourceRight-click on figure for MathML and additional features.where i=0,1,…,6 represents the location of the symbol in a slot. However, due to the effect of the channel, there is a big difference between the demodulated s sequence S and the standard QPSK modulation sequence. Therefore, it’s necessary to perform channel equalization to correct the symbol sequence.
+3) Channel Estimation and Equalization:
+
+Within each OFDM subframe, CP removal and subsequent FFT-based demodulation are performed to recover frequency-domain symbols. The REs allocated to the NRS are extracted from the demodulated symbols, as defined by the 3GPP Release 13 [4] resource grid configuration. A least squares (LS) channel estimator is applied to these REs by comparing the received NRS symbols with their predefined reference counterparts, yielding sparse channel frequency response estimates at the NRS positions. To construct a full channel matrix spanning the entire subframe (12 subcarriers ×14 OFDM symbols), linear interpolation is employed, accounting for the quasi-static fading characteristics of NB-IoT channels. This interpolated channel matrix facilitates coherent equalization across all REs, where a zero-forcing (ZF) or minimum mean square error (MMSE) equalizer compensates for amplitude and phase distortions induced by multipath propagation [40]. In NB-IoT DL, least square (LS) method [41] is used for channel estimation and MMSE algorithm is adopted for channel equalization. This process aligns with the low-overhead design constraints of NB-IoT, where NRS density and interpolation complexity are optimized for coverage extension modes.
+
+The overview of channel transmission and channel equalization is summarized in Fig. 14. The received signal at NRS-bearing REs follows:
+YNRS=XNRS⊙HNRS+N,(12)
+View SourceRight-click on figure for MathML and additional features.where XNRS denotes the known reference symbols, HNRS the channel frequency response, and N∼CN(0,σ2nI) the complex Additive White Gaussian Noise (AWGN). According to LS channel estimation, we can get the estimated channel as:
+H^NRS=X−1NRSYNRS.(13)
+View SourceRight-click on figure for MathML and additional features.By interpolating H^NRS , we can obtain the complete channel estimation matrix H^ [42]. ZF equalization is a simple linear equalization method that eliminates the influence of the channel by dividing the received signal by the channel estimation. The estimated symbols S^ZF are expressed as
+S^ZF=YH−1=X+NH−1.(14)
+View SourceRight-click on figure for MathML and additional features.The parameter G in Fig. 14 is set as H−1 when ZF equalization is adopted. It’s obvious this method ignores the effect of noise N and MMSE is introduced to reduce the interference of noise. For MMSE consideration, the matrix G should be one that minimizes the MSE by utilizing the statistical characteristics of the received signal. As shown in Fig. 14,
+MSE=E{EHE}.(15)
+View SourceRight-click on figure for MathML and additional features.If there exists a certain correlation between Y and E, then it should be possible to utilize this correlation to reduce the magnitude of E. Therefore, at the optimal point, there should be no correlation between Y and E.
+Fig. 14. - Overview of channel transmission and channel equalization.
+Fig. 14.
+
+Overview of channel transmission and channel equalization.
+
+Therefore the objective function minMSE is equivalent to
+E{EHY}=0.(16)
+View SourceRight-click on figure for MathML and additional features.Thus, we can obtain G based on the MMSE criterion:
+G=E{XYH}E{YYH}−1.(17)
+View SourceRight-click on figure for MathML and additional features.in which
+E{XYH}E{YYH}=E{XXH}HH,=HE{XXH}HH+E{NNH}.(18)
+View SourceRight-click on figure for MathML and additional features.Therefore, we can rewrite G in (17) as:
+G=HH(HHH+σ2PI)−1,(19)
+View SourceRight-click on figure for MathML and additional features.where σ represents the power of noise, P represents the transmission power and I is the identity matrix. It can be observed that when there is no noise, the results obtained from ZF equalization are consistent with those obtained from MMSE equalization [43].
+SECTION IV.
+UL Processing
+
+The NB-IoT UL physical layer introduces distinct design paradigms compared to the downlink, primarily due to its support for both single-tone and multi-tone transmissions. This dual-mode operation necessitates specialized signal processing chains to accommodate divergent resource allocation strategies, modulation schemes, and power control requirements. The UL processing chain encompasses random access preamble detection via the NPRACH and data transmission via the NPUSCH, with critical algorithmic adaptations for handling coverage enhancement repetitions.
+A. Random Access
+
+The NPRACH preamble detection constitutes the initial step in establishing uplink synchronization and scheduling requests. Unlike LTE PRACH, NB-IoT NPRACH employs a single-subcarrier frequency-hopping scheme with configurable repetition levels (4 to 128 repetitions) for coverage extension, as defined in 3GPP TS 36.211 [31].
+1) CE Levels:
+
+To optimize link robustness in diverse propagation environments, the NB-IoT network implements discrete coverage enhancement levels (CE levels) through cell-specific thresholding mechanisms. As mandated by 3GPP TS 36.304 [44], the serving eNB partitions its coverage area into multiple CE zones based on reference signal receive power (RSRP) measurements. These thresholds are dynamically configured through system information block (SIB) to meet specific quality of service (QoS) requirements. As shown in Fig. 15, higher CE level supports larger service zone.
+Fig. 15. - Higher CE level with better RSRP supports larger service zone.
+Fig. 15.
+
+Higher CE level with better RSRP supports larger service zone.
+
+The RSRP computation at the UE side follows the standardized procedure defined in TS 36.214 [45], where power estimation occurs over NRS-bearing REs. Specifically, the measurement averages received signal power across all NRS REs within the allocated narrowband physical resource block (PRB), expressed as:
+RSRPNB=1NNRS∑k∈KNRS|y[k]|2
+View SourceRight-click on figure for MathML and additional features.where KNRS denotes the set of NRS RE indices per PRB and NNRS=2 subframes per radio frame for NB-IoT. This CE level determination enables adaptive repetition configuration and transmission parameter optimization.
+2) Signal Structure:
+
+The NPRACH in NB-IoT uses a specialized preamble structure defined in 3GPP TS 36.211 [31]:
+
+    Preamble Composition: Each preamble contains 4 symbol groups, with each group consisting of 5 identical symbols and one CP.
+
+    Baseband Signal: Symbol groups are pure sinusoids: si(t)=β⋅ej2πfit , where β represents the amplitude of sinusoid and fi is the used for each sinusoid as shown in Eq. 20.
+
+    Format Specifications:
+    Format 0: Format 1: TCP=66.7μs,Tpreamble=5.6msTCP=266.7μs,Tpreamble=6.4ms
+    View SourceRight-click on figure for MathML and additional features.
+
+    Subcarrier Spacing: Fixed at 3.75 kHz, providing 48 subcarriers over 180 kHz bandwidth
+
+The signal structure of NPRACH is shown in Fig. 16.
+Fig. 16. - Signal structure of NPRACH.
+Fig. 16.
+
+Signal structure of NPRACH.
+
+3) Frequency Hopping Mechanism:
+
+NPRACH employs pseudo-random frequency hopping to reduce collision probability:
+fi=(nRAsc(i)−23.5)×3.75kHz(20)
+View SourceRight-click on figure for MathML and additional features.
+
+The subcarrier index sequence nRAsc(i) is generated as:
+
+    Initial randomization: The pseudo-random hopping sequence must begin at a randomized starting point to minimize the probability of persistent collisions when multiple UEs initiate access simultaneously. If all sequences commenced from a fixed point, their hopping patterns would be highly correlated, leading to repeated collisions. Therefore, the initial subcarrier index is randomized as follows:
+    nRAsc(0)=nstart+(ninitmod12),(21)
+    View SourceRight-click on figure for MathML and additional features.where nstart is a base offset defined by the standard for each CE level, which partitions the NPRACH resources. The critical randomization component ninit is a UE-selected random number uniformly drawn from {0,1,…,NNPRACHsc−1} , where NNPRACHsc is the total number of subcarriers available for NPRACH at the given CE level. The modulo-12 operation ensures the initial index wraps around within the 12-subcarrier range, guaranteeing a valid starting position regardless of the UE’s random choice. This mechanism effectively disperses UEs across the frequency domain at the very first symbol of the preamble.
+
+    Deterministic hopping:
+    n~RAsc(i)=⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪⎪n~RAsc(i−1)+1,(i mod 4)∈{1,3}and n~RAsc(i−1) mod 2=0n~RAsc(i−1)−1,(i mod 4)∈{1,3}and n~RAsc(i−1) mod 2=1n~RAsc(i−1)+6,i mod 4=2and n~RAsc(i−1)<6n~RAsc(i−1)−6,i mod 4=2and n~RAsc(i−1)≥6(n~RAsc(0)+f(i4)) mod 12,i mod 4=0andi>0(22)
+    View SourceRight-click on figure for MathML and additional features.
+
+This design aims to mitigate preamble collision probability during random access by dispersing transmission attempts across time and frequency domains. The pseudo-random hopping pattern randomizes resource utilization among massive devices, thereby enhancing access reliability in coverage enhancement scenarios while maintaining deterministic detectability at the base station.
+4) Processing:
+
+The base station processing chain of NPRACH incolves three critical stages [23]:
+
+Preamble Detection: For NPRACH, correlation-based detection is recommended [46]:
+P^=maxτ∣∣∣∣∑m=0M−1r[m]⋅s∗[m−τ]∣∣∣∣2(23)
+View SourceRight-click on figure for MathML and additional features.where r[m] is received signal and s[m] is local preamble replica. As cross-correlation detection introduced, the CFO influences each τ equally. Therefore, the ML methods mitigates the impact of the CFO.
+
+Time-Frequency Offset Estimation: Accurate synchronization is critical for NPRACH detection due to the narrow subcarrier spacing (3.75 kHz) and extreme coverage requirements:
+
+    Frequency offset estimation:
+    Δf^=12πTs∠(∑kr[k]⋅r∗[k+N])(24)
+    View SourceRight-click on figure for MathML and additional features.where:
+
+        Δf^ : Estimated carrier frequency offset (Hz)
+
+        Ts : Sampling interval (s), Ts=1/fs
+
+        fs : Analog digital converter (ADC) sampling rate, typically 1.92 MHz (4× oversampling for 180 kHz bandwidth)
+
+        ∠(⋅) : Complex angle operator (radians)
+
+        r[k] : Received baseband complex sample at index k
+
+        r∗[k+N] : Complex conjugate of delayed sample by N points
+
+        N : Correlation delay corresponding to symbol duration, N=Tsym×fs (e.g., 512 samples for Tsym=266.7μs )
+
+        k : Sliding window start index for correlation
+
+    This autocorrelation-based estimator leverages the constant envelope property of NPRACH symbol groups to achieve robustness in low-SNR conditions (down to -15 dB).
+
+    Timing advance estimation:
+    Δt^=argmaxτ∣∣∣∣∑k=ττ+NCP−1r[k]⋅r∗[k+N]∣∣∣∣(25)
+    View SourceRight-click on figure for MathML and additional features.where:
+
+        Δt^ : Estimated timing advance (in samples)
+
+        τ : Time index for sliding search window
+
+        NCP : CP length in samples, format-dependent:
+        Format 0: Format 1: NCP=66.7μs×fsNCP=266.7μs×fs
+        View SourceRight-click on figure for MathML and additional features.
+
+        N : Main symbol duration in samples
+
+        k : Summation index within CP window
+
+    The timing estimator exploits CP-symbol correlation to resolve propagation delays. The search range τ∈[0,τmaxfs] should cover all possible round-trip delays.
+
+RAPID Identification: The Random Access Preamble Identifier (RAPID) corresponds to the initial subcarrier index nRAsc(0) of the NPRACH preamble. This critical parameter is detected through maximum likelihood estimation based on the measured frequency hopping pattern. The identification process involves solving the optimization problem:
+n^RAsc(0)=argminn∈C∑i=03∣∣fmeasi−fi(n)∣∣2(26)
+View SourceRight-click on figure for MathML and additional features.where:
+
+    fmeasi represents the measured center frequency of the i -th symbol group (0≤i≤3 )
+
+    fi(n) is the theoretical frequency calculated for candidate n using the deterministic hopping sequence defined in [31]:
+    fi(n)nRAsc(i)=(nRAsc(i)−23.5)×3.75kHz=nstart+n~RAsc(i)
+    View SourceRight-click on figure for MathML and additional features.
+
+    C denotes the constrained candidate set determined by:
+    C={NNPRACHscoffset+12k∣0≤k<⌊NNPRACHsc12⌋}(27)
+    View SourceRight-click on figure for MathML and additional features.
+
+The candidate set C is strictly determined by the Coverage Enhancement (CE) level configuration parameters:
+
+    NNPRACHscoffset : Starting subcarrier index of the 12-subcarrier block
+
+    NNPRACHsc : Total number of subcarriers allocated for the CE level
+
+The pattern matching process accounts for the deterministic hopping sequence defined by the recurrence relation:
+n~RAsc(i)=H(n~RAsc(i−1),imod4)(28)
+View SourceRight-click on figure for MathML and additional features.where H implements the transition rules specified in [31]. This approach provides robust identification even in low-SNR conditions by exploiting the full frequency hopping pattern rather than just the initial symbol group.
+5) SDR Implementation Considerations for NPRACH Processing:
+
+: The SDR implementation of NPRACH processing requires specialized adaptation of the theoretical algorithms to address practical constraints while extracting critical information from the four symbol groups. The physical layer structure demands extraction of three key parameters: timing advance (from CP correlation), frequency offset (from phase continuity), and RAPID (from frequency hopping pattern).
+
+We can generate standard NPRACH example waveform based on MATLAB LTE ToolBox [47]. As the design of NPRACH is simple sinusoid, the processing of NPRACH is simular for simulation and SDR transmission. We perform short-time Fourier transform (STFT) on generated NPRACH sequence. To visualize the frequency-hopping pattern and the practical challenges of SDR reception, we present the time-frequency diagrams of both the ideal NPRACH waveform and a signal received over-the-air. Fig. 17a shows the clean hopping pattern of the generated signal, while Fig. 17b, captured using an RTL-SDR dongle, reveals significant frequency offset and dispersion, underscoring the need for robust synchronization algorithms. We transmitted this set of NPRACH symbols over real physical channels using SDR equipment, employing a USRP with UBX-40 RF daughterboard as the transmitter and a typical low-cost SDR (RTL-Dongle) as the receiver. The time-frequency representation at the receiver is shown in Fig. 17b, revealing significant frequency offset and noticeable energy dispersion around the symbol bands. However, the frequency difference between symbols - i.e., the hop magnitude - remains fundamentally stable. This observation confirms that frequency offset estimation and compensation are critical for ensuring effective demodulation of NB-IoT signals.
+Fig. 17. - Time-Frequency diagram of NPRACH.
+Fig. 17.
+
+Time-Frequency diagram of NPRACH.
+
+B. NPUSCH Processing
+
+The NPUSCH serves as the primary uplink data transmission mechanism in NB-IoT systems, carrying both user data and control information. Defined in 3GPP Release 13 specifications [31], NPUSCH exhibits two fundamentally distinct transmission modes that dictate receiver design:
+NPUSCH={Format 1 (Single-tone)Format 2 (Multi-tone)(29)
+View SourceRight-click on figure for MathML and additional features.
+
+Key characteristics impacting base station processing:
+
+    Resource Unit (RU) Structure: Minimum allocation unit spanning time-frequency resources
+
+    Modulation Schemes:
+
+        Single-tone: π/2 -BPSK and π/4 -QPSK with spectrum shaping
+
+        Multi-tone: QPSK + SC-FDMA Modulation
+
+    Hybrid Automatic Repeat reQuest (HARQ) Operation: Asynchronous adaptive retransmissions with Redundancy Version cycling (RV cycling)
+
+    Coverage Enhancement: Supports up to 128 repetitions (CE mode 2)
+
+The fundamental divergence between single-tone and multi-tone transmission necessitates distinct receiver architectures. Single-tone processing requires specialized phase tracking and long-duration FFTs, while multi-tone reception employs conventional SC-FDMA techniques with bandwidth-optimized equalization. Subsequent subsections detail these two processing paradigms separately.
+
+Subcarrier Spacing Constraints and Framework Implications: The subcarrier spacing selection is strictly regulated by [31] with fundamental differences between transmission modes:
+Δf={3.75kHz15kHzexclusively for single-tonefor multi-tone/single-tone(30)
+View SourceRight-click on figure for MathML and additional features.This constraint creates divergent signal processing frameworks:
+
+    Single-tone Framework:
+
+        Requires 512-point FFT for 3.75 kHz subcarrier spacing and 128-point FFT for 15 kHz subcarrier spacing
+
+        Mandates phase tracking loops (±1.875 Hz Doppler tolerance)
+
+        Uses time-domain differential detection
+
+        Slot duration: 2 ms (3.75 kHz) / 0.5 ms (15 kHz)
+
+    Multi-tone Framework:
+
+        Utilizes 128-point FFT with SC-FDMA demodulation
+
+        Enables frequency-domain MMSE equalization
+
+        Supports subcarrier bundling (3/6/12 subcarriers)
+
+        Slot duration: 0.5 ms
+
+System Design Tradeoffs:
+Coverage vs. Capacity:Single-tone: 10log10(266.7μs66.7μs)≈6dB SNR gainMulti-tone: 3×spectral efficiency (12-subcarrier)Timing Sensitivity:CP ratio: TCPTsym={0.250.07Δf=3.75kHzΔf=15kHz
+View SourceRight-click on figure for MathML and additional features.
+
+Implementation Constraints:
+
+    Single-tone prohibits multi-subcarrier transmission (Nsc≡1 )
+
+    Multi-tone forbids 3.75 kHz spacing (prevents resource collision)
+
+    Time Division Duplex (TDD) mode restricts 3.75 kHz to Frame Configurations 1/4
+
+These fundamental differences necessitate separate baseband processing chains at eNodeB, making NPUSCH receiver design uniquely complex among 3GPP technologies. The main difference between two modes of subcarrier spacing is shown in Table. IV.
+TABLE III Transmission Settings in UL
+Table III- Transmission Settings in UL
+TABLE IV UL Configuration for Different Subcarrier Spacing
+Table IV- UL Configuration for Different Subcarrier Spacing
+
+Baseband Signal Generation Differences: The physical layer processing chains differ fundamentally between transmission modes in three key aspects:
+
+Single-Tone Signal Path:
+
+    Symbol Modulation: For single-tone mode, π/2 -BPSK and π/4 -QPSK are both optional for symbol modulation.
+
+    Phase Rotation: After initial symbol mapping, all constellation points undergo specific phase rotations. The rotation sequence is defined in [31]. The phase rotation applied in NPUSCH single-tone transmission transforms the detrimental, continuous phase drift induced by residual CFO into a deterministic, periodic variation. This enables simplified and more robust receiver processing, as the known rotation can be easily compensated, effectively mitigating inter-symbol interference and maintaining link reliability under significant frequency errors.
+
+    Direct Subcarrier Mapping: The rotated symbols are directly mapped to a single designated subcarrier without any additional transformation processing. This single-subcarrier approach maintains constant-envelope characteristics throughout transmission.
+
+    Orthogonal Subcarrier Modulation: The modulated subcarrier undergoes specialized Orthogonal Subcarrier Modulation to generate the final time-domain waveform. This simplified processing chain enables ultra-low latency transmission suitable for deep coverage applications.
+
+Multi-Tone Signal Path:
+
+    Symbol Modulation: For multi-tone case, only QPSK is optional for symbol modulation.
+
+    Subcarrier Allocation: After initial symbol mapping, data symbols are allocated to multiple subcarriers (3, 6, or 12) according to scheduled resource assignments. This multi-subcarrier approach enables higher data rates but requires complex resource mapping.
+
+    FFT Precoding: Symbols undergo FFT precoding, converting time-domain symbols to frequency-domain representations. This transform precoding stage is essential for SC-FDMA operation and maintains low PAPR characteristics.
+
+    IFFT Processing: The precoded symbols are mapped to physical subcarriers within the 180 kHz bandwidth, then processed through an Inverse Fast Fourier Transform (IFFT) to generate the final time-domain waveform. This multi-stage processing enables frequency-domain equalization at the receiver.
+
+Key Implementation Differences:
+
+    Phase Handling: Single-tone mandates phase rotation before transmission while multi-tone implements phase correction during reception
+
+    Processing Complexity: Single-tone uses direct modulation requiring minimal processing; multi-tone requires FFT + IFFT stages
+
+    Resource Allocation: Single-tone uses fixed single-subcarrier mapping; multi-tone supports flexible subcarrier bundling (3/6/12 )
+
+    Latency Profile: Single-tone processing has significantly lower latency due to its simplified signal path
+
+    Receiver Requirements: Single-tone demands specialized phase tracking loops while multi-tone uses conventional frequency-domain equalization
+
+These architectural differences in baseband signal generation explain why NB-IoT base stations implement separate physical layer processing chains for single-tone and multi-tone transmissions, as mandated by 3GPP RAN4 testing requirements. The single-tone path optimizes for coverage and power efficiency while the multi-tone path prioritizes spectral efficiency and data throughput. The chain of baseband signal generation for single-tone and multi-tone is shown in Fig. 18.
+Fig. 18. - NPUSCH baseband signal generation.
+Fig. 18.
+
+NPUSCH baseband signal generation.
+
+For both single-tone and multi-tone NPUSCH transmission in NB-IoT systems, a Raised-Cosine (RC) filter is employed for pulse shaping. This filter is mathematically defined by its impulse response:
+h(t)=sin(πt/Ts)πt/Ts⋅cos(απt/Ts)1−(2αt/Ts)2(31)
+View SourceRight-click on figure for MathML and additional features.where Ts is the symbol duration and α is the roll-off factor, standardized at α=0.35 . The RC filter serves three critical functions in NPUSCH transmission:
+
+    Bandwidth Limitation: Confines signal energy strictly within the allocated frequency band, whose width is determined by the symbol rate and a standardized roll-off factor of 0.35 specific to NB-IoT systems. This effectively constrains signal power within regulatory boundaries while minimizing interference to adjacent channels, ensuring compliance with spectral emission masks that require most of energy to remain within the designated bandwidth.
+
+    ISI Elimination: Eliminates inter-symbol interference by creating precisely timed zero-crossings at each symbol boundary. The filter’s impulse response ensures that when sampled at exact symbol intervals, only the current symbol contributes to the sampled value while adjacent symbols produce zero interference. This property is essential for reliable symbol detection in both single-tone and multi-tone configurations.
+
+    SNR Optimization: When paired with a matched filter at the receiver, the combined system maximizes the achievable signal-to-noise ratio, approaching the theoretical limit defined by the bit energy to noise power density ratio. This receiver-side matching fundamentally optimizes detection performance under noisy channel conditions.
+
+Additionally, based on the usage of messages transmitted, NPUSCH can be divided into Format 1 and Format 2. Format 1 is designed for data transmission while Format 2 is used for Acknowledgement (ACK) and Negative Acknowledgement (NACK) message transmission. For Format 2, single-tone is the only mode as while multi-tone mode is optional for Format 1. Moreover, π /2-BPSK is the only symbol modulation mode optional for Format 2
+1) Single-Tone:
+
+For single-tone case, the subcarrier spacing is 3.75kHz or 15kHz. The choice of subcarrier spacing influences the configuration of signal in time domain. To illustrate, when the subcarrier spacing is set as 3.75kHz, the pilot symbol is allocate at the #4 symbol in a slot while #3 symbol is set for pilot when the subcarrier spacing is 15kHz. Additionally, the length of slot is also different, the length of slot is 2ms for 3.75kHz subcarrier spacing and is 0.5ms for 15kHz subcarrier spacing. More detailed, the CP length keeps 8.33μs when the subcarrier spacing is set as 3.75kHz. However, when the subcarrier spacing is 15kHz, the CP length is set as 5.21μs for the first symbol and 4.69μs for other symbols. The detailed difference is summarized in Table. IV. Although the process of demodulating these two subcarrier spacings is consistent, the specific parameters still need to be set separately.
+
+Moreover, as the introduction of phase rotation design, the symbols transmitted in signal is not original QPSK modulated symbols [21]. Each symbol rotates by a certain angle, which is determined in the protocol [31]. The rotation sequence is defined as:
+ϕ(l)=ρ(l mod 2)+ϕ^(l−1),(32)
+View SourceRight-click on figure for MathML and additional features.in which
+ρϕ^(l)=⎧⎩⎨⎪⎪π2π4,BPSK,QPSK={0ϕ^(l−1)+πΔf(N+Ncp)Ts,l=0,l>0.(33)
+View SourceRight-click on figure for MathML and additional features.where l=0,1,…,NRepNRUNslotNsym−1 is used for counting, zeroing at the beginning of the transmission, and increasing as the number of symbols increases during the transmission. NRep denotes the repetition time, NRU is the number of resource unit, Nslot=16 denotes the number of slots for per resource unit and Nsym=7 represents that there are 7 symbols in a slot. For receiver, the phase rotation sequence can be generated locally according to the configuration of the transmission. The chain of NB-IoT UL receiver for single-tone case is shown in Fig. 19.
+
+    Band pass filter (BPF):
+
+    In the receiver processing chain for single-tone NPUSCH, the initial bandpass filtering stage is critically designed with a 3.75 kHz bandwidth, specifically capturing ±1.875 kHz around the target subcarrier frequency to isolate the desired signal while rejecting adjacent channel interference; this intentional bandwidth allocation provides inherent tolerance for frequency offsets up to ±1.875 kHz caused by oscillator inaccuracies or Doppler shifts, effectively accommodating typical NB-IoT UE frequency errors of ±20 ppm (±1.8 kHz at 900 MHz) without signal degradation, while simultaneously suppressing out-of-band noise and interference from neighboring subcarriers in the 180 kHz channel bandwidth. The filter’s transition band characteristics are optimized to maintain signal integrity within the 3.75 kHz subcarrier spacing framework, ensuring sufficient rejection of adjacent subcarriers while preserving the constant-envelope properties of the π /2-BPSK or π /4-QPSK modulated waveform, thereby enabling robust signal acquisition even under challenging channel conditions where frequency synchronization has not yet been fully established during this early processing stage. This strategic bandwidth selection represents a fundamental design compromise between interference rejection and frequency offset tolerance that is uniquely tailored to the physical layer constraints of single-tone NPUSCH transmission in 3GPP Release 13 specifications.
+
+    Synchronization:
+
+    Unlike the downlink which employs dedicated synchronization signals (NPSS/NSSS), NB-IoT uplink synchronization in Release 13 must be achieved through blind estimation techniques leveraging inherent signal characteristics. This constraint stems from the absence of predefined uplink synchronization sequences in legacy NB-IoT specifications, necessitating receiver-side synchronization based on the feature of signal. We can achieve synchronization with CP in single-tone case of NB-IoT UL [48]. The CP is employed to mitigate inter-symbol interference (ISI) and inter-channel interference (ICI) through duplication of a modulated symbol’s trailing portion to its beginning. Crucially, this CP structure enables auto-correlation-based synchronization in uplink scenarios, as documented in existing literature. The synchronization mechanism operates according to the defined algorithm:
+    A(x)=Re(∑j=1lens[x+j]s¯¯¯[x+j+lag]),(34)
+    View SourceRight-click on figure for MathML and additional features.where len=9 specifies the normal CP length and lag=128 denotes the symbol length. Experimental validation in Fig. 20 demonstrates the auto-correlation performance for both locally-generated standard signals and signals captured via an SDR receiver. The auto-correlation coefficient exhibits distinct peaks when the convolution window aligns with the CP segments. This peak detection mechanism allows precise identification of cyclic prefix patterns within sample sequences, thereby enabling accurate symbol boundary determination.
+
+    For wireless signal synchronization, reference signal (e.g., DMRS for NB-IoT) is always a useful pattern [49]. However, as DMRS for single-tone case is sine wave with a given initial phase, it’s hard to achieve synchronization based on DMRS for single-tone.
+
+    CFO compensation:
+
+    Due to moderate instability in SDR equipment, the frequency offset estimated during NPRACH often differs significantly from those observed in previous NPUSCH transmissions. Furthermore, frequency offset varies across different NPUSCH transmission instances. Consequently, we must perform separate frequency offset estimation for each individual NPUSCH transmission [50].
+
+    In single-carrier systems, CFO arises from oscillator mismatches and Doppler effects during transmission. The normalized CFO is defined as ϵ=foΔf , where fo=fc−f′c denotes the absolute frequency offset between transmitter (fc ) and receiver (f′c ), with Δf being the sub-carrier spacing. This offset induces progressive phase rotation during demodulation, causing constellation distortion and BER degradation.
+
+    The standard CFO estimation using reference signals (DMRS) is formulated as:
+    ϵ^=12π(LCP+N)arg{∑n=1LCP+Ny∗[n]x[n]},(35)
+    View SourceRight-click on figure for MathML and additional features.where LCP=9 and N=128 represent CP and symbol lengths respectively, y[n] is the received reference symbol, and x[n] is the known transmitted reference symbol.
+
+    However, this algorithm ignores the fact that the fixed frequency offset will cause the phase linear change, so we propose a more effective strategy.
+
+        Conjugate cross-correlation: Compute complex conjugate cross-correlation between received DMRS samples y[n] and transmitted DMRS sequence x[n] :
+        r[n]=y∗[n]⋅x[n].
+        View SourceRight-click on figure for MathML and additional features.
+
+        Phase extraction: Extract phase information from correlation results:
+        ϕ[n]=arg{r[n]}.
+        View SourceRight-click on figure for MathML and additional features.
+
+        Linear regression: Determine phase progression slope β^ through least-squares fitting:
+        β^=LSFIT(n,ϕ[n]).
+        View SourceRight-click on figure for MathML and additional features.
+
+        CFO calculation: Convert phase slope to normalized frequency offset:
+        ϵ^enh=β^2πTsΔf.
+        View SourceRight-click on figure for MathML and additional features.
+
+    This method achieves 3.5× lower variance than conventional approaches at 0 dB SNR by leveraging full phase progression information within the symbol period. The computational load remains feasible with O(N) complexity while delivering ±0.5 ppm accuracy under typical SDR hardware constraints.
+
+    Phase de-rotation:
+
+    At the receiver, phase de-rotation is performed following synchronization and frequency compensation. This operation is mathematically expressed as:
+    fr[i][j]pr[i][j]s˜[i]={p[i]0j=ftotherwise,0≤j≤LS=∑t=0LSfr[i][j]ej2πtjLS,=s[i]pr¯¯¯¯¯[i],(36)
+    View SourceRight-click on figure for MathML and additional features.where fr[i] denotes the spectral representation of phase shift for symbol i , LS=128 specifies the symbol length, p[i] records the phase information, and target FFT bin ft is determined by baseband carrier choice. The time-domain rotation sequence pr and s˜[i] represent the output of the de-rotated symbol sequence.
+
+    The resulting de-rotated sequence s˜[i] constitutes a QPSK-modulated single-carrier signal. However, due to residual frequency offset causing persistent phase distortion, this signal remains unsuitable for direct demodulation. Consequently, residual frequency offset tracking and correction must be implemented using a Costas Loop.
+
+    Costas Loop:
+
+    Following phase de-rotation, the QPSK-modulated sequence contains 128 samples per symbol. The necessity of the Costas loop is evident from the distorted constellation in Fig. 23a, which results from direct demodulation without phase tracking. To address residual frequency/phase offsets and channel noise essential for long-distance reception, we implement a Costas loop comprising a voltage-controlled oscillator (VCO), loop filter (LPF), and phase detector. Compared to PLL-based detectors [51], Costas loop offers doubled sensitivity with its error voltage output sin(2(θi−θf)) versus PLL’s sin(θi−θf) , making it ideal for carrier phase tracking in communication systems. The structure is illustrated in Fig. 21.
+
+    The input signal multiplies with in-phase and quadrature components from the local oscillator, generating error signals sI(t) and sQ(t) . For computational efficiency, we implement a decision-directed phase detector:
+    VD(t)=sQ(t)⋅Sign(sI(t))−sI(t)⋅Sign(sQ(t)),(37)
+    View SourceRight-click on figure for MathML and additional features.where Sign denotes the signum function. The loop filter’s system function simplifies to:
+    F(Z)=C1+C2z−11−z−1,(38)
+    View SourceRight-click on figure for MathML and additional features.which we implement iteratively using a unified gain parameter Glf :
+    Olf(t+1)=Olf(t)+Glf⋅VD(t).(39)
+    View SourceRight-click on figure for MathML and additional features.Replacing VCO with a direct digital synthesizer (DDS) that outputs phase Olf , the processed sequence shown in Fig. 23b achieves proper constellation alignment. Due to original phase uncertainty, final phase compensation using reference symbols completes the demodulation preparation [52]. The Costas loop has a complexity of O(Ns) per symbol per iteration, with Ns=128 being the number of samples per symbol.
+
+    Additionally, the sequence after phase de-rotation represents a QPSK-modulated single-carrier signal, albeit with residual frequency offset. This specific signal characteristic directly informs our Costas loop parameter selection:
+
+        Modulation-specialized tracking: Costas loop parameters are optimized for QPSK constellation geometry, particularly the ±π/4 phase ambiguity points
+
+        Sampling density adaptation: With 128 samples per symbol, the loop bandwidth is scaled to ≈0.78% of the symbol rate (1/128 )
+
+        Residual offset matching: Initial coarse compensation limits residual offset to ≤±1.875 kHz, enabling optimized narrowband tracking
+
+Fig. 19. - NB-IoT UL processing for single-tone.
+Fig. 19.
+
+NB-IoT UL processing for single-tone.
+
+Fig. 20. - Synchronization based on CP.
+Fig. 20.
+
+Synchronization based on CP.
+
+Fig. 21. - Digital costas loop.
+Fig. 21.
+
+Digital costas loop.
+
+Fig. 22. - SC-FDMA signal processing pipeline.
+Fig. 22.
+
+SC-FDMA signal processing pipeline.
+
+This two-stage approach strategically leverages: 1. Phase de-rotation’s ability to remove systematic constellation rotation 2. Costas loop’s superior performance on constant-envelope signals like QPSK 3. Parameter calibration specifically for high-density sampling (128 samples/symbol)
+2) Multi-Tone:
+
+Building upon the foundational single-tone processing architecture, multi-tone NPUSCH represents a fundamentally distinct transmission paradigm optimized for higher data rate scenarios. While single-tone implementations utilize narrowband constant-envelope modulation (π /2-BPSK and π /4-QPSK), multi-tone transmission employs a wideband SC-FDMA framework with configurable resource allocations including 3/6/12 subcarriers.
+
+SC-FDMA represents a pivotal multiple access technique specifically engineered for power-efficient uplink transmission in cellular systems. As the fundamental physical layer framework for 3GPP LTE and NB-IoT uplink communications, SC-FDMA harmoniously integrates single-carrier waveform benefits with flexible frequency-domain resource allocation.
+
+Core Technical Principle: SC-FDMA employs a unique discrete Fourier transform (DFT) spread OFDM architecture that fundamentally differs from conventional OFDM [53]:
+Transmitter: s=F−1M(P(FNx)),(40)
+View SourceRight-click on figure for MathML and additional features.where x is the time-domain symbol block of length N , FN is the N -point DFT matrix, P is the subcarrier mapping matrix, and F−1M is the M -point inverse discrete Fourier transform (IDFT, N<M ). This signal generation process, depicted in Fig. 22, creates a single-carrier waveform with frequency-domain allocation flexibility.
+Fig. 23. - Demodulation results with/without Costas loop.
+Fig. 23.
+
+Demodulation results with/without Costas loop.
+
+Advantages for NB-IoT:
+
+    PAPR Reduction: Achieves PAPR of 3-6 dB versus 8-12 dB in OFDM, extending UE battery life by 15-20% [54], [55]
+
+    Frequency Diversity: Distributed subcarrier mapping enables robust fading channel performance [56]
+
+    Backward Compatibility: Utilizes the same IDFT/DFT sizes as OFDM systems (DFT size= 128 for 180 kHz Bandwidth)
+
+NB-IoT Implementation Framework: In 3GPP Release 13 [31], SC-FDMA is adapted for NB-IoT multi-tone NPUSCH through:
+
+    Configurable DFT sizes: N∈{12,24,48} mapping to 128-point DFT
+
+    Subcarrier bundling: Grouping into 3/6/12 subcarrier units
+
+    Resource element mapping: Distributed (comb-type) or localized (block-type) allocation
+
+The receiver processing chain leverages conjugate-symmetric properties:
+Receiver: x^=F−1N(PT(FMr)),(41)
+View SourceRight-click on figure for MathML and additional features.where r represents the received signal sequence with a length of N and x^ represents the demodulated symbols.
+
+In practical implementations, the matrix operations are replaced with optimized FFT/IFFT algorithms:
+Step 1: Step 2: Step 3: yfreq=FFTM(r),z=PTyfreq,x^=IFFTN(z).
+View SourceRight-click on figure for MathML and additional features.
+
+The dimensionality constraint requires N<M with N representing user-allocated subcarriers and M defining the total available subcarriers in the system bandwidth. In NB-IoT, the fixed relationship M=128 is mandated by the 180 kHz channel bandwidth with 15 kHz subcarrier spacing. The comparison of the spectrum of OFDM and SCFDMA is shown in Fig. 24. The figure clearly demonstrates that compared to OFDM, SC-FDMA utilizes DFT processing to coherently combine discrete subcarriers, effectively forming a bandwidth-constrained “single carrier” waveform. This structural innovation significantly reduces the PAPR and correspondingly lowers power consumption.
+Fig. 24. - Spectrum of OFDM and SCFDMA.
+Fig. 24.
+
+Spectrum of OFDM and SCFDMA.
+
+For multi-tone transmission, the system exclusively employs 15kHz subcarrier spacing to accommodate multiple subcarriers simultaneously. The number of active subcarriers can be configured as 3, 6, or 12, directly determining the resource allocation granularity. Crucially, multi-tone processing introduces frequency-domain resource mapping where data symbols are distributed across allocated subcarriers, necessitating IFFT operations for time-domain signal generation. The chain of NB-IoT UL receiver for multi-tone case is shown in Fig. 25.
+Fig. 25. - NB-IoT UL processing for multi-tone.
+Fig. 25.
+
+NB-IoT UL processing for multi-tone.
+
+∙ Configurable BPF:
+
+In multi-tone NPUSCH reception, the bandpass filtering stage features dynamic bandwidth scaling directly determined by the active subcarrier configuration, with operational bandwidths of 65 kHz, 110 kHz, or 200 kHz corresponding respectively to 3, 6, and 12 active subcarrier deployments. This adaptive bandwidth strategy comprehensively envelopes the entire transmission band while maintaining critical guard bands, effectively containing the spread spectrum energy within licensed frequency allocations and preventing detrimental spectral leakage into adjacent channels. The precisely calibrated bandwidth margins—specifically, ±32.5 kHz for 3-subcarriers, ±55 kHz for 6-subcarriers, and ±100 kHz for 12-subcarriers configurations—deliver dual technical advantages: firstly, robust immunity against ICI caused by oscillator phase noise; secondly, intrinsic accommodation of worst-case frequency offsets up to ±20 ppm (±1.8 kHz at 900 MHz) without requiring preliminary frequency correction in the signal acquisition phase. By maintaining strict conformity to the instantaneous transmission bandwidth rather than fixing to the full system bandwidth, this implementation achieves an optimal balance between adjacent channel rejection and in-band signal preservation, directly enhancing SNR across typical urban fading scenarios while simultaneously reducing UE power consumption through elimination of over-filtering effects.
+
+∙ Synchronization and CFO compensation:
+
+The temporal synchronization approach in multi-tone transmission similarly utilizes both CP-based and DMRS-based methods, mirroring the single-tone case. However, it’s worth to note that while the CP and DMRS in single-tone mode constitute simple sine waves with initial phase information, the time-domain waveforms in multi-tone transmission exhibit significantly greater complexity. This complexity arises as they essentially represent the superposition of multiple sine waves with distinct initial phase offsets. Consequently, synchronization algorithms leveraging maximum correlation peaks generally demonstrate enhanced effectiveness in multi-tone case. For example, we perform DMRS-based cross-correlation for single-tone and multi-tone mode respectively and the result is shown in Fig. 26. It is evidently observable that the pure sine waveform exhibits excessively simplistic characteristics in single-tone mode, resulting in inferior cross-correlation performance with indistinguishable peak magnitude and heightened vulnerability to interference. Conversely, the multi-carrier waveform demonstrates substantially higher complexity, yielding pronounced cross-correlation peaks that facilitate superior synchronization performance.
+Fig. 26. - DMRS-based synchronization.
+Fig. 26.
+
+DMRS-based synchronization.
+
+Additionally, DMRS is also used for CFO compensation. The cross-correlation method is similar to single-tone. The phase linear offset caused by the frequency offset is still applicable in the case of multi-tone. However, it is worth noting that due to the fact that frequency division multiple access often introduces factors such as spectrum leakage, the smoothing of phase difference sequences needs to be more surprisingly considered. With the advancement of machine learning technology, certain CFO estimation methods based on machine learning algorithms have emerged [57], [58], [59], [60]. However, considering the resource constraints inherent in SDR deployment implementations, we prioritize traditional signal processing algorithms in our approach.
+
+∙ FFT based OFDM demodulation:
+
+The initial stage of SC-FDMA demodulation for multi-tone NPUSCH directly corresponds to OFDM demodulation. This critical transformation converts time-domain samples into frequency-domain symbols through FFT processing, enabling per-subcarrier channel estimation and equalization.
+
+The core OFDM modulation/demodulation duality is mathematically expressed through Fourier transforms:
+
+    Transmitter Modulation (IFFT):
+    x0[n]=1N∑k=0N−1X[k]⋅ej2πnk/N,(42)
+    View SourceRight-click on figure for MathML and additional features.where x0[n] represents the time-domain sample at index n , and X[k] denotes the complex-valued data symbol mapped to subcarrier k . To avoid utilizing the DC subcarrier while maintaining spectral efficiency, NB-IoT employs a frequency shift of Δf/2 (7.5 kHz):
+    x[n]=x0[n]⋅ejπn/N.(43)
+    View SourceRight-click on figure for MathML and additional features.This shifts the signal spectrum by half a subcarrier, allowing the active subcarriers to be centered between bins k=64.5 rather than directly on k=64 which enables receiver to perform DC correction without damaging the data.
+
+    Receiver Demodulation (FFT): For multi-tone reception, the first stage is to remove the half-subcarrier shift:
+    y[n]=y0[n]⋅e−jπn/N,(44)
+    View SourceRight-click on figure for MathML and additional features.where y0 represents the received time-domain samples after DC correction (necessary for low-end SDR devices). The signal sequence y is demodulated with FFT:
+    Y[k]=∑n=0N−1y[n]⋅e−j2πnk/N(45)
+    View SourceRight-click on figure for MathML and additional features.where Y[k] is the demodulated frequency-domain symbol.
+
+For a 12-subcarrier NPUSCH transmission using N=128 FFT size:
+
+    Active subcarriers:k∈{58,59,60,61,…,69}
+
+    DC subcarrier always null
+
+The complete demodulation flow for multi-tone NPUSCH:
+
+    CP Removal: The introduction of the raised-cosine filter causes adjacent symbols to interfere with each other in the time domain due to their overlapping waveforms. In single-tone mode, this inter-symbol interference effect is negligible and can be safely disregarded. However, for OFDM systems, a specialized approach is typically employed during the CP removal stage:
+
+    The standard practice involves partially retaining CP samples while correspondingly truncating the trailing portion of the symbol waveform, maintaining the total processing length at 128 samples. Specifically:
+
+        For the first symbol within each slot, processing begins at sample y0[2] of the CP,
+
+        For all subsequent symbols in the slot, processing begins at sample y0[1] .
+
+    The procedure of CP removal is summarized in Fig. 27
+
+    FFT Processing:
+    Y=FFT{y~[n]}(46)
+    View SourceRight-click on figure for MathML and additional features.Outputs 128 complex frequency bins.
+
+    Subcarrier Demapping:
+    Ydata=[Yk0,Yk1,…,Yk11]T(47)
+    View SourceRight-click on figure for MathML and additional features.Extracts only the 12 active subcarriers corresponding to NPUSCH allocation.
+
+Fig. 27. - CP removal for multi-tone.
+Fig. 27.
+
+CP removal for multi-tone.
+
+This FFT processing effectively converts the composite time-domain signal into parallel frequency-domain components:
+⎡⎣⎢⎢⎢⎢y0y1⋮y127⎤⎦⎥⎥⎥⎥Time Domain−→−FFT⎡⎣⎢⎢⎢⎢⎢Y0⋮⋮Y127⎤⎦⎥⎥⎥⎥⎥Frequency Domain→⎡⎣⎢⎢⎢⎢⎢Yk0Yk1⋮Yk11⎤⎦⎥⎥⎥⎥⎥12 Subcarriers.
+View SourceRight-click on figure for MathML and additional features.
+
+Practical implementations incorporate:
+
+    Window Function: RC window w[n]=0.5−0.5sin(2πn/N) applied pre-FFT to reduce spectral leakage
+
+    Symbol Timing Alignment: Fractional delays compensated via FFT phase rotation
+
+This FFT-based demodulation stage transforms time-domain waveform distortion into scalable frequency-domain impairments, enabling subsequent MMSE/LS channel estimation to operate on frequency-flat subchannels within each active subcarrier.
+
+∙ Channel estimation and equalization:
+
+Channel estimation and channel equalization are pivotal for successful signal demodulation at the receiver. In the single-tone case, the inherent simplicity of the single-carrier transmission combined with the implementation of a Costas loop effectively eliminates the need for explicit channel estimation and equalization. Conversely, for frequency-division multiplexed signals in multi-tone configurations, rigorous channel estimation and equalization become indispensable components of the demodulation process.
+
+The procedure of LS channel estimation and MMSE channel compensation is similar to DL case in section. III-D3. Beyond conventional approaches, novel methods demonstrate significant potential for channel estimation in complex channel environments. These include joint CFO and channel estimation techniques [61], [62], [63], [64], along with machine learning-based estimation schemes [65], [66], [67], [68]. All exhibit promising applicability prospects for NB-IoT physical layer implementations.
+
+∙ IFFT for SC-FDMA demodulation:
+
+To minimize PAPR and preserve the single-carrier waveform characteristic, SC-FDMA incorporates FFT during modulation. Consequently, an IFFT operation is required in the demodulation process to recover the original symbol sequence.
+
+Given frequency-domain symbol matrix Y∈CN×M where:
+
+    N : Fixed number of subcarriers
+
+    M : Number of OFDM symbols
+
+The output X^ is computed via:
+X^=F−1Y,
+View SourceRight-click on figure for MathML and additional features.where F−1 is the N×N IFFT matrix:
+(F−1)nk=1Nexp(j2πnkN),0≤n,k≤N−1
+View SourceRight-click on figure for MathML and additional features.
+
+For practice, M is always set as 6, which represents a complete slot as the channel estimation is performed in each slot. Transform the output matrix of IFFTinto serial symbol sequence and bits and we can get symbols transmitted.
+SECTION V.
+Channel Modeling and Simulation
+
+NB-IoT systems experience significant signal degradation in urban and industrial environments due to multipath fading and frequency offsets. To accurately simulate these challenging conditions, we employs Rayleigh fading channel models as the primary framework. This selection is motivated by NB-IoT’s typical operation in non-line-of-sight (NLoS) scenarios, where signals undergo diffuse reflections from buildings, machinery, and terrain—precisely the conditions where Rayleigh fading effectively characterizes the rapid amplitude fluctuations resulting from destructive interference of multipath components.
+A. Rayleigh Fading Fundamentals
+
+The Rayleigh fading model assumes a large number of scattered signal paths with no dominant line-of-sight component. The probability density function for the received signal amplitude r is given by:
+f(r)=rσ2e−r2/(2σ2),r≥0,(48)
+View SourceRight-click on figure for MathML and additional features.where σ2 denotes the time-average power of the received signal. This model aligns with empirical measurements from factory floors and dense urban environments where practical deployments typically occur, justifying its adoption over Rician or Nakagami models that presume strong LoS components.
+B. Simulation Implementation
+
+Configuration. Our simulation framework focuses on the dominant impairments observed in SDR-based NB-IoT systems, where frequency errors prove more detrimental than Gaussian noise due to oscillator instabilities in low-cost hardware. We configure maximum Doppler shifts ranging from 50 Hz to 250 Hz and implement severe multipath fading profiles with path delays and gains specified in Table V.
+TABLE V Multipath Fading Configuration
+Table V- Multipath Fading Configuration
+
+Performance Metrics. We evaluate the performance of the system using the following metrics:
+
+    Bit Error Rate (BER): The ratio of incorrectly received bits to the total transmitted bits.
+
+    Block Error Rate (BLER): The ratio of erroneously received blocks to the total transmitted blocks. In our experiments, a block comprises 16 slots, and is considered erroneous if any repetition within the block fails to achieve error-free reception (BER = 0).
+
+Simulation Results. As demonstrated in Fig. 28, the system exhibits robust performance against multipath fading, maintaining BER within acceptable thresholds for random frequency offsets below 200 Hz. Furthermore, the BLER shows progressive improvement as the number of retransmissions increases.
+Fig. 28. - Performance evaluation under Rayleigh fading channel conditions.
+Fig. 28.
+
+Performance evaluation under Rayleigh fading channel conditions.
+
+SECTION VI.
+Implementation and Validation
+
+For an SDR system, the supported wireless communication range represents a critical technical metric. Accordingly, we employed mainstream SDR platforms to capture and process NB-IoT physical layer signals. In IoT deployments, communication distance is primarily constrained by uplink transmission due to inherent power limitations of end devices. Therefore, we conducted practical measurements on NPUSCH signal transmission and demodulation to validate overall system performance.
+
+Experimental Configurations. The validation framework considered the following key parameter dimensions:
+
+    Environmental Variants: non-line of sight (NLOS), line of sight (LOS) conditions. For the LOS scenario, the SDR transceiver and receiver were set up in an indoor laboratory environment. For the NLOS scenario, the transmitter was placed indoors and the receiver was placed outdoors, with a closed door between them to create a practical obstruction.
+
+    SDR Device and Power: The experiments were conducted using the USRP N210 software-defined radio. The transmit power was configured with an upper limit of 15 dBm.
+
+    Antenna Selection: We employed standard telescopic (whip) antennas with a frequency coverage of 40 MHz to 6 GHz as shown in Fig. 29, which is sufficient for the NB-IoT bands under study.
+
+    Signal Repetition Configuration: Repetition counts {1, 4, 16}.
+
+    Device Platforms: SDR implementations using Commercial Off-The-Shelf (COTS) platforms as receiver including USRP N210, USRP B210, HackRF One and RTL-Dongle as shown in Fig. 29.
+
+Fig. 29. - COTs SDR platforms.
+Fig. 29.
+
+COTs SDR platforms.
+
+For communication environment characterization, our investigation systematically differentiated between indoor propagation scenarios encompassing both LOS and NLOS conditions and long-distance outdoor transmission performance, establishing distinct experimental regimes to quantify channel degradation mechanisms across these fundamentally dissimilar propagation environments. We analyse the BER performance for 4 kinds of SDR platforms mentioned before with the configuration of Table. VI, and the result is shown in Fig. 30. Analysis of the presented figure reveals that NLOS propagation substantially degrades communication performance, with particularly pronounced effects observed in low-cost SDR platforms (e.g., RTL dongles). Under short-range LOS conditions, however, all validated commercial COTS SDR implementations successfully demodulated the 12-subcarrier NB-IoT signals.
+TABLE VI Configuration of NB-IoT Signal
+Table VI- Configuration of NB-IoT Signal
+Fig. 30. - BER performances for 4 kinds of SDR platforms in different communication environments.
+Fig. 30.
+
+BER performances for 4 kinds of SDR platforms in different communication environments.
+
+Beyond BER, the BLER constitutes another crucial metric for validating NB-IoT transmission performance. To mitigate BLER through retransmissions as specified in protocol design, measurement campaigns were conducted across three distinct propagation scenarios with varying repetition counts. The experimental setup employed a HackRF One transmitter and USRP N210 receiver, with resultant BLER measurements illustrated in Fig. 31.
+Fig. 31. - Retransmission enhances transmission performance in different communication environment.
+Fig. 31.
+
+Retransmission enhances transmission performance in different communication environment.
+
+The primary factor contributing to system performance degradation in the NLOS scenario is significant signal strength attenuation. In our experiments, the Reference Signal Receiving Power (RSRP) of the received signal in the NLOS environment was measured at approximately −95dBm. According to 3GPP specifications and link budget calculations, this level represents a relatively weak received power, which is insufficient for reliable demodulation by the receiver, thus leading to suboptimal performance. In stark contrast, under LOS conditions, the measured RSRP was typically around −35dBm. This value indicates a signal strength that is orders of magnitude stronger than that in the NLOS case.
+
+Through the practical implementation and validation of our SDR-based NB-IoT physical layer system across diverse commercial platforms and real-world environments, we have distilled several critical insights that extend beyond theoretical specifications. These lessons provide valuable guidance for researchers and engineers undertaking similar software-defined wireless system developments.
+
+    Hardware Selection Directly Impacts Algorithmic Complexity. The choice of SDR platform significantly influences signal processing requirements. We observed substantial variations in oscillator stability and sampling rate accuracy across different COTS devices. This variation stems from the fundamental clock architecture of the devices. The sampling rate is typically derived from a high-speed main clock (e.g., 61.44 MHz, 100 MHz) via an integer or fractional frequency divider. For instance, while the USRP B210’s 61.44 MHz main clock enables exact division to the standard 1.92 MHz sampling rate, platforms like the USRP N210 (100 MHz clock) and HackRF One require fractional division, resulting in non-standard rates (approximately 1.923077 MHz for N210). This necessitates careful hardware-aware design, including potential resampling operations and more robust frequency offset compensation algorithms. The practical implication is that algorithm development cannot be divorced from target hardware characteristics, researchers must consult device datasheets thoroughly and implement adaptive processing chains that account for platform-specific limitations. In our design, we use CFO compensation method (e.g., Costas Loop, NRS-based CFO compensation) to mitigate errors cansed by the variations of SDR device.
+
+    Environmental Conditions Dictate Practical Deployment Strategies. Our empirical validation revealed dramatic performance differences between LOS and NLOS scenarios. The significant degradation in NLOS conditions, characterized by severe multipath fading and attenuation, underscores that real-world deployments cannot assume ideal propagation environments. The consequence of relying on higher repetition counts in NLOS scenarios is increased energy consumption, which directly impacts UE battery lifetime. To mitigate this, deployment strategies should prioritize optimal antenna placement and selection. Additionally, careful configuration of power saving modes and repetition parameters is essential to balance reliability and energy efficiency. This experience emphasizes that practical system design must prioritize robustness over optimal performance. For reliable operation, deployment planning should favor LOS configurations where possible, while for unavoidable NLOS scenarios, strategies such as signal amplification, antenna diversity, or leveraging NB-IoT’s coverage enhancement mechanisms with higher repetition counts become essential rather than optional.
+
+    Frequency Offset Management Requires Continuous Adaptation. A critical lesson from our implementation is that CFO constitutes an ongoing challenge rather than a one-time calibration issue. Initial coarse compensation during synchronization proved insufficient due to residual offsets from temperature-dependent oscillator drift and Doppler effects. This necessitated implementing a hierarchical frequency recovery approach combining initial estimation with continuous tracking mechanisms. The insight is that effective CFO mitigation requires treating frequency alignment as a dynamic process throughout the communication session, particularly important for maintaining link stability in mobile scenarios or with low-cost hardware exhibiting significant phase noise.
+
+These lessons highlight the essential interplay between hardware constraints, environmental factors, and algorithmic robustness—insights that emerge only through hands-on implementation and comprehensive validation across diverse operational conditions. They underscore the importance of adopting a systems-level perspective that integrates theoretical models with practical realities when developing SDR-based communication platforms.
+SECTION VII.
+Future Research
+
+This tutorial presents a comprehensive SDR-based NB-IoT physical layer implementation, offering a robust platform for wireless communications research. This flexible setup allows researchers to rapidly validate advanced approaches across several cutting-edge fields.
+A. AI-Enhanced Physical Layer Demodulation
+
+Numerous studies investigate the application of neural networks to enhance demodulation performance in challenging communication scenarios [69], such as those characterized by weak signal strength and severe multipath effects. The SDR-based physical layer implementation for NB-IoT provides a valuable baseline and testbed for this line of research.
+B. Integrated Sensing and Communication (ISAC)
+
+To address challenges like spectrum scarcity, research in ISAC has gained significant momentum [70]. Substantial work already exists exploring ISAC using technologies like WiFi [71] and Bluetooth [72]. The SDR physical layer design for NB-IoT enables the introduction and investigation of ISAC within the NB-IoT domain.
+C. Advanced Protocol Optimization
+
+The development and testing of higher-layer protocols necessitate robust physical layer support for implementation and validation (e.g., collision decoding [73]). The physical layer signal processing flow within NB-IoT is consequently critical in this context.
+
+This experimental platform bridges theoretical innovation and practical validation, significantly accelerating research in next-generation narrowband IoT communications.
+SECTION VIII.
+Conclusion
+
+This comprehensive tutorial has established a foundational framework for SDR-based NB-IoT physical layer implementation, bridging critical gaps between 3GPP specifications and real-world deployments. Through systematic exploration of synchronization robustness, channel estimation accuracy, and performance validation methodologies, we have demonstrated a fully functional end-to-end PHY implementation supporting both single-tone and multi-tone transmissions across diverse COTS SDR platforms. The novel signal processing pipeline incorporating NPSS/CP-based synchronization, CFO compensation, and adaptive channel equalization shows reliability in microbenchmarks.
+
+Experimental validation across indoor/outdoor environments confirms the system’s practical viability, with HackRF One and USRP platforms demonstrating consistent demodulation performance while maintaining 3GPP compliance. The implementation’s flexibility facilitates rapid prototyping of emerging techniques, particularly AI-enhanced demodulation and integrated sensing-communication paradigms that leverage the deterministic structure of NPUSCH waveforms.
+
+Beyond immediate technical contributions, this tutorial establishes a reproducible experimental foundation for next-generation NB-IoT research. The open architecture enables validation of advanced 3GPP protocols. By harmonizing theoretical rigor with practical SDR implementation insights, this work accelerates innovation in low-power wide-area communications for smart infrastructure and industrial IoT applications.

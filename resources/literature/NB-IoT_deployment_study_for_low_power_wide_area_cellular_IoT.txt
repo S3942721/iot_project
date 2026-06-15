@@ -1,0 +1,182 @@
+NB-IoT deployment study for low power wide area cellular IoT
+PDF
+Nitin Mangalvedhe; Rapeepat Ratasuk; Amitava Ghosh
+All Authors
+
+Abstract
+Document Sections
+
+    I.
+    Introduction
+    II.
+    Nb-Iot System Design
+    III.
+    Deployment Considerations for Nb-Iot
+    IV.
+    Performance Evaluation
+    V.
+    Conclusions
+
+Authors
+Figures
+References
+Citations
+Keywords
+Metrics
+Abstract:
+In 3GPP, a narrowband system based on Long Term Evolution (LTE) has been introduced to support the Internet of Things. This system, named Narrowband Internet of Things (NB-IoT), provides low-cost devices, high coverage (20 dB improvement over LTE/GPRS), long device battery life (more than 10 years), and massive capacity. Latency is relaxed although a delay budget of 10 seconds is the target for exception reports. NB-IoT can be deployed in three different operation modes — (1) stand-alone as a dedicated carrier, (2) in-band within the occupied bandwidth of a wideband LTE carrier, and (3) within the guard-band of an existing LTE carrier. In this paper, we undertake a deployment study of NB-IoT using existing LTE infrastructure. We consider the case when only a fraction of the existing LTE cell sites support NB-IoT (so called partial deployment of NB-IoT). In this case, NB-IoT devices cannot attach to the best cell if that cell does not support NB-IoT. As a result, the path loss can be very high. In addition, they also suffer from high interference from non-NB-IoT cells. We examine potential techniques to compensate for the high path-loss and high interference and provide analysis to indicate when partial deployment of NB-IoT is feasible. We also examine interference issues in asynchronous deployments and study performance.
+Published in: 2016 IEEE 27th Annual International Symposium on Personal, Indoor, and Mobile Radio Communications (PIMRC)
+Date of Conference: 04-08 September 2016
+Date Added to IEEE Xplore: 22 December 2016
+ISBN Information:
+Electronic ISSN: 2166-9589
+DOI: 10.1109/PIMRC.2016.7794567
+Conference Location: Valencia, Spain
+SECTION I.
+Introduction
+
+With the massive deployment of Internet of Things (IoT) devices, low-power wide area IoT connectivity has been introduced for LTE [1]—[4]. In LTE Rel-12, low-cost devices with material cost comparable to EGPRS devices was introduced [5]. In LTE Rel-13, two new features supporting narrowband machine type communications (MTC) are being introduced. The features are called eMTC (enhanced MTC) and Narrowband IoT (NB-IoT). In eMTC, a new user equipment (UE) with reduced radio frequency (RF) bandwidth of 1.4 MHz in downlink and uplink is introduced [6]. In addition, eMTC also introduces coverage enhancement to provide better indoor support, the extent of which is further extended with NB-IoT. However, eMTC operates in-band as part of the wideband LTE carrier.
+
+NB-IoT, however, is a new narrowband IoT system built from existing LTE functionalities [7]. It can be deployed in three different operation modes-(1) stand-alone as a dedicated carrier, (2) in-band within the occupied bandwidth of a wideband LTE carrier, and (3) within the guard-band of an existing LTE carrier. In stand-alone deployment NB-IoT can occupy one GSM channel (200 kHz) while for in-band and guard-band deployment, it will use one physical resource block (PRB) of LTE (180 kHz). The design targets of NB-IoT include low-cost devices, high coverage (20-dB improvement over GPRS), long device battery life (more than 10 years), and massive capacity (greater than 52K devices per channel per cell). Latency is relaxed although a delay budget of 10 seconds is the target for exception reports.
+
+Since NB-IoT design is based on existing LTE functionalities, it is possible to reuse the same hardware and also to share spectrum without coexistence issues. This allows for a low-cost and fast deployment of NB-IoT using existing infrastructure. For sites with newer equipment, NB-IoT can be supported via software upgrade. However, older equipment may not be able to support both LTE and NB-IoT simultaneously and a hardware upgrade may be required. In this case, NB-IoT deployment can be phased in where existing cell sites are incrementally upgraded to NB-IoT. This will allow fast roll-out of NB-IoT without the need to upgrade the hardware on all sites. With such a phased roll-out, there will be a partial deployment of NB-IoT until all sites are fully upgraded.
+
+In this paper, we investigate some of the problems arising from partial deployment of NB-IoT and potential solutions to resolve them. In partial deployment of NB-IoT, NB-IoT devices cannot attach to the best cell if that cell does not yet support NB-IoT. In this case, the path loss can be very high. In addition, they also suffer from high interference coming from non-NB-IoT cells. We examine techniques to compensate for the high path-loss and high interference. They include power boosting, narrowband transmission, coverage extension using repetition, and interference mitigation techniques such as resource blanking. Deployment in the guard-band to avoid interference is also considered.
+
+The paper is organized as follows. In Section II, NB-IoT system design is presented. Considerations related to partial deployment of NB-IoT are discussed in Section 0. In Section IV, performance evaluations from simulations are provided. Finally, conclusions are drawn in Section V.
+SECTION II.
+Nb-Iot System Design
+
+In Rel-13, NB-IoT will be introduced for cellular IoT with the following design targets for all deployment operations [8]-
+
+    Improved indoor coverage: The target is to achieve an extended coverage of 20 dB compared to legacy GPRS devices. This corresponds to achieving target maximum coupling loss (MCL) of 164 dB. At this MCL, a data rate of at least 160 bps should be supported at the application layer for both the uplink and downlink.
+
+    Support of massive number of low-throughput devices: The target is to support at least 52547 devices within a cell-site sector. This target was determined using 40 devices per household with the household density based on the assumption for London provided in [5] (1517 household density per sq. km and cell inter site distance of 1732 m).
+
+    Reduced complexity: The goal is to provide ultra-low complexity devices to support IoT applications.
+
+    Improved power efficiency: The target is to provide battery life of ten years with battery capacity of 5 Wh at 164 dB MCL.
+
+    Latency: Exception report latency of 10 seconds or less is the target for 99% of the devices.
+
+The three deployment operation modes for NB-IoT are shown in Fig. 1. They provide deployment flexibility based on available spectrum and use cases as described below. In standalone operation, NB-IoT can be used as a replacement of one or more GSM carriers. This allows efficient re-farming of GSM carriers for IoT.
+Fig. 1. - NB-iot operation modes.
+Fig. 1.
+
+NB-iot operation modes.
+
+For in-band operation, one or more LTE PRBs are reserved for NB-IoT. Within this reserved region, NB-IoT signals must not be transmitted in time-frequency resources reserved for LTE (consisting of legacy control region and reference signals). The total eNB power is shared between LTE and NB-IoT with the possibility to use power spectral density (PSD) boosting on the NB-IoT PRB. Sharing of PRBs between NB-IoT and LTE allows for more efficient use of the spectrum and seamless increase in NB-IoT capacity as more devices are added to the network. In addition, although they are two separate systems, they can be supported using the same eNB hardware.
+
+In guard-band mode of operation, NB-IoT will be deployed within the guard-band of an LTE carrier. Each NB-IoT carrier is within the guard-band and the center frequency is at most 7.5-kHz offset from the 100 kHz channel raster. In addition, LTE subcarrier spacing is used so orthogonality with LTE is maintained.
+
+Based on performance evaluations, NB-IoT will support the following numerologies.
+
+    Downlink: OFDMA with 15-kHz subcarrier spacing.
+
+    Uplink: single-tone and multi-tone transmissions. For single-tone transmission, 3.75-kHz and 15-kHz channels will be supported. For multi-tone transmission, transmissions are based on SC-FDMA with 15-kHz subcarrier spacing.
+
+For in-band deployment, if 3.75-kHz subcarrier spacing is used, for single-tone transmission in the uplink, there will be interference between NB-IoT and LTE. However, this interference can be minimized by scheduling users with similar SNR requirements in NB-IoT and nearby LTE PRBs. For 15-kHz subcarrier spacing, on the other hand, orthogonality between LTE and NB-IoT subcarriers is maintained.
+
+In addition, NB-IoT UE will support only 180 kHz RE bandwidth for both downlink and uplink. Furthermore, NB-IoT needs to support only half duplex operations, 1 hybrid automatic repeat request (HARQ) process, and reduced peak data rate of approximately 62 kbps in the uplink and 26 kbps in the downlink. This will provide significant UE cost saving.
+
+Fig. 2 illustrates one example system design for NB-IoT based on existing channels. While there is an obvious difference in the bandwidth of the physical broadcast channel and the synchronization signals between LTE (1.08 MHz) and NB-IoT (180 kHz), the figure illustrates that there are also differences in the time durations between the corresponding channels in each subframe. Another important feature that can be noted from the figure is that the narrowband physical uplink shared channel can occupy less than 1 PRB of the LTE system via the support of single-tone or multi-tone transmission.
+Fig. 2. - Example NB-iot design (stand-alone).
+Fig. 2.
+
+Example NB-iot design (stand-alone).
+
+Table I lists the potential channels and signals to be supported in NB-IoT. Note that there is no uplink control channel in NB-IoT. As a result, uplink acknowledgement will be transmitted on the NPUSCH, while scheduling request will have to be indicated using random access procedure.
+Table I. NB-IOT channels and signals
+Table I.- NB-IOT channels and signals
+
+In NB-IoT, the downlink numerology is inherited from LTE. There are some differences, however, including the ability to map a single code word transmitted on the NPDSCH to multiple subframes and the support for repeated transmissions. These features help with coverage enhancement.
+SECTION III.
+Deployment Considerations for Nb-Iot
+A. Issues with Partial Network Deployment and Solutions
+
+One of the questions mobile network operators are faced with is, what are the consequences of deploying NB-IoT in a fraction of the LTE cells? As noted earlier, this is motivated by the operator's plan to deploy NB-IoT in a phased manner.
+
+A practical consequence of such a partial NB-IoT deployment is that if one PRB is used for NB-IoT in such cells, that same PRB could be used for LTE in other cells for in-band mode of NB-IoT operation. Thus, the impact of such a deployment is two-fold:
+
+    The relatively sparse deployment of NB-IoT results in a larger area that needs to be covered by each NB-IoT cell.
+
+    The NB-IoT devices that are remote from the serving cell could potentially be within relatively close proximity of an LTE cell, resulting in strong co-channel interference.
+
+This scenario is illustrated in Fig. 3. In this example, the strongest cell is an LTE cell, but the device is served by the best NB-IoT cell, which may be much farther. Thus, the coverage challenge is that, in addition to the large path loss from the serving cell, the interference from the nearest LTE cell must also be countered. This “near-far” problem due to the interfering LTE cell may result in a very low signal-to-interference-plus-noise ratio (SINR) at the NB-IoT device.
+Fig. 3. - Partial deployment of NB-iot.
+Fig. 3.
+
+Partial deployment of NB-iot.
+
+Clearly, the interference issue does not exist for guard-band mode of NB-IoT operation. However, weak coverage can still result from the expanded coverage area of each cell.
+
+One approach for improving weak coverage resulting from partial NB-IoT deployment that is readily supported by the standard is power boosting of the PRB used for NB-IoT, which directly improves the SINR by the amount of power boost. Power boosting of the NB-IoT PRB is realized by stealing power from the other PRBs. The power cannot be boosted by any arbitrary amount, however-the standard limits it to 6 dB. It is observed that when one PRB is boosted by 6 dB, there is negligible impact on the power of the other (LTE) PRBs. For example, with 46 dBm of total power at the eNB and 10-MHz system bandwidth, when one PRB is boosted by 6 dB, the power of the other PRBs is reduced from 29 dBm to approximately 28.7 dBm. Besides, the EVM impact of the power-boosted PRB on the neighboring PRBs is within the legacy requirements.
+
+To determine the limit of NB-IoT coverage, link-level coverage performance has been investigated for the channels listed in Table I. Table II shows the link budget for in-band scenario. In this case, a total of 46 dBm of power is available at the eNB. Out of this total power, 35 dBm is used for NB-IoT (with 6-dB power boosting relative to LTE PRBs). It is shown that the target MCL of 164 dB can be achieved for the channels considered. In the case of NPUSCH, coverage enhancement is achieved by using a single tone for transmission. Based on the link budget and target MCL of 164 dB, it can be seen that NB-IoT can operate at a SINR level of about-13 dB on the downlink. We will use this threshold as the limit of NB-IoT coverage.
+Table II. Link budget for in-band deployment
+Table II.- Link budget for in-band deployment
+
+The “near-far” LTE interference described above can be avoided by completely blanking the PRB used for NB-IoT in the LTE-only (i.e., non-NB-IoT) cells. That is, the PRB is not used for scheduling LTE UEs in other cells-when the NB-IoT cells and LTE cells are all time-synchronized, the blanked resources in the LTE cells would perfectly overlap with the NB-IoT resources. Furthermore, not transmitting even common reference signals (CRS) in these blanked PRBs eliminates all interference; LTE CRS would otherwise cause interference. The blanking approach is illustrated in Fig. 4.
+Fig. 4. - Resource usage in different types of cells. (a) Cell with NB-iot deployment; (b) cell without NB-iot deployment and PRB used for lte; (c) cell with no NB-iot deployment and PRB unused.
+Fig. 4.
+
+Resource usage in different types of cells. (a) Cell with NB-iot deployment; (b) cell without NB-iot deployment and PRB used for lte; (c) cell with no NB-iot deployment and PRB unused.
+
+B. Problems in Asynchronous Networks
+
+The PRB blanking approach for avoiding co-channel LTE interference requires subframe-level synchronization among cells. If the cells are asynchronous, however, the LTE PDCCH regions in different cells would be misaligned. As illustrated by Fig. 5, the symbols used for PDCCH transmission in other cells could coincide with the symbols used for NB-IoT, resulting in co-channel interference even if the LTE cell does not use the PRB for PDSCH transmission. Depending on the relative timing between cells, the interference may be due to up to 3 (control) symbols from the LTE cell.
+Fig. 5. - Co-channel interference in asynchronous networks.
+Fig. 5.
+
+Co-channel interference in asynchronous networks.
+
+When the NB-IoT cell is perfectly synchronized with another cell, the LTE subcarriers from the adjacent PRBs of the second cell are orthogonal to the NB-IoT subcarriers in the first cell. Therefore, there is no interference to NB-IoT from the adjacent LTE PRBs. When the cells are not synchronized, this orthogonality is lost and the adjacent LTE PRBs in the unsynchronized cells can potentially cause interference. Although the interference power from the adjacent PRBs is relatively suppressed, a “near-far” situation can exacerbate the problem. Fig. 6 shows a schematic representation of the relative power spectral densities (PSDs) received by an NB-IoT UE from an NB-IoT cell, an LTE-only cell (not supporting NB-IoT) that is very close to the UE, and an LTE-only cell that is far from the UE. As suggested by the figure, the interference from the adjacent PRBs may be significant enough to affect performance only if the UE is very close to the interfering LTE cell.
+Fig. 6. - Received PSDs from NB-iot cell and asynchronous LTE cells.
+Fig. 6.
+
+Received PSDs from NB-iot cell and asynchronous LTE cells.
+
+SECTION IV.
+Performance Evaluation
+A. Simulation Methodology and Assumptions
+
+To evaluate the performance impact of in-band NB-IoT deployment to NB-IoT UEs through simulations, we consider a hexagonal grid of sites with inter-site distance of 1732 m. It is assumed that NB-IoT is deployed in a single PRB within a 10-MHz bandwidth (i.e., 50 PRBs). When NB-IoT is specified to be deployed in X% (X<100) of the cells, a random set of X% of all the cells is selected for such deployment. The NB-IoT UEs are assumed to be dropped uniformly over the simulation area and attach to the strongest NB-IoT cell. The experiment is repeated for 500 such random NB-IoT cell deployments. The total eNB transmit power is assumed to be 46 dBm, so that when the NB-IoT PRB is given 6-dB power boost, the remaining 49 PRBs are assumed to be equally reduced in power to preserve the total transmit power. In cells where NB-IoT is not deployed, the total transmit power of 46 dBm is assumed to be equally distributed among all PRBs. When the PRB allocated to NB-IoT is blanked in cells where NB-IoT is not deployed, it is assumed that there is also no interference from CRS in the blanked PRB. Since the simulations are static, there is no dynamic channel modeling and only lognormal shadowing with a standard deviation of 10 dB is assumed. Other important simulation assumptions are listed in Table III.
+Table III. Simulation assumptions
+Table III.- Simulation assumptions
+
+The impact of co-channel interference to NB-IoT from asynchronous LTE cells is evaluated by considering interference from 1 or 3 PDCCH symbols. It is noted that one NB-IoT symbol suffers interference when the relative delay of the interference from asynchronous LTE cell is 1 symbol or 13 symbols. The extreme case of 3 NB-IoT symbols suffering interference occurs when the delay of the interference from asynchronous LTE cell is between 2 and 12 symbols (Fig. 5).
+B. Simulation Results
+1) Impact of Partial Deployment on Coupling Loss
+
+As discussed earlier, with partial deployment of NB-IoT, there are fewer cells to cover the network and, therefore, UEs may have to attach to cells that are farther than the strongest (LTE) cell. Fig. 7 demonstrates the impact of partial deployment on the coupling loss. It is assumed that all UEs are indoors, experiencing a penetration loss of 20 dB. From the cumulative distribution function (CDF), it is seen that the 95th percentile coupling loss is about 3 dB higher when NB-IoT is deployed in only 75% of the cells relative to full (100%) deployment (which also corresponds to LTE-only deployment scenario). There is a further increase of about 4 dB when the deployment is in only 50% of the cells. The coupling losses with a 10-dB higher penetration loss (equal to 30 dB) are found to be correspondingly 10 dB higher. Then, it is found that the 95th percentile coupling loss even with NB-IoT deployed in 50% of the cells is within the target MCL of 164 dB.
+Fig. 7. - CDF of coupling loss with penetration loss of 20 db.
+Fig. 7.
+
+CDF of coupling loss with penetration loss of 20 db.
+
+2) Co-Channel Interference in Synchronous Network
+
+We first consider the performance in a synchronous network. Ignoring the effects of propagation delay differences, it is assumed that there is no interference from the PDCCH transmission of any cell to the NB-IoT UE. Fig. 8 shows plots of the SINR CDFs for different NB-IoT deployment percentages. Results are also shown for the cases when the PRB that is used in NB-IoT is left blank in the non-NB-IoT cells. The penetration loss is assumed to be 20 dB. The results show that when blanking is not done in the LTE-only cells, there is a serious impact on the SINR. The 5th percentile is severely degraded for both 50% and 75% NB-IoT deployment relative to 100% deployment (about 10 dB and 15 dB, respectively). The median SINR is less affected, however. Thus, UEs that are at the edges of the NB-IoT cells or very close to LTE cells suffer a high level of interference. It is also observed from the results that blanking greatly improves the 5th percentile SINR. While co-channel LTE interference is eliminated, the SINR degradation with partial deployment is a direct result of the larger path loss due to the sparser network.
+Fig. 8. - CDF of SINR with penetration loss of 20 db.
+Fig. 8.
+
+CDF of SINR with penetration loss of 20 db.
+
+The SINR distributions with a 30-dB penetration loss are plotted in Fig. 9. It is observed that the higher penetration loss degrades cell-edge performance even with 100% NB-IoT deployment. For the cases with partial deployment and no PRB blanking, since the effect of co-channel interference dominates over that due to larger path loss, the SINR performance is seen to be similar to that with 20-dB penetration loss. When PRB blanking is implemented in the LTE-only cells, although the 5th percentile SINR improves, there is a bigger penalty due to the increased path loss with partial deployment than in the previous case. This is because, in the absence of co-channel interference from LTE cells, the cell-edge performance with a higher penetration loss is more noise-limited.
+Fig. 9. - CDF of SINR with penetration loss of 30 db.
+Fig. 9.
+
+CDF of SINR with penetration loss of 30 db.
+
+3) Co-Channel Interference in Asynchronous Network
+
+The impact of interference from PDCCH symbols on the block error rate (BLER) of NB-IoT is evaluated as a function of signal-to-noise ratio (SNR) assuming two transmit antennas. The performance impact of interference to 1 or 3 NB-IoT OFDM symbols is shown in Fig. 10. Interference power is assumed to be the same as the noise power. Therefore, the SINR is 3 dB lower than the SNR for the symbols experiencing interference. The transmission time can be increased to compensate for the performance loss resulting from interference. As a rough estimate, increasing the transmission time by a factor X improves the SINR by 10⋅log10 (X) dB. The results indicate that interference to 1 symbol results in approximately 0.5-dB performance degradation. This means that, to compensate for the performance loss resulting from interference to 1 symbol, the required transmission time is increased by roughly 15%, which is also the extent of reduction in data rate. Furthermore, interference to 3 symbols degrades performance by about 3.5 dB. Then, to make up for the loss in performance resulting from interference to 3 symbols, roughly 230% longer transmission time is required, causing a corresponding data rate reduction. Thus, the impact of PDCCH interference in asynchronous networks can be significant.
+Fig. 10. - Link performance with PDCCH interference to NB-iot.
+Fig. 10.
+
+Link performance with PDCCH interference to NB-iot.
+
+SECTION V.
+Conclusions
+
+This paper outlines the design of a NB-IoT system and discusses some issues related to the in-band deployment of NB-IoT in an LTE network. Deployment of NB-IoT in some but not all cells can cause coverage problems due to both large path loss and interference. Simulation results demonstrate that the increased co-channel interference with such partial deployment in synchronous networks can be overcome through PRB blanking in non-NB-IoT cells. Both co-channel interference and adjacent channel interference are potential concerns in asynchronous networks. Even with PRB blanking, co-channel interference due to LTE control symbols resulting from frame misalignment can degrade NB-IoT link performance by more than 3 dB in the extreme case.

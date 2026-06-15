@@ -1,0 +1,785 @@
+===== Verification_of_Communication_Parameters_for_NTN_Communication-1..txt =====
+E | DOI: 10.1109/ICUMT678 15.2025.11268807
+
+onal Congress on Ultra Modern Telecommunications and Control Systems and Workshops (ICUMT) | 979-8-3315-7675-2/25/$3 1.00 ©2025
+
+2025 17th International Congress on Ultra Modern Telecommunications and Control Systems and Workshops
+(ICUMT)
+
+Verification of Communication Parameters for NTN
+Communication
+
+Radim Dvorak!”, Pavel Palurik!:?, Thao Dinh Le!:?, Martin Stusek!, Pavel Masek!,
+Dmitri Moltchanov?, and Jiri Hosek!
+\Department of Telecommunications, Brno University of Technology, Brno, Czech Republic
+Unit of Electrical Engineering, Tampere University, Tampere, Finland
+bX Contact author’s e-mail: masekpavel @vut.cz
+
+Abstract—Non-terrestrial networks (NTNs) are envisioned to
+extend 5G coverage globally, with Narrowband IoT (NB-IoT)
+identified as a key technology for massive machine-type commu-
+nication in remote or underserved areas. Accurate modeling of
+the satellite channel is crucial to assess reliability and system
+performance. This paper presents a comparative study of two
+widely used NTN propagation models: the ETSI Rician fading
+model and the ITU-R P.681 land mobile-satellite model. Using
+MATLAB simulations of the NB-loT NPDSCH link in a LEO
+1200 km scenario, we evaluate block error rate (BLER) per-
+formance across elevation angles from 0° to 90° with varying
+numbers of repetitions. Results demonstrate that the ETSI Rician
+model, while simple and analytically tractable, produces overly
+optimistic BLER predictions at low elevations. In contrast, the
+ITU-R P.681 model proved to be more versatile and capable
+of capturing diverse propagation environments. These findings
+highlight the importance of model selection for NIN design,
+particularly in low-elevation and urban scenarios.
+
+Index Terms—NB-IoT, Non-terrestrial networks, Propagation
+models, Elevation angle, BLER
+
+I. INTRODUCTION
+
+As the number of devices connected to 5G-enabled IoT (5G-
+ToT) systems continues to grow, the demand for diverse types
+of connectivity and ubiquitous coverage also increases. The 5G
+vision of supporting up to one million connected devices per
+square kilometer has accelerated research into new deployment
+paradigms. While terrestrial networks (TN) currently provide
+sufficient coverage for most use cases, their inherent geograph-
+ical and infrastructural limitations make them unsuitable for
+ensuring truly global service availability. This has motivated
+the integration of non-terrestrial networks (NTN) into the SG
+ecosystem.
+
+The first formal discussions on NTN communication ap-
+peared in 3GPP Release 14 and were further developed in
+Release 15, targeting both massive Machine-Type Communi-
+cations (mMTC) and enhanced Mobile Broadband (eMBB).
+More detailed specifications for NTN integration emerged in
+Release 17, which introduced initial standardization efforts for
+IoT technologies in NTN scenarios. Although the standards
+are still under evolution, the direction is clear: enabling IoT
+technologies, in particular Narrowband IoT (NB-IoT) and
+enhanced Machine-Type Communication (eMTC), to operate
+reliably over satellite-based NTN [1], [2].
+
+NB-IoT is particularly well-suited for early adoption in
+NTN, as it is optimized for low-throughput, delay-tolerant
+
+applications requiring robust coverage and energy efficiency.
+However, extending NB-IoT from TN to NTN poses several
+technical challenges. Key difficulties arise from satellite alti-
+tude and propagation conditions, which can necessitate higher
+
+transmit power or antenna gains, as well as from Doppler shifts
+induced by the high relative velocity of low-Earth orbit (LEO)
+and very-low-Earth orbit (VLEO) satellites. Moreover, unlike
+fixed terrestrial infrastructure, LEO satellites continuously
+move relative to the user equipment (UE), leading to varying
+link conditions and intermittent visibility [3].
+
+Among these challenges, the elevation angle between the
+satellite and UE plays a critical role in determining link relia-
+bility. At low elevation angles, signal attenuation, shadowing,
+and fading effects are more severe, directly impacting the
+block error rate (BLER) and overall communication quality.
+Therefore, accurate modeling of channel conditions is essential
+for assessing NB-IoT performance in NTN deployments [4],
+[5].
+
+This paper investigates the impact of elevation angle on
+NB-IoT performance over NTN by comparing two widely
+used channel models: the ETSI Rician model and the ITU-
+R P.681 recommendation. Simulations are carried out in the
+MATLAB 5G Toolbox under a LEO 1200 km orbital scenario.
+The contributions of this paper are:
+
+Analytics of the influence of elevation angle on BLER
+performance in NTN NB-IoT systems.
+
+Comparison the applicability of ETSI Rician and ITU-R
+P.681 models under identical conditions.
+
+We highlight the strengths and limitations of each model
+for NTN system design and evaluation.
+
+The remainder of this paper is organized as follows. Sec-
+tion II introduces NB-IoT over NTN and highlights the key
+differences from TN deployments. Section III describes the
+simulation setup and scenarios. Section IV presents the results
+and discussion. Finally, Section V concludes the paper and
+outlines directions for future work.
+
+II. TERRESTRIAL VS. NON-TERRESTRIAL NB-IOT
+
+The conventional terrestrial network (TN) model is based
+on fixed base stations (gNodeBs) arranged in a cellular frame-
+work, where each cell provides coverage over a predefined
+geographical area determined by the operator. This architecture
+enables relatively uniform coverage, scalable deployment in
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 22:57:29 UTC from IEEE Xplore. Restrictions apply.
+
+87
+
+===== Verification_of_Communication_Parameters_for_NTN_Communication-2..txt =====
+densely populated regions, and the ability to serve hundreds or
+thousands of devices per cell. In such systems, user equipment
+(UE) remains connected to a largely static access node, and
+handover procedures are well established [3].
+
+In contrast, non-terrestrial networks (NTN) that rely on Low
+Earth Orbit (LEO) or Very Low Earth Orbit (VLEO) satellites
+cannot be organized in this fixed-cell structure. Satellites must
+move at high velocity to maintain orbital stability, which re-
+sults in a constantly changing network topology. Consequently,
+NTN architectures face the challenge of providing reliable, on-
+demand connectivity to multiple devices while maintaining
+seamless integration into the broader 5G ecosystem. From
+the perspective of radio access network (RAN) design, two
+primary approaches are recognized for satellite payloads:
+
+« Transparent systems - the received information from the
+UE is conveyed to the other parts of the network i.e.
+another node in the orbit on ground-based gateway
+Regenerative systems - the node acts as a simplified
+gNodeB with on-board data processing implemented to
+handle local radio protocols before forwading it to other
+nodes that are part of the system.
+
+Transparent architectures benefit from reduced satellite
+complexity and cost, while regenerative systems provide
+greater flexibility and potentially reduced latency by offloading
+some processing from the ground segment.
+
+Service Inter-Satellite Feeder
+
+ube Data
+Network
+
+sata, satB Gateway Core Network
+
+Fig. 1: NTN Communication Chain.
+
+As of 3GPP Release 17, NTN standardization efforts have
+defined reference scenarios for deployment at different orbital
+altitudes, including LEO at 600 km, LEO at 1200 km, and
+Geostationary Orbit (GEO), with an emphasis on the S-band
+around 2 GHz for initial evaluations. In the baseline archi-
+tecture, the satellite nodes terminate user-plane connections
+at ground-based gateways, which then forward traffic to the
+corresponding data networks. This approach simplifies inter-
+operability with existing terrestrial infrastructure and ensures
+backward compatibility with conventional TN deployments
+
+[6], [7].
+
+A. NTN Challenges
+
+As described above, while NTN architectures provide global
+coverage and complement terrestrial networks, they also in-
+troduce several unique challenges that must be addressed to
+ensure the reliable operation of technologies such as NB-IoT.
+The most critical issues arise from the fundamental character-
+istics of satellite communication. High orbital altitudes lead to
+increased free-space path loss, while the high relative velocity
+of LEO and VLEO satellites induces significant Doppler shifts
+that narrowband waveforms must tolerate. Propagation delays
+are considerably longer than in terrestrial systems, complicat-
+ing timing and synchronization. In addition, the time-varying
+elevation angle between the user equipment and the satellite
+strongly impacts link quality due to fading, shadowing, and
+changing propagation geometry. Together with the dynamic
+nature of satellite visibility and mobility management, these
+aspects highlight the need for careful adaptation of terrestrial
+technologies to NTN environments [5], [7].
+
+One of the primary challenges in NTN is the Doppler
+effect caused by the high orbital velocity of LEO and VLEO
+satellites, which can exceed 7 km/s. This motion induces
+frequency shifts of several kHz in the received signal, a mag-
+nitude significant compared to the narrow subcarrier spacing
+of NB-IoT. Such shifts can severely degrade demodulation and
+synchronization if not properly compensated, making Doppler
+correction and robust frequency tracking essential for reliable
+communication [4], [7].
+
+Another critical challenge is timing and synchronization,
+which are directly affected by the long propagation distances
+in NTN. Round-trip delays can reach several hundred millisec-
+onds, far exceeding those in terrestrial networks. This impacts
+not only the initial access procedures but also the mainte-
+nance of uplink timing advance and downlink synchronization.
+The extended delay budget further complicates the operation
+of mechanisms such as Hybrid Automatic Repeat reQuest
+(HARQ), where retransmission cycles become inefficient or
+even impractical at satellite latencies. When combined with
+Doppler-induced frequency offsets, these effects demand en-
+hanced synchronization and error-recovery strategies to ensure
+stable and reliable NTN operation [4], [7].
+
+Finally, the elevation angle between the user equipment
+and the satellite is one of the most decisive factors for NTN
+performance, as it directly influences propagation conditions
+and, consequently, the block error rate (BLER). At low
+elevation angles, the signal experiences higher attenuation,
+stronger shadowing, and more severe fading, particularly in
+urban environments, all of which increase the likelihood of
+decoding errors. Since NB-IoT relies on achieving very low
+BLER to ensure reliability, these conditions can significantly
+reduce system performance. Moreover, low elevation angles
+exacerbate the inefficiency of HARQ processes, as retransmis-
+sions suffer from both long round-trip delays and increased
+error probability. Accurate modeling of the elevation angle
+impact is therefore essential for evaluating NB-IoT over NTN
+and forms the central focus of this work [4].
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 22:57:29 UTC from IEEE Xplore. Restrictions apply.
+
+88
+
+===== Verification_of_Communication_Parameters_for_NTN_Communication-3..txt =====
+B. NB-IoT over NIN
+
+In terrestrial systems, NB-IoT benefits from relatively stable
+channels with modest delay spreads and minimal Doppler
+effects. HARQ feedback is effective thanks to short round-
+trip times, and synchronization procedures are straightforward
+because of low propagation delays. In NTN, however, these
+mptions no longer hold. To maintain reliable operation,
+several modifications and enhancements are considered [4],
+[8].
+
+The impact of Doppler shifts is mitigated by extending
+frequency tracking capabilities and employing more robust
+synchronization signals. NB-IoT’s narrowband structure sim-
+plifies Doppler estimation, while making the waveform more
+sensitive to frequency offsets. Long propagation delays ne-
+cessitate modifications in the HARQ process. In Release
+17, alternative schemes such as increased HARQ timing, re-
+laxed retransmission procedures, or the use of repetition-based
+mechanisms are introduced to compensate for the inefficiency
+of conventional feedback loops [?], [6].
+
+The power control and link budget adaptations are needed
+to cope with the high path loss of satellite channels. NB-IoT
+already supports coverage enhancement modes in terrestrial
+deployments, such as repeated transmissions and low-order
+modulation, which naturally extend to NTN and help to
+counter the severe attenuation at large distances [4].
+
+Finally, the strong dependence on elevation angle intro-
+duces variability not present in TN. To handle this, system-
+level techniques such as adaptive repetition, link adaptation,
+and elevation-aware resource allocation are being introduced
+to ensure reliable data transmission even under unfavorable
+conditions [6].
+
+III. NON-TERRESTRIAL PROPAGATION MODELS
+
+Accurate propagation modeling is fundamental to the design
+and evaluation of any wireless communication system. Prop-
+agation models characterize the stat 1 and deterministic
+behavior of radio channels, enabling realistic simulation of link
+performance under varying conditions. In terrestrial networks,
+widely used models such as Okumura-Hata or COST-231
+describe large-scale path loss and fading effects in urban,
+suburban, and rural environments, where the geometry of the
+link and propagation conditions are primarily determined by
+fixed base stations and cluttered ground environments [9].
+
+In non-terrestrial networks, however, the situation is hugely
+different. The satellite-Earth link is characterized by long
+free-space paths, satellite movement, and strong dependence
+on elevation angle. Traditional terrestrial propagation models
+are therefore not directly applicable. Instead, channel models
+for NTN must account for line-of-sight conditions, statistical
+fading distributions, and additional atmospheric effects such
+as gaseous absorption or rain attenuation. For NB-IoT over
+NTN, accurate modeling of these aspects is essential to capture
+the impact on link reliability and block error rate (BLER),
+especially at low elevation angles where signal degradation is
+most severe.
+
+This study focuses on two widely recognized propagation
+models for NTN scenarios: the ETSI Rician channel model
+and the ITU-R P.681 recommendation. The former represents a
+simplified, statistically driven approach well suited for system-
+level simulations, while the latter incorporates detailed em-
+pirical factors such as atmospheric losses and elevation-angle
+dependence. By comparing these two models under identical
+conditions, this paper highlights their relative strengths and
+limitations in evaluating NB-IoT performance in NTN deploy-
+ments.
+
+A. ETSI Rician Model
+
+The ETSI Rician channel model is a widely used statistical
+fading model originally developed for satellite and mobile
+satellite links. In ETSI TS 101 376-5-5 (part of the GMR
+/ mobile satellite radio interface standards), it is accepted
+as a valid representation of fast fading in satellite channels,
+excluding large-scale shadowing. The model describes the case
+where a dominant line-of-sight (LoS) component coexists with
+multiple weaker multipath components [10], [11].
+
+In baseband, the received signal can be express
+
+K 1
+r(t)= Val * Sios(t) + VKai “Smp(t), (1)
+
+where KC is the Rician K-factor denoting the power ratio be-
+tween LoS and multipath components, sios(¢) is the complex
+LoS component, and smp(t) denotes the multipath (Rayleigh)
+component. The corresponding envelope amplitude follows the
+Rician probability density function
+
+fr(r) = a+ K) exp (-«-
+
+where r is the signal envelope amplitude, Q is the average
+signal power, K is the Rician K-factor, and J(-) is the
+modified Bessel function of the first kind and zero order [11].
+
+The strength of the ETSI Rician model lies in its simplicity
+and analytical tractability. It effectively captures the domi-
+nance of the LoS component, which is a reasonable assump-
+tion in satellite links, while still including residual multipath
+effects. The model is also easy to parametrize through the
+X-factor and can be efficiently implemented in system-level
+simulation tools, making it well suited for baseline evaluations
+and initial performance studies [10].
+
+However, when applied to NTN scenarios and NB-loT
+specifically, the model shows several limitations. It does
+not inherently capture elevation-angle dependent attenuation,
+atmospheric absorption, or rain fading, all of which strongly
+influence satellite communication. The assumption of a sta-
+tionary ‘-factor and a fixed scattering environment may
+not hold in practice, as satellite geometry, elevation angle,
+and ground clutter vary dynamically. Furthermore, the model
+does not explicitly represent shadowing or blockage effects,
+which are important large-scale fading phenomena, and it
+
+das
+
+(l +h) ;
+
+(2)
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 22:57:29 UTC from IEEE Xplore. Restrictions apply.
+
+89
+
+===== Verification_of_Communication_Parameters_for_NTN_Communication-4..txt =====
+may oversimplify propagation at very low elevation angles
+where non-LoS conditions and diffraction dominate. For these
+reasons, the ETSI Rician model is often complemented with
+additional path-loss or shadowing terms when used in realistic
+NTN simulations.
+
+B. ITU-R P.681
+
+Compared to the single-state ETSI Rician fading model,
+ITU-R P.681 is a state-based land mobile-satellite (LMS)
+propagation framework that explicitly accounts for shadowing,
+blockage, and elevation-angle dependence in addition to multi-
+path fading. It is based on extensive measurement campaigns
+covering frequencies from 0.8 to 20 GHz and consolidates
+effects such as tropospheric attenuation, ionospheric variation,
+and environmental clutter. For narrowband, time-varying LMS
+channels, the Recommendation specifies semi-Markov state
+models: earlier editions (e.g., P.681-7) describe a three-state
+model (good/intermediate/bad), while P.681-11 §6.2 standard-
+izes a two-state (GOOD/BAD) model widely used in receiver
+performance simulations [9], [12].
+
+Within each channel state, the received envelope is Ricean
+conditioned on a lognormally distributed LoS component,
+leading to the so-called Loo distribution. This is expressed
+
+where r is the received envelope amplitude, A is the shadowed
+LoS amplitude in state s, o? is the diffuse multipath power,
+and Jo(-) is the modified Bessel function of the first kind. The
+overall channel statistics are then obtained by mixing across
+states with lognormal weighting of the LoS term:
+
+Priv) = y xf fria(r | A,o3) +
+
+séG,B
+fal As w) of) aA,
+
+rA
+oS
+
+r
+
+r? + A?
+5 exp( ———
+oS
+
+20?
+
+fria(r | A,o%) =
+
+(4)
+
+where 7, is the probability of being in state s (GOOD or
+BAD), and f4(-) is the lognormal pdf of the LoS amplitude
+with mean pu (LN) and standard deviation of)
+
+The model embeds explicit dependence on elevation angle
+and environment class (urban, suburban, rural) through state
+probabilities, degree of fading, and parameter tables. It also
+includes empirical roadside tree-shadowing procedures that
+yield fade distributions as a function of elevation angle and
+frequency, highlighting the significant degradation at low
+angles [12], [13].
+
+The strength of ITU-R P.681 lies in its realism and adapt-
+ability: by combining state-based fading with lognormal shad-
+owing and elevation dependence, it captures blockage, partial
+shadowing, and low-elevation degradation more accurately
+than single-state models such as ETSI Rician. At the same
+time, it is considerably more complex to implement, requiring
+semi-Markov state processes, lognormal fading distributions,
+and careful parameterization for specific environments. This
+complexity can limit its use in large-scale NB-IoT simulations,
+
+where simplicity and tractability are often necessary. For this
+reason, P.681 is frequently adopted as a conservative reference
+model, complementing simpler baselines like ETSI Rician
+[12], [13].
+
+IV. SIMULATION
+
+This section is structured into two main subsections. The
+first subsection details the simulation setup, including the
+channel models and parameterization. The second subsection
+presents and interprets the simulation results, with selected
+figures illustrating the most representative outcomes.
+
+A. Simulation Setup
+
+To evaluate the NB-IoT over NTN’s we utilized MATLAB
+5G/Satellite Communication toolbox heavily modifying the
+NPDSCH throughput example to suit the requirements for
+evaluating the performance of the technology. The commu-
+nication link chain is SISO (Single Input, Single Output) with
+NPDSCH, NRS and synchronization modeled according to
+3GPP NB-IoT specifications.
+
+The goal of the simulation scenario is to provide a de-
+tailed overview of the model’s behaviour with respect to the
+changing elevation angle and shed a light into the expected
+performance in terms of reliability when using both models.
+The simulation relies on adjusting the respective elevation
+angle between UE and orbital gNodeB and evaluating the
+BLER over a 500 transport blocks. The elevation angle is
+swept from 0° with granular steps of 1° for angles 0°-20° and
+a step of 10° for angles 20-90°. The simulation is performed
+for two propagation models:
+
+« ETSI Rician, parameterized by a fixed K-factor of 10 dB
+
+to represent a dominant LoS with residual multipath.
+
+« ITU-R P.681 - exercised across all provided environment
+
+modes (Urban, Suburban, Rural-Wooded, Residential)
+with azimuth orientation equal to 0°.
+
+Fig. 3: Visualization of simulation scenario.
+
+For the simulation, TBS size was selected 408 bits as well
+as the standalone mode of operation is considered.
+Full simulation parameters are depicted in Table I.
+
+B. Simulation
+
+As described earlier, the elevation angle was swept from
+0° to 90°, with a fine granularity of 1° between 0° and 20°
+and coarser steps of 10° for higher angles. This procedure
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 22:57:29 UTC from IEEE Xplore. Restrictions apply.
+
+90
+
+===== Verification_of_Communication_Parameters_for_NTN_Communication-5..txt =====
+TABLE I: Simulation parameters for NB-IoT over NTN
+
+Parameter Value
+Carrier frequency 2 GHz (S-band)
+Satellite altitude 1200 km (LEO)
+UE speed 0 kmh
+Operation mode Standalone
+Link configuration SISO
+
+Transmit power 44 dBm
+
+Noise figure 6 4B
+
+‘Antenna temperature 290 K
+Transport blocks 500 per run
+TBS 408 bits
+
+Free-space path loss
+Doppler compensation
+Channel model (1)
+Channel model (2)
+
+Included (slant range)
+TX on (pre-comp.), RX off
+ETSI Rician, K = 10 dB
+
+Rural-Wooded, Residential)
+Elevation angle sweep 10°-90° (step 10°)
+Repetitions = 1, 2, 4, 8, 16, 32, 64, 128
+
+Mobile altitude 0 m above sea level
+
+ITU-R P.681 (Urban, Suburban,
+
+was applied to both channel models while varying the number
+of repetitions from 1 to 128. Although using 128 repetitions
+is not practical in real deployments due to increased energy
+consumption and reduced spectral efficiency, this configuration
+was nevertheless included to explore the theoretical limits of
+NB-IoT operation in extreme scenarios such as emergency
+messaging, where reliability outweighs efficiency.
+
+Given the large volume of results, only selected plots are
+presented here, chosen to illustrate the most representative
+differences between the models and environmental conditions.
+Additional results are referenced but omitted for brevity.
+
+ETsivsTU-R-NREP=4
+
+BLERE
+
+dren ante)
+Fig. 4: ETSI Rician vs ITU-R submodels for 4 repetitions.
+
+Fig 4 shows the case of four repetitions. A clear difference
+is observed between the ETSI Rician and ITU-R models in
+terms of BLER as a function of elevation angle. The ETSI
+Rician curve begins to exhibit reduced reliability at lower
+elevation angles, while ITU-R models remain at full outage
+(BLER = 1) until approximately 20°. For example, at 20°
+elevation the ETSI Rician model predicts a BLER of 0.944,
+whereas all ITU-R variants indicate complete data loss. This
+discrepancy arises from the simplified nature of the ETSI
+model, which does not capture fading and shadowing effects
+
+that dominate in realistic NTN conditions. Consequently, ETSI
+produces a smoother, more gradual error-rate curve, whereas
+ITU-R models incorporate shadowing and blockage, resulting
+in sharper transitions—particularly between 40° and 50° ele-
+vation, where the probability of LoS rapidly increases and link
+quality improves
+
+A similar trend is observed in Fig. 5, which depicts results
+for 16 repetitions. The higher repetition count improves overall
+reliability, narrowing the gap between the two models in rural
+conditions. Nonetheless, the ETSI Rician model remains more
+optimistic, while ITU-R Urban and Suburban scenarios still
+maintain high BLER values up to approximately 20° elevation.
+This reflects the inclusion of environmental obstructions, such
+as buildings, that delay the onset of LoS dominance in the
+ITU-R framework.
+
+The same statement mentioned above holds true for 16
+repetitions, depicted on the plot 5, where due to the increased
+repetitions - therefore increased probability of success - both
+models are close to each other in their predictions for rural
+areas while the ETSI model is more optimistic as in the
+previous case. However, the ITU-R Urban and SubUrban
+models maintain high BLER to approximately 20° as the
+environmental model considers a LoS infringments caused by
+buildings and other environmental objects.
+
+BLERL
+
+Elevation Ange [*)
+
+Fig. 5: ETSI Rician vs ITU-R submodels for 16 repetitions.
+
+To further investigate low-elevation performance, the ITU-R
+Urban model with 128 repetitions was selected as a worst-case
+scenario for NTN reliability. While impractical for continuous
+operation, this setting provides valuable insight into emergency
+communications, where message delivery must be guaranteed
+despite adverse conditions and limited satellite visibility. The
+dataset is depicted in Fig. 6 compared with performance of
+lower repetitions settings of 32 and 64. The results highlight
+both the resilience and the inherent limitations of NB-IoT in
+NTN environments under highly challenging link conditions.
+
+As shown in Fig. 6, the ITU-R Urban model indicates
+that with 128 repetitions, the system remains usable for NB-
+JoT transmission down to elevation angles of approximately
+9°, where the BLER reaches about 10%, which aligns with
+the 3GPP’s target for acceptable performance. For for ex-
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 22:57:29 UTC from IEEE Xplore. Restrictions apply.
+
+91
+
+===== Verification_of_Communication_Parameters_for_NTN_Communication-6..txt =====
+ITU-R Urban - Low Elevation Angles BLER
+
+BLERE-]
+
+Elevation Ange]
+
+—s2Repetions ra
+
+Fig. 6: Low elevation angles BLER for ITU-R Urban.
+
+Liban —64Repetions- Urban —228 Repettons
+
+ample emergency-oriented scenarios, communication can be
+sustained even at elevation angles as low as 7°, although with
+a higher BLER of around 0.33 when using 128 repetitions.
+While such performance is not suitable for general-purpose
+operation, it still enables the transmission of critical messages
+under severely degraded link conditions.
+
+It should be emphasized, however, that achieving these
+reliability levels at low elevation angles comes at a significant
+cost. The use of 128 repetitions considerably increases the
+transmission latency and system load, impacting both the UE
+and the gNodeB. For battery-powered NB-IoT devices, this
+results in substantially higher energy consumption, potentially
+reducing device lifetime in practical deployments. Likewise,
+on the network side, frequent reliance on high-repetition
+modes would reduce spectral efficiency and overall system
+capacity. Consequently, while these results demonstrate the
+theoretical feasibility of low-elevation NB-IoT over NTN links
+for emergency communications, such operation would remain
+highly constrained in real deployments and should be regarded
+as a fall-back rather than a primary mode of operation.
+
+V. CONCLUSION
+
+This work has presented a comparative study of NB-IoT
+performance over NTN channels using two standardized prop-
+agation models: ETSI Rician and ITU-R P.681. By sweeping
+elevation angles from 0° to 90° and testing multiple repetitions,
+the simulations highlighted the crucial role of elevation angle
+and channel modeling assumptions on BLER performance.
+
+It should be noted that these results are based on simulations
+only and were not validated against a real-world deployment
+and measurements. The following statements are based on
+each models approach for modeling the environment and
+general observation and the results should be validated against
+a real-world scenario.
+
+The simulation results demonstrate that the ETSI Rician
+model, while analytically simple, in theory, tends to underes-
+timate the impact of fading and shadowing, thereby yielding
+overly optimistic reliability predictions at low elevation angles
+in the simulation environment. In contrast, the ITU-R P.681
+
+framework, through its state-based modeling and explicit in-
+tegration of environmental effects, seems to provide a more
+conservative but apparently realistic estimate of performance,
+particularly in challenging conditions such as urban environ-
+ments, due to the environmental effects, such as shadowing
+and fading, consideration.
+
+For practical NB-IoT over NTN deployments, this study
+showcases that repetition mechanisms are critical in mitigating
+reliability losses at low elevation angles, with ITU-R models
+capturing the sharp improvement in link quality once line-
+of-sight conditions dominate. While high repetition values are
+not sustainable for everyday communication due to energy and
+capacity constraints, they remain, according to the simulation
+results, a viable strategy for emergency transmissions in ad-
+verse conditions.
+
+Overall, the comparison highlights the importance of select-
+ing appropriate propagation models for NTN system design
+and evaluation, with ITU-R P.681 apparently offering a more
+robust basis for reliability assessment, while ETSI Rician
+yielding useful results to estimate for the baseline and analyti-
+cal benchmarking. Based on the results the recommendation is
+to utilize the ITU.R P.681 model for simulating and evaluating
+performance of NTN applications.
+
+REFERENCES
+
+[1] ©. Liberg, M. Sundberg, Y-P. E. Wang, J. Bergman, J. Sachs, and
+G. Wikstrém, Cellular Internet of Things: From Massive Deployments
+10 Critical 5G Applications, second edition ed. Academic Press, 2020.
+M. Roubitek, O. Zeman, P. Mlfnek, and P. MaSek, “NB-IoT Capacity;
+2020.”
+
+E, Rastogi, M. K. Maheshwari, A. Rastogi, and J. Jeong, “A nar-
+rowband internet-of-things communications scheme over non-terrestrial
+networks,” in 2025 IEEE 1th International Conference on Network
+Softwarization (NetSofi). IEEE, 2025, pp. 240-248.
+
+M. Conti, S. Andrenacci, N. Maturo, S. Chatzinotas, and A. Vanelli-
+Coralli, “Doppler impact analysis for nb-iot and satellite systems
+integration,” in ICC 2020 - 2020 IEEE International Conference on
+Communications (ICC), 2020, pp. 1-7.
+
+R. Barbau, V. Deslandes, G. Jakllari, J. Tronc, J.-F. Chouteau, and A.-L.
+Beylot, “Nb-iot over geo satellite: Performance analysis,” in 2020 10th
+Advanced Satellite Multimedia Systems Conference and the 16th Signal
+Processing for Space Communications Workshop (ASMS/SPSC), 2020,
+pp. I-8.
+
+3GPP, “Lte; evolved universal terrestrial radio access (e-utra); physical
+layer procedures,” 3GPP, Tech. Rep. TS 36.213 version 14.2.0 Release
+14 (2017/04), 2017.
+
+S. Cluzel, L. Franck, J. Radzik, S. Cazalens, M. Dervin, C. Baudoin, and
+D. Dragomirescu, “3gpp nb-iot coverage extension using leo satellites,”
+in 2018 IEEE 87th Vehicular Technology Conference (VIC Spring),
+2018, pp. 1-5,
+
+O. Ledesma, P, Lamo, and J. Fraire, “Trends in Ipwan technologies for
+leo satellite constellations in the newspace context,” Electronics, vol. 13,
+p. 579, 01 2024.
+
+M. Vaiia, P. Sysel, and P. Rajmic, “Validation of land mobile satellite
+channel model for gnss,” in Proceedings of the International Technical
+Meeting of the Satellite Division of The Institute of Navigation (ION
+GNSS+ 2018). ION, 2018, pp. 3375-3386.
+
+ETSI TS 101 376-5-5 V1.3.1 (2005-02): GEO-Mobile Radio Interface
+Specifications (Release 1); Part 5: Radio Interface Physical Layer
+Specifications; Sub-part 5: Radio Transmission and Reception; GMR-1
+05.005, European Telecommunications Standards Institute (ETSI) Std.,
+2005, available online: https://www.etsi.org/deliver/etsi_ts/101300_101
+399/1013760505/01.03.01_60/ts_1013760505v010301p.pdf.
+
+M. K. Simon and M.-S. Alouini, “Digital communications over fading
+channels (mk simon and ms alouini; 2005)[book review],” IEEE Trans-
+actions on Information Theory, vol. 54, no. 7, pp. 3369-3370, 2008.
+
+[10]
+
+uy
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 22:57:29 UTC from IEEE Xplore. Restrictions apply.
+
+92
+
+===== Verification_of_Communication_Parameters_for_NTN_Communication-7..txt =====
+[13] J. Zhang, Z. Cheng, G. Zhu, Y. Li, and W. Pan, “An overview of channel
+
+[12] MathWorks Inc., p68/LMSChannel: Land Mobile-Satellite Channel
+models for ngso satellites,” Frontiers in Space Technologies, vol. 3, p.
+
+Model Based on ITU-R P.681, MathWorks, 2024, available online:
+https://www.mathworks.com/help/satcom/ref/p68 I Imschannel-syste 931152, 2022.
+
+m-object.html.
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 22:57:29 UTC from IEEE Xplore. Restrictions apply.
+
+93
+

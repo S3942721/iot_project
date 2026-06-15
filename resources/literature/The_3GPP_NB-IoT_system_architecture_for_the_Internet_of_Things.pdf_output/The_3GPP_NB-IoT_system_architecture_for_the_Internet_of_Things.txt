@@ -1,0 +1,699 @@
+===== The_3GPP_NB-IoT_system_architecture_for_the_Internet_of_Things-1..txt =====
+1CC2017: WS06-Convergent Internet of Things- On the synergy of loT systems
+
+The 3GPP NB-IoT system architecture for the
+Internet of Things
+
+Almudena Diaz Zayas* and Pedro Merino*
+*University of Malaga, Andalucia Tech, Malaga, Spain, 29071
+Email: almudiaz@Icc.uma.es, pedro @Icc.uma.es
+
+Abstract—The first version of the 3GPP NarrowBand-IoT (NB-
+IoT) standards has been finalized in June 2016 as part of Release
+13. NB-IoT is a promising new radio access technology which can
+coexist with existing GSM, UMTS and LTE deployments. In fact,
+NB-IoT specifications have been integrated into LTE standards.
+NB-IoT goes a step further than the MTC [3] (Machine Type
+Communication) specification, focusing on extremely low cost
+devices, massive deployments and reduced data rates with a
+carrier bandwidth of just 200 kHz (hence its name). In this paper
+we will take a close look at 3GPP specifications to discover which
+are the modifications required in traditional LTE deployments to
+provide connectivity to the upcoming Cat-NB1 User Equipments
+(UEs).
+
+I. INTRODUCTION
+
+As result of the 3GPP study item TR 45.820 [1] titled
+"Cellular system support for ultra-low complexity and low
+throughput Internet of Things (CIoT)” a new narrowband
+radio technology have been proposed, called NB-IoT. NB-
+IoT is being integrated in the LTE standards and a new
+UE category has been standardized in [2], Cat-NB1. Features
+provided by NB-IoT have been previously introduced in [(4][5]
+and are oriented to cover the low-end massive Machine Type
+Communication (MTC) scenario: extended coverage, support
+of massive number of low throughput devices, high allowed
+latency, ultra-low device cost, low device power consumption
+and optimized network architecture. As shown in Table I the
+requirements of NB-IoT are the same as for eMTC (enhanced
+MTC)[3], but with focus on the low-end massive MTC sce-
+narios. NB-IoT provides even lower cost in UEs than eMTC
+and a higher extended coverage of 164 dB MCL (at least for
+standalone deployment). The battery life is also around 10
+years with 5 Watt Hour battery. NB-IoT is compatible with
+the enhanced DRX mode introduced in Release 13 to reduce
+power consumption. The number of devices supported per cell
+is around 55.000.
+
+Unlike eMTC, that can only be deployed in-band, utilizing
+resource blocks within a normal LTE carrier, NB-IoT can
+also be deployed in the unused resource blocks within a
+LTE carrier’s guard-band, or standalone for deployments in
+dedicated spectrum. NB-IoT is also particularly suitable for
+the re-farming of GSM channels.
+
+An early proof of concept has been carried out by Aalto
+University and Ericcson Research in Finland. This initial tests
+were run in standalone mode and based on a Cloud RAN
+(C-RAN) architecture. The NB-IoT ability to support high
+
+latencies make it an appropriate use case for applying a
+deployment based on C-RAN.
+
+In this paper we describe the evolution of 3GPP standards
+related with MTC/NB-IoT and detail the changes introduced
+into LTE standards to provide support to NB-IoT, the latest
+3GPP standard for IoT. The paper is organized as follows.
+In section II we provide the necessary background on 3GPP
+MTC/oT standards to understand the role of NB-IoT in the
+ToT era. Section III describes the modifications introduced
+in the radio access network. The architectural transformation
+suffered in the EPC is explained in section IV. Finally, in
+section 5, we provide an additional comparison between MTC
+and NB-IoT, and introduce the future enhancements expected
+in Release 14.
+
+Il. BACKGROUD
+
+3GPP (Third Generation Partnership Project) is the stan-
+dardization body that specifies LTE/LTE-Advanced, as well
+as 3G UTRA and 2G GSM mobile communications systems.
+3GPP standards are structured as Releases. The definition of
+the mobile technology known as Long Term Evolution (LTE)
+was initiated in 2005 and the first 3GPP specifications were
+introduced in Release 8 by in December 2007.
+
+The term “user equipment” (UE) has been traditionally used
+by 3GPP to refer to the cellular equipment utilized by the
+subscriber to access network services. The UE can be a smart-
+phone or an embedded device contained in a M2M equipment.
+To support multiple UE hardware capabilities 3GPP defines
+different categories in 3GPP 36.306. The categories differ in
+the maximum data rates supported in the downlink and in the
+uplink, which are associated, for example, with the support
+of spatial multiplexing (MIMO transmission). The categories
+are also used by the eNodeB (LTE base station) to establish
+the conditions under which the communication with the UE
+will take place. As discussed below, the UE category is an
+important concept in IoT. Table II provides a summary of the
+UE categories oriented to MTC/IoT scenarios.
+
+The initial version of the LTE Machine Type Communic:
+tion (MTC) standards was introduced in Release 8 and was
+based on Category 1. Category 1 was the lowest capability
+with maximum bit rates of 10 Mbps downlink and 5 Mbps
+uplink while Category 5, the highest category in Release 8,
+supported data rates of 300 Mbps in downlink and 75 in
+Mbps in uplink. Although Category 1 UEs do not support
+MIMO transmission, they still have 2 receiver antennas and
+
+o7Buth5386."'985885 ype Araiiod doe UAT YWersity Library. Downloaded on June 14,2026 at 23:31:21 UTC from IEEE Xplore. Restrictions apply.
+
+===== The_3GPP_NB-IoT_system_architecture_for_the_Internet_of_Things-2..txt =====
+1CC2017: WS06-Convergent Internet of Things- On the synergy of loT systems
+
+[ [_eMTC Enhanced MTC) Release 13_|
+
+NB-IoT (Release 13)
+
+Coverage Enhancement
+
+15 dB gain better compared to GPRS
+
+20 dB gain compared to GPRS
+
+Reduced complexity
+
+Similar to EGPRS modem cost
+
+Ultra-low cost CIS)
+
+Power efficiency 10 year battery life
+
+10 year battery life
+
+Latency TO sec 10 sec
+Capacity ~10000 devices per cell ~50000 decives per cell
+Coexistence LTE in-band GSM standalone, LTE in-band, CTE guard-band
+TABLET
+EMTC vs NB-IOT FEATURES
+Huawei
+Vodafone
+
+Qualcomm
+
+Release
+
+NB-loT
+
+3GPP 13
+Work Item NB-loT
+Release 13
+
+Frozen
+
+Ericsson
+
+/-
+
+J
+T
+g
+&
+c
+I
+
+J |
+b z
+iy S
+x Nv
+Ss ro
+$ $
+
+Fig. 1. NB-IoT standardization process
+
+have to support all RF channel bandwidth options from 1.4 to
+20 MHz and other functionalities that increase the hardware
+complexity. Moreover this category does not meet the battery,
+cost and range requirements of IoT. The first release of MTC
+was focused on the optimization of charging mechanisms,
+addressing, fixed location, low mobility and low activity
+terminals, handling of large numbers of subscriptions and
+subscriber data within the network, handling issues of large
+number of M2M subscriptions for the user of M2M services
+and security aspects.
+
+A new UE category 0 was introduced in Release 12, which
+achieves cost reduction of about 50% compared to Category 1.
+Also a new power saving mode was introduced in this Release
+in 3GPP TS 24.301 and 23.682. The main purpose of this new
+feature is to reduce energy consumption while the device is
+not transmitting or receiving. Other solutions for MTC were
+discussed in Release 12 as part of 3GPP 36.888. Improvements
+such as half-duplex transmission, single RF chain and reduced
+peak throughput are part of the specification of MTC UE Cat 0.
+
+Cost reduction using reduced system bandwidth and coverage
+improvements specification were postponed to Released 13.
+Continuing the normative work started in Release 12 to
+enhance the LTE suitability for the promising loT market, the
+key focus of eMTC (often referred to as LTE-M) for Release
+13 is to define a new low complexity UE category type that
+supports reduced bandwidth, reduced transmit power, reduced
+support for downlink transmission modes, ultra-long battery
+life via power consumption reduction techniques and extended
+coverage operation. This is Cat-M1 (previously known as Cat-
+M). In Release 13 MTC achieves an additional 50% cost
+reduction through the restriction in system bandwidth to 1.4
+MHz, which has a heavy impact on the design of the receiver,
+reducing the complexity of the baseband processing. This
+Release also introduces coverage enhancements to achieve
+an improvement of 15 dB, allowing operators to reach MTC
+devices in poor coverage conditions such as meters located in
+basements. These two improvements have an important impact
+on the design of the logical and the physical channels that
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:31:21 UTC from IEEE Xplore. Restrictions apply.
+
+===== The_3GPP_NB-IoT_system_architecture_for_the_Internet_of_Things-3..txt =====
+1CC2017: WS06-Convergent Internet of Things- On the synergy of loT systems
+
+[ [ Release-8 [ Release-12 [ Release-13 [ Release-13
+Cat. 1 Cat. 0 Cat. MI Cat. NBI
+
+Donwlink peak TO Mbps T Mbps T Mbps 200 Kbps
+
+Uplink peak rate 3 Mbps T Mbps T Mbps 144 Kbps
+
+Number of antennas 2 T T T
+
+Duplex mode Fall duplex Half duplex Half duplex Half duplex
+
+UE receive bandwidth 20 MHz. 20 Mhz 1.4 MHz 200 KHz
+
+UE transmit power 23 dBm 23 dBm 20 dBm 23 dBm
+
+Complexity 100 % 30% 20% 13%
+
+Use case Voice Services | Cat is the interim solu- | Environment monitoring, | Smart metering,
+for emergency in | tion prior Cat-M. Cat 0 is | Vehicle tracking smart buildings, home
+elevators Smart used for replacing Catl, automation
+Grid Management, | but cannot replace voice
+Kids/Elderly/Pet tracking | _use cases
+
+‘Availability ‘Available Available 2017 2017
+
+TABLE TT
+
+EVOLUTION OF UE CATEGORIES FOR MTC/IOT
+
+have to support low bandwidth modes and enhanced coverage.
+Another key enhancement in Release 13 is the introduction of
+extended DRX [6], which is based on the usage of longer DRX
+(Discontinuous Reception) timers to achieve further power
+consumption improvements. The DRX concept consists in the
+monitoring of downlink signalling channel during a limited
+period of time. During the remaining time the device gets
+slept in order to reduce power consumption.
+
+In May 2014, Huawei and Vodafone proposed a study
+item of NB-M2M to 3GPP GERAN which quickly garnered
+strong support and increased attention from other leading
+operators. In October of the same year Qualcomm submitted
+a new narrowband IoT proposal called NB-OFDM. In May
+2015, both technologies merged into NB-CloT (NarrowBand
+Cellular IoT).
+
+Meanwhile Ericcson accelerated their research on narrow-
+band IoT and proposed NB-LTE (Narrowband LTE) in August
+2015.
+
+In September 2015, the 3GPP accepted the inclusion of
+both technologies as a Work Item in Release 13 [1]. NB-
+CloT is a clean slate approach promoted by Huawei. The
+main difference between NB-LTE and NB-CloT comes down
+to how much of existing LTE networks can be reused for
+IoT. NB-CIoT requires new chipsets and does not seem to
+be backwards compatible with any LTE network older than
+Release 13. NB-LTE, by contrast, can be fully integrated
+into existing LTE networks, works within current LTE bands
+and does not need an overlay network. In November 2015
+3GPP agreed these two initiative evolve into only one standard
+called Narrowband IoT (NB-IoT). NB-IoT specifies a new
+radio access for cellular IoT, based to a great extent on a
+non-backward-compatible variant of E-UTRA, that addresses
+improved indoor coverage, support for massive number of
+low throughput devices, low delay sensitivity, ultra low device
+cost, low device power consumption and (optimised) network
+architecture. So, NB-IoT has become the main steam for 3GPP
+LPWAN (Low Power Wide Area Network) replacing NB-LTE
+and NB-CIoT (Cellular IoT) proposals. On June 2016 3GPP
+completed the standardization of NB-IoT, the new narrowband
+radio technology developed for the internet-of-Things (IoT).
+
+NB-IoT UEs are referred to as Cat-NB1 (also known as Cat-
+M2). The reduction of their complexity, compared with Cat.
+1, is up to 90%. 3GPP completed the standardization of NB-
+IoT on June 2016, it took only 9 months to standardize this
+new technology after the study phase, which demonstrates the
+importance of IoT for 3GPP.
+
+The work carried out in GSM/EDGE group inside 3GPP
+on Extended Coverage GSM for IoT (EC-GSM-IoT) has been
+integrated into these two projects: LTE-M and NB-IoT.
+
+In parallel with these standardization processes carried out
+inside 3GPP, there are other initiatives which operate in an
+unlicensed spectrum basis. It is the case of LORaWAN, Sigfox
+and OnRamp wireless, Weightless -N & -P etc. Most of these
+networks take advantage of industrial, scientific, and medical
+ISM _ unlicensed frequency bands. These technologies are
+currently available, have already been deployed and meet the 4
+factors for LPWAN (long range, very low power, low data rate,
+and very low cost). Some are based on protocols supported
+by industry alliances like LoRaWAN Alliance and Weightless
+SIG, some are based on proprietary protocols and some are
+standards in-progress.
+
+Il. NB-IoOT RADIO ACCESS NETWORK
+
+NB-IoT provides access to network services using a physical
+layer[8] optimized for very low power consumption and low
+cost. The full carrier bandwidth is 180 kHz, the subcarrier
+spacing can be 3.75 kHz (only for the uplink) or 15 kHz, the
+highest modulation scheme is QPSK, there is only support
+for FDD and half-duplex operation. The downlink of NB-
+IoT is based on OFDMA and the transmission scheme uses
+only one physical resource block (PRB). The uplink is based
+on single-carrier FDMA. For uplink transmission, there are
+two possible operation modes, single-tone transmission and
+multi-tone transmission. In single tone either 3.75 kHz or
+15 kHz subcarrier spacing is allowed. In multi-tone only 15
+kHz subcarrier spacing can be used. Multi-tone transmission
+enables grouping sets of 3, 6 or 12 subcarriers. Additionally,
+the minimum duration for the resource units used in scheduling
+depends on the number of assigned subcarriers and the oper-
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:31:21 UTC from IEEE Xplore. Restrictions apply.
+
+===== The_3GPP_NB-IoT_system_architecture_for_the_Internet_of_Things-4..txt =====
+1CC2017: WS06-Convergent Internet of Things- On the synergy of loT systems
+
+ation mode, ranging from 1 ms in 12 sub-carriers multitone
+transmission to 32ms in 3.75 kHz single tone transmission.
+
+A number of E-UTRA (Evolved Universal Terrestrial Radio
+Access) protocol functions supported by all Rel-8 UEs are not
+used for NB-IoT UEs: inter-RAT mobility, handover, measure-
+ment reports, public warning functions, GBR, CSG, support
+of HeNBs, relaying, carrier aggregation, dual connectivity,
+NAICS, MBMS, real-time services, interference avoidance
+for in-device coexistence, RAN assisted WLAN interworking,
+sidelink communication/discovery, MDT, emergency call and
+CS fallback.
+
+For NB-IoT the positioning may be supported based on
+the existing LCS (Location Services) architecture with eNB
+measurements only.
+
+Five new physical channels are introduced:
+
+« Narrowband Physical Broadcast
+« Narrowband Physical Downlink Shared Channel
+(NPDSCH). Carries the DL-SCH (Downlink Shared
+Channel) and PCH (Paging Channel) for NB-IoT UEs.
+« Narrowband Physical Downlink Control Channel (NPD-
+CCH). Informs the NB-IoT UE about the resource al-
+location of PCH and DL-SCH and carries the uplink
+scheduling grant for the NB-IoT UE.
+« Narrowband Physical Uplink Shared Channel
+(NPUSCH). Carries the UL-SCH (Uplink Shared
+Channel) and Hybrid ARQ ACK/NACKs in response to
+downlink transmission for the NB-IoT UE.
+Narrowband Physical Random Access
+(NPRACH). Carries random access
+for the NB-IoT UE.
+
+Channel
+preamble
+
+the
+
+Regarding MAC (Medium Access Control) layer, NB-IoT
+introduces a number of changes to reduce power consumption
+and make scheduling more flexible and simple. Because of
+the lower throughput requirements, a single HARQ process
+is used. This allows removing the HARQ identifier from
+the scheduling a nments and thus use a lower number of
+control bits for higher efficiency and robustness. Additionally,
+uplink retransmissions are no longer synchronous but always
+adaptive and asynchronous both in UL and DL. This provides
+the network with tighter control on the UL scheduling while
+preventing undesired periodic retransmissions as they will be
+now generated only when explicitly requested.
+
+Other NB-IoT L2 and L3 enhancements include the reduc-
+tion of the maximum PDCP SDU and Control PDU sizes,
+from 8188 octets to 1600 bytes. This is a reasonable tradeoff
+as traditional internet traffic does not exceed 1500 bytes per
+IP packet.
+
+While in connected mode, DRX can be configured with
+cycles up to 10.24 seconds. Regarding Paging configuration,
+when DRX is enabled in idle mode, for NB-IoT, the maximum
+value of the DRX cycle is 10485.76 seconds (2.91 hours).
+This allows for very high power saving when the use case
+is compatible with accordingly high connection establishment
+latencies.
+
+IV. NB-IOT SYSTEM ARCHITECTURE
+
+NB-IoT architecture simplifies the existing EPC (Evolved
+Packet Core) architecture in order to address the IoT require-
+ments of traffic models identified in [1] and shown in Table III.
+s small data transmission on a simplified architecture
+that is oriented to transporting these small data over NAS (Non
+Access Stratus) signalling messages. A dedicated core network
+node for CIoT (Internet of Things using 3GPP technology)
+profile provides combined C-plane and U-plane functions, e.g.
+aggregating some of the functions that traditionally reside
+in MME (Mobility Management Entity) and SGW (Serving
+Gateway, and in some instance PGW (Packet Data Network
+Gateway) in a new logical entity called C-SGN (CIoT Serving
+Gateway Node). C-SGN can be implemented to support only
+the necessary functionality required for CIoT use cases. S1-lite
+is an optimized version of S1-C (the S1 control plane which
+is based on the S1AP protocol) interface between the eNodeB
+and the MME. From S1-C only the necessary S1AP messages
+are supported (and inside the messages only the required parts)
+for the related CloT procedures and the optimised security
+procedures are supported, as well as some functionality to
+support data transport. The user plane data is carried in these
+modified S1AP messages in order to support efficient small
+data handing. The data planes tunnels of the SI-U interface
+(defined in TS 23.401 [9]) are not required.
+
+This architecture supports certain modifications (e.g. native
+support of SMS in PS domain, attach without PDN connection,
+simplified NAS etc.) to be applicable only to CloT UEs with-
+out requiring procedures to maintain backwards compatibility
+with other UEs.
+
+In NB-IoT, for signalling optimization, two solutions are
+introduced in addition to legacy RRC (Radio Resource Con-
+trol) connection setup. The first solution, Data-over-NAS
+(DONAS), is mandatory and is a control plane optimiza-
+tion based on solution 2 proposed in [7]. DONAS enables
+transmitting data without having to activate an user plane,
+implementing only this option allows UE implementations
+with fewer requirements related to the user plane, such as the
+support for Unacknowledged Mode (UM) in RLC, multiple
+dedicated logical channels, DTCH, RLC re-establisdhment,
+DTC . The second solution is an user plane optimization
+called RRC Suspend/Resume. This mode is optional and is
+based on solution 18 specified in [7]). RRC Suspend/Resume
+introduces enhancements to disable and restore the user plane
+in an efficient way. In the control plane optimization the data
+is sent over Non Access Stratum (NAS), directly from the
+Mobility Management Entity (MME) in the core network to
+the UE without interaction from the base station.
+
+The RRC Suspend/Resume procedures reduce the signalling
+overhead and also improve UE battery lifetime. The protocol
+architecture of NB-IoT and LTE is separated into control
+plane and user plane. Control plane consists of protocols
+which control the radio access bearers and the connection
+between the UE and the network. The highest layer of control
+plane is called Non-Access Stratum (NAS), which conveys
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:31:21 UTC from IEEE Xplore. Restrictions apply.
+
+===== The_3GPP_NB-IoT_system_architecture_for_the_Internet_of_Things-5..txt =====
+1CC2017: WS06-Convergent Internet of Things- On the synergy of loT systems
+
+g
+
+S1- lite
+
+UE S1-MME
+
+S1-MME (NAS (encrypted
+Small Data ))
+
+bj ey
+
+PtP IP tunnel for nonIP data
+
+eacicit
+
+Application
+Service
+
+SMSC/
+IWMSC
+
+Fig. 2. LTE Architecture for NB-loT
+
+[Category [ Application example [UL Data Size [DE Data Size [Frequency ]
+Mobile Autonomous Re- ] smoke alarm detectors, | 20 bytes ‘0 ACK payload size is as- | Every few months, Every
+porting (MAR) exception | power failure notifications sumed to be 0 bytes year
+
+ger to send uplink report,
+request for meter reading
+
+reports from smart meters, tamper
+notifications ete.
+Mobile Autonomous Re- | smart utility | 20 bytes with a cut off | 50% of UL data size ACK | 1 day (40%), 2 hours
+porting (MAR) periodic | (gas/water/electric) of 200 bytes ie. payloads | payload size is assumed to | (40%), 1 hour (15%), and
+reports metering reports, | higher than 200 bytes are | be 0 bytes 30 minutes (5%)
+smart agriculture, smart | assumed to be 200 bytes.
+environment etc.
+Network Command ‘Switch on/off, device trig- | 0 - 20 bytes 50% of cases | 20 bytes T day (40%), 2 hours
+
+require UL response.
+
+(40%), 1 hour (15%), and
+30 minutes (5%)
+
+Software
+date/reconfiguration
+model
+
+up- | Software patches/updates
+
+assumed to be
+
+200 bytes with a cut off
+of 2000 bytes i.e. payload
+higher than 2000 bytes are
+
+200 bytes with a cut off
+of 2000 bytes i.e. payload
+higher than 2000 bytes are
+assumed to be 2000 bytes.
+
+T80 days
+
+2000 bytes.
+
+TABLE IIT
+TRAFFIC MODELS FOR CELLULAR IOT [3GPP TR 45.820(1]]
+
+the radio signalling between the UE and the EPC, passing
+transparently through the radio network. It is responsible
+for authentication, security control, mobility management and
+bearer management. Access Stratum (AS) is the functional
+layer below NAS, and in control plane it consists of Radio
+Resource Control protocol (RRC). RRC configures the user
+and control planes according to the network status. There are
+two main RRC states, RRC_Idle or RRC_Connected, and the
+RRC entity controls the switching between these states. In
+RRC_Idle, the network knows that the UE is present in the
+network and the UE can be reached in case of incoming call. In
+RRC_Connected the UE has a connection to the eNodeB, the
+network knows the UE location on cell level and the UE may
+receive and transmit data. Connection is released, switching to
+RRC_Idle, when there is no traffic to save the UE battery and
+radio resources. RRC Suspend/Resume procedures reduce the
+
+signalling overhead required for UE state transition from Idle
+to Connected mode in order to have a user plane transaction
+with the network and back to Idle state by reducing the
+signalling messages required compared to legacy operation.
+In order to support RRC Suspend/Resume procedures
+MME, eNodeB and UE have to include new functionalities.
+The MME, which is responsible for handling the mobility of
+the UE, has to support the new procedures on S1AP, in partic-
+ular the SLAP procedure triggered by the "RRC Suspend” and
+"RRC Resume” procedures on the radio interface. The MME
+has also to store the UE Context information when the RRC
+connection is suspended and the $1 AP association is kept. The
+eNodeB should include support for storing the UE context as
+well as the SIAP association related parameters when the UE
+is in the new CloT RRC-Idle state. Moreover, the eNodeB
+has to support the new procedures to suspend/resume the
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:31:21 UTC from IEEE Xplore. Restrictions apply.
+
+===== The_3GPP_NB-IoT_system_architecture_for_the_Internet_of_Things-6..txt =====
+1CC2017: WS06-Convergent Internet of Things- On the synergy of loT systems
+
+IP/non IP Non-IP/IP
+S-NAS s-nas | GTP-C/U
+
+RAN
+
+UDP
+RAN SAP S1AP
+
+RAN RAN | SCTP/IP SCTPIIP | IP
+
+RAN RAN 2 2 LW
+
+u ul u i u ul
+
+Stite sci
+UE CIoT/LTE-RAN C-SGN
+
+Fig. 3. Protocol stack for NB-IoT
+
+connection. These procedures will be implemented between
+the eNB and the UE as well as between the eNB and the MME.
+Finally the UE has to store relevant AS information when the
+UE enters into the CloT RRC_Idle and support the procedures
+needed to suspend and resume the RRC connection.
+
+Data-over-NAS is considered as the basis for the normative
+work for support of infrequent small data transmission (for IP
+data, non-IP data and SMS). Support of DONAS is mandatory
+for both the UE and the network. This solution provides
+efficient support of infrequent small data transmission for
+ToT and support for non-IP data. The solution is based on
+lightweight core network architecture depicted in Figure 2.
+This solution piggybacks uplink small data onto the initial
+NAS uplink message that is extended and it uses an additional
+NAS message for carrying downlink response small data.
+The efforts for setting up the user plane, i.e. related RRC
+messages and AS security setup, can be avoided. There is
+not establishment of DRBs and S1-U bearers. Data can also
+be delivered through the SCEF (Service Capability Exposure
+Function), which is used for the delivery of non-IP data
+over control plane. SCEF element is part of the Architecture
+Enhancements for Service Capability Exposure (AESE) [10]
+introduced in Release 13, which displays network services to
+3rd parties. The implementation of this solution also implies
+modifications of the procedures available at the UE, eNodeB
+and C-SGN/MME to support e.g. handling of “NAS small
+data” sessions and the attach without bearer activation.
+
+The resulting protocol stack after the adoption of these two
+solutions is the simplified protocol stack shown in Figure 3
+where S-NAS indicates a simplified NAS signalling.
+
+V. CONCLUSION
+
+While LTE-M is a pure LTE technology NB-IoT is a new
+radio technology that coexists with existing GSM, UMTS and
+LTE systems.
+
+In regard to the uses cases of both technologies the main dif-
+ferences are mobility and throughput. NB-IoT offers reduced
+data rate and reduced mobility support compared to LTE-M
+as shown in Table IT
+
+In Release 14, we can expect further enhancements for NB-
+IoT in the form of multicast support, latency reduction opti-
+mizations to enable vehicle to vehicle (V2V) communications,
+positioning, mobility and service continuity enhancements,
+non-anchor PRB enhancements and new power classes and
+
+ACKNOWLEDGMENT
+
+This work has been funded by the Spanish Ministry of Econ-
+omy and Competitiveness (TIN2015-67083-R), FEDER and
+the European Unions Horizon 2020 research and innovation
+programme (grant agreement No 688712).
+
+REFERENCES
+
+[1] 3GPP TR 45.820 Cellular system support for ultra-low complexity and
+low throughput Internet of Things (CloT)
+
+[2] 3GPP TS 36.101 Evolved Universal Terrestrial Radio Access (E-UTRA);
+
+User Equipment (UE) radio transmission and reception
+
+3GPP 36.888, Study on provision of low-cost Machine-Type Communi-
+
+cations (MTC) UEs based on LTE
+
+[4] J. Gozalvez, “New 3GPP Standard for lot [Mobile Radio,” in IEEE
+Vehicular Technology Magazine, vol. 11, no. 1, pp. 14-20, March 2016.
+
+[5] S. Landstrm, J. Bergstrm, E. Westerberg, D. Hammarwall, "NB-IoT: A
+sustainable technology for connecting billions of devices”, in Ericsson
+Technology Review, vol. 93, no. 3, pp. 2-11, April 2016
+
+[6] 3GPP TR 23.770, Study on System Impacts of Extended DRX Cycle for
+Power Consumption Optimization
+
+[7] 3GPP TR 23.720 Study on architecture enhancements for Cellular Internet
+of Things
+
+[8] 3GPP TS 36.300 LTE; Evolved Universal Terrestrial Radio Access (E-
+UTRA) and Evolved Universal Terrestrial Radico Access Network (E-
+UTRAN); Overall description; Stage 2
+
+.401 General Packet Radio Service (GPRS) enhancements for
+Evolved Universal Terrestrial Radio Access Network (E-UTRAN) access
+
+[10] 3GPP TR 23.708 Architecture Enhancements for Service Capability
+Exposure (AESE)
+
+(3
+
+[9]
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:31:21 UTC from IEEE Xplore. Restrictions apply.
+

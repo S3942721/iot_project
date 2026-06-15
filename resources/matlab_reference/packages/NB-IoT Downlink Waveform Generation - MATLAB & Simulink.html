@@ -1,0 +1,1705 @@
+<!DOCTYPE html><html lang="en"><head><script nonce="B/0U4bcxtNhMGhCssh9pRO/G">window.mwDocMetadata = {"isLoggedIn":true,"exampleVersionSpec":["\u003e=25.1"],"isArchivedDoc":false,"release":"R2026a"};</script>
+	
+	<!-- Template Source Page: /content/mathworks/au/en/template-service/help/full-header-footer-offcanvas-bs5 -->
+	<!-- Template Source Env: stage -->
+	<!-- Template Last Modified: 2026-06-01T16:00:43-04:00 -->
+	
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	
+
+	<link rel="icon" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/images/favicon.20260513204911014.ico" type="image/x-icon"/>
+	<link rel="canonical" href="https://au.mathworks.com/help/lte/ug/nb-iot-downlink-waveform-generation.html"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	
+	
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:site" content="@MathWorks"/>
+		
+		<meta name="twitter:image" content="https://au.mathworks.com/template-service/help/full-header-footer-offcanvas-bs5/_jcr_content/ogImageSecureUrl.adapt.1200.medium.jpg/1744384063106.jpg"/>
+		<meta property="og:image:url" content="https://au.mathworks.com/template-service/help/full-header-footer-offcanvas-bs5/_jcr_content/ogImageSecureUrl.adapt.1200.medium.jpg/1744384063106.jpg"/>
+		<meta property="og:image:secure_url" content="https://au.mathworks.com/template-service/help/full-header-footer-offcanvas-bs5/_jcr_content/ogImageSecureUrl.adapt.1200.medium.jpg/1744384063106.jpg"/>
+	
+	<meta property="og:url" content="https://au.mathworks.com/help/lte/ug/nb-iot-downlink-waveform-generation.html"/>
+	<meta property="og:description" content="This example shows how to generate LTE-Advanced Pro Release 13 narrowband IoT (NB-IoT) waveforms for test and measurement applications using LTE Toolbox™ software."/>
+	<meta property="og:title" content="NB-IoT Downlink Waveform Generation - MATLAB &amp; Simulink"/>
+	<meta property="og:type" content="website"/>
+	
+
+	
+
+	<script nonce="B/0U4bcxtNhMGhCssh9pRO/G"> (function() { if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.classList.add('mw-theme-dark'); } else { document.documentElement.classList.add('mw-theme-light'); } })();	</script>
+	
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/webvitals.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+
+	
+	
+
+	
+	
+	
+
+	
+
+	
+	
+		
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/bootstrap5.min.20260513204911014.css" type="text/css"/>
+
+
+
+		
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/bs5.min.20260513204911014.css" type="text/css"/>
+
+
+
+	
+	
+	
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/offcanvasv5.min.20260513204911014.css" type="text/css"/>
+
+
+
+	
+
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-italic-300.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-italic-400.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-italic-500.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-italic-700.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-normal-300.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-normal-400.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-normal-500.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-normal-700.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/mathworks.20260513204911014.woff" rel="preload" as="font" type="font/woff" crossorigin=""/>
+
+	
+		
+		<script nonce="B/0U4bcxtNhMGhCssh9pRO/G">(function(g,b,d,f){(function(a,c,d){if(a){var e=b.createElement("style");e.id=c;e.innerHTML=d;a.appendChild(e)}})(b.getElementsByTagName("head")[0],"at-body-style",d);setTimeout(function(){var a=b.getElementsByTagName("head")[0];if(a){var c=b.getElementById("at-body-style");c&&a.removeChild(c)}},f)})(window,document,"[class*='personalization-container']:not([id^='web-application']) {opacity: 0 !important}",1E3);</script> <script src="//assets.adobedtm.com/d0cc0600946eb3957f703b9fe43c3590597a8c2c/satelliteLib-e8d23c2e444abadc572df06537e2def59c01db09.js" async="" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+	
+	
+
+	
+
+	
+
+	<title>NB-IoT Downlink Waveform Generation - MATLAB &amp; Simulink
+</title>
+	
+
+
+
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/jquery.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script><script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/jquery-migrate.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<meta xmlns="http://www.w3.org/1999/xhtml" http-equiv="Content-Script-Type" content="text/javascript"/>
+
+<link xmlns="http://www.w3.org/1999/xhtml" href="/help/releases/R2026a/includes/web/css/doc_center.css" rel="stylesheet" type="text/css"/>
+<link xmlns="http://www.w3.org/1999/xhtml" href="/help/releases/R2026a/includes/web/css/doc_center_localnav.css" rel="stylesheet" type="text/css"/>
+
+<script src="/help/releases/R2026a/includes/shared/equationrenderer/release/MathRenderer.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/l10n.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/docscripts.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/f1help.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/mw.imageanimation.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/jquery.highlight.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="/help/releases/R2026a/includes/product/scripts/underscore-min.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+<script xmlns="http://www.w3.org/1999/xhtml" src="/help/releases/R2026a/includes/shared/scripts/localstorage.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+<script src="/help/releases/R2026a/includes/web/scripts/overload.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/helpservices.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="/help/releases/R2026a/includes/product/scripts/productfilter.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/matlab_dialog_shared.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<link href="/help/releases/R2026a/includes/shared/highlight/styles/mwdochighlight.min.css" rel="stylesheet" type="text/css"/>
+<script src="/help/releases/R2026a/includes/shared/highlight/highlight.min.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<link href="/help/releases/R2026a/includes/web/css/doc_center_print.css" rel="stylesheet" type="text/css" media="print"/>
+
+<script src="/matlabcentral/jscript/userarea-typeahead-v1.js" defer="" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+  <script type="text/javascript" nonce="B/0U4bcxtNhMGhCssh9pRO/G">
+    document.addEventListener("DOMContentLoaded", function () {
+      const possibleSelectors = ['#query','#inpage_query'];
+      possibleSelectors.forEach(selector => {
+        const inputElement = document.querySelector(selector);
+        if (inputElement) {
+          const customElement = document.createElement('userarea-typeahead');
+          customElement.setAttribute('input-selector', selector);
+          customElement.setAttribute('collection', 'documentation');
+          customElement.setAttribute('app-label', 'Documentation');
+          customElement.setAttribute('env', 'prod');
+          customElement.setAttribute('site-language', 'en');
+          customElement.setAttribute('blank-state', 'true');
+          document.body.appendChild(customElement);
+        }
+      });
+    });
+</script> 
+	<meta name="robots" content="all"/><meta name="description" content="This example shows how to generate LTE-Advanced Pro Release 13 narrowband IoT (NB-IoT) waveforms for test and measurement applications using LTE Toolbox™ software."/><style>#localnav:has(.alert) { height:calc(44px + 36px); padding-top:36px; }
+			#localnav .alert { width: 100%; padding-top:2px; padding-right:5px; padding-bottom:2px; border-top:none; border-left:none; border-right:none; border-radius:0; display:flex; align-items:center; flex-direction:row; flex-wrap:nowrap; gap:7px; position:absolute; top:0; z-index:2;  }
+			#localnav .alert p { margin-bottom:0; }
+			#localnav .alert-dismissible .btn-close { margin-left:auto; position:relative; }</style><link rel="alternate" hreflang="x-default" href="https://www.mathworks.com/help/lte/ug/nb-iot-downlink-waveform-generation.html"/>
+	<link rel="alternate" hreflang="de" href="https://de.mathworks.com/help/lte/ug/nb-iot-downlink-waveform-generation.html"/>
+	<link rel="alternate" hreflang="en" href="https://www.mathworks.com/help/lte/ug/nb-iot-downlink-waveform-generation.html"/>
+	<link rel="alternate" hreflang="es" href="https://la.mathworks.com/help/lte/ug/nb-iot-downlink-waveform-generation.html"/>
+	<link rel="alternate" hreflang="fr" href="https://fr.mathworks.com/help/lte/ug/nb-iot-downlink-waveform-generation.html"/>
+	<link rel="alternate" hreflang="it" href="https://it.mathworks.com/help/lte/ug/nb-iot-downlink-waveform-generation.html"/>
+	<link rel="alternate" hreflang="ja" href="https://jp.mathworks.com/help/lte/ug/nb-iot-downlink-waveform-generation.html"/>
+	<link rel="alternate" hreflang="ko" href="https://kr.mathworks.com/help/lte/ug/nb-iot-downlink-waveform-generation.html"/>
+	<link rel="alternate" hreflang="zh" href="https://ww2.mathworks.cn/help/lte/ug/nb-iot-downlink-waveform-generation.html"/></head>
+
+
+
+	<body id="template_offcanvas" class="site_lang_en templateservice offcanvas_fixed
+		  
+		  
+		  
+		  
+ 		  
+		  -has_usernav
+		  -is_full_header
+		  
+		  " data-cid="helpcenter">
+		<a class="skip_link visually-hidden-focusable" href="#main">Skip to content</a>
+
+		
+		
+
+
+	<div class="sticky-top" id="sticky_container">
+		
+
+	<header class="-has_matrix
+					 -has_mwa
+					 -has_store
+					 -has_topnav
+					 -has_subnav
+					 ">
+		<nav class="navbar navbar-expand-lg" aria-label="Main navigation">
+			<div class="container-fluid container-lg">
+				<div class="d-lg-flex flex-row align-items-center" id="header_content_container">
+					<a class="navbar-brand d-inline-flex" href="/?s_tid=user_nav_logo">
+						
+						<img src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/images/mathworks-logo-membrane.20260513204911014.svg" class="mw_logo" alt="MathWorks" width="34" height="30"/>
+					</a>
+
+					<div class="sectionHead sectionhead containsResourceName resourceClass-sectionhead">
+
+
+	<p class="d-inline-flex d-lg-none h1">
+		<a class="add_cursor_pointer" href="/help/?s_tid=user_nav_help">MATLAB Help Center</a>
+		
+	</p>
+	
+
+
+
+
+</div>
+
+
+					<div class="d-flex d-lg-none" id="global_mobile_actuator_container_search">
+						<button class="navbar-toggler btn collapsed" id="global_search_mobile_actuator" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#global_search_mobile" data-bs-target="#global_search_mobile" aria-controls="global_search_mobile" aria-expanded="false" aria-label="Toggle Search">
+							<span class="icon-search"></span>
+						</button>
+					</div>
+					<div class="navbar-collapse collapse" id="global_search_mobile">
+						<div id="global_search_mobile_placeholder"></div>
+						<div id="global_search_container">
+							<div class="sectionHeadSearchBox sectionheadsearchbox containsResourceName resourceClass-sectionheadsearchbox">
+
+	
+
+	
+		
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/sectionheadsearchbox/bs5.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+		
+		
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/typeahead.min.20260513204911014.css" type="text/css"/>
+
+
+
+		
+		
+		
+			
+		
+		<form name="search" id="site_search" class="site_search" action="/search/user-center" method="get" data-release="R2026a" data-language="en">
+			<div class="input-group">
+				<label id="search-mathworks" class="visually-hidden" for="query">Search or ask a question</label>
+				<input type="hidden" name="c[]" id="site_search_collection" value="usercenter" disabled=""/>
+				<input type="search" name="q" id="query" class="form-control conjoined_search" aria-autocomplete="list" autocomplete="off" role="combobox" aria-controls="search_suggestions" aria-haspopup="listbox" aria-expanded="true" aria-activedescendant="" placeholder="Search or ask a question" data-site-domain="au" data-site-language="en" data-typeahead-proxy-url="https://services.mathworks.com/typeahead" data-typeahead-type="basic" data-typeahead-result-count="10" data-label-suggestions="Suggestions" data-label-see-all-results="See all results" aria-labelledby="search-mathworks"/>
+				
+				
+				<button type="submit" id="searchbutton" class="btn btn_color_blue btn-outline icon-search" aria-label="Search"></button>
+			</div>
+		</form>
+	
+
+	
+
+</div>
+
+						</div>
+					</div>
+
+
+					<div class="d-flex d-lg-none" id="global_mobile_actuator_container_navigation">
+						<button class="navbar-toggler collapsed btn" id="global_navigation_mobile_actuator" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#global_navigation" data-bs-target="#global_navigation" aria-controls="global_navigation" aria-expanded="false" aria-label="Toggle Main Navigation">
+							<span class="icon-menu-full"></span>
+						</button>
+					</div>
+					<div class="collapse navbar-collapse" id="global_navigation">
+						
+						<div class="topNavigation topnavigation containsResourceName resourceClass-topnavigation">
+
+
+
+	<ul class="navbar-nav flex-grow-1 align-items-lg-center mb-0">
+		
+		
+			<li class="nav-item dropdown" id="globalnav_item_helpcenter">
+				
+	
+	
+	
+
+	
+
+	<a class="nav-link active " href="/help/?s_tid=user_nav_help">
+
+		
+
+		
+			
+			MATLAB Help Center</a>
+
+		
+		
+	
+
+				
+			</li>
+		
+			<li class="nav-item dropdown" id="globalnav_item_community">
+				
+	
+	
+	
+
+	
+
+	<a class="nav-link " href="/matlabcentral/?s_tid=user_nav_community">
+
+		
+
+		
+			
+			Community</a>
+
+		
+		
+	
+
+				
+			</li>
+		
+			<li class="nav-item dropdown" id="globalnav_item_learning">
+				
+	
+	
+	
+
+	
+
+	<a class="nav-link " href="https://matlabacademy.mathworks.com/?s_tid=user_nav_learning">
+
+		
+
+		
+			
+			Learning</a>
+
+		
+		
+	
+
+				
+			</li>
+		
+
+		
+		<li class="nav-item  -alignment_lg_end" id="globalnav_item_matlab">
+			
+			
+
+			
+	
+	
+	
+
+	
+
+	<a class="not-logged-in btn btn_color_blue d-block d-lg-inline-flex " href="https://login.mathworks.com/embedded-login/landing.html?cid=getmatlab&amp;s_tid=user_nav_getml" style="display:none !important;">
+
+		
+
+		
+			
+			Get MATLAB</a>
+
+		
+		
+	
+
+			
+	
+	
+	
+
+	
+
+	<a class="logged-in btn btn_color_blue d-block d-lg-inline-flex " href="https://login.mathworks.com/embedded-login/landing.html?cid=getmatlab&amp;s_tid=user_nav_getml" style="display:none !important;">
+
+		
+
+		
+			
+			MATLAB</a>
+
+		
+		
+	
+
+
+		</li>
+
+		
+		
+			<li class="nav-item dropdown -alignment_lg_end" id="globalnav_item_mwa">
+				<a aria-label="Sign In to Your MathWorks Account" class="nav-link headernav_login mwa-nav_login" href="#" id="mwanav_item_login" style="display: none;">
+					Sign In
+				</a>
+
+				<a aria-expanded="false" class="nav-link headernav_logout dropdown-toggle" data-bs-toggle="dropdown" data-toggle="dropdown" href="#" id="mwanav_actuator" role="button" style="display: none;" title="Access your MathWorks Account">
+					<span class="mwanav_avatar mwa_image_drop_down"></span>
+					<span class="mobile_account_name visually_hidden_xxl visually_hidden_xl visually_hidden_lg hidden-md hidden-lg"></span>
+				</a>
+				<ul class="dropdown-menu dropdown-menu-lg-end" id="mwanav_dropdown_menu">
+					<li id="mwanav_item_account"><a class="mwa-account dropdown-item">My Account</a></li>
+					<li id="mwanav_item_community"><a class="mwa-community-profile dropdown-item">My Community Profile</a></li>
+					<li id="mwanav_item_associate"><a class="mwa-link-license dropdown-item">Link License</a></li>
+					<li><hr class="dropdown-divider"/></li>
+					<li id="mwanav_item_logout"><a class="mwa-logout dropdown-item">Sign Out</a></li>
+				</ul>
+			</li>
+		
+
+		
+
+		
+
+		<li class="nav-item d-block d-lg-none" id="globalnav_item_mobile_cta_support">
+			
+	
+	
+	
+
+	
+
+	<a class="nav-link " href="/support/contact_us.html" id="mobile_cta_support">
+
+		
+
+		
+			<span class="icon-phone"></span>
+			Contact MathWorks Support</a>
+
+		
+		
+	
+
+		</li>
+
+		<li class="nav-item d-block d-lg-none" id="globalnav_item_mobile_cta_corporate">
+			
+	
+	
+	
+
+	
+
+	<a class="nav-link " href="/" id="mobile_cta_corporate">
+
+		
+
+		
+			<span class="icon-membrane"></span>
+			Visit mathworks.com</a>
+
+		
+		
+	
+
+		</li>
+
+		<li class="nav-item dropdown d-none d-lg-block -alignment_lg_end" id="globalnav_item_search">
+			<a aria-expanded="false" aria-label="Search" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-toggle="dropdown" href="#" role="button"><span class="icon-search"></span></a>
+			<div class="dropdown-menu">
+				<div class="container-lg">
+					<div class="row align-items-center">
+						
+						
+							<div class="col">
+								<div id="global_search_desktop_placeholder"></div>
+							</div>
+						
+					</div>
+				</div>
+			</div>
+		</li>
+
+		<li class="nav-item d-none d-lg-block -alignment_lg_end" id="globalnav_item_matrix">
+			<mw-matrix lang="en" tier="DOTCOM" env="prod" bsversion="bs5" class="nav-link" host="https://au.mathworks.com"></mw-matrix>
+		</li>
+	</ul>
+
+
+	
+
+
+</div>
+
+					</div>
+				</div>
+
+				
+			</div>
+		</nav>
+	</header>
+
+
+
+		
+		
+		
+	</div>
+
+
+
+
+
+		
+<div id="offcanvas_container">
+	
+
+	<div class="collapse collapse-horizontal" id="offcanvas_menu" data-offcanvas-id="helpcenter-offcanvas">
+		<button class="btn collapsed" id="offcanvas_actuator" type="button" data-bs-toggle="collapse" data-bs-target="#offcanvas_menu" aria-expanded="false" aria-controls="offcanvas_menu">
+			<span class="icon-offcanvas-menu"><span class="visually-hidden">Off-Canvas Navigation Menu Toggle</span></span> <span class="offcanvas_actuator_label" aria-hidden="true">Contents</span>
+		</button>
+		<div id="offcanvas_menu_content"><nav class="offcanvas_nav" role="navigation">
+<div class="search_refine_v4 -presentation_browse">
+<div id="facets_area">
+<div class="personalization-container" id="web-application-offcanvas-container">
+<ol itemscope="" itemtype="https://schema.org/BreadcrumbList" class="nav_breadcrumb list-unstyled" id="ul_left_nav_ancestors">
+  <li itemscope="" itemtype="http://www.schema.org/ListItem" itemprop="itemListElement">
+	  <a href="/help/index.html?s_tid=CRUX_lftnav" itemprop="item">
+      <span itemprop="name">Documentation Home</span>
+		</a>
+    <meta itemprop="position" content="1"/>
+	</li>
+</ol>
+<ol itemscope="" itemtype="https://schema.org/BreadcrumbList" class="nav_breadcrumb list-unstyled" id="ul_left_nav_productgroups">
+<li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+	<a href="/help/overview/wireless-communications.html?s_tid=hc_product_group_bc" itemprop="item">
+    <span itemprop="name">Wireless Communications</span>
+	</a>
+  <meta itemprop="position" content="1"/>
+</li></ol><ol itemscope="" itemtype="https://schema.org/BreadcrumbList" class="nav_disambiguation list-unstyled"><li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+						<a href="../index.html?s_tid=CRUX_lftnav" id="index" itemprop="item">
+              <span itemprop="name">LTE Toolbox</span>
+            </a>
+            <meta itemprop="position" content="1"/>
+					</li><li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+						<a href="../downlink-channels.html?s_tid=CRUX_lftnav" id="bt4r95c-4" itemprop="item">
+              <span itemprop="name">Downlink Channels</span>
+            </a>
+            <meta itemprop="position" content="2"/>
+					</li></ol><ol itemscope="" itemtype="https://schema.org/BreadcrumbList" class="nav_disambiguation list-unstyled"><li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+						<a href="../index.html?s_tid=CRUX_lftnav" id="index" itemprop="item">
+              <span itemprop="name">LTE Toolbox</span>
+            </a>
+            <meta itemprop="position" content="1"/>
+					</li><li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+						<a href="../nb-iot-channels.html?s_tid=CRUX_lftnav" id="mw_45c0f7d1-d7cf-4357-8006-de43073c8250" itemprop="item">
+              <span itemprop="name">NB-IoT Channels</span>
+            </a>
+            <meta itemprop="position" content="2"/>
+					</li></ol><ol itemscope="" itemtype="https://schema.org/BreadcrumbList" class="nav_disambiguation list-unstyled"><li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+						<a href="../index.html?s_tid=CRUX_lftnav" id="index" itemprop="item">
+              <span itemprop="name">LTE Toolbox</span>
+            </a>
+            <meta itemprop="position" content="1"/>
+					</li><li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+						<a href="../test-and-measurement-1.html?s_tid=CRUX_lftnav" id="bt4r95c-41" itemprop="item">
+              <span itemprop="name">Test and Measurement</span>
+            </a>
+            <meta itemprop="position" content="2"/>
+					</li></ol><ul class="nav_scrollspy nav list-unstyled" id="nav_scrollspy" aria-label="On this page">
+	<li class="nav_scrollspy_function nav-item notranslate" aria-hidden="true">NB-IoT Downlink Waveform Generation</li>
+
+<li class="nav_scrollspy_title" id="SSPY810-refentry">On this page</li><li class="nav-item"><a class="intrnllnk nav-link" href="#d127e14032">Introduction</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#d127e14075">NB-IoT Downlink Subframe Allocation</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#d127e14198">NB-IoT Downlink Grid</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#d127e14326">NPDCCH/NPDSCH Configuration</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#d127e14592">NB-IoT Downlink Waveform Generation</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#d127e14631">Selected Bibliography</a></li></ul></div>
+</div>
+</div>
+</nav>
+			<div class="sidebar parsys containsResourceName resourceClass-parsys"><div class="targetcontainer containsResourceName resourceClass-targetcontainer section">
+
+
+
+<div class="personalization-container " id="web-application-offcanvas-container">
+	<div><div class="targetContent parsys containsResourceName resourceClass-parsys">
+</div>
+</div>
+</div></div>
+
+</div>
+
+		</div>
+		
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/offcanvasv5.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+	</div>
+
+
+	<div id="offcanvas_body_container">
+		<div id="offcanvas_body" class=" -has_stickynav">
+			
+			<div class="introParsys parsys containsResourceName resourceClass-parsys">
+</div>
+
+			<div class="content_container p-0" id="content_container">
+				<div class="container-fluid container-lg">
+					<div class="row">
+						<div class="col" id="offcanvas_fixed_menu_container"> </div>
+						<div class="col" id="offcanvas_content_container">
+							
+
+	
+	<div class="localnav" id="localnav">
+		<div class="localnav_container">
+			<div class="container-fluid container-lg">
+				<div class="row">
+					<div class="col-12">
+						<nav class="navbar navbar-expand-lg" aria-label="Local Navigation">
+							<button class="navbar-toggler" type="button" id="localnav_actuator" data-toggle="collapse" data-bs-toggle="collapse" data-target="#local_navigation" data-bs-target="#local_navigation" aria-controls="localnav" aria-expanded="false" aria-label="Toggle navigation"><span class="icon-kebab"></span></button>
+							<div class="collapse navbar-collapse" id="local_navigation">
+								<div class="localNavigation localnav containsResourceName resourceClass-localnav">
+
+
+
+	
+	<ul class="navbar-nav  crux_resource_list crux_browse" id="localnav_navbar">
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_documentation">
+		<a class="nav-link active" data-id="" href="/help/lte/downlink-channels.html?s_tid=CRUX_topnav">
+			Documentation
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_examples">
+		<a class="nav-link " data-id="" href="/help/lte/examples.html?s_tid=CRUX_topnav&amp;category=downlink-channels">
+			Examples
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_function">
+		<a class="nav-link " data-id="" href="/help/lte/referencelist.html?type=function&amp;s_tid=CRUX_topnav&amp;category=downlink-channels">
+			Functions
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_block">
+		<a class="nav-link " data-id="" href="/help/lte/referencelist.html?type=block&amp;s_tid=CRUX_topnav&amp;category=downlink-channels">
+			Blocks
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_app">
+		<a class="nav-link " data-id="" href="/help/lte/referencelist.html?type=app&amp;s_tid=CRUX_topnav&amp;category=downlink-channels">
+			Apps
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_video">
+		<a class="nav-link " data-id="" href="/support/search.html?fq%5B%5D=asset_type_name:video&amp;fq%5B%5D=category:lte/downlink-channels&amp;page=1&amp;s_tid=CRUX_topnav">
+			Videos
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_answers">
+		<a class="nav-link " data-id="" href="/support/search.html?fq%5B%5D=asset_type_name:answer&amp;fq%5B%5D=category:lte/downlink-channels&amp;page=1&amp;s_tid=CRUX_topnav">
+			Answers
+	    </a>
+	</li>
+</ul>
+
+
+
+
+</div>
+
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+							<div id="offcanvas_focus_actuator" tabindex="0" class="d-block d-md-none"><span class="visually-hidden">Main Content</span></div>
+							
+
+<main id="main" tabindex="-1">
+	
+	<section><div class="mainParsys parsys containsResourceName resourceClass-parsys"><div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+
+<style>
+#global_search_container > .sectionHeadSearchBox:has(#suggestions) { 
+    align-items: flex-end;
+    
+    #search_scope_doc { width:100%; max-width:540px; }
+}
+</style>
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+
+<style>
+.code_actions .btn-default { --bs-btn-color: var(--mw-ws-global-color); }
+
+.popover {
+    --bs-popover-header-bg: var(--mw-ws-helper-bg-gray);
+    --bs-popover-header-color: var(--mw-ws-global-color);
+    --bs-popover-body-color: var(--mw-ws-global-color);
+    --bs-popover-bg: var(--mw-ws-helper-bg-white); 
+}
+
+.popover-body { border-radius:0 0 var(--bs-popover-border-radius) var(--bs-popover-border-radius); }
+
+.mw-theme-dark .popover {
+    --bs-popover-border-color: var(--mw-ws-global-border-color);
+}
+
+.mw-theme-light body {
+  --mw-color-code: var(--mw-color-gray900);
+  --mw-color-commandWindowWarning: var(--mw-color-honey550);
+  --mw-color-generatedCode: var(--mw-color-teal600);
+  --mw-color-highlight: var(--mw-color-white);
+  --mw-color-matlabAttributeName: var(--mw-color-purple700);
+  --mw-color-matlabCharacters: var(--mw-color-pink600);
+  --mw-color-matlabComment: var(--mw-color-green600);
+  --mw-color-matlabDataTypes: var(--mw-color-purple700);
+  --mw-color-matlabDoctype: var(--mw-color-cobalt700);
+  --mw-color-matlabErrors: var(--mw-color-red550);
+  --mw-color-matlabFields: var(--mw-color-gray700);
+  --mw-color-matlabInstruction: var(--mw-color-blue700);
+  --mw-color-matlabKeyword: var(--mw-color-cobalt600);
+  --mw-color-matlabNodeTypes: var(--mw-color-aqua600);
+  --mw-color-matlabUnterminatedString: var(--mw-color-red700);
+  --mw-color-matlabString: var(--mw-color-purple600);
+  --mw-color-matlabSystemCommands: var(--mw-color-yellow600);
+  --mw-color-matlabValidationSections: var(--mw-color-brown600);
+  --mw-color-matlabVariables: var(--mw-color-teal600);
+  --mw-color-variableHighlightSharedScope: var(--mw-color-teal600);
+  --mw-color-matlabWarning: var(--mw-color-honey550);
+}
+
+.mw-theme-dark body {
+  --mw-color-code: var(--mw-color-gray200) !important;
+  --mw-color-commandWindowWarning: var(--mw-color-orange400) !important;
+  --mw-color-generatedCode: var(--mw-color-teal400) !important;
+  --mw-color-highlight: var(--mw-color-gray100) !important;
+  --mw-color-matlabAttributeName: var(--mw-color-purple300) !important;
+  --mw-color-matlabCharacters: var(--mw-color-pink500) !important;
+  --mw-color-matlabComment: var(--mw-color-green400) !important;
+  --mw-color-matlabDataTypes: var(--mw-color-purple300) !important;
+  --mw-color-matlabDoctype: var(--mw-color-cobalt500) !important;
+  --mw-color-matlabErrors: var(--mw-color-red400) !important;
+  --mw-color-matlabFields: var(--mw-color-gray400) !important;
+  --mw-color-matlabInstruction: var(--mw-color-blue500) !important;
+  --mw-color-matlabKeyword: var(--mw-color-cobalt400) !important;
+  --mw-color-matlabNodeTypes: var(--mw-color-aqua400) !important;
+  --mw-color-matlabUnterminatedString: var(--mw-color-red300) !important;
+  --mw-color-matlabString: var(--mw-color-purple400) !important;
+  --mw-color-matlabSystemCommands: var(--mw-color-yellow500) !important;
+  --mw-color-matlabValidationSections: var(--mw-color-brown500) !important;
+  --mw-color-matlabVariables: var(--mw-color-teal500) !important;
+  --mw-color-variableHighlightSharedScope: var(--mw-color-teal400) !important;
+  --mw-color-matlabWarning: var(--mw-color-orange400) !important;
+}
+
+:root {
+  --mw-ws-helper-eg-white: var(--mw-color-white);
+}
+</style>
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+
+<style>
+@media (max-width:991.98px) {
+
+    #localnav .nav-item:not(:first-child) .nav-link { padding-left:24px !important; }
+    #localnav .dropdown-menu .dropdown-item { padding-left:calc(var(--bs-dropdown-item-padding-x) * 3); }
+
+}
+</style>
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+	
+	
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/akamai.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/enhancedchat.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+
+
+
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+
+<style>
+@media (max-width: 991.98px) {
+    #localnav_actuator { width:auto !important; padding-left:10px !important; display: flex !important; align-items:center !important; flex-direction: row-reverse !important; justify-content:center !important; }
+    #localnav_actuator:after { padding-right:5px; content:"Resources"; font-size:14px; white-space:nowrap; }
+    #localnav_actuator .icon-kebab { position:relative; top:-1px; }
+    #localnav_actuator .icon-kebab:before { content: "\e60f" !important; font-size:16px; }
+}
+</style>
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+	
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/mathworks-aem.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/searchrefine.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/panel.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/card.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/search.min.20260513204911014.css" type="text/css"/>
+
+
+
+	
+
+
+
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+	
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/form.min.20260513204911014.css" type="text/css"/>
+
+
+
+	
+
+
+
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/nuggets.min.20260513204911014.css" type="text/css"/>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/handlebars.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/nuggets.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+	
+	
+
+
+
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+    
+
+
+
+	
+	
+
+
+
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/accordion.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/alert.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/band.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/blockquote.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/image.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/inpagenav.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/table.min.20260513204911014.css" type="text/css"/>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/accordion.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/panel.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+	
+	
+
+
+
+</div>
+<div class="targetcontainer containsResourceName resourceClass-targetcontainer section">
+
+
+
+<div class="personalization-container " id="web-application-body-container">
+
+
+
+
+
+
+<section xmlns="http://www.w3.org/1999/xhtml" id="doc_center_content" itemprop="content" lang="en" data-language="en" data-bs-spy="scroll" data-bs-target="#nav_scrollspy"><div id="pgtype-topic">
+<section><h1 class="r2026a" itemprop="title content" id="example-NBIoTDownlinkWaveformGenerationExample">NB-IoT Downlink Waveform Generation</h1><div class="examples_short_list hidden_ios_android" data-products="LS ML"><div data-pane="metadata" class="card metadata_container"><div class="card-body metadata_content"><div class="d-grid"><a class="btn btn_color_blue" data-ex-genre="Script" href="matlab:openExample(&#39;lte/NBIoTDownlinkWaveformGenerationExample&#39;)">Open Script</a></div></div></div></div><div itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/Example" itemprop="example" class="em_example"><meta itemprop="exampleid" content="lte-NBIoTDownlinkWaveformGenerationExample"/><meta itemprop="exampletitle" content="NBIoT Downlink Waveform Generation"/></div><span id="NBIoTDownlinkWaveformGenerationExample" class="anchor_target"></span>
+
+
+
+<p class="shortdesc">This example shows how to generate LTE-Advanced Pro Release 13 narrowband IoT (NB-IoT) waveforms for test and measurement applications using LTE Toolbox™ software.</p>
+
+
+
+
+<div class="procedure"><h3 class="title" id="d127e14032">Introduction<span id="NBIoTDownlinkWaveformGenerationExample-1" class="anchor_target"></span></h3><p>3GPP introduced a new air interface, Narrowband IoT (NB-IoT) optimized for low data rate machine type communications in LTE-Advanced Pro Release 13. NB-IoT provides cost and power efficiency improvements as it avoids the need for complex signaling overhead required for LTE based systems.</p><p>The LTE Toolbox can be used to generate standard compliant NB-IoT downlink complex baseband waveforms representing the 180 kHz narrowband carrier suitable for test and measurement applications. The waveform consists of the individual physical layer channels and signals and the MATLAB® value class NBIoTDownlinkWaveformGenerator can be used for full resource element (RE) grid and time-domain waveform generation. The LTE Toolbox supports all the NB-IoT modes of operation - standalone, guardband and in-band.</p><div class="itemizedlist"><ul><li><p>Standalone: NB-IoT carrier deployed outside the LTE spectrum, e.g. the spectrum used for GSM or satellite communications</p></li><li><p>Guardband: NB-IoT carrier deployed in the guardband between two LTE carriers</p></li><li><p>In-band: NB-IoT carrier deployed in resource blocks of a LTE carrier</p></li></ul></div><p>In-band mode can be further grouped depending on the physical cell identity (PCI) used, Inband-SamePCI and Inband-DifferentPCI. If Inband-SamePCI, the physical layer cell identity and PCI are the same and the UE can make assumptions about the ports and channel from LTE signals. The operation mode is indicated in the NB-IoT MIB (MIB-NB), which provides essential information for the user equipment (UE). The network can use radio resource control information to allocate a non-anchor carrier to an UE operating in an anchor carrier, see TS 36.331 section 6.7.3.2 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">5</a> ] and section 7.3.2.4 in [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">9</a> ].</p><p>This example creates the NB-IoT downlink, where the relevant physical layer channels and signals are:</p><div class="itemizedlist"><ul><li><p>Narrowband primary synchronization signal (NPSS)</p></li><li><p>Narrowband secondary synchronization signal (NSSS)</p></li><li><p>Narrowband reference signal (NRS)</p></li><li><p>Narrowband physical broadcast channel (NPBCH)</p></li><li><p>Narrowband physical downlink shared channel (NPDSCH)</p></li><li><p>Narrowband physical downlink control channel (NPDCCH)</p></li></ul></div><p>NB-IoT supports two carrier configurations:</p><div class="itemizedlist"><ul><li><p>Anchor: The carrier used by the UE for initial NB-IoT cell selection, obtaining MIBs and system information blocks (SIBs), and random access in the idle mode. The NPSS, NSSS, NPBCH, and system information are transmitted on the carrier.</p></li><li><p>Non-anchor: A carrier only used for actual exchange of data in the connected mode. NPSS, NSSS, NPBCH, and system information are not transmitted on the carrier.</p></li></ul></div><p>In this example, we demonstrate the NB-IoT downlink RE grid and waveform generation. The sections below explain the physical signals and channels that form the grid along with key concepts including subframe repetition, logical and transport channel mappings, and the corresponding grids for the different configurations. Moreover, the parameters involved in the waveform generation are shown to create waveforms as per user requirements.</p><p>The example outputs the complex baseband waveform along with the populated grid containing all the above mentioned physical channels and signals and also information about the type of data contained in each subframe. The waveform can be used for a range of applications from RF testing to simulation of receiver implementations.</p><h3 class="title" id="d127e14075">NB-IoT Downlink Subframe Allocation<span id="NBIoTDownlinkWaveformGenerationExample-2" class="anchor_target"></span></h3><p>This section explains how the physical layer channels and signals mentioned above are mapped into the downlink subframes.</p><div class="itemizedlist"><ul><li><p>
+<span class="emphasis"><em>Downlink bit map</em></span>: A logical vector to configure the NB-IoT downlink subframes. NB-IoT downlink subframes are defined as the subframes used for NPDCCH and NPDSCH not carrying SIB1-NB, it does not include subframes carrying NPSS, NSSS, NPBCH and NB-IoT system information block type 1 (SIB1-NB). The NB-IoT downlink subframes can be configured using parameter <code class="literal">Config.DownlinkBitmap</code> in class NBIoTDownlinkWaveformGenerator.</p></li></ul></div><div class="itemizedlist"><ul><li><p>
+<span class="emphasis"><em>NPSS &amp; NSSS</em></span>: As illustrated in the figure below, the NPSS is transmitted in subframe 5 in every frame, and the NSSS is transmitted in subframe 9 in frames with frame number <code class="literal">nf</code> fulfilling <code class="literal">nf</code> mod 2 = 0. The NPSS and NSSS allow the UE to synchronize to the NB-IoT cell.</p></li></ul></div><p>
+</p>
+<div class="informalfigure"><div id="d127e14101" class="mediaobject"><p><img src="../../examples/lte/win64/xxnbwaveformgen_npss_nsss.png"/></p></div></div><p>
+ </p><div class="itemizedlist"><ul><li><p>
+<span class="emphasis"><em>NPBCH</em></span>: The NPBCH is used to carry the 34 bit MIB-NB (TS 36.212 section 6.4.1 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">2</a> ]). The MIB-NB is coded to form a 1600 bits codeword (TS 36.211 section 10.2.4.1 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ]). The codeword is evenly segmented into 8 sub-blocks, each one has 200 bits which are transmitted on subframe 0 and repeated in the 7 following consecutive frames (TS 36.211 section 10.2.4.4 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ]). The mapping of the codeword bits is illustrated in the figure below.</p></li></ul></div><p>
+</p>
+<div class="informalfigure"><div id="d127e14123" class="mediaobject"><p><img src="../../examples/lte/win64/xxnbwaveformgen_npbch.png"/></p></div></div><p>
+ </p><div class="itemizedlist"><ul><li><p>
+<span class="emphasis"><em>NPDSCH</em></span>: The key feature of NPDSCH is subframe repetition. NB-IoT defines two repetition schemes for the case when NPDSCH is carrying broadcast control channel (BCCH) or not. BCCH is the logical channel to carry SIB1-NB, system information messages, etc. Not carrying BCCH implies that NPDSCH may carry Paging Control Channel (PCCH), Common Control Channel (CCCH), Dedicated Control Channel (DCCH), Dedicated Traffic Channel (DTCH), etc (TS 36.300 sections 6.1.3.2 and 5.3.1a [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">6</a> ]). The two repetition schemes are illustrated in the figure below. The NPDSCH repetition parameters includes the number of subframes in a codeword <code class="literal">NSF</code> and the number of repetitions <code class="literal">NRep</code>. The example in the figure shows the repetition pattern with <code class="literal">NRep</code> = 4 for the case when NPDSCH is carrying BCCH and <code class="literal">NRep</code> = 8 for the case when NPDSCH is not carrying BCCH and <code class="literal">NSF</code> = 3 for both cases. For the case when carrying BCCH, all the subframes of a codeword are transmitted before repeating the codeword. For the case when not carrying BCCH, a subframe in the codeword is repeated by <code class="literal">min(NRep,4)</code> before performing the same repetition for the other subframes. After the codeword is repeated by <code class="literal">min(NRep,4)</code> times, the same procedure is performed until the full repetition is complete, i.e., repeated by <code class="literal">NRep</code> times. The detailed specification of the repetition scheme can be found in TS 36.211 section 10.2.3 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ].</p></li></ul></div><p>
+</p>
+<div class="informalfigure"><div id="d127e14159" class="mediaobject"><p><img src="../../examples/lte/win64/xxnbwaveformgen_npdsch.png"/></p></div></div><p>
+ </p><p>The repeated subframes shown in the above figure are mapped to the available subframes allocated for NPDSCH transmission. As a typical example, the following figure illustrates how to perform mapping for the subframes of NPDSCH carrying SIB1-NB, which contains the most important system information for an UE (TS 36.331 section 6.7.2 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">5</a> ]).</p><p>A SIB1-NB is carried in 8 subframes (<code class="literal">NSF</code> = 8), and mapped to subframe 4 in every other frame in 16 continuous frames which are repeated <code class="literal">NRep</code> times (<code class="literal">NRep</code> = 4, 8 or 16, see TS 36.213 section 16.4.1.3 Table 16.4.1.3-3 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">3</a> ]). The repetitions are equally spaced within a period of 256 frames (TS 36.331 section 5.2.1.2a [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">5</a> ]). The starting frame number for the first NPDSCH transmission in the period depends on the narrowband physical cell identity <code class="literal">NNCellID</code> as well as the number of repetitions <code class="literal">NRep</code> (TS 36.213 Table 16.4.1.3-4 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">3</a> ]).</p><p>
+</p>
+<div class="informalfigure"><div id="d127e14194" class="mediaobject"><p><img src="../../examples/lte/win64/xxnbwaveformgen_sib1nb.png"/></p></div></div><p>
+ </p><h3 class="title" id="d127e14198">NB-IoT Downlink Grid<span id="NBIoTDownlinkWaveformGenerationExample-3" class="anchor_target"></span></h3><p>In addition to the subframe allocation described above, the generated grids below further explain the RE allocation in a subframe. The grid is for two frames of an anchor carrier containing NPSS, NSSS, NRS, NPBCH, SIB1-NB, and NB-IoT downlink subframes carrying NPDSCH and NPDCCH. The grids are compared in <code class="literal">Standalone</code> and <code class="literal">Inband-SamePCI</code> operation modes. The grid can be generated using the grid display method in the class NBIoTDownlinkWaveformGenerator, i.e., creating an object <code class="literal">ngen</code> of type NBIoTDownlinkWaveformGenerator and calling <code class="literal">ngen.displayResourceGrid</code>.</p><div class="itemizedlist"><ul><li><p>
+<span class="emphasis"><em>NRS</em></span>: The RE positions can be configured by the number of NRS ports and the narrowband physical cell identity, i.e., the parameter fields <code class="literal">NBRefP</code> and <code class="literal">NNCellID</code> in structure <code class="literal">ngen.Config</code>, respectively.</p></li><li><p>
+<span class="emphasis"><em>NPSS &amp; NSSS</em></span>: The first 11 subcarriers are used for NPSS, all 12 subcarriers in a physical resource block are used for NSSS. The first 3 OFDM symbols in a subframe are not used for NPSS/NSSS. NRS is not transmitted in any subframe containing NPSS/NSSS. The REs of NPSS/NSSS are punctured by the LTE cell-specific reference signal (CRS) only in in-band modes. The number of CRS ports that affects the puncturing can be configured by parameter field <code class="literal">CellRefP</code> in structure <code class="literal">ngen.Config</code> (TS 36.211 sections 10.2.6 and 10.2.7 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ]).</p></li><li><p>
+<span class="emphasis"><em>NPBCH</em></span>: The REs are punctured by the NRS and the CRS using the maximum number of NRS and CRS antenna ports (2 and 4, respectively), for both operation modes (TS 36.211 section 10.2.4 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ]). This is because the UE has no knowledge about the number of used antenna ports and the operation mode.</p></li><li><p>
+<span class="emphasis"><em>NPDSCH</em></span>: For operation modes <code class="literal">Standalone</code> and <code class="literal">Guardband</code>, the REs are punctured by NRS only; for in-band operation modes, the REs are punctured by both NRS and CRS. When the operation mode is in-band, the first 3 OFDM symbols in the subframe are not used for NPDSCH carrying SIB1-NB, the first <code class="literal">ControlRegionSize</code> OFDM symbols in the subframe are not used when NPDSCH is carried by a NB-IoT downlink subframe. <code class="literal">ControlRegionSize</code> is a parameter field in structure <code class="literal">ngen.Config</code> to configure the LTE control region size for NPDSCH RE allocations (TS 36.211 section 10.2.3.4 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ], TS 36.213 section 16.4.1.4 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">3</a> ] and TS 36.331 section 6.7.2 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">5</a> ]). The LTE control region size configures the starting OFDM symbol position in a NB-IoT downlink subframe carrying NPDSCH and NPDCCH in in-band operation modes.</p></li><li><p>
+<span class="emphasis"><em>NPDCCH</em></span>: The NRS and CRS puncturing are the same as that in NPDSCH described above. When the operation mode is in-band, the first <code class="literal">ControlRegionSize</code> OFDM symbols in the subframe are not used for NPDCCH. Same as that for NPDSCH, <code class="literal">ControlRegionSize</code> is used to configure the NPDCCH RE allocations (TS 36.211 section 10.2.3.4 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ], TS 36.213 section 16.4.1.4 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">3</a> ] and TS 36.331 section 6.7.2 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">5</a> ]).</p></li></ul></div><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>ngen = NBIoTDownlinkWaveformGenerator;
+
+figure;
+<span style="color:var(--mw-color-matlabComment)">% Display the resource grid with default &#39;Standalone&#39; operation mode</span>
+ngen.displayResourceGrid;
+figure;
+<span style="color:var(--mw-color-matlabComment)">% Change the operation mode to &#39;Inband-SamePCI&#39;</span>
+ngen.Config.OperationMode = <span style="color:var(--mw-color-matlabString)">&#39;Inband-SamePCI&#39;</span>;
+ngen.displayResourceGrid;
+</pre></div></div></div><div class="informalfigure"><div id="d127e14291" class="mediaobject"><p><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_01.png"/></p></div></div><div class="informalfigure"><div id="d127e14295" class="mediaobject"><p><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_02.png"/></p></div></div><p>The object <code class="literal">ngen</code> contains the following:</p><div class="itemizedlist"><ul><li><p>Resource allocation and transport block size (TBS) tables for NPDSCH (see TS 36.213 sections 16.4.1.3 and 16.4.1.5 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">3</a> ])</p></li><li><p>Structure <code class="literal">ngen.Config</code> with the NB-IoT eNodeB configuration where parameter fields <code class="literal">NPBCH</code>, <code class="literal">SIB1NPDSCH</code>, <code class="literal">NPDCCH</code> and <code class="literal">NPDSCH</code> configure NPBCH, NPDSCH carrying SIB1-NB, NPDSCH carrying other SIBs (SIBn-NB), NPDCCH and NPDSCH not carrying SIB1-NB (i.e., NPDSCH carried by NB-IoT downlink subframes), respectively.</p></li></ul></div><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>ngen                                      <span style="color:var(--mw-color-matlabComment)">% Show all available properties</span>
+nsfTable = ngen.NSFTable                  <span style="color:var(--mw-color-matlabComment)">% Display number of subframes table in TS 36.213 section 16.4.1.3</span>
+enbConfig = ngen.Config                   <span style="color:var(--mw-color-matlabComment)">% Display NB-IoT eNodeB configuration</span>
+npbchConfig = ngen.Config.NPBCH           <span style="color:var(--mw-color-matlabComment)">% Display NPBCH configuration</span>
+sib1npdschConfig = ngen.Config.SIB1NPDSCH <span style="color:var(--mw-color-matlabComment)">% Display the configuration of NPDSCH when carrying SIB1-NB</span>
+sibnnpdschConfig = ngen.Config.SIBnNPDSCH <span style="color:var(--mw-color-matlabComment)">% Display the configuration of NPDSCH when carrying other NB SIBs (not SIB1-NB)</span>
+</pre></div></div></div><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeoutput"><pre>ngen = 
+
+  NBIoTDownlinkWaveformGenerator with properties:
+
+           Config: [1×1 struct]
+         NSFTable: [8×2 table]
+        NRepTable: [16×2 table]
+         TBSTable: [176×3 table]
+    NRepTableSIB1: [12×2 table]
+     TBSTableSIB1: [12×2 table]
+
+
+nsfTable =
+
+  8×2 table
+
+    ISF    NSF
+    ___    ___
+
+     0      1 
+     1      2 
+     2      3 
+     3      4 
+     4      5 
+     5      6 
+     6      8 
+     7     10 
+
+
+enbConfig = 
+
+  struct with fields:
+
+          TotSubframes: 20
+              NNCellID: 0
+                NBRefP: 1
+              CellRefP: 4
+     ControlRegionSize: 3
+                NFrame: 0
+         OperationMode: &#39;Inband-SamePCI&#39;
+        DownlinkBitmap: [1 1 1 1 1 1 1 1 1 1]
+           CarrierType: &#39;Anchor&#39;
+        DLGapThreshold: 32
+      DLGapPeriodicity: 64
+    DLGapDurationCoeff: 0.1250
+             NPSSPower: 0
+             NSSSPower: 0
+                 NPBCH: [1×1 struct]
+            SIB1NPDSCH: [1×1 struct]
+            SIBnNPDSCH: [1×1 struct]
+                NPDCCH: [1×1 struct]
+                NPDSCH: [1×1 struct]
+
+
+npbchConfig = 
+
+  struct with fields:
+
+             Power: 0
+      EnableCoding: &#39;On&#39;
+       DataBlkSize: 34
+        DataSource: &#39;PN9&#39;
+    DataRepetition: &#39;Off&#39;
+
+
+sib1npdschConfig = 
+
+  struct with fields:
+
+            Enable: &#39;On&#39;
+             Power: 0
+              NRep: 4
+        Modulation: &#39;QPSK&#39;
+      EnableCoding: &#39;On&#39;
+       DataBlkSize: 208
+        DataSource: &#39;PN9&#39;
+    DataRepetition: &#39;Off&#39;
+
+
+sibnnpdschConfig = 
+
+  struct with fields:
+
+                      Enable: &#39;Off&#39;
+                       Power: 0
+         si_WindowLength_r13: 160
+     si_RadioFrameOffset_r13: 2
+          si_Periodicity_r13: 64
+    si_RepetitionPattern_r13: 2
+                   si_TB_r13: 56
+           SchedulingInfoIdx: 0
+                EnableCoding: &#39;On&#39;
+                  DataSource: &#39;PN9&#39;
+              DataRepetition: &#39;Off&#39;
+
+</pre></div></div></div><h3 class="title" id="d127e14326">NPDCCH/NPDSCH Configuration<span id="NBIoTDownlinkWaveformGenerationExample-5" class="anchor_target"></span></h3><p>The generated RE grid below explains how to configure the subframes used for NB-IoT downlink subframes using downlink bit map, and how to configure the parameters of NPDCCH/NPDSCH carried by the NB-IoT downlink subframes. The NB-IoT downlink subframes can be configured by parameter field <code class="literal">DownlinkBitmap</code> in the structure <code class="literal">ngen.Config</code>. In the example, a non-anchor carrier is used to disable NPSS, NSSS, NPBCH and SIB1-NB in the grid.</p><p>The waveform generator supports multiple NPDCCH and NPDSCH. Each NPDSCH and NPDCCH contains a single transport block and downlink control information (DCI) message, respectively. The parameters of a NPDCCH/NPDSCH is specified by a structure, and multiple NPDCCH/NPDSCH are expressed as a structure vector.</p><p>A NPDCCH is configured by the following parameters in the structure <code class="literal">ngen.Config.NPDCCH</code>:</p><div class="itemizedlist"><ul><li><p>
+<code class="literal">Enable</code>: Enabling or disabling the NPDCCH (&#39;On&#39;, &#39;Off&#39;).</p></li><li><p>
+<code class="literal">Power</code>: Relative power for NPDCCH symbols in the frequency domain with assumption that the NRS power is 1.</p></li><li><p>
+<code class="literal">NCCE</code>: The selected narrowband control channel elements (NCCEs) to carry the NDPCCH. The value can be either a scalar or a vector of two entries. A scalar or vector indicates NPDCCH format 0 or 1, respectively. Entry value 0 (or 1) indicates NCCE 0 (or NCCE 1). NCCE 0 occupies subcarriers 0 to 5 and NCCE 1 occupies subcarriers 6 to 11, respectively. (TS 36.211 section 10.2.5.1 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ]).</p></li><li><p>
+<code class="literal">NRep</code>: Number of repetitions for a NPDCCH candidate (TS 36.213 section 16.6 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">3</a> ]). Allowed values are <span class="inlineequation"><span class="inlinemediaobject"><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_eq03588720800496472661.png" alt="$2^n$"/></span></span>, where n = 1...10.</p></li><li><p>
+<code class="literal">Rmax</code>: Maximum number of repetitions for NPDCCH (TS 36.213 section 16.6 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">3</a> ]). It affects the NPDCCH transmission gap. Allowed values are <span class="inlineequation"><span class="inlinemediaobject"><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_eq03588720800496472661.png" alt="$2^n$"/></span></span>, where n = 1...10.</p></li><li><p>
+<code class="literal">RNTI</code>: Radio network temporary identifier used for scrambling.</p></li><li><p>
+<code class="literal">StartSubframe</code>: 0-based starting subframe indices of each NPDCCH transmission in the associated NPDCCH period in the generated RE grid. Any starting indices that occur when a NPDCCH transmission is already underway are ignored.</p></li><li><p>
+<code class="literal">Period</code>: NPDCCH allocation period in subframes. An empty value indicates no repetition.</p></li><li><p>
+<code class="literal">EnableCoding</code>: Enabling or disabling the DCI encoding (&#39;On&#39;, &#39;Off&#39;).</p></li><li><p>
+<code class="literal">DataBlkSize</code>: Length of the DCI information bits.</p></li><li><p>
+<code class="literal">DataSource</code>: DCI information bits. The parameter can be defined directly as a bit vector or using a random data type e.g., &#39;PN9-ITU&#39;, &#39;PN9&#39;, &#39;PN11&#39;, &#39;PN15&#39;, &#39;PN23&#39;. For the latter case, a random bit vector is generated for the selected type.</p></li><li><p>
+<code class="literal">DataRepetition</code>: Enabling or disabling the repetition of the data used in the first transmission to all subsequent transmissions (&#39;On&#39;, &#39;Off&#39;).</p></li></ul></div><p>A NPDSCH is configured by the following parameters in the structure <code class="literal">ngen.Config.NPDSCH</code>:</p><div class="itemizedlist"><ul><li><p>
+<code class="literal">Enable</code>: Enabling or disabling the NPDSCH (&#39;On&#39;, &#39;Off&#39;).</p></li><li><p>
+<code class="literal">Power</code>: Relative power for NPDSCH symbols in the frequency domain with assumption that the NRS power is 1.</p></li><li><p>
+<code class="literal">NPDSCHDataType</code>: Type of data the NPDSCH carries, the allowed values are either &#39;BCCHNotSIB1NB&#39; or &#39;NotBCCH&#39;. This value affects the repetition scheme as described above.</p></li><li><p>
+<code class="literal">NRep</code>: The number of repetitions (TS 36.211 section 16.4.1.3 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ]).</p></li><li><p>
+<code class="literal">NSF</code>: The number of subframes in a NPDSCH codeword (TS 36.211 section 16.4.1.3 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ]).</p></li><li><p>
+<code class="literal">Rmax</code>: Maximum number of repetitions for the NPDCCH associated to the NPDSCH, its value should be equal to the value of the same field in the corresponding NPDCCH.</p></li><li><p>
+<code class="literal">StartSubframe</code>: 0-based starting subframe indices of each NPDSCH transmission in the associated NPDSCH period in the generated RE grid. Any starting indices that occur when a NPDSCH transmission is already underway are ignored.</p></li><li><p>
+<code class="literal">Period</code>: NPDSCH allocation period in subframes. An empty value indicates no repetition.</p></li><li><p>
+<code class="literal">Modulation</code>: Modulation used by the NPDSCH (&#39;QPSK&#39;,&#39;16QAM&#39;).</p></li><li><p>
+<code class="literal">EnableCoding</code>: Enabling or disabling the DL-SCH encoding (&#39;On&#39;, &#39;Off&#39;).</p></li><li><p>
+<code class="literal">DataBlkSize</code>: Transport block size.</p></li><li><p>
+<code class="literal">DataSource</code>: Information bits of the transport block. The usage is the same as the same field in structure <code class="literal">ngen.Config.NPDCCH</code>.</p></li><li><p>
+<code class="literal">DataRepetition</code>: Enabling or disabling the repetition of the data used in the first transmission to all subsequent transmissions (&#39;On&#39;, &#39;Off&#39;).</p></li></ul></div><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>ngen = NBIoTDownlinkWaveformGenerator;
+ngen.Config.CarrierType = <span style="color:var(--mw-color-matlabString)">&#39;NonAnchor&#39;</span>; <span style="color:var(--mw-color-matlabComment)">% Anchor or NonAnchor</span>
+ngen.Config.DownlinkBitmap = [1 0 1 1 1 1 1 1 0 1];
+ngen.Config.TotSubframes = 30;
+
+<span style="color:var(--mw-color-matlabComment)">% Configure the parameters of the first NPDCCH</span>
+npdcch1 = ngen.Config.NPDCCH;
+npdcch1.Enable = <span style="color:var(--mw-color-matlabString)">&#39;On&#39;</span>;
+npdcch1.Power = 0;
+npdcch1.NCCE = 1;  <span style="color:var(--mw-color-matlabComment)">% NPDCCH format 0 with NCCE 1</span>
+npdcch1.NRep = 2;
+npdcch1.Rmax = 16;
+npdcch1.RNTI = 0;
+npdcch1.StartSubframe = 0;
+npdcch1.Period = [];
+npdcch1.EnableCoding = <span style="color:var(--mw-color-matlabString)">&#39;On&#39;</span>;
+npdcch1.DataBlkSize = 23;
+npdcch1.DataSource = randi([0 1],npdcch1.DataBlkSize,1); <span style="color:var(--mw-color-matlabComment)">% Users can define their own information bits</span>
+npdcch1.DataRepetition = <span style="color:var(--mw-color-matlabString)">&#39;Off&#39;</span>;
+
+<span style="color:var(--mw-color-matlabComment)">% Configure the parameters of the second NPDCCH</span>
+npdcch2 = ngen.Config.NPDCCH;
+npdcch2.Enable = <span style="color:var(--mw-color-matlabString)">&#39;On&#39;</span>;
+npdcch2.Power = 0;
+npdcch2.NCCE = 0;  <span style="color:var(--mw-color-matlabComment)">% NPDCCH format 0 with NCCE 0</span>
+npdcch2.NRep = 4;
+npdcch2.Rmax = 16;
+npdcch2.RNTI = 1;
+npdcch2.StartSubframe = 3;
+npdcch2.Period = [];
+npdcch2.EnableCoding = <span style="color:var(--mw-color-matlabString)">&#39;On&#39;</span>;
+npdcch2.DataBlkSize = 23;
+npdcch2.DataSource = <span style="color:var(--mw-color-matlabString)">&#39;PN9&#39;</span>;
+npdcch2.DataRepetition = <span style="color:var(--mw-color-matlabString)">&#39;Off&#39;</span>;
+
+<span style="color:var(--mw-color-matlabComment)">% Configure the parameters of the first NPDSCH</span>
+npdsch1 = ngen.Config.NPDSCH;
+npdsch1.Enable = <span style="color:var(--mw-color-matlabString)">&#39;On&#39;</span>;
+npdsch1.Power = 0;
+npdsch1.NPDSCHDataType = <span style="color:var(--mw-color-matlabString)">&#39;BCCHNotSIB1NB&#39;</span>;
+npdsch1.NSF = 3;
+npdsch1.NRep = 2;
+npdsch1.Rmax = npdcch1.Rmax;
+npdsch1.RNTI = 0;
+npdsch1.StartSubframe = 10;
+npdsch1.Period = [];
+npdsch1.EnableCoding = <span style="color:var(--mw-color-matlabString)">&#39;On&#39;</span>;
+npdsch1.Modulation = <span style="color:var(--mw-color-matlabString)">&#39;QPSK&#39;</span>;
+npdsch1.DataBlkSize = 616;
+npdsch1.DataSource = <span style="color:var(--mw-color-matlabString)">&#39;PN15&#39;</span>;
+npdsch1.DataRepetition = <span style="color:var(--mw-color-matlabString)">&#39;Off&#39;</span>;
+
+<span style="color:var(--mw-color-matlabComment)">% Configure the parameters of the second NPDSCH</span>
+npdsch2 = ngen.Config.NPDSCH;
+npdsch2.Enable = <span style="color:var(--mw-color-matlabString)">&#39;On&#39;</span>;
+npdsch2.Power = 0;
+npdsch2.NPDSCHDataType = <span style="color:var(--mw-color-matlabString)">&#39;NotBCCH&#39;</span>;
+npdsch2.NSF = 2;
+npdsch2.NRep = 4;
+npdsch2.Rmax = npdcch2.Rmax;
+npdsch2.RNTI = 1;
+npdsch2.StartSubframe = 20;
+npdsch2.Period = [];
+npdsch2.EnableCoding = <span style="color:var(--mw-color-matlabString)">&#39;On&#39;</span>;
+npdsch2.Modulation = <span style="color:var(--mw-color-matlabString)">&#39;QPSK&#39;</span>;
+npdsch2.DataBlkSize = 616;
+npdsch2.DataSource = <span style="color:var(--mw-color-matlabString)">&#39;PN23&#39;</span>;
+npdsch2.DataRepetition = <span style="color:var(--mw-color-matlabString)">&#39;Off&#39;</span>;
+
+<span style="color:var(--mw-color-matlabComment)">% Prepare NPDSCH and NPDCCH structure vectors</span>
+ngen.Config.NPDCCH = [npdcch1 npdcch2];
+ngen.Config.NPDSCH = [npdsch1 npdsch2];
+
+figure;
+ngen.displayResourceGrid;
+</pre></div></div></div><div class="informalfigure"><div id="d127e14508" class="mediaobject"><p><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_03.png"/></p></div></div><p>The generated RE grid below explains how to configure the transmission gap for NPDSCH/NPDCCH according to TS 36.211 sections 10.2.3.4 and 10.2.5.5 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">1</a> ]. The gap is defined by parameter field <code class="literal">Rmax</code> mentioned above, as well as the following parameters in structure <code class="literal">ngen.Config</code>:</p><div class="itemizedlist"><ul><li><p>
+<code class="literal">DLGapThreshold</code>: Threshold to trigger the transmission gap, i.e., there are no gaps in the NPDSCH transmission if <code class="literal">Rmax</code> &lt; |DLGapThreshold|. Allowed values are 32, 64, 128, 256 (TS 36.331 section 6.7.1 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">5</a> ]).</p></li><li><p>
+<code class="literal">DLGapPeriodicity</code>: The gap periodicity in number of subframes. It also defines the starting subframe of the gap, i.e., the starting subframe number <code class="literal">sf</code> satisfying condition (sf mod <code class="literal">DLGapPeriodicity</code>) = 0. Allowed values are 64, 128, 256, 512 (TS 36.331 section 6.7.1 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">5</a> ]).</p></li><li><p>
+<code class="literal">DLGapDurationCoeff</code>: Used to calculate the gap duration in number of subframes, together with <code class="literal">DLGapPeriodicity</code>. The gap duration is given by <code class="literal">DLGapPeriodicity</code> <span class="inlineequation"><span class="inlinemediaobject"><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_eq07331648980302395630.png" alt="$\times$"/></span></span> <code class="literal">DLGapDurationCoeff</code>. Allowed values are 1/8, 1/4, 3/8, 1/2 (TS 36.331 section 6.7.1 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">5</a> ]).</p></li></ul></div><p>The following example uses defaulting parameters <code class="literal">DLGapThreshold</code> = 32, <code class="literal">DLGapPeriodicity</code> = 64 and <code class="literal">DLGapDurationCoeff</code> = 1/8 to explain the NPDSCH transmission gap. The figure below illustrates that the 96 (<code class="literal">NRep</code> <span class="inlineequation"><span class="inlinemediaobject"><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_eq07331648980302395630.png" alt="$\times$"/></span></span> <code class="literal">NSF</code>) NPDSCH subframes is disrupted by two gaps with a duration of 8 subframes, and the two gaps start at subframe 0 and subframe 64, respectively.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>ngen = NBIoTDownlinkWaveformGenerator;
+ngen.Config.CarrierType = <span style="color:var(--mw-color-matlabString)">&#39;NonAnchor&#39;</span>; <span style="color:var(--mw-color-matlabComment)">% Anchor or NonAnchor</span>
+ngen.Config.TotSubframes = 150;
+ngen.Config.NPDCCH.Enable = <span style="color:var(--mw-color-matlabString)">&#39;Off&#39;</span>;     <span style="color:var(--mw-color-matlabComment)">% Disable the NPDCCH</span>
+ngen.Config.NPDSCH.StartSubframe = 0;
+ngen.Config.NPDSCH.Rmax = ngen.Config.DLGapThreshold; <span style="color:var(--mw-color-matlabComment)">% Minimum value to trigger the transmission gap based on given DLGapThreshold</span>
+ngen.Config.NPDSCH.NRep = 32;
+ngen.Config.NPDSCH.NSF = 3;
+
+figure;
+ngen.displayResourceGrid;
+</pre></div></div></div><div class="informalfigure"><div id="d127e14589" class="mediaobject"><p><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_04.png"/></p></div></div><h3 class="title" id="d127e14592">NB-IoT Downlink Waveform Generation<span id="NBIoTDownlinkWaveformGenerationExample-7" class="anchor_target"></span></h3><p>Generate the time-domain waveform of a reference measurement channel (RMC) for NPDSCH performance requirements, according to TS 36.101 Appendix A.3.12 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">7</a> ], or the NB Test Model (N-TM), defined in TS 36.141 sections 6.1.3-6.1.6 [ <a class="intrnllnk" href="#NBIoTDownlinkWaveformGenerationExample-9">8</a> ]. The waveform can be generated using the waveform generation method in the class NBIoTDownlinkWaveformGenerator, to call the method, an object <code class="literal">ngen</code> is created and the method can be called by using <code class="literal">ngen.generateWaveform</code>.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>rc = <span style="color:var(--mw-color-matlabString)">&#39;R.NB.5-1&#39;</span>; <span style="color:var(--mw-color-matlabComment)">% Allowed values are &#39;R.NB.5&#39;,&#39;R.NB.5-1&#39;,&#39;R.NB.6&#39;,&#39;R.NB.6-1&#39;,&#39;R.NB.7&#39;,&#39;R.NB.8&#39;,&#39;R.NB.9&#39;,&#39;N-TM&#39;</span>
+ngen = NBIoTDownlinkWaveformGenerator(rc);
+[waveform,grid,ofdmInfo] = ngen.generateWaveform;
+ofdmInfo         <span style="color:var(--mw-color-matlabComment)">% Display OFDM configuration</span>
+spectrumScope = spectrumAnalyzer;
+spectrumScope.SampleRate = ofdmInfo.SamplingRate;
+spectrumScope.ShowLegend = true;
+<span style="color:var(--mw-color-matlabKeyword)">if</span> ngen.Config.NBRefP == 1
+    spectrumScope.ChannelNames = {[<span style="color:var(--mw-color-matlabString)">&#39;Signal for RMC &#39;</span> rc <span style="color:var(--mw-color-matlabString)">&#39; (Port 2000)&#39;</span>]};
+    spectrumScope(waveform);
+<span style="color:var(--mw-color-matlabKeyword)">else</span> <span style="color:var(--mw-color-matlabComment)">% NBRefP == 2</span>
+    spectrumScope.ChannelNames = {[<span style="color:var(--mw-color-matlabString)">&#39;Signal for RMC &#39;</span> rc <span style="color:var(--mw-color-matlabString)">&#39; (Port 2000)&#39;</span>], <span style="color:var(--mw-color-matlabKeyword)">...</span>
+        [<span style="color:var(--mw-color-matlabString)">&#39;Signal for RMC &#39;</span> rc <span style="color:var(--mw-color-matlabString)">&#39; (Port 2001)&#39;</span>]};
+    spectrumScope(waveform(:,1),waveform(:,2));
+<span style="color:var(--mw-color-matlabKeyword)">end</span>
+</pre></div></div></div><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeoutput"><pre>ofdmInfo = 
+
+  struct with fields:
+
+            SamplingRate: 1920000
+                    Nfft: 128
+               Windowing: 6
+     CyclicPrefixLengths: [10 9 9 9 9 9 9 10 9 9 9 9 9 9]
+    SubframeChannelTypes: [&#34;NPDCCH&#34;    &#34;Unused&#34;    …    ] (1×20 string)
+
+</pre></div></div></div><div class="informalfigure"><div id="d127e14613" class="mediaobject"><p><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_05.png"/></p></div></div><p>The following figures compare the signal spectrums for the generated time-domain waveform. As shown in the spectrum analyzer, the signal with yellow color has stronger power than the one with blue color. This is because the RE usage percentage of yellow one is higher.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre><span style="color:var(--mw-color-matlabComment)">% Set up a standalone, non-anchor carrier, disable the NPDCCH and make the</span>
+<span style="color:var(--mw-color-matlabComment)">% REs grid fully occupied by NPDSCH/NRS</span>
+ngen = NBIoTDownlinkWaveformGenerator;
+ngen.Config.CarrierType = <span style="color:var(--mw-color-matlabString)">&#39;NonAnchor&#39;</span>;
+ngen.Config.NPDCCH.Enable = <span style="color:var(--mw-color-matlabString)">&#39;Off&#39;</span>; <span style="color:var(--mw-color-matlabComment)">% Disable the NPDCCH</span>
+ngen.Config.NPDSCH.StartSubframe = 0;
+ngen.Config.NPDSCH.NRep = 8;
+ngen.Config.NPDSCH.NSF = 5;
+
+<span style="color:var(--mw-color-matlabComment)">% Display the grid and generate the time-domain signal</span>
+figure;
+ngen.displayResourceGrid;
+[waveform1,~,ofdmInfo1] = ngen.generateWaveform;
+
+<span style="color:var(--mw-color-matlabComment)">% Set up a standalone, anchor carrier, disable the NPDSCH and NPDCCH so</span>
+<span style="color:var(--mw-color-matlabComment)">% that it contains NPSS/NSSS/NPBCH/SIB1-NB/NRS only</span>
+ngen = NBIoTDownlinkWaveformGenerator;
+ngen.Config.NPDCCH.Enable = <span style="color:var(--mw-color-matlabString)">&#39;Off&#39;</span>; <span style="color:var(--mw-color-matlabComment)">% Disable the NPDCCH</span>
+ngen.Config.NPDSCH.Enable = <span style="color:var(--mw-color-matlabString)">&#39;Off&#39;</span>; <span style="color:var(--mw-color-matlabComment)">% Disable the NPDSCH</span>
+
+<span style="color:var(--mw-color-matlabComment)">% Display the grid and generate the time-domain signal</span>
+figure;
+ngen.displayResourceGrid;
+waveform2 = ngen.generateWaveform;
+
+<span style="color:var(--mw-color-matlabComment)">% Plot the signal spectrums of the generated two waveforms</span>
+release(spectrumScope);
+spectrumScope.ShowLegend = true;
+spectrumScope.ChannelNames = {<span style="color:var(--mw-color-matlabString)">&#39;Non-Anchor carrier fully occupied by NPDSCH/NRS (Port 2000)&#39;</span>, <span style="color:var(--mw-color-matlabKeyword)">...</span>
+    <span style="color:var(--mw-color-matlabString)">&#39;Anchor carrier with NPSS/NSSS/NPBCH/SIB1-NB/NRS only (Port 2000)&#39;</span>};
+spectrumScope.SampleRate = ofdmInfo1.SamplingRate;
+spectrumScope(waveform1,waveform2);
+</pre></div></div></div><div class="informalfigure"><div id="d127e14620" class="mediaobject"><p><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_06.png"/></p></div></div><div class="informalfigure"><div id="d127e14624" class="mediaobject"><p><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_07.png"/></p></div></div><div class="informalfigure"><div id="d127e14628" class="mediaobject"><p><img src="../../examples/lte/win64/NBIoTDownlinkWaveformGenerationExample_08.png"/></p></div></div><h3 class="title" id="d127e14631">Selected Bibliography<span id="NBIoTDownlinkWaveformGenerationExample-9" class="anchor_target"></span></h3><div class="orderedlist"><ol style="list-style: decimal;"><li><p>3GPP TS 36.211 &#34;Physical channels and modulation&#34;</p></li><li><p>3GPP TS 36.212 &#34;Multiplexing and channel coding&#34;</p></li><li><p>3GPP TS 36.213 &#34;Physical layer procedures&#34;</p></li><li><p>3GPP TS 36.321 &#34;Medium Access Control (MAC); Protocol specification&#34;</p></li><li><p>3GPP TS 36.331 &#34;Radio Resource Control (RRC); Protocol specification&#34;</p></li><li><p>3GPP TS 36.300 &#34;Overall description; Stage 2&#34;</p></li><li><p>3GPP TS 36.101 &#34;User Equipment (UE) radio transmission and reception&#34;</p></li><li><p>3GPP TS 36.141 &#34;Base Station (BS) conformance testing&#34;</p></li><li><p>O. Liberg, M. Sundberg, Y.-P. Wang, J. Bergman and J. Sachs, Cellular Internet of Things: Technologies, Standards and Performance, Elsevier, 2018.</p></li><li><p>M. Kanj, V. Savaux and M. Le Guen, &#34;A Tutorial on NB-IoT Physical Layer Design&#34;, IEEE Communications Surveys &amp; Tutorials, vol. 22, no. 4, 2020.</p></li></ol></div></div></section>
+    </div></section><div class="clearfix"></div>
+<div align="center" class="feedbackblock" id="mw_docsurvey"><script src="/help/includes/shared/docsurvey/docfeedback.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script nonce="B/0U4bcxtNhMGhCssh9pRO/G">loadSurveyHidden();</script>
+<link rel="stylesheet" href="/help/includes/shared/docsurvey/release/index-css.css" type="text/css"/>
+<script src="/help/includes/shared/docsurvey/release/bundle.index.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script nonce="B/0U4bcxtNhMGhCssh9pRO/G">initDocSurvey();</script></div>
+
+
+
+
+<div class="modal fade" id="matlab-command-dialog" tabindex="-1" role="dialog" aria-labelledby="matlabCommandDialogLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">MATLAB Command</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="dialog-body">
+        <p>You clicked a link that corresponds to this MATLAB command: </p>
+        <pre id="dialog-matlab-command"></pre>
+        <p>Run the command by entering it in the MATLAB Command Window.
+        Web browsers do not support MATLAB commands.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn_color_blue" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+	<div><div class="targetContent parsys containsResourceName resourceClass-parsys"><div class="cqColumns containsResourceName section resourceClass-columns"><div class="row  ">
+
+	
+		<div class=" col-12 "><div class="2420e633-83fe-4c2d-9b62-4248985f27d2 parsys containsResourceName resourceClass-parsys">
+</div>
+</div>
+	
+</div>
+</div>
+
+</div>
+</div>
+</div></div>
+
+</div>
+</section>
+	
+	
+	
+		
+
+<div><div class="modalParsys parsys containsResourceName resourceClass-parsys">
+</div>
+</div>
+
+		
+
+
+	<div id="location_content" style="display:none;"></div>
+
+	<div class="modal fade" id="country-unselected" tabindex="-1" aria-labelledby="domain_selector_label" style="padding-left: 0px; display:none;" aria-modal="true" role="dialog">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<img src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/images/mathworks-logo.20260513204911014.svg" class="mw_logo theme_light" alt="MathWorks" width="173" height="35"/>
+					<img src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/images/mathworks-logo-rev.20260513204911014.svg" class="mw_logo theme_dark" alt="MathWorks" width="173" height="35" style="display:none;"/>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<p class="h1 icon-globe" id="domain_selector_label">Select a Web Site</p>
+					<p>Choose a web site to get translated content where available and see local events and offers. Based on your location, we recommend that you select: <strong class="recommended-country"></strong>.</p>
+					<div class="default-recommendation">
+						<p><a class="btn btn_color_blue" data-lang="en" href="#" id="recommended_domain_button"><span class="recommended-country"></span></a></p>
+					</div>
+
+					<div class="ch-recommendation" style="display:none;">
+						<ul class="list-inline">
+							<li class="list-inline-item add_margin_5 d-block d-md-inline-block"><a class="recommendation-button btn btn-outline btn_color_blue" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="Switzerland" data-subdomain="ch" href="//ch.mathworks.com"><strong class="recommended-country"></strong> (English)</a></li>
+							<li class="list-inline-item add_margin_5 d-block d-md-inline-block"><a class="recommendation-button btn btn-outline btn_color_blue" data-do-not-rewrite="true" data-lang="de" data-recommended-text="Schweiz" data-subdomain="ch" href="//ch.mathworks.com"><strong class="recommended-country"></strong> (Deutsch)</a></li>
+							<li class="list-inline-item add_margin_5 d-block d-md-inline-block"><a class="recommendation-button btn btn-outline btn_color_blue" data-do-not-rewrite="true" data-lang="fr" data-recommended-text="Suisse" data-subdomain="ch" href="//ch.mathworks.com"><strong class="recommended-country"></strong> (Français)</a></li>
+						</ul>
+					</div>
+					<div class="zh-recommendation" style="display:none;">
+						<ul class="list-inline">
+							<li class="list-inline-item"><a class="recommendation-button btn btn-outline btn_color_blue" data-default-lang="true" data-do-not-rewrite="true" data-lang="zh" data-recommended-text="中国" data-subdomain="ww2" href="//ww2.mathworks.cn"><strong class="recommended-country"></strong>（简体中文）</a></li>
+							<li class="list-inline-item"><a class="recommendation-button btn btn-outline btn_color_blue" data-do-not-rewrite="true" data-lang="en" data-recommended-text="China" data-subdomain="ww2" href="//ww2.mathworks.cn"><strong class="recommended-country"></strong> (English)</a></li>
+						</ul>
+					</div>
+
+					<p>You can also select a web site from the following list</p>
+					<div class="alert alert-warning" role="alert" id="china_performance_alert" style="display:none;"> <span class="alert_icon icon-alert-warning"></span>
+						<p class="alert_heading"><strong>How to Get Best Site Performance</strong></p>
+						<p>Select the China site (in Chinese or English) for best site performance. Other MathWorks country sites are not optimized for visits from your location.</p>
+					</div>
+					<div class="row add_margin_30">
+						<div class="col-12 col-sm-4 col-lg-3">
+							<p class="h3 add_bottom_rule">Americas</p>
+							<ul class="list-unstyled">
+								<li><a class="domain_selector_link" data-country-code="LA" data-default-lang="true" data-do-not-rewrite="true" data-lang="es" data-recommended-text="América Latina" data-selected-text="América Latina" data-subdomain="la" href="//la.mathworks.com">América Latina</a> (Español)</li>
+								<li><a class="domain_selector_link" data-country-code="CA" data-do-not-rewrite="true" data-lang="en" data-subdomain="www" href="//www.mathworks.com">Canada</a> (English)</li>
+								<li><a class="domain_selector_link" data-country-code="US" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="United States" data-selected-text="United States" data-subdomain="www" href="//www.mathworks.com">United States</a> (English)</li>
+							</ul>
+						</div>
+						<div class="col-12 col-sm-4 col-lg-6">
+							<p class="h3 add_bottom_rule">Europe</p>
+							<div class="row">
+								<div class="col-6 col-sm-12 col-lg-6">
+									<ul class="list-unstyled">
+										<li><a class="domain_selector_link" data-country-code="BE" data-do-not-rewrite="true" data-lang="en" data-subdomain="nl" href="//nl.mathworks.com">Belgium</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="DK" data-do-not-rewrite="true" data-lang="en" data-subdomain="se" href="//se.mathworks.com">Denmark</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="DE" data-default-lang="true" data-do-not-rewrite="true" data-lang="de" data-recommended-text="Deutschland" data-selected-text="Deutschland" data-subdomain="de" href="//de.mathworks.com">Deutschland</a> (Deutsch)</li>
+										<li><a class="domain_selector_link" data-country-code="ES" data-default-lang="true" data-do-not-rewrite="true" data-lang="es" data-recommended-text="España" data-selected-text="España" data-subdomain="es" href="//es.mathworks.com">España</a> (Español)</li>
+										<li><a class="domain_selector_link" data-country-code="FI" data-do-not-rewrite="true" data-lang="en" data-subdomain="se" href="//se.mathworks.com">Finland</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="FR" data-default-lang="true" data-do-not-rewrite="true" data-lang="fr" data-recommended-text="France" data-selected-text="France" data-subdomain="fr" href="//fr.mathworks.com">France</a> (Français)</li>
+										<li><a class="domain_selector_link" data-country-code="IE" data-do-not-rewrite="true" data-lang="en" data-subdomain="uk" href="//uk.mathworks.com">Ireland</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="IT" data-default-lang="true" data-do-not-rewrite="true" data-lang="it" data-recommended-text="Italia" data-selected-text="Italia" data-subdomain="it" href="//it.mathworks.com">Italia</a> (Italiano)</li>
+										<li><a class="domain_selector_link" data-country-code="LU" data-do-not-rewrite="true" data-lang="en" data-subdomain="nl" href="//nl.mathworks.com">Luxembourg</a> (English)</li>
+									</ul>
+								</div>
+								<div class="col-6 col-sm-12 col-lg-6">
+									<ul class="list-unstyled">
+										<li><a class="domain_selector_link" data-country-code="NL" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="Netherlands" data-selected-text="Benelux" data-subdomain="nl" href="//nl.mathworks.com">Netherlands</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="NO" data-do-not-rewrite="true" data-lang="en" data-subdomain="se" href="//se.mathworks.com">Norway</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="AT" data-do-not-rewrite="true" data-lang="de" data-subdomain="de" href="//de.mathworks.com">Österreich</a> (Deutsch)</li>
+										<li><a class="domain_selector_link" data-country-code="PT" data-do-not-rewrite="true" data-lang="en" data-subdomain="www" href="//www.mathworks.com">Portugal</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="SE" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="Sweden" data-selected-text="Nordic" data-subdomain="se" href="//se.mathworks.com">Sweden</a> (English)</li>
+										<li>Switzerland
+											<ul class="list-unstyled add_indent_20">
+												<li><a class="domain_selector_link" data-country-code="CH" data-do-not-rewrite="true" data-lang="de" data-recommended-text="Schweiz" data-selected-text="Schweiz" data-subdomain="ch" href="//ch.mathworks.com">Deutsch</a></li>
+												<li><a class="domain_selector_link" data-country-code="CH" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="Switzerland" data-selected-text="Switzerland" data-subdomain="ch" href="//ch.mathworks.com" id="swiss_english">English</a></li>
+												<li><a class="domain_selector_link" data-country-code="CH" data-do-not-rewrite="true" data-lang="fr" data-recommended-text="Suisse" data-selected-text="Suisse" data-subdomain="ch" href="//ch.mathworks.com">Français</a></li>
+											</ul>
+										</li>
+										<li><a class="domain_selector_link" data-country-code="GB" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="United Kingdom" data-selected-text="United Kingdom" data-subdomain="uk" href="//uk.mathworks.com">United Kingdom</a> (English)</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-sm-4 col-lg-3">
+							<p class="h3 add_bottom_rule">Asia Pacific</p>
+							<ul class="list-unstyled">
+								<li><a class="domain_selector_link" data-country-code="AU" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="Australia" data-selected-text="Australia" data-subdomain="au" href="//au.mathworks.com">Australia</a> (English)</li>
+								<li><a class="domain_selector_link" data-country-code="IN" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="India" data-selected-text="India" data-subdomain="in" href="//in.mathworks.com">India</a> (English)</li>
+								<li><a class="domain_selector_link" data-country-code="NZ" data-do-not-rewrite="true" data-lang="en" data-subdomain="au" href="//au.mathworks.com">New Zealand</a> (English)</li>
+								<li>中国
+									<ul class="list-unstyled add_indent_20">
+										<li><a class="domain_selector_link" data-country-code="CN" data-default-lang="true" data-do-not-rewrite="true" data-lang="zh" data-recommended-text="中国" data-selected-text="中国" data-subdomain="ww2" href="//ww2.mathworks.cn">简体中文</a></li>
+										<li><a class="domain_selector_link" data-country-code="CN" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="China" data-selected-text="China" data-subdomain="ww2" href="//ww2.mathworks.cn">English</a></li>
+									</ul>
+								</li>
+								<li><a class="domain_selector_link" data-country-code="JP" data-default-lang="true" data-do-not-rewrite="true" data-lang="ja" data-recommended-text="日本" data-selected-text="日本" data-subdomain="jp" href="//jp.mathworks.com">日本</a> (日本語)</li>
+								<li><a class="domain_selector_link" data-country-code="KR" data-default-lang="true" data-do-not-rewrite="true" data-lang="ko" data-recommended-text="한국" data-selected-text="한국" data-subdomain="kr" href="//kr.mathworks.com">한국</a> (한국어)</li>
+							</ul>
+						</div>
+					</div>
+					<p class="text-center"><a class="worldwide_link" data-do-not-rewrite="true" href="#">Contact your local office</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+    
+
+
+
+
+
+
+
+
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/domainselector.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+	
+</main>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
+<footer id="footer">
+	
+		<div class="primary_footer" id="primary_footer">
+			<div class="container-fluid container-lg">
+				<div class="row align-items-start">
+					<div class="col-12 col-md-9">
+						<nav>
+							
+							<div class="footerNavigation footernavigation containsResourceName resourceClass-footernavigation">
+
+
+
+	<ul class="list-inline " id="footernav" data-privacy="Your Privacy Choices">
+		<li class="list-inline-item" id="footernav_footernav_patents">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="/company/trust-center.html?s_tid=gf_tc">
+
+		
+
+		
+			
+			Trust Center</a>
+
+		
+		
+	
+
+		</li>
+	
+		<li class="list-inline-item" id="footernav_footernav_trademarks">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="/company/trust-center/trademarks.html?s_tid=gf_trd">
+
+		
+
+		
+			
+			Trademarks</a>
+
+		
+		
+	
+
+		</li>
+	
+		<li class="list-inline-item" id="footernav_footernav_privacy">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="/company/trust-center/privacy-policy.html?s_tid=gf_priv">
+
+		
+
+		
+			
+			Privacy Policy</a>
+
+		
+		
+	
+
+		</li>
+	
+		<li class="list-inline-item" id="footernav_footernav_piracy">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="/company/trust-center/piracy.html?s_tid=gf_pir">
+
+		
+
+		
+			
+			Preventing Piracy</a>
+
+		
+		
+	
+
+		</li>
+	
+		<li class="list-inline-item" id="footernav_footernav_status">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="https://status.mathworks.com/?s_tid=gf_application">
+
+		
+
+		
+			
+			Application Status</a>
+
+		
+		
+	
+
+		</li>
+	
+		<li class="list-inline-item" id="footernav_footernav_contactus">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="/company/aboutus/contact_us.html?s_tid=gf_contact">
+
+		
+
+		
+			
+			Contact Us</a>
+
+		
+		
+	
+
+		</li>
+	</ul>
+
+
+
+
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/footernavigation.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+</div>
+
+						</nav>
+						<p class="copyright">© 1994-2026 The MathWorks, Inc.</p>
+					</div>
+					<div class="col-12 col-md-3">
+						<div id="countrynav" class="d-flex justify-content-end">
+							<button class="btn btn-outline btn_countrynav companion_btn add_margin_20" id="domainButton" data-toggle="modal" data-bs-toggle="modal" data-target="#country-unselected" data-bs-target="#country-unselected">
+								<span class="visually-hidden sr-only">Select a Web Site</span>
+								<span class="icon-globe"></span>
+								<span id="countrySelectorButtonText">United States</span>
+							</button>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	
+	
+</footer>
+
+
+		</div>
+	</div>
+</div>
+
+		
+		
+		
+
+		
+			
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/button.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/downsize.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/upsize.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/tags.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/bs5-footer.min.20260513204911014.css" type="text/css"/>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/substitutepricing.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/tags.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+
+			
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/domainredirect.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+
+			
+    
+
+
+
+
+			
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/bootstrap5.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+			
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/signinanalytics.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/spotlight.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/bs5.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+			
+			
+				
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/corporatenav.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+				<div class="modal-backdrop fade show" id="corporate_nav_modal"></div>
+			
+			
+
+			
+			<a aria-hidden="true" aria-label="Back to top" class="btn btn_color_mediumgray" href="#" id="go-top" tabindex="0"><span class="icon-arrow-open-up icon_24"></span></a>
+			<div id="web-application-footer-assets"></div>
+
+			
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/matrixmenu.min.20260513204911014.css" type="text/css"/>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/matrixmenu.min.20260513204911014.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+
+
+
+
+			
+
+		
+
+	
+
+
+
+
+<script src="/help/releases/R2026a/includes/shared/scripts/saxonjs/SaxonJS2.rt.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/product_group.js" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script>
+<script nonce="B/0U4bcxtNhMGhCssh9pRO/G">
+        window.history.replaceState(window.location.href, null, ""); // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+        mystylesheetLocation = "/help/releases/R2026a/includes/shared/scripts/product_group-sef.json";
+        mysourceLocation = "/help/releases/R2026a/docset.xml";
+        product_help_location = "lte";
+        pagetype = "module";
+        doccentertype = "web";
+        langcode = "";
+        getProductFilteredList(mystylesheetLocation, mysourceLocation, product_help_location, pagetype, doccentertype, langcode);
+        });
+      </script>
+<script src="/help/includes/web/scripts/livecontrolpopoverhandler.js?202409" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script><script src="/help/includes/web/scripts/livetaskpopoverhandler.js?202409" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script><script src="https://matlab.mathworks.com/open/openwith.js?202403" nonce="B/0U4bcxtNhMGhCssh9pRO/G"></script><style>.examples_short_list a.btn {display: none;}</style><script type="text/javascript" nonce="bd90a1cea774191249732d1db7c2fc67" src="/k3q6RAQUqhN4/ioxP9U0OEy/uY/OJapmGp6JVcrrkOEib/Q3xo/Smt3/bmpeYgkB"></script></body></html>

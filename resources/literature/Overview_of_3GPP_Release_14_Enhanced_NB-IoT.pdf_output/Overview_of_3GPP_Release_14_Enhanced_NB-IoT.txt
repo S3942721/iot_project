@@ -1,0 +1,1073 @@
+===== Overview_of_3GPP_Release_14_Enhanced_NB-IoT-1..txt =====
+MASSIVE MACHINE TYPE COMMUNICATIONS
+
+Overview of 3GPP Release 14 Enhanced NB-loT
+
+Andreas Hoglund, Xinggin Lin, Olof Liberg, Ali Behravan, Emre A. Yavuz, Martin Van Der Zee, Yutao Sui, Tuomas Tirronen, Antti Ratilainen, and David Eriksson
+
+The authors are with Ericsson
+AB, Oy LM Ericsson AB.
+
+1 BL stands for bandwidth-re-
+
+duced low-complexity, and
+CE stands for coverage
+enhancement.
+
+Digital Object Identifier:
+10.1109/MNET.2017.1700082
+
+ABSTRACT
+
+In 3GPP LTE Release 13, Narrowband Internet
+of Things (NBoT) was standardized for providing,
+wide-area connectivity for massive machine-type
+communications for loT. In LTE Release 14, NB-loT
+was further developed to deliver enhanced user
+experience in selected areas through the addition
+of features such as increased positioning accuracy,
+increased peak data rates, the introduction of a
+lower device power class, improved non-anchor
+carrier operation, multicast, and authorization of
+coverage enhancements. In this article, we pro-
+vide an overview of these features introduced for
+NB-loT in LTE Release 14. An analysis is given on
+the applicability of these features and their benefits
+to enhance the NB-loT radio access technology.
+
+INTRODUCTION
+
+The networked society is at our hands, and the
+Internet of Things (loT) is the ongoing paradigm
+shift within communications. In the networked
+society, everything that benefits from a connec-
+tion can be and will be connected. The major
+change lies in that not only people will be con-
+nected, but also devices. The connectivity for
+these devices is referred to as machine-type com-
+munication (MTC) [1]. Unlike human generated
+communication (e.g., surfing or streaming using
+smartphones or tablets), the key requirement for
+MTC is the importance of enabling economical
+wireless connectivity for massive numbers of
+devices. Examples of different loT applications
+are given in Fig. 1. Not only must the cost of the
+devices be low, the network capacity be sufficient,
+and the device battery life be long enough to
+make charging or battery replacement obsolete,
+but coverage should also be improved to reach
+devices in challenging locations [1].
+
+To provide affordable solutions for massive
+numbers of MTC devices, the Third Generation
+Partnership Project (3GPP) dedicated an immense
+effort during LTE Release 13 to develop two new
+cellular technologies: LTE-MTC (LTE-M), where a
+new user equipment (UE) category, Cat. M1, was
+introduced, and Narrowband loT (NB-loT) where
+UE category Cat. NB1 was introduced. A Cat. M1
+UE, a.k.a. an LTE BL/CE UE,' operates in 1.4 MHz
+bandwidth, and supports a data rate up to 1 Mb/s
+in both downlink and uplink. It also has support
+for mobility, that is, handover to neighboring cells,
+and voice over LTE (VoLTE) service. Therefore,
+Cat. M1 UEs are suitable for loT applications such
+as wearables and asset tracking. A Cat. NB1 UE
+operates only in 200 kHz bandwidth. These are
+loT devices with ultra-low complexity that can be
+used for services that have no strict requirements
+
+for data rate, latency, or mobility, but require mas-
+sive deployment of low-cost devices (e.g., meters
+and sensors).
+
+In Fig. 1, we illustrate different loT use cases
+that are suitable for the use of LTE-M and/or
+NB-loT. It is worth mentioning that in LTE Release
+14 [2], a new category of LTE-M UEs, Cat. M2,
+was introduced that can provide data rates up to
+4 Mb/s in downlink and 7 Mb/s in uplink. Cat.
+M2 UEs are desired for loT applications that need
+higher data rate (e.g., video surveillance), but
+require a lower device cost compared to regular
+LTE UEs.
+
+MTC is an important component of next (fifth)
+generation mobile telecommunications (a.k.a.
+5G). Both 3GPP and the International Telecom-
+munication Union (ITU) have defined 5G require-
+ments for massive MTC (mMTC). The requirement
+for mMTC connection density is the same in both
+cases (i.e., 1,000,000 devices) fulfilling certain
+quality of service, and should be supported per
+square kilometer. In addition, 3GPP defines 5G
+requirements for battery life, latency, and bit rate.
+Both LTE-M and NB-loT are candidates for fulfilling
+these requirements and thus to be considered as
+5G technologies [3, 4].
+
+In this article, we provide an overview of the
+enhancements made for NB-loT in LTE Release 14.
+Some of these enhancements may help NB-loT
+toward fulfilling the 5G requirements. These features
+are introduced, described, and analyzed. Before
+that, the background of Release 13 NB-IcT is given.
+Finally, we provide discussion and conclusions on
+the relevance of this in a wider context, related to
+both the applicability and the relevance for 5G.
+
+GPP LTE NB-IoT RELEASE 13 BACKGROUND
+
+To provide massive MTC connectivity, togeth-
+er with LTE-M, NB-loT was standardized in LTE
+Release 13. NB-loT is a cellular radio access
+technology that provides low-power wide-area
+(LPWA) loT connectivity in licensed spectrum,
+unlike short-range technologies in unlicensed
+spectrum, including Bluetooth, ZigBee, and so
+on, and unlike LPWA technologies including Sig-
+Fox, LoRaWAN, and so on. The 3GPP design tar-
+gets for Release 13 were those typical for MTC:
+long device battery life, low device complexity to
+ensure low cost, support for massive numbers of
+devices, and coverage enhancements to be able
+to reach devices in basements and other challeng-
+ing locations.
+
+It is possible to deploy NB-oT in a narrow sys-
+tem bandwidth (i.e., 200 kHz). The technology
+also provides enhanced coverage, up to 164 dB
+maximum coupling loss (MCL), is energy-efficient
+to provide long battery life, and is of low com-
+
+0890-8044/17/$25.00 © 2017 IEEE
+
+EEE Network - November/December 2017
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:29:20 UTC from IEEE Xplore. Restrictions apply.
+
+&
+
+===== Overview_of_3GPP_Release_14_Enhanced_NB-IoT-2..txt =====
+plexity to enable low-cost devices [5]. NB-loT has
+three deployment options and can be deployed
+either inside an LTE carrier (in-band), in the guard
+band of it (guard band), or in its own designated
+spectrum (standalone).
+
+Coverage enhancement is one of the attrac
+tive features offered by NB-loT. NB-loT can offer
+up to 20 dB? enhanced coverage in all operation
+modes compared to the general packet radio
+services (GPRS) system. This coverage enhance-
+ment is mostly achieved through repetitions in
+time, together with power boosting in in-band and
+guard band operation modes.
+
+NB-loT reuses the LTE design to a large extent,
+including numerologies, channel modulation and
+coding schemes, and higher layer protocols. In the
+downlink, orthogonal frequency-division multiple
+access (OFDMA) is used, while the uplink uses
+single-carrier frequency-division multiple access
+(SC-FDMA) [6]. This ensures fast development
+and deployment of NB-loT products for existing
+LTE equipment and software vendors.
+
+The major difference between NB-loT and
+legacy LTE resides in the uplink design, where a
+subcarrier spacing of 3.75 kHz is introduced in
+NB-IoT in addition to the 15 kHz used in legacy
+LTE systems [6]. In NB-loT, resource allocations
+using less than twelve 15-kHz-subcarriers in the
+uplink are also introduced. For the narrowband
+physical random access channel (NPRACH), only
+3.75 kHz subcarrier spacing is supported. For
+the narrowband physical uplink shared channel
+(NPUSCH), both 3.75 kHz and 15 kHz subcarrier
+spacing are supported by single-tone transmission,
+whereas only 15 kHz subcarrier spacing is sup-
+ported for multi-tone transmission. Studies have
+shown that the introduction of 3.75 kHz subcar-
+rier spacing can have some negative impact on
+coexistence with the 15 kHz subcarrier spacing,
+but the impact can be partly compensated by
+optimizing the scheduling algorithms [7].
+
+To reduce the device cost, NB-loT only requires
+a system bandwidth of 200 kHz for both uplink
+and downlink. Only half-duplex (HD) frequen-
+cy-division duplex (FDD) is supported, and only
+one receiving antenna in the device. In addition,
+many functions have been simplified to further
+reduce the device costs. In the downlink, only
+quadrature phase shift keying (QPSK) and convo-
+lutional code are used, which is less demanding,
+for the UEs compared to the use of turbo code
+in LTE. In the uplink, to reduce peak-to-average
+power ratio (PAPR), single-tone transmissions with
+x/2-binary phase shift keying (BPSK) and n/4-
+QPSK are adopted [6]. Considering the device
+complexity, an NB-loT device is not required to
+decode the narrowband physical downlink con-
+trol channel (NPDCCH) and narrowband physical
+downlink shared channel (NPDSCH) in 1 ms, in
+contrast to the legacy LTE system. Instead, for-
+ward scheduling is introduced; that is, NPDCCH
+and NPDSCH are transmitted subsequently with
+at least 4 ms delay in between to guarantee suf-
+ficient NPDCCH decoding time at the UE. Only
+one single adaptive asynchronous hybrid automat-
+ic repeat request (HARQ) process is supported
+for both uplink and downlink. The maximum sup-
+ported transport block sizes (TBSs) are reduced
+to 680 bits for downlink and 1000 bits for uplink,
+respectively [5].
+
+Voice services,
+
+Wearables, e-health
+
+Smart grid
+as] management
+
+i Environment monitoring
+
+Smart city, guy,
+
+smart home @
+
+video surveillance
+
+Vehicle/asset tracking
+
+&¢S cE ast
+
+Smart metering,
+hap) | smartbuilding” = ARQ
+7 | home automation
+Cs}
+
+~1000
+
+~100
+
+{5/q)] suone>idde 10] snouen soy aes eyep payewins3
+
+FIGURE 1. Examples of different loT use cases.
+
+To further reduce the system information (SI)
+acquisition time and reduce the latency of setting
+up a connection, several optimizations have been
+introduced in NB-loT. Instead of using the system
+information blocks, the SI value tag and a new
+access barring indication are broadcasted in the
+narrowband master information block in NB-loT.
+This reduces the efforts for the UE, especially in
+extended coverage, to verify the SI before access
+ing the network. Furthermore, new higher-layer
+optimizations such as data over non-access stra-
+tum and radio resource control (RRC) connec
+tion resume procedures are introduced to further
+reduce signaling when accessing the network.
+These new optimizations significantly reduce the
+signaling overhead when transmitting small data
+packets.
+
+Release 13 NB-oT supports functions to
+improve battery life, such as extended discontinu-
+ous reception (eDRX), power saving mode (PSM),
+as well as functions to improve capacity (e.g.,
+multi-carrier operations). Detailed descriptions of
+the NB-loT Release 13 functionalities and deploy-
+ment guides are given in [5, 8].
+
+GPP LTE NB-IoT RELEASE 14 FEATURES
+
+To further improve the user experience as well as
+cater to more use cases, several enhancements
+and new functionalities are introduced for NB-loT
+in 3GPP LTE Release 14 NB-loT [9]. The new fea-
+tures include positioning, multicast, and a new UE
+output power class, whereas the system and UE
+throughput, non-anchor carrier operation, mobil-
+ity, and service continuity are further enhanced.
+In this section, we discuss these new or enhanced
+features in detail to see how they help NB-loT
+provide better mMTC service, and pave the road
+for NB-loT to fulfill the 5G MTC requirements.
+Furthermore, currently the work for LTE Release
+15 NB-loT is ongoing, and new features are intro-
+duced to further improve the NB-loT battery life
+and latency and improve performance in more
+use cases [10].
+
+POSITIONING
+Many loT use cases will require or benefit from
+location information, making positioning a vital
+dimension of the lo. Example use cases include
+wearables, smart bicycles, asset tracking, and
+environment monitoring. Release 13 NB-loT only
+
+2 The 20 dB coverage
+enhancement was defined
+with respect to the weakest
+channel in GPRS, that is, the
+uplink packet data trafic
+channel (PDTCH) coding
+scheme 1 (CS-1). Interested
+readers can find the detailed
+studies and simulation results
+in [14].
+
+IEEE Network - November/December 2017
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:29:20 UTC from IEEE Xplore. Restrictions apply.
+
+&
+
+===== Overview_of_3GPP_Release_14_Enhanced_NB-IoT-3..txt =====
+COF (0t)
+
+100
+
+90
+
+80
+
+70
+
+60
+
+50
+
+40
+
+30
+
+20
+
+100
+
+150200250 «300-350 400450500,
+Horizontal positoning error (m)
+
+FIGURE 2, NB-loT OTDOA positioning accuracy.
+
+supports basic positioning features through cell
+identity (CID), which uses CID information to
+associate the device to the area covered by the
+serving cell. Advanced positioning techniques are
+introduced in Release 14.
+
+The standardization efforts of Release 14 are to:
++ Develop support for the feature of observed
+
+time difference of arrival (OTDOA) for
+
+NB-loT
++ Complete UE measurement requirements for
+
+enhanced CID
+The measurement requirements of enhanced
+CID include evolved Node B (eNB) Rx-Tx time
+difference, and reference signal received power
+(RSRP) as well as reference signal received quality
+(RSRQ).
+
+OTDOA is a downlink-based positioning meth-
+od, where a device measures the times of arriv-
+al (TOAs) of positioning reference signals (PRSs)
+received from multiple transmitting nodes rela-
+tive to a reference node’s PRS transmission to
+form the reference signal time difference (RSTD)
+measurements. Each RSTD measurement can be
+translated into a geographical hyperbola on which
+the positioned UE can be assumed to reside. By
+considering multiple RSTD measurements, the UE
+position can be estimated to be at the crossover
+point of the corresponding hyperbolas.
+
+A new reference signal was designed for
+OTDOA in NB-loT, referred to as the narrow-
+band positioning reference signal (NPRS), which
+has synergies with LTE PRS such as reusing the
+PRS waveform definition and basic configuration
+parameters. Figure 2 presents OTDOA positioning
+performance for a device with high timing accura-
+cy and two types of radio propagation conditions:
+typical urban (TU) and extended pedestrian A
+(EPA). The high delay spread of the TU channel
+makes it difficult to predict the TOA of the line of
+sight channel tap, which leads to degraded per-
+formance compared to the EPA channel, which is
+characterized by a low delay spread.
+
+The detailed description of simulation setup
+and more evaluation results may be found in [11,
+references therein]. These results are generated
+
+based on NPRS, and thus are only applicable to
+NB-loT. A maximum number of 10 cells are used
+in estimating the position, and 100 NPRS trans-
+mission subframes are used to achieve the accu-
+racy. We refer interested readers to [12] for more
+simulation results comparing the OTDOA posi-
+tioning accuracy of LTE, LTE-M, and NB-loT.
+
+For NB-loT, several carriers can be config-
+ured in a cell (i.e., one anchor-carrier plus several
+non-anchor carriers). Hence, the NPRS can be
+configured per NB-loT carrier transmitting NPRS.
+The NPRS mapping to the NB-loT radio resources
+is highly flexible and may be indicated with two
+parts: part A and part B. The network can con-
+figure NPRS using part A alone, part B alone, or
+both. Part A is a subframe bitmap of 10 or 40 bits,
+and Part B is a configuration mechanism similar to
+that of LTE PRS. It specifies the periodicity of posi-
+tioning occasions and the number of consecutive
+NPRS subframes in a positioning occasion. Parts
+A and B may be both configured. In this case,
+a subframe contains NPRS if both parts of the
+configuration indicate that the subframe contains
+PRS.
+
+Multicast
+
+Multicast is group communication, where data is
+addressed to a group of users in a single trans-
+mission. One use case for multicast is firmware
+upgrade to a group of smart meters. Another one
+is to reduce latency when addressing large groups
+of UEs (e.g. turning street lamps on or off). The
+main motivation is efficiency in terms of energy
+and resource utilization due to transmitting the
+data once rather than multiple times separately
+for each device. In LTE Release 14 NB-loT, mul-
+timedia broadcast multicast services (MBMS) is
+supported through single-cell point-to-multipoint
+(SC-PtM). SC-PtM was specified earlier in LTE
+Release 13, and a general description of MBMS
+operation including details on SC-PtM can be
+found in [13, Sec. 15]. The SC-PtM data is car-
+ried on the SC-MTCH logical channel, which is
+mapped to the NPDSCH physical channel similar
+to unicast traffic, and the scheduling of SC-PtM in
+NB+oT follows the same principles. In SC-PtM, the
+same TBS and coverage enhancement configura-
+tions can be used, which leads to similar achiev-
+able downlink data rates as in unicast, depending
+on the network configuration.
+
+In SC-PtM, the single-cell MBMS control
+channel (SC-MCCH) and single-cell MBMS traf-
+fic channel (SC-MTCH) are logical channels that
+carry control and data traffic, respectively. The
+SC-MTCH is the traffic channel that carries the
+multicast data transmissions. Scheduling config-
+uration for SC-MTCH is provided via SC-MCCH
+for NB-loT UEs to locate and receive the ser-
+vice of interest. Each SC-PtM service is mapped
+to one SC-MTCH. A cell may transmit multiple
+SC-MTCHs, but only a single SC-MCCH is trans-
+mitted for informing the UEs about the physical
+layer scheduling configuration. Both logical chan-
+nels are mapped to NPDSCH in the physical layer,
+and scheduled using the downlink control infor-
+mation in NPDCCH, which is transmitted in accor-
+dance with the SC-MCCH information.
+
+Information on SC-MCCH scheduling is broad-
+cast in system information block 20-NB. The
+modification and scheduling periodicities for
+
+&
+
+IEEE Network - November/December 2017
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:29:20 UTC from IEEE Xplore. Restrictions apply.
+
+===== Overview_of_3GPP_Release_14_Enhanced_NB-IoT-4..txt =====
+SC-MCCH are extended compared to LTE due to
+repetitions required to support enhanced cover-
+age. SC-MCCH message segmentation is support-
+ed, and a mechanism similar to SC-MTCH DRX is
+used to reduce UE power consumption.
+
+SC-MCCH carries the SC-MTCH scheduling
+information, and the configuration options are
+similar to the options for SC-MCCH. The rang-
+es for the DRX timers and scheduling periodicity
+have been extended to accommodate different
+coverage scenarios. Considering the downlink
+capacity, in an NB+oT cell, the maximum number
+of different supported SC-MTCHs is 64.
+
+Lowen Power UE
+
+Release 14 for NB-IoT introduces a new low UE
+power class, where the objective is to achieve
+smaller form factor, lower device power consump-
+tion, and even lower device cost compared to
+the 20 dBm devices in NB-loT Release 13. It has
+been concluded that the device maximum output
+power should not exceed 20 dBm to enable a
+system on chip design with an integrated power
+amplifier (PA).
+
+In Release 14, a new UE power class with
+the maximum allowed output power reduced to
+14 dBm was introduced to enable using smaller
+battery form factors for NB-loT devices. The low
+power class implies a significantly reduced drain
+current. As a lower drain current reduces the
+wasteful voltage drop, calculated as the product
+of the drain current and the battery internal resis-
+tance, a low-power UE will make more efficient
+use of the available energy provided by a battery.
+Beyond this effect, it is not expected that low out-
+put power will improve the UE power consump-
+tion characteristics, since the lower output power
+must be compensated by increased transmission
+times to maintain the same energy per bit as a
+Release 13 UE achieves.
+
+To maintain the coverage of a lower-power
+device in a wide area network, the reduced uplink
+power needs to be compensated for by increas-
+ing the uplink transmission time to maintain the
+energy per transmitted bit. This may negatively
+impact the uplink resource utilization and lead to
+increased downlink control signaling. To manage
+this and control the overall system resource utili-
+zation, 3GPP agreed that the MCL for low-pow-
+er devices should be relaxed compared to the
+Release 13 specification. Here we consider a cov-
+erage relaxation of 9 dB, which can be associated
+with the difference in output power between 23
+and 14 dBm power classes. This means that devic
+es experiencing a coupling loss above 164 - (23
+-14) = 155 dB to the serving cell are not consid-
+ered to fulfill the cell suitability criterion and are
+not allowed to access the system. Figure 3 shows
+average UL resource utilization for two networks
+based on 14 dBm devices and 23 dBm devices.
+The figure shows that the increased resource uti-
+lization observed for the 14 dBm case can be
+controlled by enforcing the mentioned MCL lim-
+itation.
+
+The downlink resource utilization may also
+be impacted if the eNB does not possess accu-
+rate knowledge of the used device output power.
+This is a consequence of the eNB estimating the
+coupling loss to a connected device based on
+the received uplink power. The introduction of
+
+100
+—14 dBm, 164 dB MCL
+14 dBm, 155 dB MCL|
+90 f] ~---25dBm, 164 dB MCL.
+80
+
+50
+
+40
+
+30
+
+Average resource ut
+
+20
+
+0 2 4 6 8 10 2 4
+Access arrival intensity (accesses/s)
+
+FIGURE 3, Average uplink resource utilization as a function of the user access
+arrival intensity.
+
+a 14 dBm power class in addition to the existing
+Release 13 power classes introduces an ambigu-
+ity that called for early indication of the device
+power class. The NB-loT connection setup pro-
+cedure was therefore improved in Release 14 to
+allow the serving eNB to acquire the device capa-
+bilities, including the power class, during the early
+phases of the connection setup.
+
+MutTI-CARRIER ENHANCEMENTS
+
+The NB-loI Release 13 design target for capacity
+largely had the 6 x 104 devices/km? of the pre-
+ceding study [14] in mind, whereas from Release
+14 the ITU 5G requirement [4] of 6 x 10° devic
+es/km? is of main interest. The NB-loT system can
+be contained in a carrier of 200 kHz bandwidth,
+and to increase capacity, multiple carriers can be
+deployed (i.e., multiple cells or systems). How-
+ever, in this narrow bandwidth the continuous
+broadcast of system information and synchroni-
+zation signals will take a quite large part of the
+downlink resources, above 50 percent for some
+configurations. Therefore, multi-carrier operation
+was already introduced in Release 13 in which
+there is one anchor carrier carrying this always-
+on broadcast signaling and possible non-anchor
+carriers for offloading of data traffic and increased
+capacity.
+
+In Release 13, the non-anchor carriers are
+restricted to offload devices in active state (RRC
+connected). That is, all devices will perform RRC
+idle mode operations, such as monitoring of pag-
+ing and random access, on the anchor carrier, but
+the eNB can, after the RRC connection setup or
+RRC connection, resume messaging to direct a
+device to a non-anchor carrier for the duration of
+its connected session.
+
+The obvious drawback is that paging and ran-
+dom access are likely to become capacity bot-
+tlenecks. Therefore, a natural enhancement of
+multi-carrier operation in Release 14 was for
+devices to be able to both monitor paging and
+perform random access on non-anchor carriers.
+Devices will still “camp” on the anchor carrier in
+
+IEEE Network - November/December 2017
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:29:20 UTC from IEEE Xplore. Restrictions apply.
+
+&
+
+===== Overview_of_3GPP_Release_14_Enhanced_NB-IoT-5..txt =====
+In conditions where repetition:
+
+is limited; instead, itis th
+
+ictual transmission times that limit the ac
+
+re used, the impact on throughput from the NPDCCH scheduling gaps
+ble data rates, This also
+
+implies that the two HARQ processes feature is mostly useful in good radio conditions,
+
+Carrier Stand-alone/ In-band
+Guard-band overhead —_ overhead
+Rel-13 Anchor 40% 59 percent
+Rel-14 Anchor 44% 62 percent
+Rel-13 Non-anchor 109 38 percent
+Rel-14 Non-anchor 10% 38 percent
+TABLE 1. Multi-carrier system overhead.
+NPDSCH — NPUSCH
+Category NB 2 79 kb/s 106 kb/s
+Se for2 iar kb/s 158.5 kb/s
+
+TABLE, NB-IoT release 14 peak data rates.
+
+the sense that mobility measurements and syn-
+chronization are always carried out on the anchor
+carrier. On non-anchor carriers, the only signals
+broadcasted are the narrowband reference signals
+(NRSs), but only when needed for either paging
+or random access, or when there is a device in
+RRC connected state.
+
+For the random access procedure, up to three
+NPRACH resources with a one-to-one mapping
+to the three possible coverage enhancement lev-
+els can be configured for a non-anchor carrier. A
+device will randomly select an NPRACH resource
+among all carriers which have NPRACH config-
+ured for its coverage enhancement level. Since
+all Release 13 devices will choose an NPRACH
+resource on the anchor carrier, a biased NPRACH
+selection is introduced for Release 14 devices
+such that a selection weight is used to be able to
+achieve, say, an uneven load distribution in sys-
+tems containing both Release 13 and 14 devices.
+Up to a total of 16 carriers can be configured for
+random access.
+
+For the monitoring of paging, the paging occa-
+sions, and hence the paging load, will be spread
+over the anchor carrier and the non-anchor car-
+riers configured with paging. Since there can be
+significant differences between downlink carriers
+due to differences in deployment modes, load
+from broadcast, and Release 13 devices, and
+especially power boosting, uneven paging load
+distribution can be achieved by configuring a
+weight per paging carrier. Up to a total of 16 car-
+riers can be configured for paging.
+
+An analysis of the downlink overhead contrib-
+uted by reference signals, broadcast channels,
+system information, and the new system informa-
+tion block carrying the non-anchor configurations
+is provided in Table 1 for all types of carriers. It
+is seen that the non-anchor gain is an overhead
+reduction of at least 30 percent-units for stand-
+alone or guard band carriers and 21 percent-units
+
+for in-band carriers. This means that for the stand-
+alone case, the same downlink capacity increase
+as achieved by deploying three additional anchor
+carriers could in fact be achieved by only two
+additional non-anchor carriers. For Release 14,
+this capacity increase also applies to NPRACH
+and paging.
+
+INCREASED DATA RATE
+
+NB-IoT is intended for the ultra-low complexity
+loT market segment. A key component to secure
+low-complexity device design is to limit the
+requirements on device buffer memory and com-
+putational processing power. These limitations
+result in a downlink peak data rate of ~25 kb/s
+and the supported uplink peak data rate of ~65
+kb/s in NB-loT Release 13.
+
+To support more diverse traffic scenari-
+os, Release 14 introduces a new NB-loT device
+category, Cat. NB 2, supporting 2536 bits TBS
+in both the uplink and the downlink. Besides
+increasing the maximum TBS, the optional sup-
+port for a second HARQ process was also spec
+ified. This further increased the peak data rates.
+Table 2 summarizes the achievable physical layer
+peak data rates for the new device category tak-
+ing device processing and NPDCCH scheduling
+delays into account.
+
+As the larger TBSs are introduced at the
+expense of an increased code rate, which reduces
+the robustness of the radio link, it is expected that
+the higher data rate is mainly intended for devic-
+es experiencing favorable radio conditions. The
+throughput gains achieved by a second HARQ
+process is mainly due to reducing the overhead
+from NPDCCH scheduling gaps, which limits the
+achievable throughput in good radio conditions.
+In conditions where repetitions are used, the
+impact on throughput from the NPDCCH sched-
+uling gaps is limited; instead, it is the actual trans-
+mission times that limit the achievable data rates.
+This also implies that the two HARQ processes
+feature is mostly useful in good radio conditions.
+
+Connected Mope MOBILITY ENHANCEMENT
+
+NBHoT supports stationary and low-mobility UEs.
+Handover is not supported in NB-loT, and when
+the UE moves out of the coverage area of the
+serving cell, the UE will experience radio link fail-
+ure (RLF). A UE that supports NB-loT supports
+data transfer via the control plane. Optionally,
+the UE can also support data transfer via the user
+plane. When the UE supports data transfer via the
+user plane, the RRC connection re-establishment
+procedure is supported, which means that after
+RLF is detected, the UE tries to find a suitable cell
+through cell selection.
+
+If the UE finds a suitable cell, the UE will try
+to re-establish the connection on that cell and
+resume data transfer. The RRC re-establishment
+intends to hide the temporary loss of the radio
+interface to the upper layers. RRC re-establish-
+ment for a UE only supporting data transfer via
+the control plane was added in Release 14 [15].
+
+RELEASE ASSISTANCE INDICATION
+
+NB-loT is designed to support UEs that have
+occasional small amounts of data to transmit or
+receive, according to the traffic model defined in
+[14, Annex E]. Even though the UE spends most
+
+0
+
+&
+
+EEE Network - November/December 2017
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:29:20 UTC from IEEE Xplore. Restrictions apply.
+
+===== Overview_of_3GPP_Release_14_Enhanced_NB-IoT-6..txt =====
+of its time in idle mode in an (extended) DRX to
+save power, when the UE has data to send and/
+or receive, it is important that these data trans-
+missions are completed as soon as possible and
+with the least amount of signaling overhead. After
+data transmissions have been completed, the
+eNB releases the connection, and the UE returns
+to idle mode to save power. The eNB typically
+releases the connection using a data inactivity
+timer; that is, the connection is released when
+no more data is sent or received after some time.
+Compared to the data transmission times, this is
+a relatively long inactivity time during which the
+UE is waiting to be released, especially in normal
+coverage. In NB-loT the traffic use cases can be
+rather predictable, and the UE may have good
+knowledge when it has finished transmitting and/
+or receiving data. The release assistance indica-
+tion procedure allows the UE to send an indica-
+tion to the eNB when it does not have more data
+to send or receive. The eNB can use this indica-
+tion to release the UE more quickly to idle mode.
+
+RESTRICTION ON THE USE OF COVERAGE ENHANCEMENTS
+
+To obtain enhanced coverage up to 164 dB
+MCL, a significant amount of network resources
+is required (e.g., repetitions). With authorization
+of the coverage enhancements feature, the net-
+work can restrict the use of coverage enhance-
+ments to a UE based on subscription information.
+In Release 14, an NB-loT UE is required to sup-
+port this feature. In idle mode, the authorization
+is enforced by the UE and in connected mode
+by the eNB. The UE receives authorization infor-
+mation during attachment and tracking area
+update (TAU) from the network. When the UE
+is not authorized to use coverage enhancement,
+the UE shall apply an offset to the measured sig-
+nal strength of the selected cell in NB-loT, and
+the UE shall not use the cell selection criterion
+for enhanced coverage in MTC. When the signal
+strength drops below the minimum threshold (.e.,
+the cell is not suitable for the UE to camp on in
+idle mode), the UE is required to try to find anoth-
+er suitable cell.
+
+CONCLUSIONS
+
+Both new features and enhanced functionalities
+are introduced in NB-loT 3GPP LTE Release 14.
+The new features broaden the use cases that can
+be offered by NB-loT, whereas the enhanced func
+tionalities increase the system capacity flexibly, as
+well as improve the energy efficiency.
+
+NB-loT systems especially focus on the low-
+cost device with delay-tolerant services. From the
+discussion, we can see that NB-loT in Release 14
+is another significant step that paves the road for
+the NB-loT technology to fulfill the massive MTC
+requirements in 5G. Not only can more diversified
+services be supported by NB-loT; it also enables
+the possibility to further reduce the cost of the
+devices. Furthermore, due to the flexibility of sup-
+porting several operation modes, the NB-loT sys-
+tem is foreseeable to be future-proof in operating
+and coexisting with the next generation (i.e., 5G)
+new radio technologies.
+
+REFERENCES
+[1] 3GPP TS 22.368, “Service Requirements for Machine-Type
+Communications (MTC),” v. 13.1.0, Dec. 2014; http://
+www.3gpp.org, accessed Apr. 30, 2017,
+
+Not only can more diversified services be supported by NB-loT; it also enables the possibility to further
+
+reduce the cost of devices. Furthermore, due to the flexibility of supporting several operation modes,
+
+the NB-loT system is foreseen to be future-proof in operating anc
+(ie., 56) new radio technologies.
+
+[2] 3GPP RP-161464, “Revised WID for Further Enhanced MTC
+for LTE,” Sept. 2016; http://www.3gpp.org, accessed Apr.
+30, 2017.
+
+[3] 3GPP TR 38.913, “Study on Scenarios and Requirements
+for Next Generation Access Technologies,” v. 14.2.0, Mar.
+2017, [available: http://www.3gpp.org, accessed Apr. 30,
+2017.
+
+[4] ITU Doc. 5D/TEMP/300€, “Minimum Requirements Related
+to Technical Performance for IMT-2020 Radio Interface(s),”
+Feb. 2017; http://www.itu.int/pub/R-REP-M.21 34-2008,
+accessed Apr. 30, 2017.
+
+[5] Y-P. E. Wang et al, “A Primer on 3GPP Narrowband Internet
+of Things (NB-IoT),” IEEE Commun. Mag, vol. 55, no. 3, Mar.
+2017.
+
+[6] 3GPP TS 36.211, “Evolved Universal Terrestrial Radio Access
+(E-UTRA); Physical Channels and Modulation,” v. 14.3.0,
+June 2017; http://Awww.3gpp.org, accessed Aug. 30, 2017.
+
+[7] 3GPP R1-160776, “Discussion on Multiplex of Uplink Sig-
+nal with Different Subcarrier Spacing,” MediaTek Inc, Feb.
+2016; http://www.3gpp.org, accessed July 5, 2017.
+
+[8] GSMA, “NB-loT Deployment Guide to Basic Feature set
+Requirements,” v. 1.0, Aug. 2017; https://www.gsma.com/,
+accessed Aug. 31, 2017.
+
+[9] 3GPP RP-161901, “Revised Work Item Proposal: Enhance-
+ments of NB-loT,” Sept. 2016; http://www.3gpp.org,
+accessed Apr. 30, 2017.
+
+[10] 3GPP RP-171428, “Revised WID on Further NB-loT
+Enhancements,” June 2017; http://www.3gpp.org, accessed
+Aug. 31, 2017.
+
+[11] 3GPP R1-1611118, “OTDOA Performance for NB-IoT,”
+Ericsson, Nov. 2016; http://www.3gpp.org, accessed Apr.
+30, 2017.
+
+[121 X. Lin et al, “Positioning for the Internet of Things: A 3GPP
+Perspective,” IEEE Commun. Mag, vol. 55, no. 4, Apr. 2017.
+
+[13] 3GPP TS 36.300, “Evolved Universal Terrestrial Radio
+‘Access (E-UTRA) and Evolved Universal Terrestrial Radio
+Access Network (E-UTRAN); Overall Description; Stage 2,”
+v. 14.3.0, June 2017; http://www.3gpp.org, accessed Aug.
+31, 2017.
+
+[14] 3GPP TR 45.820, “Cellular System Support for Ultra-Low
+Complexity and Low Throughput Internet of Things (CloT),”
+v. 13.1.0, Nov. 2015; http://www.3gpp.org, accessed Apr.
+30, 2017.
+
+[15] 3GPP_R2-1706165, “Introduction of RRC Connection
+Re-Establishment for NB-loT Control Plane,” Qualcomm
+Inc., Huawei, HiSilicon, Gemalto N.V., May 2017; http://
+www.3gpp.org, accessed July 5, 2017.
+
+BIOGRAPHIES
+
+ANDREAS HOGLUND (andreas hoglund@ericsson.com) has a Mas
+ter of Science in engineering physics (2002) and a Ph.D. in con-
+densed matter physics (2007) from Uppsala University, Sweden.
+He is currently a senior researcher at Ericsson Research and, since
+he joined in 2008, has worked on HSPA, LTE, system simulations,
+5G research in the METIS project, 3GPP standardization, and
+more. He has worked on the standardization of LTE MTC (Cat
+M1) and NB4oT from the start in Release 13 and is currently the
+team leader for the team within Ericsson Research handling the
+evolution and research of the higherdayer aspects thereof,
+
+XINGQIN LIN (xingqin.lin@eriesson.com) received his Ph.D.
+degree in electrical and computer engineering from the Uni-
+versity of Texas at Austin (UT Austin) in 2014. He is currently a
+research engineer at Ericsson Research Silicon Valley. He held
+summer internships at Qualcomm CR&D, Nokia Networks,
+and Alcatel-Lucent Bell Labs. He received the MCD Fellowship
+from UT Austin and was recognized by Ericsson for outstanding
+Contributions to NBoT research and standards. He serves as an
+Editor of IEEE Communications Letters.
+
+OLOF LiBeRG (olof.liberg@ericsson.com) is a master researcher
+at Ericsson. After studies at Uppsala University, he received a
+Bachelor's degree in business and economics and a Master's
+degree in engineering physics. He joined Ericsson in 2008 and
+has specialized in the design of cellular systems for machine
+type communications and the Internet of Things. He has, over
+the years, actively contributed to work in several standardization
+bodies such as 3GPP, ETSI, and the MulteFire Alliance.
+
+existing with the next generation
+
+IEEE Network - November/December 2017
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:29:20 UTC from IEEE Xplore. Restrictions apply.
+
+&
+
+===== Overview_of_3GPP_Release_14_Enhanced_NB-IoT-7..txt =====
+AU BEHRAVAN (ali.behravan@ericsson.com) received his Ph.D. in
+electrical engineering from Chalmers University of Technology
+in 2006. He has been with Ericsson Research in Stockholm since
+2007, where he is currently working on standardization of 5G.
+His research interests include physical layer design of mobile
+broadband communications, machine-to-machine communica
+tions, and ultra-reliable and low-latency communications. He
+received his B.Sc. and M.Sc. degrees, both in electrical engi-
+neering, from Ferdowsi University of Mashad, Iran, in 1994 and
+1997.
+
+EMRE A. YAVUZ (emre.yavuz@ericsson.com) received his B.Sc.
+and M.Sc. degrees in electrical and electronics engineering at
+METU in Ankara, Turkey, in 1995 and 1998, respectively. He
+Was a software engineer at Alcatel in Toronto developing safe-
+ty-ctitical realtime microprocessor firmware for embedded com-
+mand, control, and communication applications in automated
+train systems from 1999 to 2001. He received his Ph.D. degree
+in electrical and computer engineering at the University of Brit-
+ish Columbia in Vancouver in 2007. He worked as a technical
+consultant for a network operator in Vancouver from 2007 to
+2009 prior to joining the School of Electrical Engineering at KTH
+in Stockholm as a postdoctoral fellow. He is now a researcher
+at Ericsson in Stockholm working on L2/L3 standardization and
+RAN system design. He is invoived in the standardization of
+machine type communication (MTC/NB-IoT) in new generation
+cellular networks.
+
+MARTIN VAN DER Zee (martin.van.der.zee@ericsson.com) has
+a Master's degree in computer science (1989) and Licentiate
+degree (1991) in telecommunications from the University of
+Twente. Between 1991 and 1995 he was a research assistant at
+the University of Twente, He is currently a researcher at Ericsson
+Technology & Research. Since he joined Ericsson in 1995, he
+has worked on protocol simulations, Bluetooth Link Manager,
+and WCDMA/LTE L2/L3. He has been a Bluetooth standard-
+ization delegate, and has been a 3GPP RAN2 delegate since
+2007. As a RAN2 delegate, he has been working on WCDMA
+and NBHOT (LTE).
+
+YUTAO SUI (yutao.sui@ericsson.com) received his Ph.D. degree
+in communication systems from Chalmers University of Tech-
+nology, Gothenburg, Sweden. His main research interests are in
+design and analysis of physical layer algorithms, multiple access,
+vehicular small cells, and massive machine-type communication.
+He is currently a standardization researcher at Ericsson, Stock
+holm, Sweden, with focus on machine-type communication
+related standardization.
+
+TUOMAS TIRRONEN (tuomas.tirronen@ericsson.com) is a senior
+researcher at Ericsson Research, which he joined in 2012. He
+received his M.Sc. in teletraffic theory in 2006 from Helsinki
+University of Technology and D.Sc. in communications engi-
+neering in 2010 from Aalto University. He is currently working,
+on developing concepts and standards for 4G and 5G wireless
+technologies with focus on machine-type communications and
+the Internet of Things, performance evaluation, and energy
+efficiency. He is also currently a 3GPP RAN2 delegate with
+focus on MTC and NB-loT. He has (co-) authored several con-
+ference and journal papers, and is involved in innovation work
+and patenting.
+
+ANTTI RATILAINEN (antti.ratilainen@ericsson.com) is an experi-
+enced researcher at Ericsson Research, which he joined in 2014.
+He received his Master of Science in communications engineer-
+ing in 2014 from Aalto University, carrying out his Master's the-
+sis work at Ericsson Research studying dual connectivity in LTE
+networks. Currently he is involved in developing and evaluating
+12/13 concepts and contributing to standardization of 4G and
+5G cellular networks with focus on machine-type communica-
+tions.
+
+DAVID ERIKSSON (david.a.eriksson@ericsson.com) has a Master
+of Science in engineering physics (2001) from Umea Universi-
+ty and a Ph.D. in theoretical high energy physics (2009) from
+Uppsala University. He joined Ericsson Research in 2011 and
+is currently a senior researcher. Since he joined he has worked
+on HSPA, LTE, system simulation, performance evaluations, and,
+most recently, system aspects of MTC and NB-IoT.
+
+n
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:
+
+&
+
+IEEE Network - November/December 2017
+
+:20 UTC from IEEE Xplore. Restrictions apply.
+

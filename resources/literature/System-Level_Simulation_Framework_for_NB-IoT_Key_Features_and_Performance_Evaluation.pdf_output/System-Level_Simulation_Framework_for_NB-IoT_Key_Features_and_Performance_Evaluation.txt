@@ -1,0 +1,1660 @@
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-01..txt =====
+IEEE SYSTEMS JOURNAL, VOL. 19, NO. 2, JUNE 2025
+
+377
+
+System-Level Simulation Framework for NB-IoT:
+Key Features and Performance Evaluation
+
+Shutao Zhang, Wenkun Wen, Member, IEEE, Peiran Wu®, Member, IEEE, Hongqing Huang®, Liya Zhu,
+Yijia Guo®, Graduate Student Member, IEEE, Tingting Yang ®, Senior Member, IEEE,
+and Minghua Xia®, Senior Member, IEEE
+
+Abstract—Narrowband Internet of Things (NB-IoTT) is a tech-
+nology specifically designated by the 3 rd Generation Partnership
+Project (3GPP) to meet the explosive demand for massive machine-
+type communications (mMTC), and it is evolving to RedCap.
+Industrial companies have increasingly adopted NB-IoT as the
+solution for mMTC due to its lightweight design and comprehensive
+technical specifications released by 3GPP. This article presents a
+system-level simulation framework for NB-IoT networks to evalu-
+ate their performance. The system-level simulator is structured into
+four parts: Initialization, pregeneration, main simulation loop, and
+postprocessing. In addition, three essential features are investigated
+to enhance coverage, support massive connections, and ensure low
+power consumption. Simulation results demonstrate that the cu-
+mulative distribution function curves of the signal-to-interference-
+and-noise ratio fully comply with industrial standards. Further-
+more, the throughput performance explains how NB-IoT networks
+realize massive connections at the cost of data rate. This work
+highlights its practical utility and paves the way for developing
+NB-IoT networks.
+
+Index Terms—Enhanced discontinuous reception, massive
+connections, narrowband Internet of Things (NB-IoT), system-level
+simulation.
+
+NOMENCLATURE
+Abbreviation Definition
+CDF Cumulative Distribution Function.
+eDRX extended Discontinuous Reception.
+EPC Evolved Packet Core.
+HARQ Hybrid Automatic Repeat reQuest.
+LPWA Low Power Wide Area.
+LTE Long Term Evolution.
+MCL Maximum Coupling Loss.
+
+Received 15 August 2024; revised 20 February 2025; accepted 30 April 2025.
+Date of publication 29 May 2025; date of current version 17 June 2025. This work
+‘was supported in part by the National Natural Science Foundation of China under
+Grant 62171486 and in part by the Guangdong Basic and Applied Basic Research
+Project under Grant 2022A 1515140166. (Corresponding author: Minghua Xia.)
+
+Shutao Zhang, Hongging Huang, Liya Zhu, and  Yijia Guo were
+with the School of Electronics and Information Technology, Sun
+Yat-sen University, Guangzhou 510006, China (e-mail:  zhangsht3@
+mail2.sysu.edu,cn; huanghq29 @ mail2.sysu.edu.cn; zhuly55 @ mail2.sysu.edu.cn;
+guoyj33@mail edu.cn)
+
+Wenkun Wen is with Guangzhou Techphant Company Ltd., Guangzhou
+510310, China (e-mail: wenwenkun@techphant.net)..
+
+Peiran Wu and Minghua Xia are with the School of Electronics and Informa-
+tion Technology, Sun Yat-sen University, Guangzhou 510006, China (e-mail
+wupr3 @ mail.sysu.edu.cn; xiamingh @ mail. sysu.edu.cn).
+
+Tingting Yang is with Peng Cheng Laboratory, Shenzhen, China, and also
+with Navigation College, Dalian Maritime University, Dalian 116026, China
+(e-mail: yangtingting820523@ 163.com).
+
+Digital Object Identifier 10.1109/JSYST.2025.3569189
+
+MME Mobility Management Entity.
+
+mMTC massive Machine-Type Communication.
+NB-IoT NarrowBand Internet of Things.
+
+PGW Public data network GateWay.
+
+RedCap Reduced Capability.
+
+SGW Serving GateWay.
+
+SINR. Signal-to-Interference-and-Noise Ratio.
+TBS Transport Block Size.
+
+I. INTRODUCTION
+
+ITH the rapid development of the Internet of Things
+(loT), many companies and organizations have launched
+their designs of IoT communication systems. For example,
+extended coverage-GSM (EC-GSM), enhanced machine-type
+communications (eMTC), and narrowband Internet of Things
+(NB-IoT) are based on the Long Term Evolution (LTE) cel-
+lular communication system that works in licensed frequency
+bands [1], [2], [3], [4]. At the same time, LoRa and Sigfox are
+two typical IoT techniques that work in unlicensed frequency
+bands [5], [6], [7]. Compared with EC-GSM and eMTC, NB-IoT
+has a new and flexible air interface design with a 3.75 or 15 kHz
+subcarrier in a 180 kHz bandwidth, which is more suitable for
+the massive IoT scenario. Compared with LoRa and Sigfox,
+the precise standard of NB-IoT is nonproprietary, and the cor-
+responding specifications about the physical layer and higher
+layer are publicly available from the 3 rd Generation Partnership
+Project (3GPP). As a result, NB-IoT is the most promising low
+power and wide area (LPWA) technique among the technologies
+mentioned above [8], [9], [10]. Although the fifth generation
+(5G) mobile communications was commercialized at the end
+of 2019, the massive machine-type communication (mMTC)
+standard was finally fulfilled on July 9, 2020. The Interna-
+tional Telecommunication Union Radiocommunication Sector
+(ITU-R) formally approved 5G technology as IMT-2020 5 G
+standard at the working party SD (WPSD) #35 meeting, and thus,
+NB-IoT becomes essential to the mMTC applications. In later
+3GPP Release 17, the NB-IoT is evolving to RedCap to allow a
+transition from massive to broadband IoT connectivity [11].
+Fig. 1(a) and (b) depict the NB-IoT network architecture and
+corresponding functional entities, respectively. It is seen from
+Fig. 1(a) that the NB-IoT network includes the NB-IoT terminal,
+NB-IoT eNodeB, core network, and application platform. For
+low cost and power saving, the hardware resource of the NB-IoT
+terminal is strictly limited. NB-loT eNodeB is a base station
+connecting multiple NB-IoT terminals to the core network. It
+manages radio resources, handles data transmission, and ensures
+
+1937-9234 © 2025 IEEE. All rights reserved, including rights for text and data mining, and training of artificial intelligence and similar technologies.
+Personal use is permitted, but republication/redistribution requires IEEE permission. See https://www.ieee.org/publications/rights/index.html for more information,
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-02..txt =====
+578
+
+Bc
+ep
+
+Application Platform
+
+ai
+a
+
+(b)
+
+Fig. 1. NB-IoT network architecture and functional entities. (a) The architec-
+ture of NB-IoT networks. (b) The entities of NB-loT networks.
+
+seamless connectivity for numerous NB-IoT terminals. Depend-
+ing on the specific requirements of the deployment scenario,
+NB-IoT terminals and NB-IoT eNodeB can be deployed in
+various modes, including stand-alone, guard-band, and in-band.
+
+On the other hand, Fig. 1(b) shows that the NB-IoT core
+network, derived from the evolved packet core (EPC) in the LTE
+system, consists of three functional entities: mobility manage-
+ment entity (MME), serving gateway (SGW), and public data
+network gateway (PGW). Among them, MME is responsible
+for signaling and control tasks, including authentication, bearer
+management, and session control. It ensures that sessions be-
+tween terminals and the core network are properly established
+and maintained. SGW routes and forwards local data packets
+between the eNodeB and PGW. It is the mobility anchor for
+data transmission, ensuring data is forwarded across different
+network segments, particularly during handovers. PGW is re-
+sponsible for external data connections, such as packet filtering
+and IP address allocation. It plays a key role in ensuring that
+data from NB-IoT devices reaches their intended destination.
+The NB-IoT application platform comprises a service capability
+server (SCS) and a third-party application server (TAS). The
+SCS provides services that various applications can use, while
+the TAS hosts the applications that leverage the network’s func-
+tionality. As for the interface of network entities, the Uu interface
+refers to the communication rules between the NB-IoT terminal
+and NB-IoT eNodeB. The S1-MME interface bears signaling
+interaction between NB-IoT eNodeB and MME, while the S1-U
+interface bears data transmission between NB-IoT eNodeB and
+SGW. The S11 interface connects MME and SGW, with the S5
+and/or S8 interface exchanging information between SGW and
+PGW. The SGi interface enables communication from PGW to
+outside servers in application platforms like SCS/TAS to support
+various NB-IoT services.
+
+When deploying an NB-IoT network in practice, the link-level
+and system-level performance evaluation is instrumental and
+crucial. The link-level performance evaluation focuses on the
+physical layer of NB-IoT, i.e., an end-to-end link [12], [13],
+[14]. In the uplink of NB-IoT, the narrowband physical random
+access channel (NPRACH) and a narrowband physical uplink
+shared channel (NPUSCH) were both modeled in [15]. The
+design details and performance of NPRACH and NPUSCH were
+
+IEEE SYSTEMS JOURNAL, VOL. 19, NO. 2, JUNE 2025
+
+also shown in [16] and [17], respectively. In the downlink of
+NB-IoT, three physical channels were newly introduced, namely,
+narrowband physical broadcast channel (NPBCH), narrowband
+physical downlink control channel (NPDCCH), and narrowband
+physical downlink sharing channel (NPDSCH). An efficient
+downlink receiver for NB-IloT was designed in [18]. More-
+over, the synchronization signals, consisting of narrowband pri-
+mary synchronization signal (NPSS) and narrowband secondary
+synchronization signal (NSSS), were mainly used for time
+and frequency synchronization between NB-IoT terminals and
+associated NB-IoT eNodeB [19], [20], [21]. Our previous
+work [16], [17], [18] has constructed the uplink and down-
+link receiver for NB-IoT conforming to 3GPP Release 15, and
+link-level performance satisfies the benchmarks designated by
+3GPP [22], [23].
+
+On the contrary, the system-level performance evaluation fo-
+cuses on the overall system performance of an NB-IoT network
+through a multicell and massive-terminal network topology.
+In the literature, for instance, channel utilization was defined
+in [10] to simulate the NB-IoT network. However, this work
+only focused on the physical layer characteristics of the OPNET
+software, such as NB-IoT uplink and downlink channels, without
+considering a specific system-level simulation process. Signif-
+icantly, it overlooked critical aspects such as scheduling algo-
+rithms, which are essential for a comprehensive understanding of
+NB-IoT network performance. As for radio resource scheduling
+in the NB-IoT network, a dual-layer link adaptation scheme
+was proposed in [24] by first introducing a repetition number to
+NB-IoT. An iterative algorithm based on cooperative approaches
+was developed in the subcarrier and power allocation of the
+NB-IoT network to maximize the achievable data rate [25]. The
+authors noticed that NB-IoT network performance evaluations
+were typically done separately at the link and system levels. This
+approach led to incomplete evaluations and potentially risky
+engineering practices. Consequently, our research focuses on
+designing an efficient system-level simulation platform to better
+evaluate the increasingly complex NB-IoT network.
+
+In this article, we design a comprehensive NB-IoT system-
+level simulation framework based on object-oriented program-
+ming in the MATLAB platform with version R2020a. The com-
+prehensive system-level simulation framework contains both
+link- and system-level simulators. To make a tradeoff between
+low complexity and high accuracy, we adopt the approach of
+quasi-dynamic system-level simulation, where the quick net-
+work layout in static system-level simulation and high-accuracy
+modeling in dynamic system-level simulation are exploited si-
+multaneously. To further analyze and verify the key features
+of the NB-IoT network, we evaluate the maximum coupling
+loss (MCL), traffic model, and extended discontinuous reception
+(eDRX) to assess the capabilities of the enhanced coverage,
+massive connections, and low-power consumption, respectively.
+Finally, we discuss the cumulative distribution function (CDF)
+of the signal-to-interference-and-noise ratio (SINR) and demon-
+strate that the NB-IoT network supports massive connections of
+NB-IoT terminals at the cost of the normalized user throughput.
+
+For better readability, we have summarized key abbreviations
+in Nomenclature section. The rest of this article is organized
+as follows. Section II presents the structure of the link-level
+simulator, and Section III describes the structure of the system-
+level one. Section IV provides detailed insights into three key
+technologies of the NB-IoT network. Section V discusses and
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-03..txt =====
+ZHANG et al.: SYSTEM-LEVEL SIMULATION FRAMEWORK FOR NB-IOT: KEY FEATURES AND PERFORMANCE EVALUATION
+
+379
+
+Transmitter
+
+re
+tachment
+
+CChannet
+coding
+
+Rate
+matching
+
+Subfiame
+repetition
+
+‘Transport
+block
+
+= eo
+
+LY
+
+=
+
+Resource
+clement
+mapping
+
+Modulation
+‘mapping
+
+Layer
+mapping
+
+|_| oro |}
+‘modulation [—t
+
+Receiver
+
+Channel
+
+Subfiame
+soft
+combinin
+
+Rate
+
+Chant Sof
+
+decoding 4
+
+Descrambling
+
+MMSE
+equalization
+
+OFDM
+demodulation
+
+—> Bit stream
+
+Fig. 2. Transceiver chain of the link-level simulator.
+
+analyzes the simulation results. Finally, Section VII concludes
+this articlew.
+
+TI. LINK-LEVEL SIMULATOR STRUCTURE
+
+The link-level simulator of NB-IoT focuses on the
+physical layer issues, such as channel coding, modulation, and
+equalization. As illustrated in Fig. 2, the transceiver in the
+downlink mainly describes the process of encoding specified
+in the 3GPP Technical Specification (TS) 36.212 [26], and the
+process of modulation specified in the 3GPP TS 36.211 [27].
+Given some data blocks to be transmitted, the cyclic redundancy
+check (CRC) bits are calculated and appended to the end of
+each transport block for error checking. Then, channel coding
+and channel interleaving are applied for error correction. The
+block of rate matching adjusts the number of coded bits to
+the scheduled physical resources of one subframe, followed by
+subframe repetition, a key feature of NB-IoT for expanded cov-
+erage and enhanced transmission reliability. Next, the downlink
+scrambling benefits identifying cells and breaking continuous
+bit sequences of 0 s or 1 s. Afterward, the scrambled bits are
+modulated by the quadrature phase shift keying (QPSK) constel-
+lation, followed by layer mapping and precoding, and then the
+modulated symbols are mapped to different physical resources
+through resource element (RE) mapping. Finally, the orthogonal
+frequency division multiplexing (OFDM) modulation is applied,
+after which the symbols are transmitted from the antenna(s). As
+for channel models, we adopt the standard supported models,
+including the extended pedestrian A (EPA) channels and the
+extended typical urban channels [22].
+
+At the receiver side, the received signals attenuated by the fad-
+ing channel are corrupted by independent identically distributed
+(i.i.d.) additive white Gaussian noise (AWGN). In principle,
+the transmitted signals can be recovered by using an inverse
+process to that at the transmitter. To this end, synchronization
+is first acquired using NPSS, then physical cell identification
+is obtained using NSSS. After OFDM demodulation, channel
+estimation is performed to obtain channel frequency response
+(CFR), and then channel equalization is performed with the
+help of a narrowband reference signal (NRS). Next, QPSK
+demodulation provides soft information that contains the like-
+lihood of received bits and is extremely useful for subsequent
+channel decoding. Afterward, a soft combination is performed to
+exploit the subframe repetitions. Finally, rate recovery, channel
+decoding, and CRC decoding are performed sequentially.
+
+— + —P Symbol stream
+
++++) Soft information
+
+III. DESIGN OF SYSTEM-LEVEL SIMULATOR
+
+The relationship between link-level simulation and system-
+level simulation is that the former focuses on modeling the
+physical layer behavior of NB-IoT terminals, such as evaluating
+the SINR, whereas the latter takes a broader view by assessing
+the overall system performance, which involves multiple termi-
+nals and scheduling strategies. By adopting a similar architec-
+ture to the LTE Vienna simulator [28], our proposed simulator
+considered more NB-IoT features, such as eDRX. As shown
+in Fig. 3, the system-level simulator creates an efficient signal
+processing flow consisting of four main blocks: initialization,
+pregeneration, main simulation loop, and postprocessing. The
+initialization block configures network topology parameters,
+NB-IoT eNodeB parameters, and NB-IoT terminal parameters.
+The pregeneration block creates network topology, places NB-
+ToT terminals, and generates propagation channels. The main
+simulation loop includes the scheduler, link quality, and link
+performance analysis models. Based on the link-level simulation
+results, the system-level simulator abstracts the physical layer
+of NB-IoT into the link quality and performance models. It
+simulates the system performance of NB-IoT in a multicell
+and massive-terminal network topology. The last postprocessing
+block stores the simulation results, combines related simulation
+in different time subframes, and performs statistical
+sis. Next, we discuss the details of each building block.
+
+A. Initialization
+
+‘o start with system-level simulation experiments, we must
+initially configure all the basic parameters for the network lay-
+out, NB-IoT eNodeB, and NB-IoT terminals. The parameters of
+the network layout consist of the number of cells, the number
+of sectors, and the distance between NB-IoT eNodeBs. The
+parameters of NB-IoT eNodeB and terminals include antenna
+gain, transmit power, and frequency band. The parameter setting
+mentioned above follows the standard defined in the 3GPP
+TS 36.888 [29]. Specifically, we have structured the network
+layout as a classic three-layer cellular structure with 19 NB-IoT
+eNodeBs, each covering three sectors. The distance between two
+adjacent NB-IoT eNodeBs is precisely 1732 m. The antenna gain
+and transmit power of NB-IoT eNodeB are set at 18 dBi and
+43 dBm, respectively. Similarly, the NB-IoT terminal’s antenna
+gain and transmit power are —4 dBi and 23 dBm, respectively.
+The RF center frequency is fixed at 900MHz. Based on these
+settings, the system-level simulation runs in every transmission
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-04..txt =====
+580
+
+IEEE SYSTEMS JOURNAL, VOL. 19, NO. 2, JUNE 2025
+
+[ Nexon. layout | Creat network |
+
+Fig. 3. Building blocks of the system-level simulator.
+
+Fig. 4
+
+time interval (TTI) of | ms per subframe. During every TTI, a
+codeword is formulated and transmitted.
+
+B. Pregeneration
+
+The pregeneration block creates the network topology, places
+NB-IoT terminals, and generates the propagation channels. The
+network layout determines the distribution of NB-IoT eNodeBs
+and the location of massive NB-IoT terminals. Once the network
+layout is set, propagation channels between NB-IoT eNodeBs
+and NB-IoT terminals can be generated, considering large-scale
+path loss, shadowing effect, and small-scale fading parameters.
+
+As illustrated in Fig. 4(a), the NB-IoT network layout consists
+of 19 NB-IoT cells, each with three hexagonal sectors and an
+NB-IoT eNodeB at its center. There are 12 NB-IoT eNodeBs in
+the outermost layer, 6 in the middle layer, and | in the innermost
+layer, denoted by solid red spots in the figure. The system-level
+simulation focuses on the innermost NB-IoT eNodeB, with three
+sectors highlighted in blue, while the other 18 NB-IoT eNodeBs
+a interfering ones. Once the network layout is set, NB-loT
+terminals are placed in the region of interest (ROT) using a two-
+dimensional pixel map with a pixel resolution of 5 m. Each
+pixel represents the location of an NB-IoT terminal. Thousands
+
+: -
+H ' {
+
+I | {
+
+i i {
+
+‘|. parameters}! layout !
+
+1 {
+
+I{ NB-IoT eNodeB | Drop NB-IoT_ | Process results
+I parameters |[~ | terminals tf model from all subframes.
+1 14 {
+
+' tot '
+
+'(NB-loT terminal}! !{ Generate __)! Link performance! a ,
+} rot ' Statistical analysis
+'\__ parameters}! ! channels model
+
+I it i
+
+UE initial positions: 19 eNodeBs, 3 sectors/eNodeB
+
+y pos [m]
+
+-3000
+
+-2000 -1000 0
+
+x pos [m]
+
+1000 2000 3000 4000
+
+(b)
+
+Network model of the system-level simulator. (a) The three-layer network layout. (b) NB-IoT eNodeBs (red solid spots) and terminals (blue circles).
+
+of NB-IoT terminals, evenly distributed in the ROI, are then
+randomly positioned, shown in blue circles in Fig. 4(b), and
+they generally have limited movement or stay stationary.
+
+The propagation channels must be pre-generated and stored
+before entering the main simulation loop. The channel generates
+large-scale fading (including path loss and shadowing effect) and
+small-scale fading, which can be expressed as:
+
+Prx(t,n) = Prx(t,n) +0 +8 + F(t,n) (om)
+
+where Ppx(t,m) and Pr,(t,n) denote the received power at
+the eNodeB and transmit power of a terminal at time instant t
+on the subcarrier n, in the unit of dBm, respectively; a, 3 and
+F(t,n) represent the path loss, shadowing effect, and small-
+scale fading, in the unit of dB, respectively. Path loss refers to the
+reduced signal strength as the signal propagates over distance,
+while shadowing refers to the additional attenuation caused by
+obstacles (like buildings or trees) between the transmitter and
+receiver. The small-scale fading occurs due to multipath propa-
+gation, where the transmitted signal reaches the receiver through
+multiple paths, each with different delays. These paths result
+in constructive or destructive interference, causing variations
+in signal strength. By accounting for the multipath effect, the
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-05..txt =====
+ZHANG et al.: SYSTEM-LEVEL SIMULATION FRAMEWORK FOR NB-IOT: KEY FEATURES AND PERFORMANCE EVALUATION 581
+
+small-scale fading F(t, n) at time instant ¢ on the subcarrier n
+can be determined by its power delay profile [22].
+The path loss a in (1) can be explicitly computed as
+
+a = max (L — Gps — Germinal, Y) +O + € (2)
+
+where the value of L depends on the path loss model of a city
+or suburb, determined as [30]
+
+L= 40x (1-4 x 10°°H) logy R— 18 logiy H
++ 21logi9 f + 80 dB (3)
+
+in which H = 15 m stands for the antenna height of NB-loT
+eNodeB, F is the distance between NB-IoT eNodeB and an
+associated terminal, and f = 900 MHz denotes the carrier
+frequency. With these parameter fixed, (3) reduces to
+
+L = 120.9 + 37.6 logyy RGB. (4)
+
+On the other hand, the paramerter Ggg in (2) denotes the
+antenna gain of NB-IoT eNodeB [31], given by
+
+; a\ ,.
+Gps = —min [ 12(—) , 23) + Grnax (5)
+65°
+
+where @ € [—180°,180°] counts the angle between
+NB-IoT eNodeB and an associated terminal in the vertical
+plane; Gynax = 18 dBi is the maximum antenna gain of NB-IoT
+eNodeB. Finally, Germinal in (2) is set to —4 dBi due to the
+isotropic antenna of the NB-IoT terminal; Y ~ 178.96 dB
+denotes the minimum path loss according to (4) assuming that
+the minimum distance between NB-IoT eNodeB and a terminal
+is 35 m; 6 = 3 dB stands for the cable loss of NB-IoT eNodeB,
+and € = 20 dB is the building penetration loss.
+
+The value of the shadowing parameter (3 in (1) can be deter-
+mined as follows. In principle, the shadowing effect introduced
+by large obstacles in the propagation path leads to large-scale
+fading fluctuations. In mathematics, it is modeled as a log-
+normal distribution of mean 0 dB. We adopt the method designed
+in [32] to generate spatially correlated shadowing. Specifically,
+let x denote the distance from an NB-IoT eNodeB to a point in
+space, then the correlation coefficient is given by
+
+r(a) (6)
+
+where 7 is the normalized factor to be determined by the
+environment (e.g., a 7 = 1/20 value is suggested for urban
+scenarios). Given an m x n pixel map, the correlation matrix
+ReR™*™" can be calculated by using (6). Then, performing
+Cholesky decomposition on R gives R = LL. Asaresult, the
+shadowing random vector s € R’" is computed as
+
+s=La 7)
+where a@ = [a,@2,-.-,@mn]’ is the random vector satisfing
+Elaa"] = I. Finally, the parameter 3 in (1) can take any el-
+
+ement in s, representing the corresponding pixel’s shadowing
+value in the network layout.
+
+C. Main Simulation Loop
+
+Fig. 5 shows the five steps performed in the main simu-
+lation loop for each TTI iteration: updating the channel pa-
+rameters regarding the small-scale fading, scheduling available
+time-frequency resources to NB-IoT terminals, calculating the
+effective SINR in the link quality model, judging whether the
+
+Update channels
+
+a
+
+Scheduler
+
+a
+
+Link quality model
+
+a
+
+Link performance model
+
+a
+
+Feedback
+
+Fig. 5. Main simulation loop of the system-level simulator.
+
+transport block is decoded correctly and mapping SINR to chan-
+nel quality indicator (CQI) in the link performance model, and
+finally, sending feedback to the scheduler. Next, we elaborate
+on the technical issues in each step.
+
+1) Update Channels: A system-level simulation experiment
+generally lasts thousands of TTIs, equivalent to several seconds
+in a real-world network. Although the large-scale fading is
+time-varying, it varies slowly and can be assumed to remain
+unchanged during these few seconds. Therefore, the configu-
+rations of large-scale fading parameters, such as path loss and
+shadowing, need not be updated. Meanwhile, the small-scale
+fading channels are updated in consecutive TTIs according to
+the pre-generated channel model.
+
+2) Scheduler: After a transmission delay, the scheduler re-
+ceives feedback on CQI from NB-IoT eNodeB in the uplink
+or NB-IoT terminals in the downlink. In NB-IoT, the CQI value
+ranges from 0 to 13, with higher values indicating better channel
+quality. Upon receiving CQI, the scheduler must determine the
+modulation and coding scheme (MCS), the number of repeti-
+tions, and the transmission format. In NB-IoT, the MCS value
+equals the value of CQI, and the transmission block size can be
+obtained through the MCS.
+
+The uplink transmission format is based on the resource unit
+(RU), composed of a 3.75/15 kHz subcarrier and corresponding
+time slot. In contrast, the downlink transmission format is based
+on 12 subcarriers and 14 OFDM symbols. The scheduler uses the
+classic round-robin (RR) and proportional fair (PF) algorithms
+for scheduling. The RR algorithm allows NB-IoT terminals
+to share time-frequency resources regardless of instantaneous
+channel quality. In contrast, the PF algorithm considers fairness
+and efficiency based on the priority of the NB-IoT terminal. The
+terminal with the best channel quality has the highest priority
+and is scheduled first. If a terminal has poor channel quality and
+has not been scheduled for a long time, its priority will gradually
+increase until it is scheduled.
+
+The scheduler must also handle the hybrid automatic repeat
+request (HARQ) process [33] to allow for repetitive transmis-
+sions. In the uplink HARQ process, the new data indication
+(NDI) signals whether an NB-IoT terminal can continue to send
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-06..txt =====
+582
+
+BLER
+
+SINR [dB]
+(a)
+
+Fig. 6
+
+new data. If the transport block decodes the received codeword
+correctly, the NB-IoT eNodeB generates NDI feedback to inform
+the scheduler that the NB-IoT terminal should transmit new
+data. If the transport block is not decoded correctly, the NB-IoT
+eNodeB does not generate NDI. When the NB-IoT terminal
+does not receive NDI within a certain period, it retransmits
+the previous transport block. For the downlink HARQ process,
+the ACK/NACK mechanism is applied to indicate whether the
+decoding result is correct or incorrect. The NB-IoT terminal
+sends the ACK/NACK information to the scheduler as feedback.
+
+3) Link Quality Model: Simulating the complete physical
+layer for all links between an NB-IoT eNodeB and its asso-
+ciated massive terminals is often challenging due to the high
+time complexity and extensive storage memory requirements.
+To expedite the simulation, we abstract the physical layer as
+a link quality model and a performance analysis model [34],
+[35] in the developed simulator. In the link quality model,
+the received SINR of a subcarrier can be calculated using
+a pre-generated channel model. Precisely, in the single-input
+single-output (SISO) transmission mode of NB-IoT, the received
+SINR of the ith subcarrier can be calculated as
+
+\ni/?
+
+© SE aOR + 92
+
+(i)
+Payo
+
+= (8)
+Dk=
+
+where PQ, and |h\?|? denote the transmit power and the
+channel gain from the ith subcarrier of the kth cell to its
+associated eNodeB, respectively. The Oth cell is the target cell
+located at the center of the network. The index k = iN
+denotes the interference cells surrounding the target cell, and in
+this cas 18. Also, o? in (8) represents the receiver noise
+power corresponding to the i*" subcarrier of the Oth cell.
+Based on the per-subcarrier SINR computed by (8), the
+effective SINR for an NB-IoT terminal can be calculated by
+
+IEEE SYSTEMS JOURNAL, VOL. 19, NO. 2, JUNE 2025
+
+SINR-CQI mapping
+
+cal
+
+10-86-4202 4 6 8 10
+SINR [dB]
+
+(b)
+
+Physical-layer mapping used in the system-level simulator. (a) BLER curves of link performance model. (b) CQL mapping with BLER = 10% .
+
+the method of exponential effective signal-to-interference-and-
+noise ratio mapping (EESM) [36]. Here, a set of per-subcarrier
+SINR ¥ = [v1 yp]" assigned to the NB-IoT terminal is
+mapped into an effective SINR ir, defined as
+
+“
+1 yi
+
+where P denotes the number of subcarriers assigned to the
+NB-IoT terminal, and 77 is the factor regarding the modulation
+scheme. For intance, 7) = 2 for the QPSK modulation [36].
+
+4) Link Performance Model: The effective SINR (yerr) cal-
+culated in the link quality model is used as input into the link
+performance model to obtain the decoding result of the transport
+block and CQI. The NB-IoT network has 14 kinds of MCSs and
+14 relevant CQIs, as depicted in Fig. 6(a) and (b). Once the
+number of subframes (Vsp) and MCS are known, the transport
+block size (TBS) can be determined as specified in Subclause
+8.6 of [37]. For example, Fig. 6(a) and (b) show the simulation
+results for SISO configuration with a bandwidth of 180kHz in
+an AWGN channel, with Nsp = 1 and the number of repetitions
+Npep = 1. By obtaining the SINR value corresponding to BLER
+= 0.1 from Fig. 6(a), the CQI mapping curve in Fig. 6(b) can be
+derived after smoothing. The curves in Fig. 6(a) represent the
+different MCSs’ results of the NB-IoT link simulation obtained
+from the link-level simulator. The block error rate (BLER) is
+computed as Norror/Neotals Where Norror is the number of erro-
+neous blocks and N;otai is the total number of received blocks.
+As the MCS value increases, more information is transmitted
+using the same resources, deteriorating the BLER performance.
+A coin toss is used to determine whether the received transport
+block was decoded correctly or not. Precisely, an effective SINR
+ert corresponds to a BLER value in Fig. 6(a). Subsequently,
+a uniformly distributed random number between 0 and 1 is
+generated. If the random number exceeds the BLER value, the
+decoding result is considered correct; otherwise, it is deemed
+incorrect.
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-07..txt =====
+ZHANG et al.: SYSTEM-LEVEL SIMULATION FRAMEWORK FOR NB-IOT: KEY FEATURES AND PERFORMANCE EVALUATION 583
+
+5) Feedback: Inthe final step of the main simulation loop, the
+CQI obtained from Fig. 6(b) provides feedback to the scheduler
+to indicate the channel quality. Similarly, the decoding result
+from the link performance model serves as HARQ information,
+which is then sent back to the scheduler. After an unavoidable
+delay, the scheduler receives the HARQ information and uses it
+to determine whether new data should be transmitted. Ensuring
+that the scheduler and feedback function are properly aligned
+enables the scheduler to interpret the feedback accurately. For
+the scenarios with a large number of UEs, there are various
+strategies to collect and utilize the CQI information efficiently,
+e.g., aperiodic CQI reporting [38], CQI prediction [39], and CQL
+compression [40].
+
+D. Postprocessing
+
+The global parameters of the initialization and pregeneration
+blocks remain unchanged throughout the system-level simula-
+tion. The main simulation loop processes the data in the TTI
+cycle, so the simulation results must be stored at the end of each
+TTI When all the subframes are processed, the individual results
+are combined and averaged, followed by statistical analysis. The
+obtained values, ranging from throughput to SINR, are displayed
+and stored in a file. Curves about important parameters are
+plotted so that the performance of the system-level simulator
+is presented vividly.
+
+IV. THREE KEY FEATURES USED IN THE SIMULATION
+
+This section evaluates the maximum coupling loss (MCL),
+traffic model, and eDRX, which are imperative to the system-
+level simulation of an NB-IoT network. The MCL quantifies the
+wide-area coverage in an NB-IoT network. The traffic model the-
+oretically analyzes the massive connection capability of NB-loT
+terminals. Finally, eDRX verifies the low-power consumption of
+NB-IoT terminals.
+
+A. Maximum Coupling Loss
+
+MCL is widely used in legacy cellular communication net-
+works to reflect network coverage performance. By definition,
+MCL is the difference between transmit power and receiver
+sensitivity, given a receiver processing gain of 0 dB. Receiver
+sensitivity is the sum of effective noise power and target signal-
+to-noise ratio (SNR). As shown in Table I, the MCLs of downlink
+and uplink in the NB-IoT network are calculated to be 164. dB. As
+for the link budget of the LTE technology, its MCL is designed as
+144 dB [41]. Therefore, the NB-IoT network achieves a coverage
+enhancement of 20 dB compared to legacy LTE.
+
+B. Traffic Model
+
+Various services are available in the NB-IoT network, and
+in this work, we focus on service clustering based on spatial-
+temporal characteristics. These services can be categorized into
+three groups.
+
+1) Services with fixed location and determined time, such as
+smart meters;
+
+Services with fixed location but random time, like intelli-
+
+gent parking; and
+
+3) Services with random locations and times, such as shared
+bicycles.
+
+2
+
+TABLE
+Link BUDGET FoR NB-IoT NETWORK
+
+Parameter Downlink | Uplink
+(1) Transmit power (dBm) a3 23
+(2) Thermal noise density (dBm/Hz) | —174 =174
+(3) Receiver noise figure (dB) 5 3
+(4) Interference margin (dB) 0 0
+(5) Occupied bandwidth (kHz) 180 15
+(6) Effective noise power = (2) + (3) | -116.4 | -129.2
++ (A) + 10log;9((5)) (dBm)
+
+(7) Target SNR (dB) —4.6 =118
+(8) Receiver sensitivity = (6) + (7) | —121 -141
+(dBm)
+
+(9) Receiver process gain (dB) 0 0
+(10) MCL = (1) - (8) + (9) (dB) 164 164
+
+Due to the diverse nature of NB-IoT services, a single traffic
+model cannot represent them. Hence, we analyze the traffic
+model based on the frequency and size of packets to assess the
+capability of massive connections.
+
+Mobile autonomous reporting (MAR) measures the frequency
+of packets in the NB-IoT network. According to the periodic
+reports in MAR, the arrival period of packets is distributed
+over four categories with constant times of 1 d, 2 hours, | h,
+and 30 minutes, with proportions of 40%, 40%, 15% and 5%,
+respectively [42]. For instance, environmental sensors might
+report data once a day, whereas industrial monitoring systems
+may transmit information every two hours. A I-h interval might
+be used for applications like remote health monitoring. In con-
+trast, A 30-min interval could be used for applications requiring
+near-real-time tracking, such as specific emergency or safety
+systems. The average data rate of reports that a terminal should
+achieve, which is calculated based on the MAR periodic traffic
+model [43], is computed as.
+
+Ray = 0.4/86400 + 0.4/7200 + 0.15/3600 + 0.05/1800
+
+= 129.6 x 10°® packet /s/terminal. (10)
+
+The size of packets in the NB-IoT network follows a Pareto
+distribution with a minimum application payload size (datayyin)
+of 24 bytes and a parameter « of 2.5. Thus, the expectation of
+packet size is datayin x &/(& — 1) & 32 bytes. By (10), the
+average data rate can be calculated as
+
+Ray = 129.6 x 10° x 32 x 8
+
+= 33.2 x 10~% bit/s/terminal. ab
+
+Consequently, the total data rate of packets per second in
+a sector with M terminals is computed as Ryot = M x Ray.
+Based on the family density in London, the number of NB-loT
+terminals a sector can support is 52549 [42]. Therefore, to
+support such massive connections with M = 52549 NB-IoT
+terminals, Ryo¢ can be given by
+
+Riot = 52549Ray = 1744.6 bit /s/sector. (12)
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-08..txt =====
+IEEE SYSTEMS JOURNAL, VOL. 19, NO. 2, JUNE 2025
+
+584
+hyper-frame number
+frame number | 0
+subframe number
+7) Paging hyper-frame
+Fig. 7. Function of eDRX in NB-IoT networks.
+C. eDRX
+
+If a terminal continuously monitors the paging message from
+the network, it will result in high power consumption. To ad-
+dress this issue, 3GPP introduced the discontinuous reception
+(DRX) technique. Using DRX, a terminal periodically checks
+the paging message when paging may occur while it sleeps to
+save power for the rest of the time. However, the maximum
+period of the DRX is 2.56 s, which does not meet the low-power
+consumption requirement of NB-IoT. Consequently, 3GPP pro-
+posed eDRX to further reduce the power consumption of NB-IoT
+terminals by extending the wake-up period.
+
+The period of eDRX depends on a superframe, which
+has a length of 10.24 seconds, comprising 1024 frames.
+Each frame has 10 subframes. There are T.prx = 2", where
+k =1,2,3,...,10 superframes in an eDRX period, ranging
+from {20.48, 40.96, 81.92, 163.84, 327.68, 655.36, 1310.72,
+2621.44, 5242.88, 10485.76} s. The maximum period of the
+eDRX is up to 10485.76 s, or equivalently 2.91 h, allowing
+a longer period for NB-IoT terminals. As shown in Fig. 7, in
+eDRX, the superframe where the paging message is located is
+called the paging hyper-frame, and the frame where the paging
+message is located is called the paging frame. The subframe
+in which the paging message is located is called the paging
+occasion. The eDRX period includes the paging time window
+(PTW) to monitor paging messages and the idle period to sleep.
+
+To implement the function of eDRX, we set up a paging
+timetable and timer between the NB-IoT eNodeB and the
+NB-IoT terminal. According to the paging timetable, an NB-IoT
+terminal wakes up in PTW. The activated NB-IoT terminal
+associates with the NB-IoT network in case of a corresponding
+paging message. When a timeout occurs in the timer, the NB-IloT
+terminal returns to the idle period and rests.
+
+V. SIMULATION RESULTS AND DISCUSSIONS
+
+In this section, we present and discuss Monte Carlo simulation
+results to verify the effectiveness of the developed system-level
+simulator. To speed up the simulation experiments, we model
+essential components (e.g., NB-IoT eNodeB and NB-IoT termi-
+nal) as programming objects, depicted in Fig. 8 with their imple-
+mentation of public functions. The NB-IoT network is deployed
+in stand-alone mode. Fig. 9 shows the MATLAB graphical user
+interface (GUI) and pertaining simulation parameter settings on
+its left panel. Clicking the Run button in the upper left corner
+yields the link-level and system-level simulation results on the
+right panel.
+
+To verify the effectiveness of link-level simulation, Fig. 10
+demonstrates the BLER performance of an NB-IoT terminal
+
+(7) Paging frame
+
+(7) Paging occasion
+
+HARQ
+
+HARQ status_update()
+HARQ index_update()
+
+i
+
+NBeNodeB
+
+receive_feedback()
+schedule_users()
+
+attach_users() ‘
+
+power_control()
+downlinkChannelModel
+
+fast_fading()
+
+pathloss()
+
+shadow_fading()
+
+uplinkChannelModel
+
+get_feedback()
+send_feedback()
+
+f
+
+NBterminal
+
+fast_fading_index_update()
+feedback_gen()
+link_quality_model()
+link_performance_model()
+
+i
+
+eDRX
+
+Set_e@DRXO
+timer_update()
+calculate POQ)
+
+Fig. 8. _ Class diagram of the system-level simulator.
+Gras ree - a x
+> loT Simulator @SYSU
+“Number of cts ® =a
+al _ 0 000s o CC rr
+Fig. 9. MATLAB GUI and simulation parameter setting.
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-09..txt =====
+ZHANG et al.: SYSTEM-LEVEL SIMULATION FRAMEWORK FOR NB-IOT: KEY FEATURES AND PERFORMANCE EVALUATION 585
+
+1
+—S— Nagy = 7 (Linkclovel Simulation)
+09 35 4— Nowy =2 (Unkclevel Simulation)
+ost ‘. A Nog = 4 (Link-level Simulation)
+‘ —~ Nac =8 (Lnkclovel Sinuation)
+o7 \__ |= = = MATLAB implementation
+3 8GPP Benchmark
+06
+Pa
+fos
+a
+oa .
+03
+o2
+O41 ——
+°
+5 0 5 70 15
+
+SNR (dB)
+
+Fig. 10. BLER versus SNR for stand-alone NPDSCH in the EPA channel.
+
+4 (Link-level Simulation)
+(Linkevel Simulation)
+
+= = = MATLAB Implementation
+o&_8GPP Benchmark
+
+BLER
+
+SNR (dB)
+
+Fig. 11. Comparison of system-level and industrial results.
+
+under stand-alone NPDSCH in the extended pedestrian A (EPA)
+channel. It is shown that the BLER improves with more repe-
+titions. In the 3GPP specification [44], the SNR benchmark is
+set to 9.4 dB given BLER = 0.3 and the number of repetitions
+Npep = 1, as highlighted in the red star. The NB-IoT toolbox
+from MATLAB implementation needs 8.2 dB for the same
+parameter setting. In contrast, the required SNR of our proposed
+link-level simulation is only 7.1 dB, exhibiting favorable perfor-
+mance gain.
+
+Based on the link-level simulation, system-level simulation
+can be conducted further. Fig. 11 plots the CDF curves of
+coupling loss calculated by SINR. By definition, the SINR
+between NB-IoT eNodeB and NB-IoT terminals is the sum of
+transmit power, channel gain of large- and small-scale fading, in-
+terference, as well as noise, all measured in dB. Our system-level
+simulation results are compared with the industrial results [45]
+reported by Ericsson in a 3GPP meeting. In our simulation, 43%
+of the SINR values are less than 140 dB, while this proportion
+is 90% in the industrial results. This observation suggests that
+our simulation indicates a lower proportion of low SINR val-
+ues, implying higher receiver sensitivity. Both curves increase
+and reach 100% at 160 dB, demonstrating that they meet the
+MCL requirement of 164 dB in the NB-IoT network. However,
+
+Uplink, PE
+= Downlink, BR
+Downlink, PE
+
+(Cumulative distribution function
+
+0.015 0.02 0.025 0.03 0.035 0.04
+
+0 . A
+0 0.005 0.01
+Normalized user throughput (bps/Hz)
+
+Fig. 12. Comparison of different scheduling methods.
+1
+0
+08
+Zor
+Sos
+Eos
+go4
+goa
+Coz (== = 4000 NB-loT terminals
+£000 Nts
+on 2000 tinal
+1000 No mins
+0
+0” coos oor 001s 002 —ouas oa
+Normalized User Throughput (ops/H2)
+Fig. 13. Comparison of the number of NB-IoT terminals.
+oe
+Foo
+a
+Zoos Number of active NBAoT terminals
+Boo} be ye
+3 -
+2 se
+Zoo Fae
+5 “=
+5 oot X
+0.008 310
+3 Bsr
+E 0.006 we ae
+2 ~
+3, 0.004
+8 0.002
+2
+0
+000 1000 1800 2000 2500 2000 500 4000 4600
+Number of NB-loT terminals
+Fig. 14. Comparison of eDRX with normalized user throughput.
+
+our results exhibit a steeper slope. The observed performance
+gain is attributed to our proposed link-level simulation, which
+offers better modeling performance than Ericsson’s proposal
+to 3GPP. To be specific, we have implemented uplink and
+downlink NB-IoT channels with superior performance than
+3GPP specifications, including NPRACH [16], NPUSCH [17]
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-10..txt =====
+586
+
+IEEE SYSTEMS JOURNAL, VOL. 19, NO. 2, JUNE 2025
+
+cor
+
+sare
+kw
+
+Fig. 15.
+
+and NPDSCH [18]. Therefore, the improved link-level simula-
+tion enhances system-level simulation performance.
+
+Fig. 12 compares different scheduling strategies in terms
+of the normalized user throughput when using 4000 NB-IoT
+terminals in a sector employing eDRX. In this context, through-
+put refers to the transport block size divided by the transmission
+time and bandwidth, which is the number of bits transmitted
+within the unit bandwidth per unit time. The normalized user
+throughput is derived by dividing the throughput by the number
+of scheduled NB-IoT terminals. In the figure, the yellow curves
+represent downlink normalized throughputs, which are slightly
+larger than the blue curves, which represent uplink normalized
+user throughputs, regardless of whether RR or PF scheduling
+strategy is applied. This observation suggests that the NB-IoT
+downlink transmits more packets than the uplink. Furthermore,
+the figure also indicates that the maximum normalized user
+throughput in NB-IoT is approximately 0.02 bps/Hz, notably
+smaller than the 3 to 5 bps/Hz typically achieved in legacy LTE
+systems. This is expected due to the much smaller packets in
+NB-IoT. In addition, Fig. 12 demonstrates that the RR and PF
+scheduling strategies deliver similar normalized user throughput
+in both downlink and uplink transmissions due to the unique
+characteristics of IoT scenarios. On the one hand, NB-IoT
+devices typically transmit small and infrequent data packets with
+high latency tolerance, minimizing the impact of scheduling
+differences on throughput. On the other hand, NB-IoT devices
+often operate in static or semistatic environments, leading to rela~
+tively stable channel conditions, which diminishes the advantage
+of PF scheduling in adapting to channel variations. Therefore,
+the performance gap between these two scheduling algorithms
+is often minimal in such contexts. In addition to RR and PF
+scheduling, other strategies such as priority-based scheduling
+
+Real-world case studies of the smoke alarm sensor and the smart electricity meter.
+
+algorithms can also be considered, allowing the prioritization of
+delay-critical tasks or data streams.
+
+Fig. 13 illustrates the impact of the number of NB-IoT termi-
+nals on normalized user throughput when using RR scheduling
+and eDRX. The median normalized user throughput values
+for 4000, 3000, 2000, and 1000 NB-IoT terminals are 0.004,
+0.0056, 0.0097, and 0.013 bps/Hz, respectively. It can be
+inferred from these results that the normalized user through-
+put increases as the number of NB-IoT terminals decreases.
+This is because, with fewer NB-IoT terminals, each terminal
+can be allocated more resources. In other words, the normal-
+ized user throughput will be higher if the same amount of
+resources is shared among fewer NB-IoT terminals. There-
+fore, scheduling more NB-IoT terminals in the eDRX mode
+will take longer, which leads to a decrease in the normal-
+ized user throughput to accommodate more NB-IoT terminal
+connections.
+
+Fig. 14 demonstrates the effect of DRX on the average nor-
+malized user throughput. The average normalized user through-
+put is calculated by adding all the elements in the normalized
+user throughput. As the number of NB-IoT terminals increases,
+the average normalized user throughput performance without
+eDRX gradually deteriorates, which aligns with the conclusion
+in Fig. 13. When eDRX is used, not all NB-IoT terminals are
+active. For example, only 62 out of 500 NB-IoT terminals are
+activated, resulting in an average normalized user throughput of
+0.0138 bps/Hz. When the total number of NB-IoT terminals
+is 4000 and eDRX is used, 496 NB-IoT terminals are ac-
+tive simultaneously, and the corresponding average normalized
+user throughput is similar to that without eDRX. As expected,
+eDRX significantly improves the average normalized user
+throughput.
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-11..txt =====
+ZHANG et al.: SYSTEM-LEVEL SIMULATION FRAMEWORK FOR NB-IOT: KEY FEATURES AND PERFORMANCE EVALUATION
+
+VI. REAL-WORLD CASE STUDIES
+
+To demonstrate the proposed framework’s practical applica-
+bility, we have developed the real-world case studies of smoke
+alarm sensors and smart electricity meters, as shown in Fig. 15.
+To be specific, in Fig. 15(a), a set of loT modules is placed on a
+workbench, which are embedded with physical algorithms from
+the link-level simulator. They are set up for data collection and
+transmission, verifying the feasibility of the link-level simulator.
+Then, these IoT modules can be applied and packaged in differ-
+ent devices, such as smoke alarm sensors in Fig. 15(b) and smart
+electricity meters in Fig. 15(c). We have deployed these IoT
+devices in our lab and a garage on our SYSU campus. The smoke
+alarm sensors are designed to detect smoke levels and send alerts
+in case of a fire hazard, while smart electricity meters record
+energy consumption data. They are connected as an IoT network,
+monitoring fire safety across a building and measuring electricity
+usage in real time. In Fig. 15(d), they can communicate with the
+base station, and their collected information is transmitted to
+the controlled cloud platform for further analysis and display. In
+Fig. 15(e), the controlled cloud platform can show the location
+of these IoT devices on a map. The graphs and statistics indicate
+smoke alarm alerts, energy consumption trends, and battery sta-
+tus updates. This controlled cloud platform also allows users to
+monitor conditions and update configurations remotely, offering
+a convenient way to track these IoT devices. We can exploit the
+eDRX mode according to different applications to reduce power
+consumption. For example, the eDRX period of time-sensitive
+products (e.g., smoke alarm sensors) can be set to 20.48 or 40.96
+s. As for time-insensitive products like smart electricity meters,
+their eDRX period can be set to 5242.88 or 10485.76 s. More
+details on deploying these commercial products can be found on
+our website https://www.techphant.cn.
+
+VII. CONCLUSION
+
+This article presented a practical system-level simulator
+for NB-IoT networks. The simulator comprises four main
+building blocks: initialization, pre-generation, main simulation
+loop, and post-processing. It delved into three crucial aspects of
+NB-IoT networks: evaluation of MCL, traffic model, and eDRX.
+The simulation results effectively showcase the performance
+of SINR and throughput, providing a clear picture of how
+NB-IoT networks enable extensive connectivity. This practical
+system-level simulator is reliable for evaluating performance
+and developing NB-loT communication systems. Future
+research directions include advanced algorithms to support
+massive connectivity and combining NB-IoT with distributed
+edge learning for further performance enhancement. Also, in the
+upcoming 3 GPP R19, integrating NB-IoT with nonterrestrial
+networks promises to provide services in remote areas.
+
+REFERENCES
+
+(1) S. Lippuner, B. Weber, M. Salomon, M. Korb, and Q. Huang, “EC-G
+IoT network synchronization with support for large frequency offsets,
+Proc. IEEE Wireless Commun. Netw. Conf., 2018, pp. 1-6.
+
+(2] R. Ratasuk, N. Mangalvedhe, and D. Bhatoolaul, “Coexistence analysis
+
+of LTE eMTC and 5G new radio,” in Proc. IEEE 30th Annu. Int. Symp.
+
+Pers. Indoor Mobile Radio Commun., 2019, pp. 1-6.
+
+J. Gozalvez, “New 3GPP standard for loT [mobile radio];” IEEE Veh.
+
+Technol, Mag., vol. 11, no. 1, pp. 1420, Mar. 2016.
+
+[4] Y. E. Wang et al., “A primer on 3GPP narrowband Internet of Things
+IEEE Commun, Mag,, vol. 55, no. 3, pp. 117-123, Mar. 2017.
+
+[10]
+
+oy]
+(12)
+
+(13)
+
+14]
+
+1s)
+
+[16]
+
+07)
+
+[18]
+
+(19)
+
+[20]
+
+(21)
+
+[22]
+
+[23]
+
+[24]
+
+[25]
+
+[26]
+
+[27]
+
+[28]
+
+[29]
+
+[30]
+
+587
+
+L. Vangelista, “Frequency shift chirp modulation: The LoRa modulation,”
+IEEE Signal Process. Lett., vol. 24, no. 12, pp. 1818-1821, Dec. 2017.
+. Afisiadis, M. Cotting, A. Burg, and A. Balatsoukas-Stimming, “On the
+error rate of the LoRa modulation with interference,” IEEE Trans. Wireless
+Commun., vol. 19, no. 2, pp. 1292-1304, Feb. 2020.
+
+L. Joris, F. Dupont, P. Laurent, P. Bellier, S. Stoukatch, and J. Redouté, “An
+autonomous Sigfox wireless sensor node for environmental monitoring,”
+IEEE Sensors Lett., vol. 3, no. 7, Jul. 2019, Art, no. 5500604.
+
+J. Chen, K. Hu, Q. Wang, Y. Sun, Z. Shi, and S, He, “Narrowband Internet
+of Things: Implementations and applications,” IEEE Internet Things J.,
+vol. 4, no, 6, pp. 2309-2314, Dec. 2017.
+
+J.Xu, J. Yao, L. Wang, Z. Ming, K. Wu, and L. Chen, “Narrowband Internet
+of Things: Evolutions, technologies, and open issues,’ IEEE Internet
+Things J., vol. 5, no. 3, pp. 1449-1462, Jun. 2018.
+
+Y. Miao, W. Li, D. Tian, M.S. Hossain, and M. F. Alhamid, “Narrowband
+Internet of Things: Simulation and modeling,” [EEE Internet Things J.,
+vol. 5, no. 4, pp. 2304-2314, Aug. 2018.
+
+R. Singh et al., “Towards 6G evolution: Three enhancements, three inno-
+vations, and three major challenges,” 2024, arXiv:2402.10781.
+
+M. Kanj, V, Savaux, and M. Le Guen, “A tutorial on NB-IoT physical layer
+design,” IEEE Commun. Su , vol. 22, no. 4, pp. 2408-2446, Fourth
+Quarter 2020.
+
+S. Lagen, K. Wanuga, H. Elkotby, S. Goyal, N. Patriciello, and
+L. Giupponi, “New radio physical layer abstraction for system-level
+simulations of 5G networks,” in Proc. IEEE Int. Conf. Commun., 2020,
+pp. 1-7.
+
+L. liyambo, G. Hancke, and A. M. Abu-Mahfouz, “A survey on NB-loT
+random access: Approaches for uplink radio access network congestion
+management,” IEEE Access, vol. 12, pp. 95487-95506, 2024.
+
+A. Chakrapani, “NB-IoT uplink receiver design and performance stud}
+IEEE Internet Things J., vol. 7, no. 3, pp. 2469-2482, Mar. 2020.
+
+Q. Wu, P. Wu, W. Wen, T. Yang, and M. Xia, “An efficient NPRACH
+receiver design for NB-IoT systems,” /EEE Internet Things J., vol. 7,
+no. 10, pp. 10418-10426, Oct. 2020.
+
+A. Qin, R. Tang, P. Wu, and M. Xia, “An efficient NPUSCH receiver
+design for NB-IoT system,” in Proc. IEEE 91st Veh. Technol. Conf., 2020,
+pp. 1-5,
+
+S. Zhang, S. Zeng, F. Ye, R. Tang,
+downlink receiver design for NB-IoT,
+Netw. Conf., 2020, pp. 1-6.
+Qualcomm Ine., “NB-PSS and NB-SSS Design (Revised),” Tech. Rep.
+R1-161981, Qualcomm Ine., Sophia-Antipolis, France, Mar. 2016.
+
+A. Aliand W. Hamouda, “On the cell search and initial synchronization for
+NB-IoT LTE systems,” EEE Commun. Lett.,vol.21,no.8, pp. 1843-1846,
+Aug. 2017.
+
+y.-J. Yu and C.-L. Wu, “Energy-efficient scheduling for search-space
+periods in NB-IoT networks,” IEEE Syst. J., vol. 17, no. 3, pp. 3974-3985,
+Sep. 2023.
+
+3GPP, 3GPP TS 36.101, “Evolved Universal Terrestrial Radio Access (E-
+UTRA): User Equipment (UE) radio transmission and reception (Release
+15),” 3GPP, Tech. Rep., Jan, 2020, version 15.9.0.
+
+3GPP, 3GPP TS 36.104, “Evolved Universal Terrestrial Radio Access
+(E-UTRA): Base Station (BS) radio transmission and reception (Release
+15);" 3GPP, Tech. Rep., Jul. 2020, version 15.9.0.
+
+C. Yu, L. Yu, Y. Wu, Y. He, and Q. Lu, “Uplink scheduling and link
+adaptation for narrowband Internet of Things systems,” JEEE Access,
+vol. 5, pp. 1724-1734, 2017.
+
+H. Malik, H. Pervaiz, M. Mahtab Alam, Y. Le Moullec, A. Kuusik, and
+M. Ali Imran, “Radio resource management scheme in NB-IoT systems,”
+IEEE Access, vol. 6, pp. 15051-15064, 2018.
+
+3GPP, 3GPP TS 36.212, “Evolved universal terrestrial radio access (E-
+UTRA): Multiplexing and channel coding (release 15),” 3GPP, Tech. Rep.,
+Jan, 2020, version 15.8.0.
+
+3GPP, 3GPP TS 36.211, “Evolved Universal Terrestrial Radio Access
+(E-UTRA): Physical channels and modulation (Release 15),” 3GPP, Tech.
+Rep., Jan. 2020, version 15.8.0.
+
+M. Rupp, S. Schwarz, and M. Taranetz, The Vienna LTE-Advanced Sim-
+ulators: Up and Downlink, Link and System Level Simulation, Springer-
+Verlag, Singapore, 2016.
+
+3GPP, 3GPP TS 36.888, “Study on provision of low-cost machine-type
+communication (MTC) user equipments (UE) based on LTE (release 12),”
+3GPP, Tech. Rep., Jun. 2013, version 12.0.0.
+
+3GPP, 3GPP TS 36.942, “Evolved universal terrestrial radio access (E-
+UTRA): Radio frequency (RF) system scenarios (release 15)” 3GPP, Tech.
+Rep., Jul, 2018, version 15.0.0.
+
+P. Wu, and M. Xia, “An efficient
+in Proc. IEEE Wireless Commun.
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+
+===== System-Level_Simulation_Framework_for_NB-IoT_Key_Features_and_Performance_Evaluation-12..txt =====
+588
+
+(32]
+
+(33]
+
+[34]
+
+[35]
+
+[36]
+
+[37]
+
+[38]
+
+[40]
+
+(41)
+
+[42]
+
+3GPP, 3GPP TR 45.914,"Circuit switched voice capacity evolution for
+GSMIEDGE radio access network (GERAN) (release 15),” 3GPP, Tech,
+Rep., Jun. 2018, version 15.0.0.
+
+Claussen, “Efficient modelling of channel maps with correlated shadow
+fading in mobile radio systems,” in Proc. IEEE 16th Int, Symp. Pers. Indoor
+Mobile Radio Commun., 2005, pp. 512-516
+
+Z. Shi, S. Ma, F. Hou, K.-W. Tam, and Y.-C. Wu, “Optimal power allocation
+for HARQ schemes over time-correlated Nakagami-m fading channels,”
+in Proc. IEEE Int. Conf. Commun. Syst., 2016, pp. 1-6.
+
+G. Piro, L. A. Grieco, G. Boggia, F. Capozzi, and P. Camarda, “Simulating
+LTE cellular systems: An open-source framework,” IEEE Trans. Veh.
+Technol., vol. 60, no. 2, pp. 498-513, Feb. 2011
+
+M. Liu, P. Ren, Q. Du, W. Ou, X. Xiong, and G. Li, “Design of system-
+level simulation platform for 5G networks,” in Proc. IEEE/CIC Int. Conf.
+Commun. China, 2016, pp. 1-6.
+
+R. Sandanalakshmi, T. G. Palanivelu, and K, Manivannan, “Effective SNR
+mapping for link error prediction in OFDM based systems,” in Proc. IET-
+U.K. Int. Conf. Inform. Commun. Technol. Electri. Sci., 2007, pp. 684-687.
+3GPP, 3GPP TS 36.213, “Evolved universal terrestrial radio access
+(E-UTRA): Physical layer procedure (release 15),” 3GPP, Tech. Rep.,
+Jan, 2020, version 15.8.0.
+
+R. Basukala, H. Ramli, K. Sandrasegaran, and L. Chen, “Impact of CQL
+feedback rate/delay on scheduling video streaming services in LTE down-
+link,” in Proc. IEEE 12th Int. Conf. Commun. Technol., 2010, pp. 1349—
+1352
+
+. M. Abd El-Atty and K. Lizos, “Enhanced uplink scheduling for contin-
+uous connectivity in high speed packet access systems,” Int. J. Commun.,
+Netw, Syst. Sci., vol. 5, no. 8, pp. 446-453, 2012.
+
+M. Cordina and C. J. Debono, “A support vector machine based sub-band
+CQI feedback compression scheme for 3GPP Ite systems,” in Proc. 2017
+IEEE Int, Symp. Wireless Commun, Syst., 2017, pp. 325-330
+
+R. Ratasuk, B. Vejlgaard, N. Mangalvedhe, and A. Ghosh, “NB-IoT system
+for M2M communication,” in Proc. IEEE Wireless Commun. Netw. Conf.,
+2016, pp. 1-5.
+
+3GPP, 3GPP TR 45.820, “Cellular system support for ultra-low complexity
+and low throughput Internet of Things (CloT) (release 13),” 3GPP, Tech.
+Rep., Dec. 2015, version 13.1.0.
+
+'] Nokia Networks, “NB-IoT — Capacity evaluation,” Tech. Rep. R1-
+
+157248, Anaheim, US, Nov. 2015
+
+|] 3GPP, 3GPP TS 36.141, “Base station (BS) conformance testing (R15)”
+
+3GPP, Tech. Rep., Oct. 2019, version 15.8.0.
+Ericsson, “NB-IoT — System level evaluation and comparison - stan-
+dalone,” Tech. Rep. R1-157398, Anaheim, US, Nov. 2015.
+
+Shutao Zhang received the B-E. degree and the M.E.
+degree in electronics and communication engineering
+from Sun Yat-sen University, Guangzhou, China, in
+2018 and 2020, respectively, and the Ph.D. degree
+in computer and information engineering from The
+Chinese University of Hong Kong, Shenzhen, China,
+in 2025.
+
+His research interests include IoT system design
+and cellular network optimization.
+
+Dr. Zhang was the recipient of the IEEE ISWCS
+Best Conference Paper Award in 2022, and the Ph.D.
+
+Scholarship (Gold Class) from the Shenzhen Research Institute of Big Data
+(SRIBD) in 2023.
+
+Wenkun Wen (Member, IEEE) received the Ph.D.
+degree in telecommunications and information sys-
+tems from Sun Yat-sen University, Guangzhou,
+China, in 2007.
+
+Since 2020, he has been with Techphant Technolo-
+gies Guangzhou Ltd. Company as Chief Engineer.
+From 2008 to 2009, he was with the Guangdong-
+Nortel R&D center in Guangzhou, China, where he
+worked as a system engineer for 4G systems. From
+2009 to 2012, he was with the New Postcom Equip-
+ment Company, Ltd., LTER&D center in Guangzhou,
+
+China, where he worked as the 4G Standard Team Manager. From 2012 to
+2018, he was with the 7th Institute of China Electronic Technology Corporation
+(CETC) as an Expert in Wireless Communications. From 2018 to 2020, he
+was the Deputy Director of the 5G Innovation Center of China Electronic
+Technology Corporation (CETC). His research interests include SG/B5G mobile
+communications, machine-type communications (MTC), narrow-band wireless
+communications, and signal processing.
+
+IEEE SYSTEMS JOURNAL, VOL. 19, NO. 2, JUNE 2025
+
+Peiran Wu (Member, IEEE) received the Ph.D. de-
+gree in electrical and computer engineering from The
+University of British Columbia (UBC), Vancouver,
+Canada, in 2015
+
+From 2015 to 2016, he was a Postdoctoral Fellow
+with UBC. In the summer of 2014, he was a Vis-
+iting Scholar with the Institute for Digital Commu-
+nications, Friedrich-Alexander-University Erlangen-
+Nuremberg (FAU), Erlangen, Germany. Since Febru-
+ary 2017, he has been with Sun Yat-sen University,
+Guangzhou, China, where he is currently an Associate
+Professor. Since 2019, he has been an Adjunct Associate Professor with the
+Southern Marine Science and Engineering Guangdong Laboratory, Zhuhai,
+China. His research interests include mobile edge computing, wireless power
+transfer, and energy-efficient wireless communications.
+
+Hongging Huang received the B.S. degree in com-
+munication engineering and the M.S. degree in
+information and communication engineering from
+Sun Yat-sen University, Guangzhou, China, in 2019
+and 2022, respectively.
+
+His research interests include 3-D channel model-
+ing and channel estimation.
+
+Liya Zhu received the M.Eng. degree in electronics
+and communication engineering from Sun Yat-sen
+University, Guangzhou, China, in 2020.
+
+Her research interests include NB-IoT downlink
+channel and pilot design.
+
+Yijia Guo (Graduate Student Member, IEEE) re-
+ceived the M.Eng. degree in electronics and com-
+munication engineering from Sun Yat-sen University,
+Guangzhou, China, in 2021. She is currently working
+toward the Ph.D. degree in deep learning-enhanced
+device authentication for Internet of Things with the
+Department of Electrical Engineering and Electron-
+ics, University of Liverpool, Liverpool, U.K.
+
+Her current research interests include the Inter-
+net of Things, deep learning, and physical layer
+authentication.
+
+Tingting Yang (Senior Member, IEEE) received
+the B.Sc. and Ph.D. degrees in telecommunica-
+tions and information systems from Dalian Maritime
+Unive in 2004 and 2010, respectively.
+
+She is currently a Professor with the Pengcheng
+Laboratory, and also with Dalian Maritime Uni-
+versity. Her research interests include network
+Al, edge intelligence, and space-air-ground-sea
+integrated networks.
+
+Dr. Yang serves as an Associate Editor-in-Chief
+for IEEE Network and JET Communications, and an
+Advisory Editor for SpringerPlus.
+
+Minghua Xia (Senior Member, IEEE) received the
+Ph.D. degree in telecommunications and information
+systems from Sun Yat-sen University, Guangzhou,
+China, in 2007.
+
+From 2007 to 2009, he was with the Electronics
+and Telecommunications Research Institute (ETRI)
+of South Korea, Beijing R&D Center, Beijing, China,
+where he worked as a Member and then as a Se-
+nior Member of the Engineering Staff. From 2010
+to 2014, he was in sequence with The University of
+Hong Kong, Hong Kong; King Abdullah University
+of Science and Technology, Jeddah, Saudi Arabia; and the Institut National de
+Ja Recherche Scientifique (INRS), University of Quebec, Montreal, Canada, as
+a Postdoctoral Fellow. Since 2015, he has been a Professor with Sun Yat-sen
+University. Since 2019, he has also been an Adjunct Professor with the Southern
+Marine Science and Engineering Guangdong Laboratory (Zhuhai). His research
+interests include wireless communications and signal processing.
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:14:14 UTC from IEEE Xplore. Restrictions apply.
+

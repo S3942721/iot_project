@@ -1,0 +1,2770 @@
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-01..txt =====
+technologies
+
+Article
+
+Optimizing LoRaWAN Gateway Placement in Urban Environments:
+A Hybrid PSO-DE Algorithm Validated via HTZ Simulations
+
+Kanar Alaa Al-Sammak 1*®, Sama Hussein Al-Gburi 1*©, Ion Marghescu !, Ana-Maria Claudia Dragulinescu 1©,
+Cristina Marghescu !, Alexandru Martian 1, Nayef A. M. Alduais ?® and Nawar Alaa Hussein Al-Sammak 3
+
+check for
+updates
+
+©
+
+Academic Editor: Spyridon Nikolaidis
+
+Received: 22 May 2025
+Revised: 12 June 2025
+Accepted: 15 June 2025
+Published: 17 June 2025
+
+Citation: Al-Sammak, K.A.; Al-Gburi,
+S.H.; Marghescu, L.; Dragulinescu,
+A-M.C,; Marghescu, C.; Martian, A
+Alduais, N.A.M,; Al-Sammak, N.A.H.
+Optimizing LoRaWAN Gateway
+Placement in Urban Environments: A
+Hybrid PSO-DE Algorithm Validated
+via HTZ Simulations. Technologies 2025,
+13,256. https:/ /doi.org/10.3390/
+technologies13060256
+
+Copyright: © 2025 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons.
+Attribution (CC BY) license
+
+(https:/ /creativecommons.org/
+licenses /by /4.0/).
+
+Faculty of Electronics, Telecommunications and Information Technology, National University of Science and
+Technology Politehnica Bucharest, 060042 Bucharest, Romania; ion.marghescu@upb.ro (I.M.);
+ana.dragulinescu@upb.ro (A.-M.C.D)); cristina.marghescu@cetti.ro (C.M.); alexandru.martian@upb.ro (A.M.)
+Faculty of Computer Science and Information Technology (FSKTM), Universiti Tun Hussein Onn
+
+Malaysia (UTHM), Parit Raja, Batu Pahat, Johor 86400, Malaysia; nayef@uthm.edu.my
+
+College of Education for Pure Science, University of Kerbala, Karbala 56001, Iraq; alasadinawar43@gmail.com
+Correspondence: kanar_alaa.al@stud.etti.upb.ro (K.A.A.-S.); sama_hussein.al@stud.etti.upb.ro (S.H.A.-G.)
+
+Abstract: With rapid advancements in the Internet of Things (IoT), Low-Power Wide-Area
+Networks (LPWANs) play a crucial role in expanding IoT’s capabilities while using mini-
+mal energy. Among the various LPWAN technologies, LORaWAN (Long-Range Wide-Area
+Network) is particularly notable for its capacity to enable long-range, low-rate communi-
+cations with low power needs. This study investigates how to optimize the placement of
+LoRaWAN gateways by using a combination of Particle Swarm Optimization (PSO) and
+Differential Evolution (DE). The approach is validated through simulations driven by HTZ
+to evaluate network performance in urban settings. Centered around the area of the Po-
+litehnica University of Bucharest, this research examines how different gateway placements
+on various floors of a building affect network coverage and packet loss. The experiment
+employs Adeunis Field Test Devices (FTDs) and Dragino LG308-EC25 gateways, system-
+atically testing two spreading factors, SF7 and SF12, to assess their effectiveness in terms
+of signal quality and reliability. An innovative optimization algorithm, GateOpt PSODE,
+is introduced, which combines PSO and DE to optimize gateway placements based on
+real-time network performance metrics, like the Received Signal Strength Indicator (RSSI),
+the Signal-to-Noise Ratio (SNR), and packet loss. The findings reveal that strategically
+positioning gateways, especially on higher floors, significantly improves communication
+reliability and network efficiency, providing a solid framework for deploying LORaWAN
+networks in intricate urban environments.
+
+Keywords: IoT; LPWAN; LoRaWAN,; gateway optimization; PSO; DE; HTZ Communications
+
+1. Introduction
+
+IoT is considered a revolution transforming the globe. It entails massive objects linked
+to the internet that can gather and distribute data [1]. These are smart, primitive devices
+with wireless sensing and embedded communication functions [2]. There are intelligent
+and networked devices in an IoT ecosystem that include but are not limited to processors,
+sensors, and communication gadgets that work harmoniously to obtain, relay, and act
+on the information that they receive [3]. IoT sensor devices transport telemetric data
+via an IoT gateway or other edge devices to the cloud for either remote or local data
+analysis [3]. IoT and Wireless Sensor Networks (WSNs) are both integral in this wave
+of technologies [4]. This has made LPWANSs the network of choice when it comes to
+
+Technologies 2025, 13, 256
+
+https: / /doi.org / 10.3390/technologies13060256
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-02..txt =====
+Technologies 2025, 13, 256
+
+2 of 41
+
+implementing IoT, because they guarantee long-range communication and low power
+consumption [5]. LPWAN was developed to allow for long-range communications at a low
+data rate and with low energy consumption. Hence, LPWAN devices are low-complexity
+long-range devices. LPWAN works either in license-free frequency bands or in licensed
+frequency (cellular) bands [6]. Since the rise of IoT, LPWAN devices have become highly
+available to both industrial and commercial users. End devices are so commonly integrated
+in our society that they have become ubiquitous. A few examples include smart meters
+and temperature and humidity sensors. LORaWAN, the most popular LPWAN, has been
+in existence since 2015 and has rapidly penetrated the market, with a growing number
+of applications on the Internet of Things, which have included significant features such
+as security and two-way communication and even localization services. While Semtech
+is the major manufacturer of LoRa chips, some manufacturers have a license to produce
+them (e.g., Microchip) or collaborate with Semtech (e.g., ST Microelectronics). Alternatively,
+manufacturers may develop a LoRa module based on a chip from Semtech [7]. LARaWAN
+operates at 868 MHz in Europe and 915 MHz in North America in the sub-GHz Industrial,
+Scientific, and Medical (ISM) frequency bands [8]. The purpose of a LORaWAN network is
+to send or receive information from a considerably large area using low power. LoRa is the
+physical layer, while LoORaWAN is the Medium Access Control (MAC) layer that adopts a
+star topology to permit communication between multiple end equipment and the network
+gateway [9]. Understanding key principles is still needed, as network characteristics
+should be studied from the point of view of environmental, physical, and meteorological
+factors [10]. Well-defined space and time series measurements must be undertaken, as they
+would assist in the representation and understanding of complex and varying parameters of
+real natural or artificial environments [11]. LoRa technology utilizes a modulation scheme
+known as Chirp Spread Spectrum (CSS), which is designed to permit strong, long-range
+communication while maintaining low power consumption, so LORaWAN provides higher
+performance when the tradeoff between coverage and power consumption is considered.
+In CSS, data is transmitted using chirping signals, which are time-varying frequency signals
+that decrease or increase in frequency over time for LP. This modulation is resilient to noise
+and interference, which makes LoRa ideal as a PHY for LoRaWAN [12]. LoRa receiver
+sensitivity, which makes out its capability to reveal weak signals, depends on the spreading
+factor (SF) [13]. The SF determines the number of bits per symbol in the signal, affecting
+the tradeoff between the data rate and the range. Six spreading factors, ranging from SF7
+to SF12, are supported by LoORaWAN, where a high level of data is provided by SF7, but
+the range is shortest, while the range is longest with SF12, but the data rate is lowest [14].
+When the spreading factor increases, the signal takes more time in the air, which increases
+the sensitivity of the receiver (by increasing the energy per bit) and makes it possible to
+detect weaker signals. Adaptability makes LoRa a flexible solution for IoT applications,
+requiring changeable communication distances and network conditions [15].
+
+Motivation and Contributions
+
+The network deployment of LoRaWAN in urban environments leads to several chal-
+lenges, mainly in gateway placement optimization terms to enhance coverage, reduce the
+loss of packets, and maintain high signal quality. This research investigates LARaWAN
+devices’ performance under configuration with two spreading factors, SF7 and SF12. SF7
+was chosen due to its higher data rate feature, which makes it suitable for environments
+where faster data transmission and shorter communication distances are required. SF12, on
+the other hand, operates at a lower data rate and provides reliable communication over
+long distances and in difficult environments. This makes SF12 suitable for obstructing
+environments or where devices are far from the gateway.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-03..txt =====
+Technologies 2025, 13, 256
+
+3 of 41
+
+Additionally, this research addresses complex challenges such as signal obstruction
+and multipath fading, since urban environments are rife with dense infrastructures that
+block and reflect signals, severely degrading RSSI and SNR. Another challenge which
+is important is that 868/915 MHz ISM bands are notoriously crowded, leading to signal
+collisions and subsequent packet losses, a critical challenge for ensuring communication link
+stability. To face the challenges of designing communication systems based on LORaWAN,
+we developed and validated GateOpt PSODE, a novel hybrid algorithm that dynamically
+optimizes gateway placements by balancing RSSI, SNR, and packet loss. Unlike existing
+approaches that often focus on single-objective optimizations, such as coverage or cost,
+our approach provides a real-time, scalable solution tailored to the intricate demands of
+urban IoT deployments. By integrating extensive HTZ simulations and empirical data,
+our methodology not only confirms the viability of proposed gateway placements but
+also offers a robust framework for future deployments, significantly enhancing network
+reliability and performance in urban settings.
+
+The objectives of this paper are as follows:
+
+¢ To develop and implement the GateOpt PSODE algorithm for dynamic and optimal
+LoRaWAN gateway placement.
+
+¢ To evaluate the performance impacts of spreading factors SF7 and SF12 on urban
+network configurations.
+
+e To validate the optimization framework using both HTZ-driven simulations and
+empirical field data.
+
+e To provide actionable insights and strategic recommendations for effective gateway
+placements in urban IoT environments.
+
+e By addressing these objectives, this study contributes significantly to the field of urban
+IoT networking, offering substantial advancements in both theoretical and practical
+aspects of network design and deployment.
+
+This paper is organized as follows: Section 2 reviews the related contributions to
+LoRaWAN gateway placement and strategies for the optimization of LPWAN. Section 3
+reveals the research methodology, system architecture, and experimental setup. In Section 4,
+a discussion will be provided concerning network architecture and hardware components.
+The aim of Section 5 is to provide an analysis of the software implementation, data man-
+agement, and hybrid GateOpt PSODE algorithm results. Section 6 presents experimental
+results that include RSSI, SNR, and packet loss analyses along with HTZ simulation valida-
+tion. Finally, this study concludes with Section 7, which is devoted to recommendations
+aimed at the deployment of urban IoT.
+
+2. Related Work
+
+The development of efficient network architectures is pivotal in advancing IoT, particu-
+larly through the optimization of network protocols and deployment strategies in LPWAN.
+This section reviews relevant studies focusing on LoORaWAN, which is critical for enhancing
+JoT connectivity in urban and complex environmental settings. Several studies have empha-
+sized the importance of strategic gateway placement to enhance LORaWAN coverage and
+performance. Savithi et al. [16] explore the optimization of LARaWAN gateway placement
+by balancing system costs and bitrate maximization. Citoni et al. [17] analyze packet loss
+in LoRaWAN networks, finding that proper gateway spacing enhances performance and
+that using SF11 and SF12 decreases packet delivery rates in denser networks. In [18], the
+authors explore the effectiveness of LORa/LoRaWAN technology in IoT networks through
+experiments in both indoor and outdoor settings. They confirm that LoRa performance
+is superior outdoors and note that gateway elevation, ensuring a clear line of sight with
+oT nodes, enhances signal quality and extends the communication distance. This study
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-04..txt =====
+Technologies 2025, 13, 256
+
+4of 41
+
+contributes to understanding LoRa’s operational strengths and limitations in different envi-
+ronments. Mikhaylov et al. [19] assess LORaWAN performance in Brno, Czech Republic,
+testing over 231 locations with more than 20 gateways, and they found that the nearest
+gateway provided the strongest signal in only 47% of cases, and they analyze RSSI, SNR
+variations, and spreading factor distributions in urban settings.
+
+Svertoka et al. [20] explore the potential of LoORaWAN (868 MHz band) for device
+localization in industrial IoT applications, addressing both its past criticisms and recent
+advancements. Their study, conducted through measurement campaigns at the Brno Uni-
+versity of Technology and the University Politechnica of Bucharest, evaluates LORaWAN’s
+feasibility across various indoor and outdoor settings. Findings indicate that a dense
+deployment of LoORaWAN gateways can achieve meter-level accuracy, making it a viable
+solution for worker localization in industrial environments. Dawaliby et al. [21] investi-
+gated network slicing in LoRa smart city networks, using maximum likelihood estimation
+to optimize spreading factors and transmission power. Their simulations show improved
+QoS metrics, like delay, throughput, and energy efficiency, while maintaining reliable
+and isolated network slices. The authors in [22] examine the effectiveness of LARAWAN
+for localization in Industry 5.0 networks, where traditional methods often lack accuracy.
+Their work includes an analysis of two underground datasets and the development of two
+innovative k-nearest neighbor (k-NN) algorithms that improve position accuracy by up to
+17% through optimized neighbor selection and preprocessing techniques.
+
+Additionally, Cruz et al. [23] present a methodology for optimizing LoRa gateway
+placement using Evolutionary Particle Swarm Optimization (EPSO) in wooded campus
+environments. Their study, at the Federal University of Para, adjusts local propagation
+models and applies EPSO to maximize coverage and minimize gateway numbers, whereas
+their simulations confirm that three gateways can effectively cover the campus, achieving
+the desired reception sensitivity of —108 dBm. In [24], a machine learning ensemble was
+employed to optimize LORaWAN gateway placement, enhancing network scalability and
+efficiency. The authors’ approach includes a constrained K-means algorithm, regression
+model, and neural network.
+
+The simulation in [25] addresses the overlooked challenge of efficiently planning and
+deploying LoRa networks, focusing on gateway placement, spreading factor assignment,
+and power allocation. The problem is formulated as a mixed-integer non-linear optimiza-
+tion problem, and the author develops an approximate algorithm for large-scale network
+planning. Mendes et al. [26] optimized LORaWAN gateway placement to minimize power
+consumption, extend the network lifetime, and enhance spectrum efficiency, demonstrating
+effective planning for wide-area monitoring systems. Rezazadeh et al. [27] proposed a
+joint gateway placement and spread factor assignment framework for LORaWAN in smart
+cities, addressing challenges of shadow fading in urban environments. Their unsupervised
+learning-aware greedy algorithm improved network coverage probability by up to 15%
+compared to traditional methods.
+
+Nyirenda, in his book [28], examined PSO for gateway placement in LORaWAN net-
+works. Their simulations introduced a modified PSO that incorporates gateway distancing.
+Table 1 presents a comparison of our hybrid algorithm, GateOpt PSODE, with other works.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-05..txt =====
+Technologies 2025, 13, 256 5 of 41
+Table 1. Comparison of our GateOpt PSODE algorithm with other works.
+‘Aspect Present Works Comparison of GateOpt PSODE ‘Aspect
+While other algorithms target diverse
+Sele te domains (engineering, hydrology, and
+Reliability optimization 1°51, battery modeling), GateOpt PSODE
+Application diversity Parameter estimation bv focuses on optimizing LoORaWAN Application diversity
+
+Multi-objective handling
+
+Scalability
+
+Algorithm design
+
+Performance metrics
+
+Field-specific benefits
+
+Application diversity
+
+SOC estimation [31], and SSL
+modeling [32].
+
+Al-based PSO and DE [33]
+balance LCOE and LPSP for
+renewable energy systems and
+ACVDEPSO [34] for UAVs.
+
+Modular hybridization [35]
+demonstrates scalability with
+800 hybrid variants.
+
+Algorithms like SaPSODE [31]
+and MLP-PSODE [32]
+integrate advanced features
+like self-adaptive mutation.
+
+Improved performance shown
+for SSL accuracy [32], reduced
+LCOE [33], and reliable
+redundancy [29].
+
+UAV navigation in 3D [34],
+renewable energy
+optimization [33], and
+hydrological modeling [32].
+
+Reliability optimization [29],
+parameter estimation [30],
+SOC estimation [31], and SSL
+modeling [32].
+
+gateway placement for communication
+network performance, addressing a
+unique and underexplored domain.
+GateOpt PSODE similarly balances RSSI,
+SNR, and packet loss but applies this
+balance to communication network
+metrics, ensuring robust performance in
+LPWAN environments, a specialized
+multi-objective approach.
+
+GateOpt PSODE leverages scalability by
+applying k-means clustering for
+preprocessing, enabling it to efficiently
+manage clusters of RSSI and SNR data
+across multiple gateways in large
+network setups.
+
+GateOpt PSODE integrates advanced
+hybrid features, combining PSO and DE
+with a clustering approach, providing a
+unique mix of exploration and
+exploitation tailored to network
+deployment problems.
+
+GateOpt PSODE achieves significant
+performance improvement in network
+metrics such as RSSI, SNR, and packet
+loss, ensuring optimized gateway
+placement and superior coverage
+compared to traditional placement
+strategies.
+
+GateOpt PSODE introduces field-specific
+advantages by addressing real-world
+LPWAN challenges, like interference,
+multi-gateway placement, and
+maintaining connectivity in dynamic
+building environments, offering a unique
+solution tailored to LORaWAN.
+
+While other algorithms target diverse
+domains (engineering, hydrology, and
+battery modeling), GateOpt PSODE
+focuses on optimizing LogaWAN
+gateway placement for communication
+network performance, addressing a
+unique and underexplored domain.
+
+Multi-objective handling,
+
+Scalability
+
+Algorithm design
+
+Performance metrics
+
+Field-specific benefits
+
+Application diversity
+
+3. Methodology and System Overview
+
+This section outlines the methodology used to optimize LoORaWAN gateway placement,
+including system design, data acquisition, and hybrid optimization. Also, a detailed
+overview of the experimental setup, hardware components, and network architecture
+
+is provided.
+
+3.1. Methodology
+
+This study adopts a systematic approach to optimize LoORaWAN gateway placement
+in urban environments, combining experimental measurements, clustering analysis, and
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-06..txt =====
+Technologies 2025, 13, 256
+
+6 of 41
+
+LoRaWAN Configuration
+(€U868 MHz, SF7/SF12)
+
+|
+
+Hardware: Adeunis FTD
+Class A/C, Dragino
+LG308-EC25
+
+hybrid optimization algorithms. The methodology is structured into five key stages as
+in Figure 1:
+
+Step 1: System Design and
+Technology Selection
+
+SN\
+
+Step 2: System
+Implementation
+
+—~
+
+Gateway Positioning
+(vertical setup for Step 3: Data Collection and
+multi-story analysis) p
+
+| aa N
+
+Experiment Setup (6 hours,
+3 phases: P1, P2, P3)
+
+Payload Decoding
+
+(JavaScript formatter)
+
+Network Configuration (The
+Things Network)
+
+Step 4: Hybrid
+Optimization (GateOpt
+PSODE)
+
+University of Bucharest,
+
+Location: Politehnica
+(urban setting)
+
+“a
+
+—_
+
+Objective Function: ’
+Operator Role: Manual Monitor Role: Data JSON Parsing (Python ‘a-norm(RSSI) + | 5: Simulation and
+packet transmission. reception validation scripts) B-norm(SNR) + Validation
+
+Y-norm(Packet Loss)
+
+Lacan
+
+Particle Swarm ae HTZ Communications
+
+Optimization (Global
+
+(Urban propagation
+exploration to initialize |
+wernt) simulation)
+
+| |
+
+Differential Evolution Propagation Models: ITU-R
+(Local refinement via 1812-6 (ground/3rd floor),
+mutation and crossover) Cost-Hata 231 (top floor)
+
+|
+
+Validation Metrics:
+Standard deviation,
+average error, correlation
+with real data
+
+Key Metrics Extraction |
+(RSSL, SNR, GPS, packet
+oss)
+
+Geodesic Distance
+Calculation (geopy)
+
+K-Means Clustering (6
+clusters for RSSI, 7 for SNR)
+
+Figure 1. Methodology workflow.
+
+e Step 1: System Design and Technology Selection: The LORaWAN configuration in this
+study operates in the EU868 MHz band, utilizing SF7 for high data rate transmission
+and SF12 for long-range communication. The hardware selection includes Adeunis
+Class A/C FTDs for RSSI/SNR measurements, configured with Over-The-Air Activa-
+tion (OTAA) and 14 dBm transmission power, while Dragino LG308-EC25 gateways
+with LTE backhaul were strategically placed at five building levels (from the ground to
+the 9th floor). The experiment was conducted over a 6 h continuous operation, divided
+into three phases (P1, P2, and P3), in the urban area around Politehnica University of
+Bucharest, as shown in Figure 2. This location was chosen for its diverse architectural
+styles and urban infrastructure, including closely packed buildings and open areas,
+providing a comprehensive environment to assess LORaWAN performance in dense
+urban settings.
+
+e Step 2: System Implementation: In the system implementation, the hardware deploy-
+ment involved positioning gateways vertically to analyze multi-story signal propaga-
+tion. The network configuration integrated the setup with The Things Network (TTN)
+for real-time packet monitoring. The experiment assigned specific roles, where the
+operator manually triggered packet transmissions using the Adeunis FTD, while the
+monitor validated data reception on TIN.
+
+e Step 3: Data Collection and Preprocessing: In the data collection and preprocessing
+phase, payload decoding was performed using custom payload formatter in JavaScript,
+and after that, JSON data was parsed from TTN using Python scripts (PyCharm 2023.2)
+extracting key metrics, such as RSSI, SNR, GPS, and packet loss. The geodesic distance
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-07..txt =====
+Technologies 2025, 13, 256
+
+7 of 41
+
+between devices and gateways was calculated using the geopy library to ensure
+precise localization. Additionally, K-means clustering was applied, with six clusters
+for RSSI and seven for SNR, to classify signal quality and analyze network performance
+more effectively.
+
+e Step 4: Hybrid Optimization (GateOpt PSODE): In the hybrid optimization (GateOpt
+PSODE) phase, the objective function aimed at minimizing cost, defined as
+a-norm(RSSI) + B-norm(SNR) + y-norm(packet loss). The PSO phase focused on global
+exploration to initialize the weights («, B, and y), ensuring an optimal starting point. Fol-
+lowing this, the DE phase performed local refinement through mutation and crossover,
+enhancing the accuracy and efficiency of the gateway placement optimization.
+
+e Step 5: Simulation and Validation: In the simulation and validation phase, HTZ
+Communications was used to simulate urban propagation, applying the ITU-R 1812-6
+model for the ground and 3rd floors and the Cost-Hata 231 model for the top floor.
+The validation process evaluated key metrics, including standard deviation, average
+error, and correlation between real-world measurements and simulated data, ensuring
+the accuracy and reliability of the proposed optimization approach.
+
+Nationalag. al
+jade Stiintatsivy
+
+Figure 2. LoRaWAN experiment area.
+
+This work analyzes the possibility of using LoORaWAN technology as smart metering
+systems, which require robust low-power long-range communication for data collection at
+utility meters. Our focus concerns a range of regions which include sparsely populated
+rural locations, small towns, and suburban regions on the periphery of larger cities. These
+areas have low infrastructure, with smart meters mostly installed outdoors. Gas meters are
+typically set at approximately one meter’s height, while electricity meters are positioned
+one to two meters from the ground level. Such installation patterns have considerable
+consequences for signal propagation in structured environments, such as outdoor-to-indoor
+or non-line-of-sight (NLoS) conditions. To improve the network coverage and increase ease
+of deployment, we optimized a scenario where LORaWAN gateways (GWs) are located
+on top of tall buildings. By placing GWs on the upper floors of high-rise buildings, signal
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-08..txt =====
+Technologies 2025, 13, 256
+
+8 of 41
+
+reach is enhanced while infrastructure clutter is diminished, making it easier to reduce
+deployment efforts. Figure 2 shows the experimental area, which is marked in the center,
+near Politehnica University in Bucharest. This site has mixed urban settings, as it contains
+tall buildings interspersed with other structures along unobstructed pathways for signal
+transmission. The primary building for GW placement is labeled P1, while the path taken by
+the mobile end device and all followed paths, including main and secondary transmission
+paths, are highlighted. For further details pertaining to the measurement points and their
+spatial distribution, see Figure 11.
+
+3.2. Technology Overview
+3.2.1. LoRaWAN Technology
+
+LoRa/LoRaWAN is an open-source technology that can autonomously and cheaply
+build up a private network without the need for third-party infrastructure [36]. LoRa is used
+as the physical layer (PHY) of LORaWAN, with low-energy and long-range capabilities
+that operate in sub-gigahertz unlicensed radio frequencies. LoRa Alliance developed
+LoRaWAN, a communication solution, including the MAC protocol for the datalink layer
+and a network layer based on star architecture [37].
+
+LoRa/LoRaWAN is an LPWAN technology for a battery-operated wireless connection
+of objects to the internet in regional, national, or worldwide networks that aims at major
+ToT needs, including two-way communication, end-to-end protection, mobility, and local-
+ization. The LoRa physical layer supports long-range communication links, whereas the
+LoRaWAN protocol principally functions as a protocol to route the data between LORaWAN
+gateways and LoRa devices. In the frame of LORaWAN, one can also manage data rates,
+communication frequencies, and transmission power for all nodes in the network, which
+are asynchronous and transmit data on demand [36].
+
+e End devices: These are typically sensors or actuators and may include both. They
+are generally battery-powered and capable of wireless communication. These devices
+utilize RF signals modulated through the CSS technique to connect to the network
+via gateways.
+
+«© Gateways: These act as bridges between end devices and the network server. Upon
+registration with a network server, gateways simply forward the received messages
+from end devices to the network server and vice versa without performing any com-
+putational tasks.
+
+e Network server: This serves as the central management hub of the network, handling
+all aspects of network operations, including the filtering of duplicate messages and
+the implementation of adaptive data rate schemes.
+
+«Application server: This manages application-specific data which involves operations
+such as decryption, data storage, and visualization. This server processes data received
+from end devices, managing both uplink and downlink data flows as required by
+the application.
+
+In the LoRaWAN architecture, LORaWAN networks depict a star-of-stars gateway,
+transferring messages between end devices and a central core network server. The Lo-
+RaWAN protocol supports privately owned networks, allowing customization and modifi-
+cation at various architectural levels. This flexibility underpins the deployment of tailored
+solutions that can address specific operational needs. It also proposes a network archi-
+tecture indicating how the devices are to be connected, as well as the management and
+parameterization of the channels. The latest version of the protocol, published by the LoRa
+Alliance, is version 1.1 [38], which guarantees compatibility with its predecessor, 1.0, the
+first version of the protocol, as in Figure 3.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-09..txt =====
+Technologies 2025, 13, 256
+
+9 of 41
+
+LoRaWAN’
+
+(Data Flow
+
+Logical Layer (MAC)
+
+MAC
+
+Security Protocols
+
+Adaptive Data Rate | | Channel Selection
+
+Options
+
+"Configuration )
+
+y
+| |
+
+Device Classes
+
+ClaseA | Clase B
+
+Signal Transmission
+
+LoRa
+
+‘Communication
+
+Clase C
+
+Figure 3. The LoRaWAN protocol.
+
+Classes of End Devices
+LoRaWAN defines three classes of end devices to support various application needs:
+
+Class A (Low-Power Bidirectional): This is the default class, where communication
+is always initiated by the end device. Each uplink transmission is followed by two
+downlink windows, providing a balanced approach to communication. This setup
+minimizes power consumption but leads to higher latency [39].
+
+Class B (Bidirectional with Scheduled Downlink): Its operation is built on a synchro-
+nization mechanism between the network (gateway and LoRaWAN Network-Server)
+and the end devices. It supplements the Class A operation with additional scheduled
+downlink reception slots (ping slots), which are synchronized with the network via
+periodic beacons. This class allows for downlink communications at predetermined
+times, improving the predictability of communications at the cost of slightly increased
+power consumption [40].
+
+Class C (Lowest Latency Bidirectional): Class C maintains an almost continuous
+open receive window, closing only when transmitting. This configuration guarantees
+the lowest latency to downlink communications, as the network server can send
+communications at any time, assuming the device's receiver is open [41].
+
+3.2.2, Hardware Overview
+
+The experimental setup for optimizing LoRaWAN gateway placement required a
+robust selection of end devices and gateways to ensure accurate data collection and perfor-
+mance evaluation. This section details the hardware components, including their technical
+specifications, their role in the experiment, and the justification for their selection.
+
+End Devices: The Adeunis FTD (see Figure 4a) [42] was chosen for its high reliability in
+measuring RSSI and SNR in real-world conditions. These devices operate in the EU868 MHz
+band, supporting Over-The-Air Activation (OTAA) and 14 dBm transmission power, which
+ensures secure network access and consistency in data collection. The Adeunis FTDs’ key
+specifications are summarized in Table 2. According to the manufacturer, the Adeunis FTD
+supports a range of up to 15 km in rural areas and 2-5 km in urban environments; however,
+in our urban experimental setup, the maximum measured transmitter-to-gateway distance
+was approximately 1 km, as determined by a GPS and Google Maps. The FTD devices were
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-10..txt =====
+Technologies 2025, 13, 256
+
+10 of 41
+
+carried by a person walking outdoors during all phases, ensuring practical, real-world
+coverage analysis. Adeunis FTDs were most preferred for their high reliability and accuracy
+in reading such important metrics as RSSI and SNR. Of course, their basic compatibility
+with TTN and support of the LoRaWAN protocol made them ideal for field use, especially
+from the point of view of signal strength or different kinds of interference in urban settings
+that might affect communication quality. Also, device configuration included Over-the-Air
+Activation (OTAA) for secure network access. During the experiment, adaptive data rate
+(ADR) was set off to have consistent transmission performance.
+
+Dadeunis
+
+(b)
+
+Figure 4. (a) Adeunis FTD (end devices) and (b) Dragino LG308-EC25 (gateway).
+
+Table 2. Specifications of Adeunis FTDs.
+
+Specification Details
+Spreading factors SF7 and SF12
+Frequency band European ISM band (863-870 MHz)
+LoRaWAN-supported regions EU863-870 (experiment conducted in Romania)
+Wireless security AES-128 data encryption (LoRaWAN only)
+LoRaWAN class Class A
+LoRaWAN features OTAA (Over-The-Air Activation)
+Adaptive data rate (ADR) Disabled
+RF transmission power 14 dBm (25 mW)
+Sensitivity —140 dBm LoRaWAN EU868 @SF12
+Supported protocols LoRaWAN
+GPS support Latitude /longitude coordinates in degrees, minutes,
+
+and seconds
+Up to 15 km in rural areas and 2 to 5 km in urban
+
+Range
+8 areas
+
+Gateway—Dragino LG308-EC25: Dragino LG308-EC25 (Figure 4b) is an example of a
+robust LoRaWAN gateway, which uses a cellular backhaul (EC25 LTE module) and is also
+a multi-channel one regarding the reception of data from LoRaWAN devices [43]. Such
+TTIN-optimized gateways are very good, especially for use in urban cases. The experiment
+was conducted using the EU868 frequency band (863-870 MHz). The gateway was placed
+at five different building levels—the ground floor, 1st floor, 3rd floor, 5th floor, and 9th
+floor (the top of building)—to assess variations in signal strength, packet loss, and SNR
+at different heights in the building. The key specifications of Dragino LG308-EC25 are
+summarized in Table 3 below:
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-11..txt =====
+Technologies 2025, 13, 256 of 41
+Table 3. Dragino LG308-EC25 gateway specifications.
+Specification Details
+LoRaWAN compatibility Multi-channel support for EU868 (863-870 MHz)
+Backhaul EC25 LTE module for cellular connectivity
+Sensitivity Up to —142.5 dBm with SX1250 Tx/Rx front-end
+
+Signal rejection 70 dB CW interferer rejection at 1 MHz offset
+8 x SF5-SF12, 125/250/500 kHz LoRa, and (G)FSK
+demodulator
+10 programmable parallel paths
+Supports DDR adaptation for efficient transmission
+True antenna diversity for reliable reception
+Ground floor, 1st floor, 3rd floor, 5th floor, and
+
+9th floor (top of building)
+
+Demodulation capability
+
+Parallel demodulation paths
+Dynamic data rate (DDR)
+Antenna diversity
+
+Placement in experiment
+
+4. Network Architecture Overview
+
+A well-structured LoRaWAN network architecture is essential for optimizing data
+transmission, coverage reliability, and energy efficiency in urban environments. This study
+implements a multi-tier LoORaWAN architecture, integrating end devices, gateways, a
+network server, and an application server to ensure seamless communication, real-time
+monitoring, and data analysis.
+
+4.1. LORaWAN Network Architecture
+
+The architecture of a typical LORaWAN network comprises several critical components,
+including end devices, gateways, a network server, and an application server [44], as
+illustrated in Figure 5.
+
+End Devices
+
+Commu in Flow
+
+Send Data
+jp ___,
+
+Different sensor data
+sent to gateways
+
+Forward Data
+
+Data Processing #FFEFBC
+Process Data
+
+Send Acknowledgment |
+
+Send Response
+
+Relay Acknowledgment
+
+End Devices
+
+Figure 5. A typical LoORaWAN network architecture.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-12..txt =====
+Technologies 2025, 13, 256
+
+12 of 41
+
+4.2. Data Transmission Workflow
+
+The data transmission workflow in the LORaWAN network follows a structured
+process to ensure accurate data collection, real-time monitoring, and reliable performance
+evaluation. Packet transmissions are manually triggered by the operator using the Adeunis
+FTD, enabling controlled and repeatable data collection across different environmental
+conditions. Once transmitted, the packets are received by The Things Network (TTN),
+where real-time validation is performed to monitor packet delivery, RSSI, SNR, and other
+key performance indicators. The function checks a bitmask to determine which data fields
+are included and then decodes each field accordingly:
+
+¢ Temperature: This is decoded from the bytes, with adjustments for a signal, providing
+critical information for environmental monitoring that can affect device performance
+and data reliability.
+
+e Trigger Source: This parameter identifies whether data transmission was triggered by
+movements detected via the accelerometer or manual button presses. It is essential to
+understand the context in which data is sent, which is vital for applications that react
+to environmental changes or user interactions.
+
+e GPS Information: By calculating the latitude and longitude from multiple bytes,
+precise location data is obtained, which is essential for spatial analysis and validating
+the coverage effectiveness of deployed devices.
+
+e Frame Counters: These counters, which track uplink and downlink frames, are instru-
+mental in identifying packet loss or duplications, which is crucial for maintaining data
+integrity and efficient network management.
+
+e Battery Level: Decoded from two bytes to reveal the voltage in millivolts, monitoring
+the battery level is key for predicting device maintenance schedules and ensuring
+operational longevity.
+
+e RSSI and SNR: These metrics provide data on signal strength and noise ratio,
+which is fundamental for analyzing communication reliability and optimizing
+network performance.
+
+The payload was formatted using JavaScript on the application side in TTN, as illus-
+trated in Figure 6. The decoded data, collected in a JSON file from TTN, underwent some
+steps of transformation to prepare it for the analysis stage. Figure 7 shows the structured
+dataset. These were then automated by Python scripts which not only improved the ac-
+curacy but also the speed of executing activities involving data. Figure 8 illustrates the
+concise steps for data preprocessing.
+
+Figure 6. The decoding process of payload data.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-13..txt =====
+Technologies 2025, 13, 256
+
+13 of 41
+
+UplinkMessage
+session_key_id [String
+f port Integer
+fent Integer
+fim_payload | String
+received_at__ [DateTime
+
+consumed_airtime| String
+
+Kent_by fontains \yeceived_by
+DecodedPayload
+~ Gateway
+altitude [Intezer] |_| | —
+ateway i
+battery [Integer] | | >>}S 88 | ne
+downlink [Integer = =
+Device a time [DateTime
+= latitude | Float — a
+ring Tongituds T Float mestamp | Integer
+String! sels | Cat resi Integer
+String ss channel_resi | Integer
+sats [Integer
+String “ous _finveeer snr Float
+S uplink_token | String
+temperature |Intexer
+= [channel_index| Integer
+rigger) String. received_at [DateTime
+uplink [Integer z
+belongs_to
+‘Application
+
+PK [application id]String
+
+Figure 7. Structured dataset collected from The Things Network (TTN).
+
+Start Process
+
+‘Load JSON Data
+
+Parse JSON File
+
+(Parsing
+
+Suctess
+
+Data} Preparation
+Prepare Data for CSV
+
+Initialize Variables
+Iterate Over Data Entries
+
+Extract Data Fields
+
+Continue Loop
+
+‘Check RSSI Values More Entries
+
+Failure
+
+No Morel Entries
+
+CSV_yriting
+
+Convert Data to DataFrame
+
+[lite bata ev ]
+
+[[Hondte Prsng ror
+
+Figure 8. Data preprocessing.
+
+End Process
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-14..txt =====
+Technologies 2025, 13, 256
+
+14 of 41
+
+5. Computational Techniques for Signal Analysis and Network Optimization
+
+To enhance LoRaWAN network performance, this study employs a multi-step compu-
+tational framework that integrates geodesic distance calculations, clustering analysis, and
+hybrid optimization using PSO and DE algorithms. These techniques enable precise signal
+behavior analysis, gateway placement optimization, and performance evaluation.
+
+5.1. Distance Calculation
+
+The distance between the Adeunis FTDs and the Dragino LG308-EC25 gateways at
+different building levels was a key factor in analyzing signal behavior (RSSI and SNR),
+as well as determining packet loss rates. Since the devices and gateways were deployed
+at specific locations with known geographical coordinates, we calculated the distance
+between each device and the gateway using the geodesic method from the geopy Python
+library. The geodesic distance is the shortest path between two points on the earth’s
+surface, considering the curvature of the earth. This method is particularly accurate for
+calculating relatively short distances, as in this case, where the devices were deployed
+within a multi-story building.
+
+5.2. Clustering Analysis Using K-Means Algorithm
+K-means clustering is a commonly used unsupervised learning algorithm that parti-
+
+tions data into k clusters based on the minimization of the variance within each cluster. In
+
+this experiment, K-means clustering was applied to both SNR and RSSI metrics to classify
+signal performance into multiple distinct groups. Unlike the traditional approach of classi-
+fying signal quality into predefined categories, such as “Low,” “Moderate,” and “High,”
+we used six clusters for RSSI and seven clusters for SNR. This clustering approach allowed
+for a more granular analysis of the data, providing richer insights into the variations in
+signal quality across different distances from the gateway.
+
+The K-means algorithm works through the following iterative process:
+
+e Step 1: Select the initial k centroids, where k is the number of clusters. In our case,
+k =6 for RSSI and k = 7 for SNR, reflecting the data characteristics and allowing for
+fine distinctions between different signal quality levels.
+
+« Step 2: Assign each data point to the nearest centroid based on Euclidean distance d.
+The distance between a data point x and a centroid c is computed using Equation (1):
+
+7
+
+()
+
+i=
+
+where x; is an individual dimension of the data point x, and c; is the corresponding
+dimension of the centroid.
+
+e Step 3: Recalculate the centroids by averaging the data points assigned to each cluster.
+The new centroid c for a cluster S is updated, as in Equation (2):
+
+1
+c= XL x (2)
+
+where | S| is the number of data points in cluster S, and the sum is the overall data
+points x in that cluster.
+
+e Step 4: Repeat the assignment and update the steps until the centroids stabilize and
+do not change significantly, indicating that the algorithm has converged.
+
+e The resulting clusters for RSSI and SNR were labelled numerically (e.g., Cluster 0,
+Cluster 1, etc.), with each cluster representing a different range of signal values.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-15..txt =====
+Technologies 2025, 13, 256 15 of 41
+
+5.3. The Particle Swarm Optimization (PSO) Algorithm
+
+PSO is an effective algorithm for optimizing a wide range of functions, such as en-
+gineering design and neural network training, particularly in neural network weight
+optimization for disease prediction and diagnosis models, exhibiting its adaptability and
+effectiveness in handling complex optimization problems [45]. The algorithm starts with
+a swarm of particles, which are initialized with random positions and velocities in the
+problem space. Each particle evaluates the fitness of its position based on a predefined
+objective function. Two main values are tracked for each particle, which are pbest, the best
+position it has found so far, and gbest, the best position found by any particle in the swarm.
+Figure 9 illustrates the basic steps of the PSO algorithm.
+
+v
+
+Initialize particle positions and velocities
+
+y
+Set pbest and gbest
+
+y
+
+Calculate fitness of each particle
+
+A
+
+Update Personal Best (pbest)
+
+|
+
+Update Global Best (gbest)
+
+'
+
+Update velocity and position
+
+Stopping Criteria
+
+Output global best solution
+
+Figure 9. A basic outline of the PSO algorithm.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-16..txt =====
+Technologies 2025, 13, 256
+
+16 of 41
+
+5.4. Differential Evolution (DE) Algorithm
+
+DE is a popular evolutionary algorithm, introduced by Storn and Price [46] and
+inspired by Darwin’s theory of evolution, and has been studied extensively to solve different
+areas of optimization and engineering applications since its introduction.
+
+DE performs well in solving problems where other methods, such as those relying
+on gradient information, might fail. It is significantly noted for its ability to navigate com-
+plex, multimodal landscapes effectively, like predictions, industrial control, computational
+systems, electrical and power systems, feature selection, clustering, image processing,
+healthcare, and wireless and sensor networks [47]. The core of DE is its iterative evolution
+process, comprising mutation, crossover, and selection. In mutation, a mutant vector is
+created by adding the weighted difference between two randomly chosen vectors to a
+third, introducing variability. Crossover mixes this mutant vector with the target vector
+using a predetermined probability, enhancing diversity. The process culminates in selection,
+where the vector with superior fitness is chosen for the next generation, ensuring continual
+improvement in solution quality [48]. This process repeats until reaching a stopping crite-
+tion, like a set number of generations or an optimal fitness level. Figure 10 illustrates the
+mathematical workflow of the DE algorithm.
+
+Initialization
+
+Mutation
+
+Create a mutant vector
+
+Crossover
+
+Repeat steps 2-5 for N generations
+or until criterion is met
+
+Not stopping criterion?
+
+Figure 10. DE mathematical workflow diagram.
+
+5.5. Hybrid PSO-DE (GateOpt PSODE)
+
+In modern communication networks, especially those utilizing LPWAN technologies,
+such as LoRaWAN, the placement of one or more gateways is crucial for ensuring robust
+network coverage and performance. Gateway placement directly influences several key net-
+work metrics, including the RSSI, SNR, and packet loss rates, which collectively determine
+the quality and reliability of the network service provided to end devices.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-17..txt =====
+Technologies 2025, 13, 256
+
+17 of 41
+
+This hybrid approach uses the PSO algorithm [49] and the DE algorithm [50]. GateOpt
+PSODE is strategic in solving complex optimization problems posed by wireless networks,
+such as LoORaWAN. It can perform multi-objective optimization operations that are the most
+appropriate for maximizing RSSI and SNR in conjunction with minimizing packet loss,
+thereby improving the network performance across the use of GWs placed on several floors
+of a building. PSO and DE are typically good at exploring and exploiting the solution space,
+since PSO excels at a global speed search, while DE perfects neighborhood refinements
+for a local search. More importantly, existing research indicates that it has worked in
+certain adapted versions in a similar complicated scenario, and, therefore, this approach
+is also suitable for fast-changing multidimensional affine parameters of the placement
+of gateways in LORaWAN networks. GateOpt PSODE also constructs systematic and
+streamlined optimization for gateway deployments by inputting these algorithms into
+clusters of RSSI and SNR values calculated for each gateway from a K-means algorithm in
+the analysis phase. The core equation for evaluating the objective function (or cost function)
+is Equation (3).
+
+cost(weights) = a - normyss; + B+ normgny + Y° NOFMpacketoss (3)
+
+where «, 8, and y represent the weights for RSSI, SNR, and packet loss, respectively.
+
+Equation (3) defines the objective function combining RSSI, SNR, and packet loss
+through weights («, B, and y). The goal is to maximize RSSI and SNR and minimize packet
+loss, and PSO initially finds near-optimal weights, guiding subsequent refinement. PSO
+is used as the initial step in the hybrid algorithm to explore the search space and find a
+near-optimal solution for the weights «, 8, and y.
+
+The process includes the following:
+
+Initialization. Randomly generate a swarm of particles, each representing a possible
+solution (a, B, and y).
+
+Velocity update. The velocity of each particle is updated based on personal best (Phest)
+and global best (gpest) positions using Equation (4).
+
+new = W X Void + p X rand() x (Pres — current position)
++ x rand() X (best — current position)
+
+(4)
+
+Position update. The new position of each particle is determined based on its velocity,
+as in Equation (5).
+Posiotionnew = Positiongig + Pnew 6)
+
+Objective evaluation. The cost function is evaluated for each particle based on the
+equation above, aiming to maximize RSSI and SNR while minimizing packet loss.
+
+Convergence. The algorithm iterates until the maximum number of iterations is
+reached or the best global solution stabilizes.
+
+On the other hand, DE is employed to refine the solution provided by PSO, ensuring
+further fine-tuning of the weights «, B, and y. The steps include the following:
+
+Mutation. Mutation is performed by adding the weighted difference between two
+randomly selected individuals to a third individual, as in Equation (6).
+
+Oj = Xn + F X (%2 — 13) (6)
+
+where 7; is the trial vector, F is a mutation factor, and (x,1, X;2, X;3) are randomly selected
+individuals from the population.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-18..txt =====
+Technologies 2025, 13, 256 18 of 41
+
+Crossover. After mutation, crossover is applied using Equation (7) to create a new trial
+vector (1;) by combining elements from the mutated vector (v;) and the current individual
+in the population:
+
+(7)
+
+sig af Pi if tad) < Cy 0F j= jean
+Ws Xijr otherwise
+
+where C; is the crossover rate; 1;,; is the jth component of the trial vector for the individual
+ith; v;,; is the jth component of the mutated vector; x; is the jth component of the target
+vector; and rand() is a function generating a random number between 0 and 1, jrand iS
+a randomly chosen index, ensuring at least one component from 9; is included in u; to
+maintain diversity.
+
+Selection. The offspring is evaluated using the objective function, and if the offspring
+outperforms its parent, it replaces the parent in the next generation.
+
+Normalization and final score calculation. Once the final weights are determined by
+DE, they are normalized to ensure their sum equals 1:
+
+totdl weights =X + B+ (8)
+normalizedaipha = %/ total weights (9)
+normalizedyere = B/totaiweights (10)
+normalized gamma = Y/ total weights (1)
+
+For each floor, the optimized score is computed as in Equation (12).
+
+optimizedscore = (normalized gipig : noFityssi) + (normalizedpete « normsny) 12)
++ (normatizedganma . HOTMpacketas)
+
+In summary, the hybrid PSO-DE approach effectively optimizes weights («, 6, and y)
+for RSSI, SNR, and packet loss, ensuring balanced network performance and guiding opti-
+mal gateway placements across floors. The proposed algorithm is shown in Algorithm 1.
+
+Algorithm 1: Hybrid Particle Swarm Optimization + Differential Evolution (PSO + DE)
+
+Input:
+Ts
+
+: Array of RSSI values for each floor
+snr: Array of SNR values for each floor
+packet_loss: Array of packet loss values for each floor
+label: Descriptor (e.g., ‘SF12’ and ‘SF7’)
+Output:
+Optimized weights (alpha, beta, and gamma)
+Optimized scores for each floor
+1 Normalize the input data:
+normyss; = (rssi — min(rssi)) / (max(rssi) — min(rssi))
+normsnr = (snr — min(snr))/(max(snr) — min(snr))
+(max(packet joss) —
+min(packetjoss))
+
+1 — (packetjy,; — min(packeto.;)) /
+
+NOYMyacketjos
+
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-19..txt =====
+Technologies 2025, 13, 256 19 of 41
+
+2 Optimize using PSO:
+best_weights_pso = optimize_with_pso(normyssi, 1 OFMsnr, NOTMpacketyycg)
+Function optimize_with_pso(norm_rssi, norm_snr, norm_packet_loss):
+Initialize PSO with specific parameters
+For each iteration:
+Update positions and velocities of particles
+Evaluate cost function:
+cost(weights) = —1 - (« + NOFMyssi + B+ NOT Msn + Y + NOTM packettoss
+Update particle velocities and positions based on personal and global best
+Return best weights («, 6, 7) from PSO
+3 Fine-tune using DE:
+best_weights_de = optimize_with_de(best_weights_pso, norityssj, M1 OFMsyr, NOTM packets)
+Function optimize_with_de(best_weights_pso, normtyssj,N OFMsnr, NOTMpacketiyss)?
+Set bounds for alpha, beta, and gamma
+Initialize population around best_weights_pso
+For each generation:
+Perform mutation, crossover, and selection based on the DE cost function evaluation
+Return best weights found by DE
+4 — Calculate and normalize final scores:
+final_scores = calculate_scores(floors, rssi, snr, packetj,,;, best_weights_de)
+Function calculate_scores(floors, rssi, snr, packetjo;;, best_weights):
+total weights =a +B+7
+normalizedgipha = %/ total weights
+normalizedpere = B/totayveights
+normalized gamma = ¥/ total weights
+For each floor:
+optimized score =
+(normatizedgtpne : normssi) + (normalized peta - normsnr) + (normatizedgonma : MOF packets)
+Store optimized score for the floor
+Return dictionary or dataframe containing floors and their corresponding optimized scores
+5 Display results:
+Output the best_weights_de and final_scores
+Visualize scores on a bar chart with a color map reflecting the score intensity
+End Algorithm
+
+5.6. HTZ Simulation Parameters
+
+This section analyzes the coverage of a LORaWAN network set up with SF7 and
+SF12, comparing simulation results with experimental data collected in summer conditions
+with high temperatures (40 °C) and humidity. The simulation was run using the HTZ
+Communications software, which includes a detailed map of the area that was analyzed,
+giving a strong basis for comparison. Our goal was to check our test results against the
+simulated data, showing the trustworthiness and effectiveness of the network in different
+settings and setups.
+
+Figure 11 illustrates the measurement path points utilized in a comparative anal-
+ysis with the predictions from the HTZ simulation throughout the university campus
+area. The markers indicate the specific locations where RSSI and SNR data were system-
+atically collected to assess the performance of the LORaWAN network. The thoughtful
+arrangement of these points guarantees extensive spatial coverage and includes a range of
+urban environments.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-20..txt =====
+Technologies 2025, 13, 256
+
+20 of 41
+
+| : by
+
+WAR I Park’4
+
+Figure 11. Experiment measurement points.
+
+Our simulation was conducted via the HTZ Communications software, which provides
+sophisticated radio network planning and optimization capabilities across a wide range
+of technologies, from a few kHz to 1 THz. This all-in-one solution oversees the complete
+radio planning lifecycle [51].
+
+HTZ boasts a robust propagation engine that facilitates the design of outdoor, indoor,
+and combined outdoor-indoor networks. It includes a library of over 50 empirical, deter-
+ministic, and hybrid propagation models, encompassing all ITU-R models, Okumura-Hata,
+Cost-Hata, the Irregular Terrain Model-Longley Rice, as well as ITU and 3GPP models.
+We aimed to analyze the performance of LORaWAN networks across different floors of
+a building under specific environmental conditions. Below, in Table 4, we outline the
+configurations for each gateway, along with their corresponding settings, to illustrate the
+setup comprehensively:
+
+Table 4. Simulation parameters.
+
+Parameter Ground Floor 3rd Floor Top of Building
+Spread Factor (SF) 7 and 12 7 and 12 7 and 12
+Frequency (MHz) 868.100 868.100 868.100
+Bandwidth (kHz) 125.00 125.00 125.00
+
+Nominal Power (dBm) 14 14 14
+E.LR.P (dBm) 19 19 19
+Antenna Type Standard Standard Standard
+
+Antenna Size (m) 0.17 0.17 0.17
+Crossover Distance
+
+between Near and Far 0.69 0.69 0.69
+
+Fields (m)
+
+Tx/Rx ant. Gain (dBi) 5.00 5.00 5.00
+Beamwidth (°) 360.00 360.00 360.00
+
+Antenna Height (m) 2.00 15.00 45.00
+
+Propagation Model ITU-R 1812-6 ITU-R 1812-6 Cost-Hata 231
+
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-21..txt =====
+Technologies 2025, 13, 256
+
+21 of 41
+
+6. Experimental Results and Analysis
+6.1. SF7 and SF12 Comparative Analysis
+
+This section is subdivided into two main phases. Initially, we assess the performance of
+a LoRaWAN network with raw experiment metrics: packet loss, RSSI, and SNR. Afterward,
+the metric results are used in conjunction with the GateOpt PSODE optimization algo-
+rithm to evaluate optimal gateway placement. The analysis starts from a single-gateway
+perspective, evaluating one floor at a time, and is always conducted under both SF7 and
+SF12 settings.
+
+6.1.1. Packet Loss Evaluation
+
+This section examines the packet loss observed during the gateway placement experi-
+ment, a crucial metric for evaluating network efficiency and data transmission reliability.
+By analyzing packet loss rates in correlation with gateway positions for both SF7 and SF12,
+this study aims at pinpointing optimal gateway locations that minimize data loss and
+enhance overall network performance. This packet loss analysis serves as the first phase of
+performance evaluation, prior to investigating signal strength (RSSI) and noise ratio (SNR)
+and applying the GateOpt PSODE optimization algorithm.
+
+To calculate the percentage of packet loss for each floor and spreading factor, we use
+the following formula:
+
+Number of packets a x 100 (3)
+
+Packet Loss Percentage = ( Total packet ssent
+
+Using the provided data from our collected data and by applying Equation (13), we
+obtained the results in Table 5, and Figure 12 presents the number of packets lost with the
+corresponding percentage.
+
+Table 5. The overall lost packets by building levels for SF7 and SF12.
+
+Gw SF12 SF12 SF12 SF12 SE7 SE7 SE7 SE7
+Location Received Total Lost Loss (%) Received Total Lost Loss (%)
+Ground 348 720 372 51.67 340 745 405 54.36
+
+Ast 442 720 278 38.61 328 745 417 55.97
+
+3rd 629 720 91 12.64 498 745 247 33.15
+
+5th 216 720 504 70.00 122 745 623 83.62
+
+Top 660 720 60 8.33 643 745 102 13.69
+
+Lost Packets and Packet Loss Percentage by Floor for SF7 and SF12
+
+lm Lost Packets (SF7)
+Lost Packets (SF12). | 80
+Packet Loss % (SF7)
+
+—@- Packet Loss % (SF12)
+500
+
+400 anne
+300 és.
+200 a /
+se 20
+100
+10
+o
+
+Ground Floor Ast Floor 3rd Floor Sth Floor ‘Top of Building
+Floor
+
+8
+
+&
+Packet Loss Percentage (%)
+
+Lost Packets
+
+8
+
+Figure 12. Number and percentage of lost packets by floor for SF7 and SF12.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-22..txt =====
+Technologies 2025, 13, 256
+
+22 of 41
+
+The significantly lower packet loss observed with SF12, compared to SF7 at the same
+distance, is primarily due to the increased receiver sensitivity at higher spreading factors.
+This relationship can be explained using the LoRa receiver sensitivity in Equation (14):
+
+S$ = -174 + 10log,y (BW) + NE + SNRinin (14)
+
+where
+
+S is the receiver sensitivity (dBm);
+
+BW is the bandwidth (KHz);
+
+NF is the noise figure (dB);
+
+SNRynin is the minimum required Signal-To-Noise Ratio for a given spreading factor.
+
+As the spreading factor increases (for example, from SF7 to SF12), the minimum
+required SNR decreases (from approximately —7.5 dB for SF7 to about —20 dB for SF12).
+This means that devices configured with SF12 can successfully receive and decode much
+weaker signals compared to SF7. As a result, even under identical conditions and distances,
+packets transmitted using SF12 are less likely to be lost due to poor signal quality, resulting
+in significantly lower packet loss.
+
+Different perspectives of the analysis of packet loss, in the case of placing the GWs
+on different floors, are provided in relation to network performance. As expected, from
+a theoretical point of view, the topmost floor turns out to be the best place to position a
+gateway, with a better communication link in the line of sight and the least number of
+barriers, which provided the least percentage of packet loss for both SF7 and SF12. On
+the other hand, the GWs placed on the fifth floor, due to a couple of building peculiarities,
+performed poorly. It can be observed that it had the highest packet loss percentage and is,
+therefore, not fit for the placement of a gateway. Reasonable performance was observed for
+the third floor during the measurement, particularly for SF12, making it a good candidate
+for a second GW placement. The ground and first floors, on the other hand, had combined
+moderate performance, which can be understood to be because of obstacles lowering
+the level. It was reaffirmed that SF12 performs better compared to SF7, as theoretically
+expected, on all floors, which can only confirm its viability in the provision of services in
+areas where there are more barriers or where long-range communication is required. These
+findings emphasize the importance of strategic gateway placement to ensure robust and
+reliable network performance. These packet loss patterns reveal that top-floor deployment
+offers the most favorable communication conditions. In the next sections, we analyze RSSI
+and SNR to further understand signal behavior under similar conditions.
+
+6.1.2. RSSI Analysis with Clustering
+
+In LoRaWAN networks, the Received Signal Strength Indicator (RSSI) is one of the
+primitive metrics used to evaluate signal quality and its propagation. In this part of the
+study, we analyze variations in RSSI values from five gateways using two different con-
+figurations: SF7 and SF12. To understand the wide variance in RSSI values and their
+corresponding performance, a clustering method, K-means, was applied to the measure-
+ments and divided them into six clusters, from Cluster 0 to Cluster 5, which represent very
+strong to critically weak signal levels.
+
+The clustering algorithm was applied independently for each gateway height and
+each spreading factor to capture local propagation features. Thus, the specific range of RSSI
+for each cluster differs regarding the gateway location. Table 6 below describes the range
+of the defined clusters for SF12 and SF7, respectively:
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-23..txt =====
+Technologies 2025, 13, 256
+
+23 of 41
+
+Table 6. Detailed RSSI cluster ranges per gateway (SF7 and SF12).
+
+Cluster Gateway Level SF12 (dBm) No. of Points SF7 (dBm) No. of Points
+Ground Floor —87 to —67 46 —85 to —79 19
+1st Floor —88 to —69 40 —77 to —72 10
+Cluster 0 3rd Floor —81 to —63 52 —80 to —66 53
+5th Floor —115 to —107 15 —112 to —109 11
+Top of Building —79 to —67 27 —82 to —73 65
+Ground Floor —98 to —87 49 —91 to —86 37
+1st Floor —102 to —89 88 —88 to —80 20
+Cluster 1 3rd Floor —94 to —82 56 —91 to —81 74
+5th Floor —122 to —-116 34 —115 to —-113 14
+Top of Building —86 to —80 64 —88 to —82 95
+Ground Floor —108 to —99 83 —97 to —92 61
+Ast Floor —112 to —103 90 —95 to —89 44
+Cluster 2 3rd Floor —107 to —95 140 —101 to —92 81
+5th Floor —127 to —123 35 —118 to —116 17
+Top of Building —93 to —87 134 —93 to —89 128
+Ground Floor —116 to —109 74 —103 to —98 88
+1st Floor —120 to -113 94 —103 to —96 92
+Cluster 3 3rd Floor —117 to —108 156 —110 to —102 94
+5th Floor —132 to —128 37 —122 to —119 27
+Top of Building —100 to —94 154 —99 to —94 144
+Ground Floor —122 to —-117 58 —109 to —104 69
+1st Floor —126 to —121 77 —112 to —104 105
+Cluster 4 3rd Floor —126 to -118 132 —117 to -111 113
+5th Floor —136 to —133 40 —125 to —123 27
+Top of Building —108 to —101 152 —106 to —100 128
+Ground Floor —130 to —123 38 —118 to —110 66
+1st Floor —132 to —127 53. —121 to —113 57
+Cluster 5 3rd Floor —137 to —127 84 —127 to -118 83
+5th Floor —142 to —137 55 —130 to —126 25
+Top of Building —125 to —109 129 —118 to —107 83
+
+These cluster boundaries will be used as a base reference for the subsequent perfor-
+mance analysis conducted from floor to floor. On the ground floor, SF7 has an initial yield
+of RSSI values in Cluster 0 (—85 to —79 dBm) and improves due to its proximity to the gate-
+way. However, the signal quality severely deteriorates with distance, with several values
+hitting Cluster 5 (—118 to —110 dBm). This rapid degradation yields a 54.4% packet loss,
+showcasing SF7’s weakness in blocked environments. On the other hand, SF12 displays a
+more forgiving slope of attenuation, starting at Cluster 0 (—87 to —67 dBm) and ending at
+Cluster 5 (—130 to —123 dBm), yielding a slightly better 51.7% packet loss.
+
+On the first floor, the SF7 RSSI values start at Cluster 0 (—77 to —72 dBm) and end
+t Cluster 5 (—121 to —113 dBm), achieving a 56.0 packet loss. SF12 starts at Cluster 0
+(—88 to —69 dBm) with a better signal quality but ends at Cluster 5 (—132 to —127 dBm).
+SF12 suffers a greater packet loss as well, achieving a total of 38.6%, despite many values
+remaining at Clusters 1-3.
+
+On the third floor, SF7 struggles with Clusters 0 and 5 (—80 to —66 dBm and
+—127 to —118 dBm, respectively), reaching a 33.2% packet loss rate. SF12 performs sig-
+nificantly better, beginning at Cluster 0 (—81 to —63 dBm) and ending at Cluster 5
+(—137 to —127 dBm). Due to the stronger clustering in Clusters 1 and 2, packet loss is
+only 12.6%.
+
+On the fifth floor, conditions worsen further. SF7 starts at Cluster 0 (—112 to —109 dBm)
+and ends at Cluster 5 (—130 to —126 dBm), suffering the most from packet loss at 83.6%.
+SF12 performs slightly better, starting at Cluster 0 (—115 to —107 dBm) and ending at
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-24..txt =====
+Technologies 2025, 13, 256
+
+24 of 41
+
+Cluster 5 (—142 to —137 dBm), suffering a 70.0% packet loss on the way. Most values for
+both SFs are clustered at Clusters 4 and 5, reinforcing the poor conditions observed at
+this level.
+
+At the top of the building, both SFs exhibit their peak performance. SF7 starts at
+Cluster 0 (—82 to —73 dBm) and ends at around Cluster 5 (—118 to —107 dBm), with a
+13.7% packet loss. SF12 demonstrates the strongest claim signal distribution, starting at
+Cluster 0 (—79 to —67 dBm) and only slightly degrading to Cluster 5 (—125 to —109 dBm),
+which is an 8.3% packet loss. These trends are vividly depicted in Figure 13, which contains
+the RSSI versus distance plots for the top-floor gateway, with K-means clustering added.
+The spatial segmentation validates the clear dominance of the high-quality signal clusters
+(0-2) of the SF12 signal strength at this position.
+
+RSSI vs. Distance
+
+Cluster 0 (82.0 to -73.0 (d8m))
+Cluster 1 (88.0 to -83.0 (d8m))
+Cluster 2 (-93.0 to -89.0 (d8m))
+Cluster 3 -89.0 to 84.0 (d8m))
+Cluster 4 (-106.0 to -100.0 (48m)
+Cluster 5 (118.0 to-107.0 (d8m))
+(Out of Range (<= -142.5 (d8m))
+
+100
+
+e
+.
+
+130
+
+=o
+
+150] romnc mmmocsacx x s0remotOOK x He OK X20 NOR x xx
+
+00 or 02 o3 oa os oe o7 oe
+
+Distance (km
+(a)
+
+RSSI vs. Distance
+
+Cluster 0 (-79.0 to -67.0 (d8m))
+Cluster 1 (-86.0 to 80.0 (d8m))
+Cluster 2(-93.0 to -87.0 (d8m))
+Cluster 3(-100.0 to -94.0 (d8m))
+Cluster 4 (-108.0 to -101.0 (48m)
+Cluster 5 (-125.0 to -109.0 (d8m))
+Out of Range (<= -142.5 (d8m))
+
+SSI ( (8m)
+
+-120
+
+140
+
+oo a1 a2 03 os os 06 or oe
+Distance (km)
+
+(b)
+
+Figure 13. (a) RSSI vs. distance of top-of-building gateway, SF 7; (b). RSSI vs. distance of top-of-
+building gateway, SF 12.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-25..txt =====
+Technologies 2025, 13, 256
+
+25 of 41
+
+These results further confirm the hypothesis that having higher placed gateways
+leads to stronger and more stable signal propagation. In addition, the clustering approach
+offers an interesting perspective on explaining the distribution of RSSI values amidst
+multi-layered environments. Any dataset utilized in this specific clustering analysis can be
+provided upon request for replicated or additional studies. Figure 14 illustrates the average
+RSSI measured on each floor for SF7 and SF12, respectively.
+
+RSSI Ranges for SF7 Across Different Building Levels
+
+'~@~ Ground Floor (min)
+=* Ground Floor (Max)
+m+ Ast Floor (Min)
+
+“est Floor (Max)
+~@- 31d Floor (Min)
+
+-@ 31d Floor (Max)
+A= 5th Floor (Min)
+
+t= 5th Floor (Max)
+== Top of Building (Min)
+= Top of Building (Max)
+
+SSI (dam)
+
+-110
+
+-120
+
+-130
+
+Cluster 0 ‘Cluster 1 ‘Cluster 2 Cluster 3 ‘Cluster 4 Cluster 5
+clusters
+
+(a)
+
+RSSI Ranges for SF12 Across Different Building Levels
+
+== Ground Floor (Min)
+-e Ground Floor (Max)
+<a Ist Floor (Min)
+Ast Floor (max)
+-@- 3rd Floor (min)
+3rd Floor (Max)
+Sth Floor (Min)
+“te 5th Floor (Max)
+x= Top of Building (Min)
+Hop of Building (Max)
+
+20
+
+SSI (dBm)
+
+120
+
+=130
+
+140
+
+‘cluster 0 Cluster 2 Cluster 2 Cluster 3 Cluster 4 Cluster 5
+Clusters
+
+(b)
+
+Figure 14. (a). RSSI ranges for SF7 across different locations of the GWs; (b) RSSI ranges for SF 12
+across different locations of the GWs.
+
+6.1.3. SNR Analysis with Clustering
+
+SNR describes the level of communication quality in a wireless system in terms of
+useful signal power compared to background noise. SNR impacts the clarity of signal
+reception, increases the success of demodulation, and decreases the chances of packet loss.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-26..txt =====
+Technologies 2025, 13, 256
+
+26 of 41
+
+In LoRaWAN systems, each spreading factor (SF) has a different SNR sensitivity threshold.
+For instance, SF7 requires a minimum SNR of approximately —7.5 dB, while SF12 can
+still decode packets down to —20 dB, enabling robust communication under very noisy or
+distant conditions.
+
+To structure the performance evaluation, SNR data was processed using K-means
+clustering for each gateway height and spreading factor individually. The SNR data was
+valid for clustering and was categorized into seven categories, spanning from excellent to
+very poor signal conditions (Cluster 0 to Cluster 6). The analysis was limited to successful
+receptions by excluding packets without valid SNR readings, which were assumed to be
+due to transmission failure. Table 7 below provides the complete distribution of SNR values
+for all clusters and gateways levels for SF7 and SF12.
+
+Table 7. Detailed SNR cluster ranges per gateway (SF7 and SF12).
+
+Cluster Gateway Level SF12 (dB) No. of Points SF7 (dB) No. of Points
+Ground Floor 8.5 to 11.2 80 6.5 to 10.5 50
+1st Floor 78 to 10.8 80 6.8 to 12.2 75
+Cluster 0 3rd Floor 8.8 to 11 141 7.5 to 11.2 125
+5th Floor 5 to 7.2 14 2.5 to8 12
+Top of Building 8.8 to 11.5 61 9to 115 189
+Ground Floor 5.8 to 8.2 52 2.8 to 6.2 70
+1st Floor 5 to 7.5 85 1.8 to6.5 67
+Cluster 1 3rd Floor 6.2 to 8.5 137 3.8 to 7.2 83
+5th Floor 2.8 to 3.8 27 —2.2 to18 14
+Top of Building 6.8 to 8.5 131 7.2088 146
+Ground Floor 2.8 to 5.5 48 —1.2to2.5 57
+1st Floor 2.5 to 4.8 79 —3 to 1.5 37
+Cluster 2 3rd Floor 3.5 to 6 104 —0.5 to 3.5 55
+5th Floor 0.5 to 2.2 29 —5.5 to —2.5 12
+Top of Building 4.2 to 6.5 164 5to7 95
+Ground Floor 0.2 to 2.5 53 —6.5 to -1.5 49
+Ast Floor 0.2 to 2.2 61 —7.5 to -3.5 34
+Cluster 3 3rd Floor 0.5 to 3.2 80 —5.5 to -0.8 83
+5th Floor —1.5 to 0.2 28 —9 to —5.8 16
+Top of Building 15to4 96 2.8 to 4.8 89
+Ground Floor —2.5 to —0.2 52 —11.2 to -6.8 28
+Ast Floor —2.5 to —0.2 61 —11.5 to -7.8 44
+Cluster 4 3rd Floor —1.8 to 0.2 72 —9.8 to -5.8 46
+5th Floor —3.2 to -18 36 —13 to —9.5 19
+Top of Building —1.5 to 1.2 96 —0.5 to 2.5 58
+Ground Floor —5 to —2.8 40 —15.2 to —11.5 45
+1st Floor —48 to —2.8 52 —15.2 to —11.8 35
+Cluster 5 3rd Floor —4.2 to -2 61 —13.8 to —10 48
+5th Floor —5.2 to —3.5 34 —16.2 to —13.2 22
+Top of Building —4.2 to -18 75 —5.5 to —0.8 40
+Ground Floor —7.2 to —5.2 23 —19 to —15.5 31
+1st Floor —7.2to -5 54 —19.8 to —15.5 36
+Cluster 6 3rd Floor —7.2to -4.5 34 —19 to —14 58
+5th Floor —7.2to —5.5 48 —19.8 to —16.5 27
+Top of Building —7.2 to -4.5 37 —14.5 to —5.8 26
+
+The SNR behavior across all floors exhibits a uniform pattern. Both SF7 and SF12 near
+the gateway experience high SNR values (Cluster 0 and Cluster 1) that progressively lessen
+(Clusters 4-6) with increased distance or obstruction interference. SF12 has a broader SNR
+range than SF7, demonstrating a more expansive range of operational SNR.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-27..txt =====
+Technologies 2025, 13, 256
+
+27 of 41
+
+Further, obstruction inhibition enhances the line of sight, leading to windows trans-
+mitting higher SNR for both spreading factors at the top of the building. SF7 values begin
+at Cluster 0 (8.8 to 11.5 dB) and decline toward Cluster 6 (—7.2 to —4.5 dB) with increas-
+ing distance. SF12 starts at Cluster 0 (9 to 11.5 dB) and stepwise descends into Cluster 6
+(—14.5 to —5.8 dB). Though SF12 has better stability, it suffers from a wider span of data
+points below decoding thresholds.
+
+Figure 15 conveys these findings by plotting the SNR versus distance at the gateway
+of the top floor for both spreading factors. The clustering boundaries highlight how SF12
+maintains strong performance even at longer distances, while SF7 is more susceptible to
+signal degradation.
+
+SNR vs. Distance
+
+Cluster 0 (8.8 to 11.5 (dB)
+Cluster 1 (6.8 to 8.5 (48))
+Cluster 2 (4.2 to 6.5 (dB)
+Cluster 3 (1.5 t0 4.0 (dB)
+Cluster 4 (1.5 to 1.2 (a8)
+Cluster 5 (-4.2 to-1.8 (d8))
+Cluster 6 (-7.2 to-4.5 (48)
+Out of Range (<= -7.5 (dB)
+
+= . °
+3 se
+5° - *
+ee
+oe
+° .
+%.
+.
+5
+.
+ral x
+-10
+00 o1 02 03 08 05 06 07 08
+Distance (km)
+(a)
+
+SNR vs. Distance
+
+°
+Cluster 0 (9.0 to 11.5 (48))
+Cluster 1 (7.2 to 8.8 (d8))
+Cluster 2 (5.0 to 7.0 (d8))
+Cluster 3 (2.8 to 4.8 (dB))
+Cluster 4 (-0.5 to 2.5 (dB)
+Cluster 5 (-5.5 to-0.8 (dB))
+“as © Cluster 6 (-14.5 to-5.8 (dB))
+
+do o1 2 a3 04 os 06 7 os
+Distance (km)
+
+(b)
+Figure 15. (a) SNR vs. distance of top of building, SF7; (b) SNR vs. distance of top of building, SF12.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-28..txt =====
+Technologies 2025, 13, 256 28 of 41
+
+The full variation in SNR values across all gateway placements is summarized in
+Figure 16. Subfigure (a) shows the SNR cluster distribution for SF7, while subfigure (b) de-
+picts the same for SF12. These figures provide a comparative overview of how the signal
+quality varies floor by floor. It is evident that SF12 maintains broader coverage across the
+clusters, with a greater proportion of data points in higher SNR categories at each level,
+confirming its superior robustness under various propagation conditions.
+
+SNR Ranges for SF7 Across Different Building Levels
+
+= Ground Floor SF7 (Min)
+Ground Floor SF7 (Max)
+1st Floor SF7 (Min)
+Ast Floor SF? (Max)
+3rd Floor SF7 (Min)
+31d Floor SF7 (Max)
+a> 5th Floor SF7 (Min)
+
+Sth Floor SF7 (Max)
+Top of Building SF7 (Min)
+Top of Building SF7 (Max)
+
+t
+
+—
+a
+ae
+
+tit
+
+5.0
+
+00
+
+‘Cluster 0 Cluster 1 Cluster 2 Cluster 3 cluster 4 Clusters Cluster 6
+Clusters
+
+(a)
+
+SNR Ranges for SF12 Across Different Building Levels
+
+Ground Floor SF12 (Min)
+-®- Ground Floor SF12 (Max)
+m+ Ist Floor S12 (Min)
+~~ Ist Floor SF12 (Max)
+“© 3rd Floor SF12 (Min)
+@ 31d Floor SF12 (Max)
+“te Sth Floor SF12 (Min)
+—t- Sth Floor SF12 (Max)
++ Top of Building SF12 (Min)
+= Top of Building SF12 (Max)
+
+0
+
+Cluster 0 Cluster 1 Cluster 2 Cluster 3 Cluster 4 Cluster 5 Cluster 6
+Clusters
+
+(b)
+Figure 16. (a) SNR ranges for SF 7 across different locations of the GWs.; (b) SNR ranges for SF 12
+across different locations of the GWs.
+6.1.4. GateOpt PSODE Results—Single Gateway
+
+An investigation of the single gateway situation is crucial for verifying the efficiency
+of the GateOpt PSODE optimization algorithm. In this confined scenario, an assessment
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-29..txt =====
+Technologies 2025, 13, 256
+
+29 of 41
+
+of each floor separately permits both algorithmic and manual decisions based on commu-
+nication principles, notably on the radio communication’s line-of-sight (LoS) and packet
+loss ratio. In traditional approaches, gateway placement is often based solely on maxi-
+mizing height or selecting arbitrary building floors. As a baseline, initial placements are
+typically on lower floors (such as the ground or first floor) or at fixed heights, without
+considering real performance metrics. In contrast, our algorithm evaluates each possible
+placement using empirical data—specifically, the measured RSSI, SNR, and packet loss.
+The optimization process selects the floor(s) that maximizes network quality based on these
+combined metrics.
+
+For example, as shown in Table 8, the algorithm assigns an optimized score of 0.466 to
+the ground floor and only 0.346 to the first floor for SF7, indicating that higher placement
+alone is not optimal. The best-performing placement is consistently identified as the top
+floor, which achieves the highest score of 1.000 for SF12, highlighting the clear improvement
+obtained through the data-driven optimization method compared to simple initial place-
+ments. Table 8 illustrates the optimized scores obtained by the GateOpt PSODE algorithm
+for each floor.
+
+Table 8. The optimized scores for each floor.
+
+Floor Optimized Score (SF7) Optimized Score (SF12)
+Ground 0.465608 0.521123
+Ist 0.345638 0.593492
+3rd 0.492956 0.792785
+5th 0.209877 0.000000
+Top 0.855338 1.000000
+
+These scores indicate the composite network performance of each GW position as
+they relate to the overall reliability and quality of the signal received, with higher scores
+indicating better performance. As shown in the previous table, the top floor maintains the
+highest score for both spreading factors, which are 0.855 for SF7 and 1.000 for SF12.
+
+An optimized score of 1.000 indicates that the location achieves the ideal equilibrium
+for all three-performance metrics, packet loss, RSSI, and SNR, i.e., where packet loss is
+low, RSSI is strong, and SNR is high. This theoretical optimum confirms that top-floor
+deployment provides advantageous propagation conditions, particularly for SF12, which
+performs better in long-range NLoS conditions.
+
+The third floor also obtains a strong score for SF12 at 0.793, making it a potential
+secondary candidate. However, the first and ground floors yield only moderate results,
+while the fifth floor is the weakest performing, on a par with SF12, scoring 0.000 due to
+extreme packet loss, poor signals, obstructing structures, and interference at that elevation,
+resulting from signals being blocked by structures and interference from other signals.
+The results are shown in Figure 17, where optimized scores per floor for SF7 and SF12 are
+presented. This figure proves that top-floor gateway placement holds the strongest position
+in link quality and network reliability.
+
+These results validate that the performance of the GateOpt PSODE algorithm is
+consistent with its theoretical expectations and benchmarking metrics. Single-gateway
+(SGW) LoRaWAN topology upper-floor placement is confirmed as the optimal LORaWAN
+position for multi-story building deployments, though third-floor placement also serves as
+a reasonable alternative in some scenarios, notably under SF12.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-30..txt =====
+Technologies 2025, 13, 256
+
+30 of 41
+
+Optimized Scores by Floor for SF7 and SF12 using Hybrid PSO + DE
+
+SFT
+1.00
+10 | mm sFi2
+0.86
+0.79
+
+0.8
+2
+g 0.59
+F o6
+a os? 049
+— 0.47 2
+2
+é
+
+°
+Ss
+
+0.2
+
+0.00
+Ground Ist 3rd sth Top
+
+0.0
+Figure 17. Optimized scores across different locations of the GWs for SF7 and SF12.
+
+6.2. Multi-Gateway Placement Evaluation
+
+Ina multiple-gateway assessment, packet loss is the first to be analyzed, since it reveals
+the most immediate glimpse into the performance of the network with different gateway
+locations. Although we know from the prior section that the top floor has the best single-
+gateway performance, this part investigates an extensive range of strategies, including
+those with and without the top floor, to determine if other gateways could improve data
+coverage and reduce data loss. We determine the configured combinations that optimize
+vertical coverage while minimizing packet losses and reducing the impact of weak GWs
+(e.g., the 5th floor) on the overall system performance.
+
+6.2.1. Packet Loss Evaluation Across Scenarios
+
+As shown in Table 9 and illustrated in Figure 18, packet loss results for all scenarios
+with the SF12 and SF7 configuration are listed. Scenarios that have the top floor as part
+of the scenario consistently exhibit the lowest proportion of packets loss, which confirms
+the benefit of placing gateways at elevated positions within the structure. For instance,
+the combinations (Top + 1st + 3rd) and (Ground + Top + 1st + 3rd) and the complete
+five-gateway configuration exhibit a very low packet loss of as much as 0.83% in SF12 and
+1.61% in SF7, which indicates superb coverage and negligible transmission failures. An
+exceedingly high packet loss of greater than 30-50% is observed in some of the gateway
+combinations that exclude the top floor, such as (Ground + Ist + 5th) or (Ist + 5th). This is
+a consequence of drowning in signal obstruction and poor reception abilities in the mid
+to lower parts of the building. Of interest is the performance degradation inflicted by any
+arrangement featuring the 5th floor as a solo or joint node. This arises from the ever-growing
+packet loss attributed to the weak link brought into play regardless of configuration.
+
+Table 9. Packet loss statistics for each scenario under SF7 and SF12.
+
+Combination SF12 SF12 SF12 SF12 Loss SE7 SE7 SF7 SF7 Loss
+Received Total Lost (%) Received Total Lost (%)
+Ground + Ist 475, 720 245 34.03 402 745, 343 46.04
+Ground + 3rd. 649 720 71 9.86 544 745, 201 26.98
+Ground + 5th 380 720 340 47.22 350 745, 395 53.02
+Ground + Top 683, 720 37 5.14 678 745 67 8.99
+Ist + 3rd 668 720 52 7.22 543 745 202 27.11
+
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-31..txt =====
+Technologies 2025, 13, 256 31 of 41
+Table 9. Cont.
+soe SF12 SF12 SF12 SF12 Loss SF7 SF7 SF7 SF7 Loss
+Combination Received Total Lost (%) Received Total _Lost (%)
+Ist + 5th 589 720 131 18.19 351 745 304 52.89
+Ist + Top 690 720 30 4.17 681 745 64 8.59
+3rd + 5th 639 720 81 11.25 505 745 240 32.21
+3rd + Top 701 720 19 2.64 724 745 21 2.82
+Sth + Top 673 720 47 6.53 652 745 93 12.48
+Ground + Ist + 3rd 672 720 48 6.67 570 745 175 23.49
+Ground + Ist + 5th 490 720 230 31.94 406 735 339 455
+Ground + 3rd + 5th 650 720 70 9.72 547 745 198 26.58
+Ist + 3rd 4+ 5th 669 720 51 7.08 548 745 197 26.44
+Top + 1st + 3rd 710 720 10 1.39 733 745 12 1.61
+Top + Ist + 3rd + 5th 72 720 8 reel 733 735 2 161
+Ground + Top + Ist + 3rd 714 720 6 0.83 733 745 2 161
+Ground + Ist + 3rd + 5th 672 720 48 6.67 571 745 174 23.36
+Ground + Top + Ist + 3rd + 5th 74 720 6 0.83 733 745 2 161
+
+400; mam Lost Packets (SF7)
+(mim Lost Packets (SF12)
++ Loss % (SF7)
+se Loss % (SF12)
+
+350
+
+300
+
+Lost Packets
+
+150
+
+100
+
+50
+
+Ground Ground Top
+
++ + +
+Top Top st.
++ oF +
+Ist Ist 3rd
++ oF +
+
+3rd 3rdSth
+
+Lost Packets and Packet Loss % by Scenario (SF7 vs SF12)
+
+50
+
+38 &
+Packet Loss Percentage (%)
+
+8
+
+5S
+
+Top 3rd Ast Ground Sth Ground Ground Ist Ist Ground Ground 3rd Ist Ground Ground Ground
+
+a
+Ist Top Top Top Top ist ist 3rd 3rd «Sd rd Sth_~Sth_= Ast’ «Ast Sth
++ + + + + +
+3rd 3rd 3rd th sth sth
+
++
+
+sth
+
+Figure 18. Lost packets for SF7 and SF12 across multiple gateway scenarios.
+
+These empirical results reinforce a crucial insight: adding more gateways does not
+always improve reliability, especially when one of the included nodes suffers from poor
+reception quality. Scenarios like (Top + 1st + 3rd + 5th), while seemingly redundant and
+well-distributed, exhibit higher packet loss than their three-gateway counterparts due to
+the underperformance of the 5th floor.
+
+6.2.2. GateOpt PSODE Optimization Results
+
+Following the packet loss evaluation, the GateOpt PSODE optimization algorithm was
+applied to determine the overall performance scores for each gateway placement scenario
+by integrating RSSI, SNR, and packet loss into a single estimated score. This score provides
+a holistic view of signal quality and network reliability for each configuration.
+
+In conventional multi-gateway deployments, the initial approach is often to maximize
+the number of gateways or distribute them uniformly by height or across different floors,
+with the assumption that more gateways or vertical diversity always enhances network
+performance. However, our methodology contrasts with this by leveraging empirical
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-32..txt =====
+Technologies 2025, 13, 256
+
+32 of 41
+
+performance data to identify the most effective combinations, regardless of the number of
+gateways or their heights.
+
+As shown in Table 10 and visualized in Figure 19, the highest optimization scores are
+consistently observed in scenarios that include the top floor. For example, the dual-gateway
+(Ground + Top) configuration achieves a score of 0.948 for SF12, while the triple-gateway
+(Top + 1st + 3rd) configuration attains 0.893. Both scenarios significantly outperform
+configurations that simply increase the gateway count or include more mid-level floors,
+such as the four-gateway (Ground + 1st + 3rd + 5th) scenario, which only achieves a score
+of 0.486 for SF12. This demonstrates that simply adding gateways or distributing them
+across all floors does not guarantee improved network performance. Conversely, several
+multi-gateway scenarios that include the poorly performing 5th floor—such as (Top + 1st
++ 3rd + 5th) and (Ground + 1st + 3rd + 5th)—show reduced optimization scores. The
+persistent underperformance of the 5th floor lowers the overall network quality, further
+emphasizing the necessity of data-driven, rather than intuition-driven, gateway selection.
+
+Table 10. Comparison of gateway deployment scenarios and their implications.
+
+Scenario Type Score (SF12) Score (SF7) Interpretation
+
+Dual GW
+Ground + Ist 0.546 0.5199 Basic coverage for lower levels lacks upper-floor visibility.
+Ground + 3rd 0.7919 0.5261 Good mid-level performance without rooftop support.
+
+Strong overall solution: the top floor provides reach, and the
+
+Ground + Top 0.9484 0.8677
+
+ground floor supports local coverage.
+
+dst + 3rd 0.8235 0.5246 Focused mid-floor coverage; limited range
+upwards/downwards.
+
+Ist + Top 0.9036 0.872 Balanced and effective; the top floor enhances range, and the
+Ist floor supports indoors.
+
+5th + Top 0.4873 0.4381 Weakened by poor 5th-floor results; the top floor provides
+partial compensation.
+
+3rd + Top 0.9784 over Great performance across upper floors; reliable high-floor
+
+3rd + Sth 0.4308 0.2249 Weak configuration; suffers due to poor 5th-floor reception.
+
+Ist + 5th 0.3477 0.0014 Not recommended; fails to deliver meaningful coverage.
+
+Triple GW
+Ground + 3rd +5th 0.4491 0.2857 Unbalanced; poor 5th-floor performance that degrades
+
+Ground + 1st + 3rd
+
+despite ground and mid support.
+0.8301 0.5638 Strong lower and mid-level coverage; lacks rooftop visibility.
+Very poor configuration; low reliability due to 5th-floor
+
+Ground + Ist + 5th 0.183 0.0813
+weakness and no top coverage.
+Top + Ist + 3rd 0.8934 0.8002 Excellent balance from top to mid-floor levels; robust and
+reliable setup.
+Ist + 3rd + 5th 0.4807 0.2872 Moderate mid-floor coverage, but the 5th floor limits
+performance without top coverage.
+Quad GW
+Ground + Ist + 3rd + 5th 0.4856 0.3205 Offers extensive mid- and low-floor coverage, but the weak
+5th floor and no rooftop coverage reduce reliability.
+Ground + Top + Ist + 3rd 0.9001 0.8002 Strong overall coverage with top-floor redundancy; reliable
+across all building levels.
+Top + Ist + 3rd + 5th 0.5522 0.5556 Balanced configuration, but 5th floor reduces effectiveness,
+despite top-floor support.
+Ground + Top + Ist + 3rd + 5th (5-GW) 0.5556 0.5556 Full redundancy, but added 5th floor dilutes performance;
+
+not optimal despite coverage depth.
+
+All of these combined results show the effectiveness of GateOpt PSODE in balancing
+empirical measurements and the metrics of signal quality in a derived framework. Our
+proposed algorithm achieves optimal deployments not based on the number of gateways
+but rather on the completeness of gateway selection based on their interdependence in the
+range of propagation and signal stability. Integrating real RSSI, SNR, and packet loss into
+one single objective makes it possible to data-drive the placement of gateways in urban
+areas and minimize redundancy while ensuring coverage. Such selection eliminates waste
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-33..txt =====
+Technologies 2025, 13, 256
+
+33 of 41
+
+and enhances coverage, as well as harnessed deployment, irrespective of the height and
+density of the structures.
+
+Comparison of Optimized Scores: SF12 vs SF7
+
+08
+
+Optimized Score
+
+02
+
+oot
+
+Figure 19. Comparison of optimized scores for SF12 and SF7 across gateway placement scenarios.
+
+6.3. HTZ Simulation Validation
+
+The analysis of the measured versus predicted electric field strength on the ground
+floor for both SF7 and SF12 (as shown in Figure 20) offers key insights into their signal
+behavior under identical conditions. SF7 exhibits a standard deviation of 5.76 dB, indicating
+a relatively stable signal with moderate deviation from the predicted trend. In contrast,
+SF12 shows a higher standard deviation of 8.39 dB, reflecting more noticeable fluctuations.
+This increased variability may be attributed to SF12’s longer airtime, which can make it
+more exposed to transient environmental effects, such as multipath propagation or brief
+interference. The plots visually support this, with SF12 exhibiting sharper peaks and larger
+signal swings compared to the more consistent SF7.
+
+Despite this variability, SF12 achieved a lower average error of 0.33 dB compared to
+0.51 dB for SF7, suggesting that the predictive model aligns very well with the measured
+values in both cases. This indicates that while SF12 may experience more dynamic signal
+conditions, the prediction algorithm accurately captures these behaviors. Correlation factors
+further support this conclusion: SF7 yielded a correlation of 0.77, while SF12 achieved a
+slightly higher value of 0.82, indicating stronger predictive alignment even under more
+variable conditions. Overall, the results highlight that SF7 offers greater stability and may
+be preferable in consistent environments. SF12, while more variable, benefits from highly
+accurate and robust predictions, making it suitable for scenarios where an extended range
+or coverage is required. The low average errors and strong correlation factors for both
+spreading factors confirm the effectiveness of the modeling approach. Understanding these
+dynamics is essential for selecting the appropriate spreading factor based on the specific
+deployment environment and performance goals in LORaWAN networks.
+
+The analysis of the measured versus predicted signal strengths for SF7 and SF12 on the
+third floor (as illustrated in Figure 21) demonstrates key performance metrics: the standard
+deviation, average error, and correlation factor. On the contrary, SF7 has a standard
+deviation of 6.48 dB, resulting in moderate variability in signal strength. Higher results can
+be seen for SF12, with a standard deviation of 8.23 dB, suggesting larger variations in signal
+strength due to environmental and structural interferences at this level. Such variations are
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-34..txt =====
+Technologies 2025, 13, 256
+
+34 of 41
+
+seen in the respective plots of SF12, having greater divergence as compared to the more
+stable trend observed in SF7. In terms of the average error, SF7 obtained a value of 0.12 dB,
+indicating that the measured and predicted signal strengths are quite nicely aligned. The
+average error does not rise very high for the model in SF12, reaching 1.83 dB, despite the
+higher variability. This does represent the general trend of the signals. Thus, this indicates
+that the prediction model is well calibrated, especially with SF12, which is naturally more
+sensitive to propagation woes.
+
+Measured vs. Predicted Electric Field Strength for SF7 on Ground Floor
+
+S| R
+
+_ 50 i
+
+g
+2 faa |
+8 1 | 4 bhaety
+£ t | TT
+bf rh i 1 ;
+Pd |
+
+a
+
+(a)
+Measured vs. Predicted Electric Field Strength for SF12 on Ground Floor
+
+10
+Eoo
+5
+3 a
+& 40
+2 30
+
+Pa
+
+10
+
+0 100 200 300 400
+Distance (m)
+
+(b)
+
+Figure 20. Comparison of measured vs. predicted field strength on ground floor: (a) SF 7; (b) SF 12.
+
+SF7 achieves a correlation factor that is quite high, standing at 0.90, which indicates
+that the predicted values and measured values are highly correlated. On the other hand,
+for SF12, the correlation factor is 0.84, which is lower compared to SF7 but still indicates
+a strong predictive capability. This shows that the model can provide information on dy-
+namic variations in signals from SF12, even in the more challenging third-floor environment.
+Overall, the analysis shows that SF7 signals display very consistent and stable characteris-
+tics and are most preferred for applications that demand predictable performance. SF12 on
+the other hand, is more unpredictable but has higher prediction accuracy, as the model has
+been adequately trained to handle its dynamic nature. Moreover, both spreading factors
+show good correlation coefficients and low average errors, which magnifies the credibility
+of predictive models.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-35..txt =====
+Technologies 2025, 13, 256
+
+35 of 41
+
+Measured vs. Predicted Electric Field Strength for SF7 on 3rd Floor
+
+70
+
+8 & 8 &
+
+Electric Field Strength (4BuVim)
+
+e Measured Electric Feld Strength ;
+==" Predicted Electric Feld Strength :
+
+0 700 200 300 700 500 00
+Distance (m)
+
+(a)
+Measured vs. Predicted Electric Field Strength for SF12 on 3rd Floor
+
+eo Measured Electric Feld Strength
+=== Predicted Electric Feld Strength
+
+0 100 200 300 00 500 600 700
+Distance (m)
+
+(b)
+
+Figure 21. Comparison of measured vs. predicted on third floor: (a) SF 7; (b) SF 12.
+
+The analysis of the measured versus predicted signal strengths using SF7 and SF12 on
+the top of building (as shown in Figure 22) provides the most valuable information for the
+evaluation of the performance of each spreading factor in terms of the standard deviation,
+average error, and correlation factor. The standard deviation for SF7 is 6.90 dB, reflecting
+the fact that this spreading factor shows moderate variation in signal strength on the top
+floor. In contrast, SF12 is quite a bit higher in its standard deviation, which is 11.01 dB,
+indicating significant variation in signal strength. These differences show that SF12 is much
+more responsive to the changing environment and is dependent on the line of sight and
+other physical conditions, as can be seen in their corresponding plots, where SF12 clearly
+has bigger variations than SF7.
+
+Regarding the average error, SF7 presents an error of 0.45 dB. This is a very good
+indication between the measured and predicted values and shows the accuracy of the
+model. SF12, however, has a slightly higher average error of 0.77 dB, indicating that even
+though the predictive model for SF12 is quite accurate, the higher signal variability of SF12
+teases out its alignment with the measured data. Still, the model fits well with the overall
+behavior of SF12, which can be seen from the trends of the plots.
+
+The correlation factor again supports the results of the predictions, as in the case of
+SF7, which lands at 0.73, denoting a high agreement of the measured with the predicted
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-36..txt =====
+Technologies 2025, 13, 256
+
+36 of 41
+
+values, whereas SF12 also amounts to a total of 0.58 in the correlation factor. It is lower than
+SF7, though it still provides a good reach of the predicted values considering the higher
+signal variability of SF12.
+
+Comparison of Measured vs. Predicted Electric Field Strength for SF7 on Top Floor
+
+“e Messured Electric Feld Strength
+
+=== Predicted Electric Feld Strength
+70
+
+30
+
+Electric Field Strength (4BuVim)
+
+0 200 00 00 300
+Distance (m)
+
+(a)
+Measured vs. Predicted Electric Field Strength for SF12 on Top Floor
+
+. -e Measured Electric Field Strength
+70) rc Fed Strength
+
+0 200 700 00 wo
+Distance (m)
+
+(b)
+
+Figure 22. Comparison of measured vs. predicted signal strength on the top level of building: (a) SF 7;
+(b) SF 12.
+
+The heatmap in Figure 23 serves as a sample of the HTZ simulations, showing how the
+LoRaWAN gateway, located on the roof of the building, propagates signals using a spread-
+ing factor of 12. The simulation, performed at a frequency of 868.1 MHz, displays signal
+strengths that range from —135 dBm to —47 dBm across a complex urban environment. The
+strongest signals are found close to the gateway, with the strength diminishing as the dis-
+tance increases. The characteristics of SF12, known for its extensive coverage and ability to
+penetrate urban obstacles, are highlighted by the broad areas of moderate signal strengths
+(indicated by green to blue regions). This visualization is crucial for understanding the
+theoretical effects of gateway placement and signal optimization in densely populated
+areas, showcasing how SF12 enhances coverage by mitigating environmental losses.
+
+Table 11 presents the standard deviation, average error, and correlation factor for both
+SF7 and SF12 across different locations of the GWs. These metrics offer valuable insights
+into signal stability, transmission accuracy, and the consistency of the received signal.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-37..txt =====
+Technologies 2025, 13, 256
+
+37 of 41
+
+Figure 23, HTZ LoRaWAN signal propagation simulation of SF12, top of building.
+
+Table 11. Simulation output metrics.
+
+Floor Spreading Factor Brandard Average Correlation Factor
+SE7 5.76 dB 0.51 dB 0.77
+Ground Floor SF12 8.39 dB 0.33 dB 0.82
+SE7 6.48 dB 0.12 4B 0.90
+3rd Floor SF12 8.23 dB 1.83 dB 0.84
+“op of Building SF7 6.90 dB 0.45 dB 0.73
+SF12 11.01 dB 0.77 dB 0.58
+
+7. Conclusions
+
+This study focused on evaluating real-life problems regarding the use of LARaWAN
+technology with GWs placed in a multi-story building by analyzing the impact that the
+spreading factors SF7 and SF12 have on the signal, packet loss, and network reliability.
+Extensive measurements using Adeunis FTDs and Dragino LG308-EC25 gateways were
+captured on different floors of the building. As an initial step in the analysis, packet loss was
+evaluated thoroughly. The packet loss analysis confirmed that a higher gateway elevation
+on the top floor provides significant advantages for reduced packet loss with both SFs. In
+contrast, the fifth floor consistently exhibited the poorest performance, negatively impacting
+scenarios in which it was included, regardless of the number of gateways deployed.
+
+To enhance the understanding of signal propagation patterns at varying gateway
+locations and SF factors, the SNR and RSSI data was clustered using K-means techniques.
+Clustering revealed that signal strength and noise resilience degrade more predictably at
+lower and obstructed levels, especially under SF7, emphasizing the need for informed,
+data-driven placement. Meanwhile, SF12 showed more robust coverage, with signal values
+classified in higher-quality clusters across most gateway locations.
+
+To enable intelligent deployment that is scalable and adaptive, we introduced GateOpt
+PSODE, a PSO and DE hybrid optimization algorithm. This algorithm optimizes gate-
+way selection by calculating varying weights for RSSI, SNR, and packet loss. Network
+performance did not overly benefit from increased gateways, contrary to traditional be-
+liefs. Increased infrastructure with poor nodes, particularly the fifth floor, reduced the
+optimization score. GateOpt PSODE effectively attained high-performing combinations,
+(Top + 1st + 3rd) and (Ground + Top), which were yielded even with fewer gateways.
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-38..txt =====
+Technologies 2025, 13, 256
+
+38 of 41
+
+Integration of real-time data, such as RSSI, SNR, and packet loss, into a single mea-
+sure of performance allowed for optimizing tiered gateway placement geologically, thus
+eliminating unnecessary gateways while effectively bolstering dependable coverage for
+cities. GateOpt PSODE demonstrated robust performance against weak nodes, variable
+deployment density, and consistent performance in SF7 and SF12.
+
+Furthermore, HTZ Communications simulations using ITU-R 1812-6 and Cost-Hata
+231 models were conducted, verifying the results obtained from field measurements. The
+simulation results align with the field data, strongly validating the interesting results
+obtained from SF12, where the simulated results were closely aligned with the experimental
+results from complex urban deployments.
+
+In conclusion, the integration of clustering with actual measurements and hybrid
+optimization within the scope of this work provides city planners and designers of IoT
+systems with a validated approach for optimizing gateway placement in LORaWAN systems
+within urban multi-story buildings. This approach is reliable, scalable, and cost-efficient
+for improving network performance in densely populated regions.
+
+Author Contributions: Conceptualization, K.A.A.-S.; methodology, K.A.A.-S.; software, K.A.A.
+validation, $.H.A.-G., LM., C.M. and A.M,; formal analysis, K.A.A--S., N.A.M.A. and N.A.H.A-S.;
+investigation, K.A.A.-S. and $.H.A.-G,; resources, K.A.A.-S., A-M.C.D. and C.M,; data curation,
+K.A.A-S. and S.H.A--G.; writing—original draft preparation, K.A.A.-S.; writing—review and editing,
+K.A.A-S,, LM, A-M.C.D., A.M. and C.M,; visualization, $.H.A-G., C.M., A.M. and NAMA;
+supervision, IM.; project administration, A.-M.C.D,; funding acquisition, A.M. All authors have read
+and agreed to the published version of the manuscript.
+
+Funding; This research received no external funding.
+Institutional Review Board Statement: Not applicable.
+Informed Consent Statement: Not applicable.
+
+Data Availability Statement: The original contributions presented in this study are included in the
+article, and further inquiries can be directed at the corresponding author.
+
+Acknowledgments: The research leading to this article was supported by the Vodafone Innovation
+Hub at the National University of Science and Technology Politehnica Bucharest; by GNAC2023
+ARUT, STARTING GRANT-SG SalvAIoT, contract no. 21/09.10.2023, funded by the National Uni-
+versity of Science and Technology Politehnica Bucharest; and by the SOLID-BSG project, funded by
+European Economic Area (EEA) Norway (NO) Grants 2014-2021, under project contract no. 42/2021,
+RO-NO-2019-0499—" A Massive MIMO Enabled IoT Platform with Networking Slicing for Beyond
+5G IoV/V2X and Maritime Services (SOLID-B5G)”.
+
+Conflicts of Interest: The authors declare that this research was conducted in the absence of any
+commercial or financial relationships that could be construed as a potential conflict of interest.
+
+Abbreviations
+
+ADR Adaptive data rate
+
+css Chirp Spread Spectrum
+
+DE Differential Evolution
+
+EIRP Equivalent Isotropically Radiated Power
+
+FID Field Test Device
+
+GBEST Global Best Position (in PSO)
+
+GPS Global Positioning System
+
+GateOpt PSODE _S*teway Optimization Particle Swarm Optimization + Differential Evotution
+(hybrid algorithm)
+
+HITZ HTZ Communications (simulation software)
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-39..txt =====
+Technologies 2025, 13, 256 39 of 41
+
+IoT Internet of Things
+ISM Industrial, Scientific, and Medical (band)
+LPWAN Low-Power Wide-Area Network
+MAC Medium Access Control
+OTAA Over-The-Air Activation
+PHY Physical layer
+PSO Particle Swarm Optimization
+PDR Packet Delivery Ratio (implied in context)
+RE Radio Frequency
+RSSI Received Signal Strength Indicator
+SF Spreading factor
+SNR Signal-to-Noise Ratio
+TIN The Things Network
+UAV Unmanned Aerial Vehicle
+WSN Wireless Sensor Network
+References
+1. Apriantoro, R.; Suharjono, A.; Kurnianingsih, K.; Enriko, LK.A. Investigation of Coverage and Signal Quality of LARaWAN
+
+10.
+11.
+
+12.
+
+13.
+
+14.
+
+15.
+
+Network in Urban Area. In Proceedings of the 2020 International Conference on Computer Engineering, Network, and Intelligent
+Multimedia (CENIM), Surabaya, Indonesia, 17 November 2020; IEEE: Piscataway, NJ, USA, 2020; pp. 326-331.
+
+Majid, M.; Habib, S.; Javed, A.R.; Rizwan, M.; Srivastava, G.; Gadekallu, TR; Lin, J.C.-W. Applications of Wireless Sensor
+Networks and Internet of Things Frameworks in the Industry Revolution 4.0: A Systematic Literature Review. Sensors 2022, 22,
+2087. [CrossRef] [PubMed]
+
+Narasimha Swamy, S.; Kota, S.R. An Empirical Study on System Level Aspects of Internet of Things (IoT). IEEE Access 2020, 8,
+188082-188134. [CrossRef]
+
+Maini, J.; Rani, S. Introduction to IoT and WSN. In WSN and oT; CRC Press: Boca Raton, FL, USA, 2024; pp. 1-34. ISBN
+9781003437079.
+
+Al-Sammak, K.A,; Al-Gburi, S.H.; Marghescu, C.; Dragulinescu, A.M.; Suciu, G.; Abdulqader, A.G. A Comprehensive Assessment
+of LoRaWAN and NB-IoT Performance Metrics under Varied Payload Data Sizes. In Proceedings of the 2024 16th International
+Conference on Electronics, Computers and Artificial Intelligence (ECAD, Iasi, Romania, 27 June 2024; IEEE: Piscataway, NJ, USA,
+2024; pp. 1-5.
+
+Ogbodo, E.U.; Abu-Mahfouz, A.; Kurien, A. A Survey on 5G and LPWAN-IoT for Improved Smart Cities and Remote Area
+Applications: From the Aspect of Architecture and Security. Sensors 2022, 22, 6313. [CrossRef] [PubMed]
+
+Janssen, T.; Koppert, A.; Berkvens, R.; Weyn, M. A Survey on IoT Positioning Leveraging LPWAN, GNSS, and LEO-PNT. IEEE
+Internet Things J. 2023, 10, 11135-11159. [CrossRef]
+
+Ouaissa, M.; Ouaissa, M.; Khan, L.U.; Boulouard, Z.; Rashid, J. Low-Power Wide Area Network for Large Scale Internet of Things:
+Architectures, Communication Protocols and Recent Trends; Ouaissa, M., Khan, I.U., Boulouard, Z., Rashid, J., Eds.; Taylor & Francis:
+London, UK, 2024; ISBN 9781040005774.
+
+Al-Sammak, K.; Al-Gburi, S.; Marghescu, I; Dragulinescu, A.M.C.; Marghescu, C.; Martian, A.; Al-Sammak, N.A.H.; Suciu, G.;
+Alheeti, K. Optimizing IoT Energy Efficiency: Real-Time Adaptive Algorithms for Smart Meters with LoRaWAN and NB-IoT.
+Energies 2025, 18, 987. [CrossRef]
+
+Kwasme, H.; Ekin, S. RSSI-Based Localization Using LoRaWAN Technology. IEEE Access 2019, 7, 99856-99866. [CrossRef]
+Jeftenic, N.; Simic, M.; Stamenkovic, Z. Impact of Environmental Parameters on SNR and RSS in LoRaWAN. In Proceedings of
+the 2020 International Conference on Electrical, Communication, and Computer Engineering (ICECCE), Istanbul, Turkey, 12-13
+June 2020; IEEE: Piscataway, NJ, USA, 2020.
+
+Al-Sammak, K.; AL-Gburi, S.; Marghescu, I. Communications Systems in Smart Metering: A Concise Systematic Literature
+Review. In Proceedings of the 2022 14th International Conference on Communications (COMM), Bucharest, Romania, 16 June
+2022; IEEE: Piscataway, NJ, USA, 2022; pp. 1-9.
+
+Yatagan, T.; Oktug, S. Smart Spreading Factor Assignment for LORaWANs. In Proceedings of the 2019 IEEE Symposium on
+Computers and Communications (ISCC), Barcelona, Spain, 29 June-3 July 2019; IEEE: Piscataway, NJ, USA, 2019.
+
+Turcinovic, E; Vukovic, J; Bozo, S.; Sisul, G. Analysis of LoRa Parameters in Real-World Communication. In Proceedings of the
+2020 International Symposium ELMAR, Zadar, Croatia, 14-15 September 2020; IEEE: Piscataway, NJ, USA, 2020.
+
+Kamal, A.; Muhammad, M.; Mansoor Alam, A.A.B.; Mohd Su’ud, M. Requirements, Deployments, Challenges LoRa Technology:
+Survey. Comput. Intell. Neurosci. 2023, 2023, 5183062. [CrossRef]
+
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-40..txt =====
+Technologies 2025, 13, 256 40 of 41
+
+16.
+
+17.
+
+18.
+
+19.
+
+20.
+
+21.
+
+22.
+
+23.
+
+24.
+
+25.
+
+26.
+
+27.
+
+28.
+
+29.
+
+35.
+
+36.
+
+37.
+
+38.
+
+Savithi, C.; Kaewta, C. Multi-Objective Optimization Gateway Location Selection Long-Range Wide Area Networks: Tradeoff
+Analysis between System Costs Bitrate Maximization. J. Sens. Actuator Netw. 2024, 13, 3. [CrossRef]
+
+Citoni, B.; Ansari, S.; Abbasi, Q.H.; Imran, M.A.; Hussain, S. Impact of Inter-Gateway Distance on LORaWAN Performance.
+Electronics 2021, 10, 2197. [CrossRef]
+
+Saban, M.; Aghzout, O.; Medus, L.D.; Rosado, A. Experimental Analysis of loT Networks Based on LoRa/LoRaWAN under
+Indoor and Outdoor Environments: Performance and Limitations. IFAC-Pap. 2021, 54, 159-164. [CrossRef]
+
+Mikhaylov, K.; Stusek, M.; Masek, P.;; Fujdiak, R.; Mozny, R.; Andreev, S.; Hosek, J. On the Performance of Multi-Gateway
+LoRaWAN Deployments: An Experimental Study. In Proceedings of the 2020 IEEE Wireless Communications and Networking
+Conference (WCNC), Seoul, Republic of Korea, 25-28 May 2020; IEEE: Piscataway, NJ, USA, 2020.
+
+Svertoka, E.; Rusu-Casandra, A.; Burget, R.; Marghescu, I.; Hosek, J.; Ometov, A. LARaWAN: Lost for Localization? IEEE Sens. J.
+2022, 22, 23307-23319. [CrossRef]
+
+Dawaliby, S.; Bradai, A.; Pousset, Y. Joint Slice-Based Spreading Factor and Transmission Power Optimization in LoRa Smart City
+Networks. Internet Things 2021, 14, 100121. [CrossRef]
+
+Svertoka, E.; Rusu-Casandra, A.; Burget, R.; Nurmi, J.; Ometov, A. K-NN Empowered LoRaWAN Localization for Surface and
+Underground Scenarios: Work-in-Progress Report. 2024. Available online: https: / /researchportal.tuni.fi/en/publications/k-nn-
+empowered-lorawan-localization-for-surface-and-underground-s (accessed on 21 May 2025).
+
+Cruz, H.A.O,; Ferreira, S.C.B.; Aratijo, J.PL.; Barros, FJ.B.; Farias, FS.; Neto, M.C.A.; Tostes, M.E.L.; Nascimento, A.A.; Cavalcante,
+G.PS. Methodology for LoRa Gateway Placement Based on Bio-Inspired Algorithmsfor a Smart Campus in Wooded Area. Sensors
+2022, 22, 6492. [CrossRef] [PubMed]
+
+Abubakar, A.K.; Shore, T.; Sastry, N. Constrained Machine Learning for LoRa Gateway Location Optimisation. In Proceedings of
+the 17th Asian Internet Engineering Conference, Hiroshima, Japan, 19 December 2022; ACM: New York, NY, USA, 2022.
+
+Ousat, B.; Ghaderi, M. LoRa Network Planning: Gateway Placement and Device Configuration. In Proceedings of the 2019 IEEE
+International Congress on Internet of Things (ICIOT), Milan, Italy, 8-13 July 2019; IEEE: Piscataway, NJ, USA, 2019.
+
+Mendes, B.; Correia, N.; Passos, D. On the Optimization of LARaWAN Gateway Placement in Wide Area Monitoring Systems. In
+Internet of Things. IoT Through a Multi-Disciplinary Perspective; IFIP Advances in Information and Communication Technology; Springer
+International Publishing: Cham, Switzerland, 2022; pp. 41-51. ISBN 9783031188718.
+
+Rezazadeh, A.; Soorki, M.N.; Kavian, Y.S.; Ranjbaran, S.; Nitti, M. Gateway Planning for the Long-Range Wireless Networks in
+Smart Cities. In Proceedings of the 2024 IEEE 35th International Symposium on Personal, Indoor and Mobile Radio Communica-
+tions (PIMRC), Valencia, Spain, 2 September 2024; IEEE: Piscataway, NJ, USA, 2024; pp. 1-7.
+
+Nyirenda, C.N. On the Efficacy of Particle Swarm Optimization for Gateway Placement in LoRaWAN Networks. In Optimisation
+Algorithms and Swarm Intelligence; IntechOpen: London, UK, 2022; ISBN 9781839686658.
+
+Saheb, T.; Mellal, M.A. Improvement of System Reliability in a Natural Gas Processing Facility by PSO and DE. Int. J. Interact.
+Des. Manuf. (IJIDeM) 2024, 18, 167-176. [CrossRef]
+
+Hosseinzadeh, S.; Géktiirkler, G.; Turan-Karaoglan, S. Inversion of Self-Potential Data by a Hybrid DE/PSO Algorithm. Acta
+Geod. Geophys. 2023, 58, 241-272. [CrossRef]
+
+Wang, C.; Xu, M.; Zhang, Q.; Feng, J.; Jiang, R.; Wei, Y.; Liu, Y. Parameters Identification of Thevenin Model for Lithium-
+Ion Batteries Using Self-Adaptive Particle Swarm Optimization Differential Evolution Algorithm to Estimate State of Charge.
+J. Energy Storage 2021, 44, 103244. [CrossRef]
+
+Mohammadi, B.; Guan, Y.; Moazenzadeh, R.; Safari, MJ.S. Implementation of Hybrid Particle Swarm Optimization-Differential
+Evolution Algorithms Coupled with Multi-Layer Perceptron for Suspended Sediment Load Estimation. Catena 2021, 198, 105024.
+[CrossRef]
+
+Iweh, C.D.; Akupan, E.R. Control and Optimization of a Hybrid Solar PV—Hydro Power System for off-Grid Applications Using
+Particle Swarm Optimization (PSO) and Differential Evolution (DE). Energy Rep. 2023, 10, 4253-4270. [CrossRef]
+
+Huang, C.; Zhou, X.; Ran, X.; Wang, J.; Chen, H.; Deng, W. Adaptive Cylinder Vector Particle Swarm Optimization with
+Differential Evolution for UAV Path Planning. Eng. Appl. Artif. Intell. 2023, 121, 105942. [CrossRef]
+
+Boks, R.; Wang, H.; Back, T. A Modular Hybridization of Particle Swarm Optimization and Differential Evolution. arXiv 2020,
+arXiv:2006.11886.
+
+Almuhaya, M.A.M.; Jabbar, W.A.; Sulaiman, N.; Abdulmalek, S. A Survey on LoRaWAN Technology: Recent Trends, Opportuni-
+ties, Simulation Tools and Future Directions. Electronics 2022, 11, 164. [CrossRef]
+
+Osorio, A.; Calle, M.; Soto, J.D.; Candelo-Becerra, J.E. Routing in LORaWAN: Overview and Challenges. IEEE Commun. Mag.
+2020, 58, 72-76. [CrossRef]
+
+TS001-1.0.4 LORaWAN® L2 1.0.4 Specification. Available online: https: / /resources.lora-alliance.org/technical-specifications/ts0
+01-1-0-4-lorawan-|2-1-0-4-specification (accessed on 29 December 2024).
+
+Obiri, N.M.; Van Laerhoven, K. A Survey of LOARaWAN-Integrated Wearable Sensor Networks for Human Activity Recognition:
+Applications, Challenges and Possible Solutions. IEEE Open J. Commun. Soc. 2024, 5, 6713-6735. [CrossRef]
+
+===== Optimizing_LoRaWAN_Gateway_Placement_in_Urban_Environments:_A_Hybrid_PSO-DE_Algorithm_Validated_via_HTZ_Simulations-41..txt =====
+Technologies 2025, 13, 256 41 of 41
+
+40.
+
+41.
+
+42.
+
+43.
+
+45.
+
+46.
+
+47.
+
+48.
+
+49.
+50.
+
+51.
+
+Elbsir, H.E.; Kassab, M.; Bhiri, S.; Bedoui, M.H. Evaluation of LoRaWAN Class B Performances and Its Optimization for Better
+Support of Actuators. Comput. Commun. 2023, 198, 128-139. [CrossRef]
+
+Leonardi, L.; Lo Bello, L.L.; Patti, G.; Pirri, A.; Pirri, M. Combined Use of LoRaWAN Medium Access Control Protocols for loT
+Applications. Appl. Sci. 2023, 13, 2341. [CrossRef]
+
+Fontana, C. FTD: Network Tester. Available online: https: / /www.adeunis.com/en/produit/ftd-network-tester/ (accessed on
+19 March 2025).
+
+Dragino Download Server./Downloads/LoRa_gateway /LG308-LG301/. Available online: https: //www.dragino.com/
+downloads/index.php?dir=LoRa_Gateway /LG308-LG301/ (accessed on 19 March 2025).
+
+Alkhayyal, M.; Mostafa, A.M. Recent Developments in Al and ML for IoT: A Systematic Literature Review on LoRaWAN Energy
+Efficiency and Performance Optimization. Sensors 2024, 24, 4482. [CrossRef]
+
+Gad, A.G. Particle Swarm Optimization Algorithm and Its Applications: A Systematic Review. Arch. Comput. Methods Eng, 2022,
+29, 2531-2561. [CrossRef]
+
+Storn, R.; Price, K. Differential Evolution—A Simple and Efficient Heuristic for Global Optimization over Continuous Spaces.
+J. Glob. Optim. 1997, 11, 341-359. [CrossRef]
+
+Ahmad, M.F, Isa, N.A.M.; Lim, W.H.; Ang, KM. Differential Evolution: A Recent Review Based on State-of-the-Art Works. Alex.
+Eng. J. 2022, 61, 3831-3872. [CrossRef]
+
+Bilal; Pant, M.; Zaheer, H.; Garcia-Hernandez, L.; Abraham, A. Differential Evolution: A Review of More than Two Decades of
+Research. Eng. Appl. Artif. Intell. 2020, 90, 103479. [CrossRef]
+
+Wang, D.; Tan, D.; Liu, L. Particle Swarm Optimization Algorithm: An Overview. Soft Comput. 2018, 22, 387-408. [CrossRef]
+Price, K; Storn, R.M.; Lampinen, J.A. Differential Evolution: A Practical Approach to Global Optimization; Natural Computing;
+Springer: Berlin/Heidelberg, Germany, 2005; ISBN 9783540313069.
+
+HTZ Communications. Available online: https:/ /atdi.com/products-and-solutions/htz-communications/ (accessed on
+19 March 2025).
+
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.
+

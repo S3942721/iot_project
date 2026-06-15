@@ -1,0 +1,375 @@
+===== Performance_of_Narrow-Band_Internet_of_Things_NB-IoT_Based_on_Repetition_of_Downlink_Physical_Channel-1..txt =====
+Performance of Narrow-Band Internet of Things
+
+(NB-IoT) Based on Repetition of Downlink Physical
+Channel
+
+Nurul Aizati Ahmad, and Nur Idora Abdul Razak
+Universiti Teknologi MARA, 40450 Shah Alam, Selangor MALAYSIA
+zatty.ahmad@gmail.com, nuridora@salam.uitm.edu.my
+
+Abstract- Narrow-Band Internet of Things (NB-IoT) offers
+low power and wide coverage for IoT services which reuse
+existing Long Term Evolution (LTE) technology. Coverage
+enhancement at weak signal area may be achieved by channel
+repetition to improve signal quality. In this paper, the
+performance of NB-IoT is evaluated for three different modes
+of deployments by repeating the downlink physical channel.
+It is proved that the increase in the number of repetitions will
+give better performance of NB-IoT system. It also shows that
+the standalone and guard band modes perform better
+compared to in-band mode.
+
+Index Terms- NB-IoT, Repetition, In-band, Guardband,
+Standalone, NPDSCH
+
+I. INTRODUCTION
+
+NB-IoT is a radio access technology that is defined from the
+existing Long-Term Evolution (LTE) technology by 3GPP in
+middle of 2016 [4] [12]. The idea of NB-IoT introduction is to
+fulfill the demand of markets related to the IoT needs. The main
+objectives of this technology are to be able to effectively handle
+huge number of connected devices, to lengthen the battery
+operated by lowering the power consumptions and improve the
+weak and cell edge coverage by signal repetition in physical layer
+[1]. Deployment of NB-IoT are based on the guideline that have
+been defined in 3GPP Release-13.
+
+NB-IoT supports repetition of the signals in order to boost the
+signal power for low powered devices that are in extreme
+coverage condition [9]. In [15], number of repetitions depends on
+the coverage enhancement level required by a User Equipment
+(UE). Repetition can exist in physical downlink channel and
+physical uplink channel.
+
+NB-IoT can be deployed in three different modes — inband,
+guardband and standalone [1] [6]. Fig. | shows the inband mode
+where NB-IoT is deployed within the LTE carrier. NB-loT
+requires only one physical resource block (PRB) from LTE
+legacy. PRB can be fully utilized by LTE whenever there is no
+NB-IoT traffic present. This is due to the integration of structure
+
+and spectrum usage defined in LTE and NB-IoT. To support full
+flexible design, two modes of inband operation are defined. The
+first mode is named Same-PCI mode where the NB-IoT carrier
+has identical parameters, which are the physical cell ID (PCI) and
+number of transmit antennas as the LTE. The other mode is
+defined as Different-PCI where it considers options of having
+different cell ID and number of transmit antennas [6].
+
+LTE Bandwidth (MHz)
+
+Transmission Bandwiddh
+ti al Resource Block)
+
+i i
+
+LTE Guard Band
+
+Fig. 1: Inband mode NB-IoT
+
+Guardband mode means the deployment of NB-IoT in
+channel bandwidth that are reserved for the guardband of legacy
+LTE band as illustrated in Fig. 2. One of the benefits of guardband
+mode is none of PRB in legacy LTE is used. In addition, all
+symbols in subframe can be used for guardband operation
+compared to inband mode where there are few symbols will be
+used by LTE for control channel and reference signals [1] [6].
+
+For standalone mode, the NB-IoT is deployed in non-
+LTE carrier (GSM carrier) as shown in Fig. 3. GSM carriers
+mainly operates in 900 MHz and 1800 MHz frequency bands
+(present spectrum in nowadays market). Deploying NB-IoT in
+these carriers basically an advantage as it can accelerate its
+readiness time to be in market [6].
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:23 UTC from IEEE Xplore. Restrictions apply.
+
+506
+
+===== Performance_of_Narrow-Band_Internet_of_Things_NB-IoT_Based_on_Repetition_of_Downlink_Physical_Channel-2..txt =====
+LTE Bandwidth (MHz)
+
+Transmission Bandwideh
+(Physical Resource Block)
+
+LTE Guard Band
+
+LTE Guard Band
+
+Fig. 2: NB-IoT Deploymnet in Guardband Mode
+
+GSM GSM
+
+GSM { GSM
+NB-IoT
+
+o_o’
+‘Non-LTE Casrier
+
+Fig. 3: NB-IloT Deployment in Standalone Mode
+
+Since NB-IoT is part of LTE family, therefore there are few
+common characteristics of NB-IoT and LTE such as the length of
+radio frame and the PRB. In NB-IoT, the system bandwidth is
+fixed to 180 kHz spectrum which is equivalent to one PRB. Thus,
+the number of resource block in NB-IoT system bandwidth is
+always one [7] with 12 subcarriers separated by 15 kHz guard
+band. Fig. 4 shows the even and odd downlink frames Each frame
+has a duration of 10 ms and consists of 10 subframes.
+
+In 3GPP Rel-13, there are new channels and signals are
+derived based on LTE channels with some modification to fit into
+the narrow bandwidth used by downlink (DL) and uplink (UL) in
+NB-IoT. Narrow-band Primary Synchronization Signal (NPSS)
+and Narrow-band Secondary Synchronization Signal (NSSS)
+provide information on time and frequency synchronization.
+NPSS is transmitted in subframe 5 in all radio frames while NSSS
+is transmitted in subframe 9 in even radio frames only. Cell
+reference is identified by the Narrow-band Reference Signal
+(NRS) cell.
+
+Three new downlink channels are Narrow-band Physical
+Broadcast Channel (NPBCH), Narrow-band Physical Downlink
+Shared Channel (NPDSCH) and Narrow-band Downlink Control
+Channel (NPDCCH). NPBCH carries the Master Information
+Block (MIB) and occupies subframe 0 in every frame. NPDCCH
+carries downlink control information. NPDSCH carries the data
+intended for the specific user, in addition to paging, system
+information and random access response.
+
+ML m@ TTT tit
+oO
+
+1234567890123456789
+
+Even frame Odd frame =——>
+
+Subframes
+
+[BW veech [J ness [] nsss[_] NPoccH/NPDSCH
+
+Fig. 4: Structure of NB-IoT downlink frame
+
+In NB-IoT network, when User Equipment (UE) is an
+ideal mode it will periodically monitors NPDCCH to check
+whether there is any paging message which indicates the presence
+of downlink traffic for the UE. Once the UE recognized the
+presence of traffic for the UE, it will decode NPDSCH to identify
+the contents of the traffic. Therefore, successful decoding of
+NPDSCH is a crucial factor in providing a reliable NB-loT
+services [6]. Thus, when the system enables the NPDSCH
+repetition transmission, it will increase the number of received
+signal detected and decoded at the weak signal area or cell edge.
+NB-IoT adjust the number of transmission repetition based on the
+signal strength and increase the number of transmission repetition
+to ensure effective data transmission at coverage edges.
+
+The NB-IoT signaling protocol uses new messages - Master
+Information Block NB (MIB-NB) and System Information Block
+Type I-NB (SIB1-NB). These two messages are different from the
+SIB and MIB messages in LTE standard in terms of the content
+of the message, the scheduling type and the physical channel.
+Even though these two messages are different from LTE standard,
+the eNodeB still can manage these new messages in a same
+manner by differentiating the UE types and messages [4]. MIB in
+legacy LTE only contains high level information, but in MIB-NB
+it contains more details information to acquire SIB1-NB including
+the operation mode of NB-IoT. In [13], the specification of SIB1-
+NB messages is explained in detail. SIBI-NB message is
+transmitted every 2560 ms which is equivalent to 256 frames.
+Within this period, this message can be repeated for several times.
+In NB-IoT standard, UE shall receive minimum one MIB-NB
+message and one SIBI-NB message before Random Access
+Channel (RACH) process and connection establishment with
+eNodeB.
+
+Il. SYSTEM MODEL
+
+In order to ideally show the effect of repetition, the controlled
+channel performance has been considered. The performance of
+NPDSCH repetition will be presented by Block Error Rate
+(BLER) simulation under Addictive White Gaussian Noise
+(AWGN). The improvement of signal quality is expected to be
+illustrated when number of NPDSCH repetition are varies at three
+different modes of NB-IoT deployment — inband, guardband and
+standalone (non-LTE carrier). To have a comparable result, there
+are few constant variables configured in all three modes of NB-
+IoT deployment.
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:23 UTC from IEEE Xplore. Restrictions apply.
+
+507
+
+===== Performance_of_Narrow-Band_Internet_of_Things_NB-IoT_Based_on_Repetition_of_Downlink_Physical_Channel-3..txt =====
+In [15] the number of NPDSCH repetitions and the transport
+block size (TBS) are affected depending on the NPDSCH channel
+whether it is carrying SIBI-NB or not. In this simulation,
+NPDSCH is configured to carry SIB1-NB. The number of
+repetitions depends on the TBS tables in [15].
+
+The transport blocks of size 680 undergo 24-bit CRC
+encoding, convolutional encoding and rate matching stages in
+order to obtain the NPDSCH bits which are repeated according to
+repetition configured. Scrambling, QPSK modulation, layer
+mapping and precoding are applied to form complex NPDSCH
+symbols. AWGN is added to these NPDSCH symbols and then
+channel decoding and demodulation are performed to recover the
+transport block. After de-scrambling, the repetitive subframes are
+soft-combined before rate recover. The transport block error rate
+(BLER) of decoded blocks are calculated.
+
+Ill. | SIMULATION RESULTS
+
+To present the effect of repetition, the channels are simulated
+as perfect channels where there is no channel propagation
+considered during simulation. Fig. 5 represents the effect of
+repetition transmission in inband mode. As NPDSCH channels
+are carrying SIB1-NB massage, thus the number of repetitions can
+only be repeat either 4, 8 or 16 as defined in 3GPP standard. It
+shows for BLER 107, the SNR at 4, 8 and 16 repetitions are -3.1
+dB, -6.2 dB and -9.4 dB respectively. It clearly shows that by
+having repetition transmission, more signals can be detected
+correctly at low SNR as the number of repetitions is increasing. It
+shows that around 3 dB improvement can be achieved if the
+number of repetitions is doubled.
+
+INGBAND DIFFERENT PCr: SIB1NO:TBS=CO0;NSFO2NRS Porte
+
+Fig. 5: NPDSCH Repetition in inband Mode
+
+Fig. 6: NPDSCH Repetition in Guardband Mode
+
+Similar to inband mode, the number of NPDSCH
+repetitions are varies at 4, 8 and 16. In Fig. 6, at BLER 107, 4, 8
+and 16 repetitions give SNR -6 dB, -8.1 dB and -10 dB
+respectively. For guardband and standalone modes no symbols are
+used for control and reference symbol. Due to this, more signal is
+detected and decoded at lower SNR compared to inband. It shows
+that around 2 dB improvement can be achieved if the number of
+repetitions is doubled.
+
+Fig. 7 shows for BLER 10°, 4, 8 and 16 repetitions give
+SNR -6 dB, -8.1 dB and -10.2 dB respectively. Similar with other
+two modes, there are signal received at lower SNR which helps to
+improve the coverage improvement at cell edge or at weak signal
+area. It shows that around 2 dB improvement can be achieved if.
+the number of repetitions is doubled.
+
+= =<
+
+aur
+
+Fig. 7: NPDSCH Repetition in Standalone Mode
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:23 UTC from IEEE Xplore. Restrictions apply.
+
+508
+
+===== Performance_of_Narrow-Band_Internet_of_Things_NB-IoT_Based_on_Repetition_of_Downlink_Physical_Channel-4..txt =====
+ler
+
+Fig. 8: NPDSCH Repetition = 4 for all three modes
+
+Fig. 8 compares the effect of repetitions of NPDSCH
+channels when repeated four times in all three deployment modes.
+For guardband and standalone modes, the effect of repetition is
+the same for both modes. Differ from the other two modes, BLER
+10? (1%), the SNR for inband is -3.2 dB while for other two
+modes the SNR is -6 dB. This result represented that, in
+guardband and standalone modes, the repetition able to boost the
+coverage better than in inband modes.
+
+TV. | CONCLUSION
+
+Based on the result achieved, it can be concluded that
+repetition of NPDSCH improved signals quality at the lower SNR
+where more signals are detected and decoded correctly. As the
+number of NPDSCH channels repetition are increased the signal
+able to reach even at the lower SNR. Hence, it will enhance
+coverage at the weak area or cell edge. At lower SNR, more
+signals are detected and decoded in both guardband and
+standalone modes compared to inband mode. Regardless any
+modes of deployments, repetition transmission is possible to boost
+the coverage at lower SNR. Coverage improvement is important
+as NB-loT users can have better experience in applying NB-IoT.
+
+Vv. © ACKNOWLEDGEMENT
+
+This project is supported by a Fundamental Research Grant
+Scheme (FRGS) 600-IRMI/FRGS 5/3 (94/2015) funded by the
+Ministry of Higher Education, Malaysia. The authors also
+gratefully acknowledge the support from Faculty of Electrical
+Engineering, Universiti Teknologi MARA, Malaysia.
+
+VI. | REFERENCES
+
+[I] R. Ratasuk, J. Tan, N. Mangalvedhe, M. H. Ng and A. Ghosh,
+"Analysis of NB-IoT Deployment in LTE Guard-Band," 2017 IEEE
+85th Vehicular Technology Conference (VTC Spring), Sydney,
+NSW, 2017, pp. 1-5.
+
+[2] H. Chung, S. Lee and J. Jeong, "NB-IoT Optimization on Paging
+MCS and Coverage Level," 20/8 15th International Symposium on
+Wireless Communication Systems (ISWCS), Lisbon, 2018, pp. 1-5.
+
+[3] G. Tsoukaneri, M. Condoluci, T. Mahmoodi, M. Dohler and M. K.
+Marina, "Group Communications in Narrowband-IoT: Architecture,
+Procedures, and Evaluation," in /EEE Internet of Things Journal,
+vol. 5, no. 3, pp. 1539-1549, June 2018.
+
+[4] S. Foni, T. Pecorella, R. Fantacci, C. Carlini, P. Obino and M. G. Di
+Benedetto, "Evaluation methodologies for the NB-IOT system:
+Issues and ongoing efforts," 20/7 AEIT International Annual
+Conference, Cagliari, 2017, pp. 1-6.
+
+[5] A. D. Zayas and P. Merino, "The 3GPP NB-IoT system architecture
+for the Internet of Things," 20/7 IEEE International Conference on
+Communications Workshops (ICC Workshops), Paris, 2017, pp.
+277-282.
+
+[6] J. Chen, K. Hu, Q. Wang, Y. Sun, Z. Shi and S. He, "Narrowband
+Internet of Things: Implementations and Applications," in IEEE
+Internet of Things Journal, vol. 4, no. 6, pp. 2309-2314, Dec. 2017.
+
+[7] M. Elsaadany, A. Ali and W. Hamouda, "Cellular LTE-A
+Technologies for the Future Internet-of-Things: Physical Layer
+Features and Challenges," in IEEE Communications Surveys &
+Tutorials, vol. 19, n0. 4, pp. 2544-2572, Fourthquarter 2017.
+
+[8] J. Xu, J. Yao, L. Wang, Z. Ming, K. Wu and L. Chen, "Narrowband
+Internet of Things: Evolutions, Technologies, and Open Issues,” in
+IEEE Internet of Things Journal, vol. 5, no. 3, pp. 1449-1462, June
+2018.
+
+[9] Y. D. Beyene, R. Jantti, K, Ruttik and S. Iraji, "On the Performance
+of Narrow-Band Internet of Things (NB-IoT)," 2017 IEEE Wireless
+Communications and Networking Conference (WCNC), San
+Francisco, CA, 2017, pp. 1-6.
+
+[10] H. Kim, S. Cho, J. Oh and G. Jo, "Uplink Scheduling Technique for
+the LTE System to Improve the Performance of the NB-loT
+System," 2018 Tenth International Conference on Ubiquitous and
+Future Networks (ICUFN), Prague, 2018, pp. 613-615.
+
+[11]3G°PP TR 4°5.820 V13.1.0 (2015-11): Cellular system support for
+ultra-low complexity and low throughput Internet of Things (CloT)
+(Release 13)
+
+[12] 3GPP TS 36.211 V13.2.0 (2016-06) E-UTRA Physical channels and
+modulation,
+
+[13] 3GPP TS 36.331 V13.2.0 (2016-06): E-UTRA RRC Protocol
+Specification
+
+[14] Narrowband IoT Wide Range of Opportunities, Huawei White
+Paper, 2016.
+
+[15] 3GPP TS 36.213 Evolved Universal Terrestrial Radio Access (E-
+UTRA): Physical layer Procedures (Release 13)
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:15:23 UTC from IEEE Xplore. Restrictions apply.
+
+509
+

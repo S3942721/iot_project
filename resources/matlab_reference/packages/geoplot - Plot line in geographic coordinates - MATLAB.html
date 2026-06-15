@@ -1,0 +1,1964 @@
+<!DOCTYPE html><html lang="en"><head><script nonce="rngGPzngNfYNK6JBJd/IuTu2">window.mwDocMetadata = {"isLoggedIn":true,"exampleVersionSpec":["\u003e=25.1"],"isArchivedDoc":false,"release":"R2026a"};</script>
+	
+	<!-- Template Source Page: /content/mathworks/au/en/template-service/help/full-header-footer-offcanvas-bs5 -->
+	<!-- Template Source Env: stage -->
+	<!-- Template Last Modified: 2026-06-01T16:00:43-04:00 -->
+	
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	
+
+	<link rel="icon" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/images/favicon.20260513204911014.ico" type="image/x-icon"/>
+	<link rel="canonical" href="https://au.mathworks.com/help/matlab/ref/geoplot.html"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	
+	
+		<meta name="twitter:card" content="summary_large_image"/>
+		<meta name="twitter:site" content="@MathWorks"/>
+		
+		<meta name="twitter:image" content="https://au.mathworks.com/template-service/help/full-header-footer-offcanvas-bs5/_jcr_content/ogImageSecureUrl.adapt.1200.medium.jpg/1744384063106.jpg"/>
+		<meta property="og:image:url" content="https://au.mathworks.com/template-service/help/full-header-footer-offcanvas-bs5/_jcr_content/ogImageSecureUrl.adapt.1200.medium.jpg/1744384063106.jpg"/>
+		<meta property="og:image:secure_url" content="https://au.mathworks.com/template-service/help/full-header-footer-offcanvas-bs5/_jcr_content/ogImageSecureUrl.adapt.1200.medium.jpg/1744384063106.jpg"/>
+	
+	<meta property="og:url" content="https://au.mathworks.com/help/matlab/ref/geoplot.html"/>
+	<meta property="og:description" content="This MATLAB function plots a line in geographic coordinates."/>
+	<meta property="og:title" content="geoplot - Plot line in geographic coordinates - MATLAB"/>
+	<meta property="og:type" content="website"/>
+	
+
+	
+
+	<script nonce="rngGPzngNfYNK6JBJd/IuTu2"> (function() { if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.classList.add('mw-theme-dark'); } else { document.documentElement.classList.add('mw-theme-light'); } })();	</script>
+	
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/webvitals.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+
+	
+	
+
+	
+	
+	
+
+	
+
+	
+	
+		
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/bootstrap5.min.20260513204911014.css" type="text/css"/>
+
+
+
+		
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/bs5.min.20260513204911014.css" type="text/css"/>
+
+
+
+	
+	
+	
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/offcanvasv5.min.20260513204911014.css" type="text/css"/>
+
+
+
+	
+
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-italic-300.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-italic-400.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-italic-500.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-italic-700.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-normal-300.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-normal-400.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-normal-500.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/roboto/roboto-latin-normal-700.20260513204911014.woff2" rel="preload" as="font" type="font/woff2" crossorigin=""/>
+	<link href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/fonts/mathworks.20260513204911014.woff" rel="preload" as="font" type="font/woff" crossorigin=""/>
+
+	
+		
+		<script nonce="rngGPzngNfYNK6JBJd/IuTu2">(function(g,b,d,f){(function(a,c,d){if(a){var e=b.createElement("style");e.id=c;e.innerHTML=d;a.appendChild(e)}})(b.getElementsByTagName("head")[0],"at-body-style",d);setTimeout(function(){var a=b.getElementsByTagName("head")[0];if(a){var c=b.getElementById("at-body-style");c&&a.removeChild(c)}},f)})(window,document,"[class*='personalization-container']:not([id^='web-application']) {opacity: 0 !important}",1E3);</script> <script src="//assets.adobedtm.com/d0cc0600946eb3957f703b9fe43c3590597a8c2c/satelliteLib-e8d23c2e444abadc572df06537e2def59c01db09.js" async="" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+	
+	
+
+	
+
+	
+
+	<title>geoplot - Plot line in geographic coordinates - MATLAB
+</title>
+	
+
+
+
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/jquery.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script><script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/jquery-migrate.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<meta xmlns="http://www.w3.org/1999/xhtml" http-equiv="Content-Script-Type" content="text/javascript"/>
+
+<link xmlns="http://www.w3.org/1999/xhtml" href="/help/releases/R2026a/includes/web/css/doc_center.css" rel="stylesheet" type="text/css"/>
+<link xmlns="http://www.w3.org/1999/xhtml" href="/help/releases/R2026a/includes/web/css/doc_center_localnav.css" rel="stylesheet" type="text/css"/>
+
+<script src="/help/releases/R2026a/includes/shared/equationrenderer/release/MathRenderer.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/l10n.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/docscripts.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/f1help.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/mw.imageanimation.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/jquery.highlight.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="/help/releases/R2026a/includes/product/scripts/underscore-min.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+<script xmlns="http://www.w3.org/1999/xhtml" src="/help/releases/R2026a/includes/shared/scripts/localstorage.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+<script src="/help/releases/R2026a/includes/web/scripts/overload.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/helpservices.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="/help/releases/R2026a/includes/product/scripts/productfilter.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/matlab_dialog_shared.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<link href="/help/releases/R2026a/includes/shared/highlight/styles/mwdochighlight.min.css" rel="stylesheet" type="text/css"/>
+<script src="/help/releases/R2026a/includes/shared/highlight/highlight.min.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<link href="/help/releases/R2026a/includes/web/css/doc_center_print.css" rel="stylesheet" type="text/css" media="print"/>
+
+<script src="/matlabcentral/jscript/userarea-typeahead-v1.js" defer="" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+  <script type="text/javascript" nonce="rngGPzngNfYNK6JBJd/IuTu2">
+    document.addEventListener("DOMContentLoaded", function () {
+      const possibleSelectors = ['#query','#inpage_query'];
+      possibleSelectors.forEach(selector => {
+        const inputElement = document.querySelector(selector);
+        if (inputElement) {
+          const customElement = document.createElement('userarea-typeahead');
+          customElement.setAttribute('input-selector', selector);
+          customElement.setAttribute('collection', 'documentation');
+          customElement.setAttribute('app-label', 'Documentation');
+          customElement.setAttribute('env', 'prod');
+          customElement.setAttribute('site-language', 'en');
+          customElement.setAttribute('blank-state', 'true');
+          document.body.appendChild(customElement);
+        }
+      });
+    });
+</script> 
+	<meta name="robots" content="all"/><meta name="description" content="This MATLAB function plots a line in geographic coordinates."/><style>#localnav:has(.alert) { height:calc(44px + 36px); padding-top:36px; }
+			#localnav .alert { width: 100%; padding-top:2px; padding-right:5px; padding-bottom:2px; border-top:none; border-left:none; border-right:none; border-radius:0; display:flex; align-items:center; flex-direction:row; flex-wrap:nowrap; gap:7px; position:absolute; top:0; z-index:2;  }
+			#localnav .alert p { margin-bottom:0; }
+			#localnav .alert-dismissible .btn-close { margin-left:auto; position:relative; }</style><link rel="alternate" hreflang="x-default" href="https://www.mathworks.com/help/matlab/ref/geoplot.html"/>
+	<link rel="alternate" hreflang="de" href="https://de.mathworks.com/help/matlab/ref/geoplot.html"/>
+	<link rel="alternate" hreflang="en" href="https://www.mathworks.com/help/matlab/ref/geoplot.html"/>
+	<link rel="alternate" hreflang="es" href="https://la.mathworks.com/help/matlab/ref/geoplot.html"/>
+	<link rel="alternate" hreflang="fr" href="https://fr.mathworks.com/help/matlab/ref/geoplot.html"/>
+	<link rel="alternate" hreflang="it" href="https://it.mathworks.com/help/matlab/ref/geoplot.html"/>
+	<link rel="alternate" hreflang="ja" href="https://jp.mathworks.com/help/matlab/ref/geoplot.html"/>
+	<link rel="alternate" hreflang="ko" href="https://kr.mathworks.com/help/matlab/ref/geoplot.html"/>
+	<link rel="alternate" hreflang="zh" href="https://ww2.mathworks.cn/help/matlab/ref/geoplot.html"/><script nonce="b67d3baa971b5a7098a936b549da4b63">bazadebezolkohpepadr="1053758119"</script><script type="text/javascript" src="https://au.mathworks.com/akam/13/3ecf1297" nonce="b67d3baa971b5a7098a936b549da4b63" defer></script></head>
+
+
+
+	<body id="template_offcanvas" class="site_lang_en templateservice offcanvas_fixed
+		  
+		  
+		  
+		  
+ 		  
+		  -has_usernav
+		  -is_full_header
+		  
+		  " data-cid="helpcenter">
+		<a class="skip_link visually-hidden-focusable" href="#main">Skip to content</a>
+
+		
+		
+
+
+	<div class="sticky-top" id="sticky_container">
+		
+
+	<header class="-has_matrix
+					 -has_mwa
+					 -has_store
+					 -has_topnav
+					 -has_subnav
+					 ">
+		<nav class="navbar navbar-expand-lg" aria-label="Main navigation">
+			<div class="container-fluid container-lg">
+				<div class="d-lg-flex flex-row align-items-center" id="header_content_container">
+					<a class="navbar-brand d-inline-flex" href="/?s_tid=user_nav_logo">
+						
+						<img src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/images/mathworks-logo-membrane.20260513204911014.svg" class="mw_logo" alt="MathWorks" width="34" height="30"/>
+					</a>
+
+					<div class="sectionHead sectionhead containsResourceName resourceClass-sectionhead">
+
+
+	<p class="d-inline-flex d-lg-none h1">
+		<a class="add_cursor_pointer" href="/help/?s_tid=user_nav_help">MATLAB Help Center</a>
+		
+	</p>
+	
+
+
+
+
+</div>
+
+
+					<div class="d-flex d-lg-none" id="global_mobile_actuator_container_search">
+						<button class="navbar-toggler btn collapsed" id="global_search_mobile_actuator" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#global_search_mobile" data-bs-target="#global_search_mobile" aria-controls="global_search_mobile" aria-expanded="false" aria-label="Toggle Search">
+							<span class="icon-search"></span>
+						</button>
+					</div>
+					<div class="navbar-collapse collapse" id="global_search_mobile">
+						<div id="global_search_mobile_placeholder"></div>
+						<div id="global_search_container">
+							<div class="sectionHeadSearchBox sectionheadsearchbox containsResourceName resourceClass-sectionheadsearchbox">
+
+	
+
+	
+		
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/sectionheadsearchbox/bs5.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+		
+		
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/typeahead.min.20260513204911014.css" type="text/css"/>
+
+
+
+		
+		
+		
+			
+		
+		<form name="search" id="site_search" class="site_search" action="/search/user-center" method="get" data-release="R2026a" data-language="en">
+			<div class="input-group">
+				<label id="search-mathworks" class="visually-hidden" for="query">Search or ask a question</label>
+				<input type="hidden" name="c[]" id="site_search_collection" value="usercenter" disabled=""/>
+				<input type="search" name="q" id="query" class="form-control conjoined_search" aria-autocomplete="list" autocomplete="off" role="combobox" aria-controls="search_suggestions" aria-haspopup="listbox" aria-expanded="true" aria-activedescendant="" placeholder="Search or ask a question" data-site-domain="au" data-site-language="en" data-typeahead-proxy-url="https://services.mathworks.com/typeahead" data-typeahead-type="basic" data-typeahead-result-count="10" data-label-suggestions="Suggestions" data-label-see-all-results="See all results" aria-labelledby="search-mathworks"/>
+				
+				
+				<button type="submit" id="searchbutton" class="btn btn_color_blue btn-outline icon-search" aria-label="Search"></button>
+			</div>
+		</form>
+	
+
+	
+
+</div>
+
+						</div>
+					</div>
+
+
+					<div class="d-flex d-lg-none" id="global_mobile_actuator_container_navigation">
+						<button class="navbar-toggler collapsed btn" id="global_navigation_mobile_actuator" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#global_navigation" data-bs-target="#global_navigation" aria-controls="global_navigation" aria-expanded="false" aria-label="Toggle Main Navigation">
+							<span class="icon-menu-full"></span>
+						</button>
+					</div>
+					<div class="collapse navbar-collapse" id="global_navigation">
+						
+						<div class="topNavigation topnavigation containsResourceName resourceClass-topnavigation">
+
+
+
+	<ul class="navbar-nav flex-grow-1 align-items-lg-center mb-0">
+		
+		
+			<li class="nav-item dropdown" id="globalnav_item_helpcenter">
+				
+	
+	
+	
+
+	
+
+	<a class="nav-link active " href="/help/?s_tid=user_nav_help">
+
+		
+
+		
+			
+			MATLAB Help Center</a>
+
+		
+		
+	
+
+				
+			</li>
+		
+			<li class="nav-item dropdown" id="globalnav_item_community">
+				
+	
+	
+	
+
+	
+
+	<a class="nav-link " href="/matlabcentral/?s_tid=user_nav_community">
+
+		
+
+		
+			
+			Community</a>
+
+		
+		
+	
+
+				
+			</li>
+		
+			<li class="nav-item dropdown" id="globalnav_item_learning">
+				
+	
+	
+	
+
+	
+
+	<a class="nav-link " href="https://matlabacademy.mathworks.com/?s_tid=user_nav_learning">
+
+		
+
+		
+			
+			Learning</a>
+
+		
+		
+	
+
+				
+			</li>
+		
+
+		
+		<li class="nav-item  -alignment_lg_end" id="globalnav_item_matlab">
+			
+			
+
+			
+	
+	
+	
+
+	
+
+	<a class="not-logged-in btn btn_color_blue d-block d-lg-inline-flex " href="https://login.mathworks.com/embedded-login/landing.html?cid=getmatlab&amp;s_tid=user_nav_getml" style="display:none !important;">
+
+		
+
+		
+			
+			Get MATLAB</a>
+
+		
+		
+	
+
+			
+	
+	
+	
+
+	
+
+	<a class="logged-in btn btn_color_blue d-block d-lg-inline-flex " href="https://login.mathworks.com/embedded-login/landing.html?cid=getmatlab&amp;s_tid=user_nav_getml" style="display:none !important;">
+
+		
+
+		
+			
+			MATLAB</a>
+
+		
+		
+	
+
+
+		</li>
+
+		
+		
+			<li class="nav-item dropdown -alignment_lg_end" id="globalnav_item_mwa">
+				<a aria-label="Sign In to Your MathWorks Account" class="nav-link headernav_login mwa-nav_login" href="#" id="mwanav_item_login" style="display: none;">
+					Sign In
+				</a>
+
+				<a aria-expanded="false" class="nav-link headernav_logout dropdown-toggle" data-bs-toggle="dropdown" data-toggle="dropdown" href="#" id="mwanav_actuator" role="button" style="display: none;" title="Access your MathWorks Account">
+					<span class="mwanav_avatar mwa_image_drop_down"></span>
+					<span class="mobile_account_name visually_hidden_xxl visually_hidden_xl visually_hidden_lg hidden-md hidden-lg"></span>
+				</a>
+				<ul class="dropdown-menu dropdown-menu-lg-end" id="mwanav_dropdown_menu">
+					<li id="mwanav_item_account"><a class="mwa-account dropdown-item">My Account</a></li>
+					<li id="mwanav_item_community"><a class="mwa-community-profile dropdown-item">My Community Profile</a></li>
+					<li id="mwanav_item_associate"><a class="mwa-link-license dropdown-item">Link License</a></li>
+					<li><hr class="dropdown-divider"/></li>
+					<li id="mwanav_item_logout"><a class="mwa-logout dropdown-item">Sign Out</a></li>
+				</ul>
+			</li>
+		
+
+		
+
+		
+
+		<li class="nav-item d-block d-lg-none" id="globalnav_item_mobile_cta_support">
+			
+	
+	
+	
+
+	
+
+	<a class="nav-link " href="/support/contact_us.html" id="mobile_cta_support">
+
+		
+
+		
+			<span class="icon-phone"></span>
+			Contact MathWorks Support</a>
+
+		
+		
+	
+
+		</li>
+
+		<li class="nav-item d-block d-lg-none" id="globalnav_item_mobile_cta_corporate">
+			
+	
+	
+	
+
+	
+
+	<a class="nav-link " href="/" id="mobile_cta_corporate">
+
+		
+
+		
+			<span class="icon-membrane"></span>
+			Visit mathworks.com</a>
+
+		
+		
+	
+
+		</li>
+
+		<li class="nav-item dropdown d-none d-lg-block -alignment_lg_end" id="globalnav_item_search">
+			<a aria-expanded="false" aria-label="Search" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-toggle="dropdown" href="#" role="button"><span class="icon-search"></span></a>
+			<div class="dropdown-menu">
+				<div class="container-lg">
+					<div class="row align-items-center">
+						
+						
+							<div class="col">
+								<div id="global_search_desktop_placeholder"></div>
+							</div>
+						
+					</div>
+				</div>
+			</div>
+		</li>
+
+		<li class="nav-item d-none d-lg-block -alignment_lg_end" id="globalnav_item_matrix">
+			<mw-matrix lang="en" tier="DOTCOM" env="prod" bsversion="bs5" class="nav-link" host="https://au.mathworks.com"></mw-matrix>
+		</li>
+	</ul>
+
+
+	
+
+
+</div>
+
+					</div>
+				</div>
+
+				
+			</div>
+		</nav>
+	</header>
+
+
+
+		
+		
+		
+	</div>
+
+
+
+
+
+		
+<div id="offcanvas_container">
+	
+
+	<div class="collapse collapse-horizontal" id="offcanvas_menu" data-offcanvas-id="helpcenter-offcanvas">
+		<button class="btn collapsed" id="offcanvas_actuator" type="button" data-bs-toggle="collapse" data-bs-target="#offcanvas_menu" aria-expanded="false" aria-controls="offcanvas_menu">
+			<span class="icon-offcanvas-menu"><span class="visually-hidden">Off-Canvas Navigation Menu Toggle</span></span> <span class="offcanvas_actuator_label" aria-hidden="true">Contents</span>
+		</button>
+		<div id="offcanvas_menu_content"><nav class="offcanvas_nav" role="navigation">
+<div class="search_refine_v4 -presentation_browse">
+<div id="facets_area">
+<div class="personalization-container" id="web-application-offcanvas-container">
+<ol itemscope="" itemtype="https://schema.org/BreadcrumbList" class="nav_breadcrumb list-unstyled" id="ul_left_nav_ancestors">
+  <li itemscope="" itemtype="http://www.schema.org/ListItem" itemprop="itemListElement">
+	  <a href="/help/index.html?s_tid=CRUX_lftnav" itemprop="item">
+      <span itemprop="name">Documentation Home</span>
+		</a>
+    <meta itemprop="position" content="1"/>
+	</li>
+</ol>
+<ol itemscope="" itemtype="https://schema.org/BreadcrumbList" class="nav_disambiguation list-unstyled"><li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+						<a href="../index.html?s_tid=CRUX_lftnav" id="index" itemprop="item">
+              <span itemprop="name">MATLAB</span>
+            </a>
+            <meta itemprop="position" content="1"/>
+					</li><li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+						<a href="../graphics.html?s_tid=CRUX_lftnav" id="graphics" itemprop="item">
+              <span itemprop="name">Graphics</span>
+            </a>
+            <meta itemprop="position" content="2"/>
+					</li><li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+						<a href="../2-and-3d-plots.html?s_tid=CRUX_lftnav" id="btfmhrh" itemprop="item">
+              <span itemprop="name">2-D and 3-D Plots</span>
+            </a>
+            <meta itemprop="position" content="3"/>
+					</li><li itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+						<a href="../geographic-plots.html?s_tid=CRUX_lftnav" id="mw_5792d5ae-3d07-479a-b998-38df97361ea3" itemprop="item">
+              <span itemprop="name">Geographic Plots</span>
+            </a>
+            <meta itemprop="position" content="4"/>
+					</li></ol><ul class="nav_scrollspy nav list-unstyled" id="nav_scrollspy" aria-label="On this page">
+	<li class="nav_scrollspy_function nav-item notranslate" aria-hidden="true">geoplot</li>
+
+<li class="nav_scrollspy_title" id="SSPY810-refentry">On this page</li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_73d9b68f-f374-494b-ad74-48aaa183f5fd">Syntax</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#description">Description</a><ul class="nav"><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_ca7355e8-55ff-4d45-9446-827ffbcd6f69">Vector Data</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_383568f7-c8b9-42ad-8f79-4d2d11ea84d7">Table Data</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_d37df527-a94a-48b4-8d57-84b88d81e708">Additional Options</a></li></ul></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_9a518c8d-d12d-4f91-ac7e-8cc011fb27e7">Examples</a><ul class="nav"><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_5da29e5a-1b0f-436b-8bc0-74b5daa7ddde">Create Geographic Line Plot</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_24aee5b3-b3ae-4a22-8fe2-9e4543ea87eb">Plot Multiple Lines in Geographic Coordinates</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_a6b6773b-219d-4827-b92d-480b6d6ba36d">Specify Line Style, Color, and Marker</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_4c23325c-0ef2-44a7-b4a2-c00d77970ae2">Specify Line Width, Marker Size, and Marker Color</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_af1a2640-8a31-4c6a-8441-d14edc89b347">Add Text to Geographic Plot</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_b976c7e1-6593-471c-9b99-5af6788b4881">Plot Data from Table</a></li></ul></li><li class="nav-item"><a class="intrnllnk nav-link" href="#d127e648722">Input Arguments</a><ul class="nav"><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_263267ff-3e1c-4ef3-afe6-51c418fb861c">lat</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592">lon</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8">LineSpec</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_1f5b8358-45d8-4c4d-8a0d-17e2da07c841">tbl</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_b9ec206a-6174-47f6-be3a-89fcbb0b9242">latvar</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_3122ae6e-7554-48f3-9790-9450787df047">lonvar</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#d127e649598">ax</a></li></ul></li><li class="nav-item"><a class="intrnllnk nav-link" href="#namevaluepairs">Name-Value Arguments</a><ul class="nav"><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_a250ef5d-2f7c-4707-a0d4-2707d33061fa">Color</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineStyle">LineStyle</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineWidth">LineWidth</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_13e4a702-e44e-4460-8231-b2d89e05c29d">Marker</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerFaceColor">MarkerFaceColor</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerSize">MarkerSize</a></li></ul></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_0a808154-e062-4482-91cc-9c47bf11bc6d">Output Arguments</a><ul class="nav"><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_e48f21b1-2087-4547-8f24-a6e78dde0c66">h</a></li></ul></li><li class="nav-item"><a class="intrnllnk nav-link" href="#d127e650701">Tips</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_44fabc4e-3d1b-45e2-9db0-d60017fe31d4">Version History</a><ul class="nav"><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_8150642f-5e99-4832-841c-59c73b78aa7e">Pass tables directly to geoplot</a></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_192ecb33-cb65-40aa-860f-30b7456dcf69">Adding new plots to geographic axes does not reset basemap</a></li></ul></li><li class="nav-item"><a class="intrnllnk nav-link" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_seealso">See Also</a></li></ul></div>
+</div>
+</div>
+</nav>
+			<div class="sidebar parsys containsResourceName resourceClass-parsys"><div class="targetcontainer containsResourceName resourceClass-targetcontainer section">
+
+
+
+<div class="personalization-container " id="web-application-offcanvas-container">
+	<div><div class="targetContent parsys containsResourceName resourceClass-parsys">
+</div>
+</div>
+</div></div>
+
+</div>
+
+		</div>
+		
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/offcanvasv5.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+	</div>
+
+
+	<div id="offcanvas_body_container">
+		<div id="offcanvas_body" class=" -has_stickynav">
+			
+			<div class="introParsys parsys containsResourceName resourceClass-parsys">
+</div>
+
+			<div class="content_container p-0" id="content_container">
+				<div class="container-fluid container-lg">
+					<div class="row">
+						<div class="col" id="offcanvas_fixed_menu_container"> </div>
+						<div class="col" id="offcanvas_content_container">
+							
+
+	
+	<div class="localnav" id="localnav">
+		<div class="localnav_container">
+			<div class="container-fluid container-lg">
+				<div class="row">
+					<div class="col-12">
+						<nav class="navbar navbar-expand-lg" aria-label="Local Navigation">
+							<button class="navbar-toggler" type="button" id="localnav_actuator" data-toggle="collapse" data-bs-toggle="collapse" data-target="#local_navigation" data-bs-target="#local_navigation" aria-controls="localnav" aria-expanded="false" aria-label="Toggle navigation"><span class="icon-kebab"></span></button>
+							<div class="collapse navbar-collapse" id="local_navigation">
+								<div class="localNavigation localnav containsResourceName resourceClass-localnav">
+
+
+
+	
+	<ul class="navbar-nav  crux_resource_list crux_browse" id="localnav_navbar">
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_documentation">
+		<a class="nav-link active" data-id="" href="/help/matlab/geographic-plots.html?s_tid=CRUX_topnav">
+			Documentation
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_examples">
+		<a class="nav-link " data-id="" href="/help/matlab/examples.html?s_tid=CRUX_topnav&amp;category=geographic-plots">
+			Examples
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_function">
+		<a class="nav-link " data-id="" href="/help/matlab/referencelist.html?type=function&amp;s_tid=CRUX_topnav&amp;category=geographic-plots">
+			Functions
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_app">
+		<a class="nav-link " data-id="" href="/help/matlab/referencelist.html?type=app&amp;s_tid=CRUX_topnav&amp;category=geographic-plots">
+			Apps
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_video">
+		<a class="nav-link " data-id="" href="/support/search.html?fq%5B%5D=asset_type_name:video&amp;fq%5B%5D=category:matlab/geographic-plots&amp;page=1&amp;s_tid=CRUX_topnav">
+			Videos
+	    </a>
+	</li>
+
+	<li class="nav-item crux_resource" data-nav-id="crux_nav_answers">
+		<a class="nav-link " data-id="" href="/support/search.html?fq%5B%5D=asset_type_name:answer&amp;fq%5B%5D=category:matlab/geographic-plots&amp;page=1&amp;s_tid=CRUX_topnav">
+			Answers
+	    </a>
+	</li>
+</ul>
+
+
+
+
+</div>
+
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+							<div id="offcanvas_focus_actuator" tabindex="0" class="d-block d-md-none"><span class="visually-hidden">Main Content</span></div>
+							
+
+<main id="main" tabindex="-1">
+	
+	<section><div class="mainParsys parsys containsResourceName resourceClass-parsys"><div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+
+<style>
+#global_search_container > .sectionHeadSearchBox:has(#suggestions) { 
+    align-items: flex-end;
+    
+    #search_scope_doc { width:100%; max-width:540px; }
+}
+</style>
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+
+<style>
+.code_actions .btn-default { --bs-btn-color: var(--mw-ws-global-color); }
+
+.popover {
+    --bs-popover-header-bg: var(--mw-ws-helper-bg-gray);
+    --bs-popover-header-color: var(--mw-ws-global-color);
+    --bs-popover-body-color: var(--mw-ws-global-color);
+    --bs-popover-bg: var(--mw-ws-helper-bg-white); 
+}
+
+.popover-body { border-radius:0 0 var(--bs-popover-border-radius) var(--bs-popover-border-radius); }
+
+.mw-theme-dark .popover {
+    --bs-popover-border-color: var(--mw-ws-global-border-color);
+}
+
+.mw-theme-light body {
+  --mw-color-code: var(--mw-color-gray900);
+  --mw-color-commandWindowWarning: var(--mw-color-honey550);
+  --mw-color-generatedCode: var(--mw-color-teal600);
+  --mw-color-highlight: var(--mw-color-white);
+  --mw-color-matlabAttributeName: var(--mw-color-purple700);
+  --mw-color-matlabCharacters: var(--mw-color-pink600);
+  --mw-color-matlabComment: var(--mw-color-green600);
+  --mw-color-matlabDataTypes: var(--mw-color-purple700);
+  --mw-color-matlabDoctype: var(--mw-color-cobalt700);
+  --mw-color-matlabErrors: var(--mw-color-red550);
+  --mw-color-matlabFields: var(--mw-color-gray700);
+  --mw-color-matlabInstruction: var(--mw-color-blue700);
+  --mw-color-matlabKeyword: var(--mw-color-cobalt600);
+  --mw-color-matlabNodeTypes: var(--mw-color-aqua600);
+  --mw-color-matlabUnterminatedString: var(--mw-color-red700);
+  --mw-color-matlabString: var(--mw-color-purple600);
+  --mw-color-matlabSystemCommands: var(--mw-color-yellow600);
+  --mw-color-matlabValidationSections: var(--mw-color-brown600);
+  --mw-color-matlabVariables: var(--mw-color-teal600);
+  --mw-color-variableHighlightSharedScope: var(--mw-color-teal600);
+  --mw-color-matlabWarning: var(--mw-color-honey550);
+}
+
+.mw-theme-dark body {
+  --mw-color-code: var(--mw-color-gray200) !important;
+  --mw-color-commandWindowWarning: var(--mw-color-orange400) !important;
+  --mw-color-generatedCode: var(--mw-color-teal400) !important;
+  --mw-color-highlight: var(--mw-color-gray100) !important;
+  --mw-color-matlabAttributeName: var(--mw-color-purple300) !important;
+  --mw-color-matlabCharacters: var(--mw-color-pink500) !important;
+  --mw-color-matlabComment: var(--mw-color-green400) !important;
+  --mw-color-matlabDataTypes: var(--mw-color-purple300) !important;
+  --mw-color-matlabDoctype: var(--mw-color-cobalt500) !important;
+  --mw-color-matlabErrors: var(--mw-color-red400) !important;
+  --mw-color-matlabFields: var(--mw-color-gray400) !important;
+  --mw-color-matlabInstruction: var(--mw-color-blue500) !important;
+  --mw-color-matlabKeyword: var(--mw-color-cobalt400) !important;
+  --mw-color-matlabNodeTypes: var(--mw-color-aqua400) !important;
+  --mw-color-matlabUnterminatedString: var(--mw-color-red300) !important;
+  --mw-color-matlabString: var(--mw-color-purple400) !important;
+  --mw-color-matlabSystemCommands: var(--mw-color-yellow500) !important;
+  --mw-color-matlabValidationSections: var(--mw-color-brown500) !important;
+  --mw-color-matlabVariables: var(--mw-color-teal500) !important;
+  --mw-color-variableHighlightSharedScope: var(--mw-color-teal400) !important;
+  --mw-color-matlabWarning: var(--mw-color-orange400) !important;
+}
+
+:root {
+  --mw-ws-helper-eg-white: var(--mw-color-white);
+}
+</style>
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+
+<style>
+@media (max-width:991.98px) {
+
+    #localnav .nav-item:not(:first-child) .nav-link { padding-left:24px !important; }
+    #localnav .dropdown-menu .dropdown-item { padding-left:calc(var(--bs-dropdown-item-padding-x) * 3); }
+
+}
+</style>
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+	
+	
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/akamai.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/enhancedchat.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+
+
+
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+
+<style>
+@media (max-width: 991.98px) {
+    #localnav_actuator { width:auto !important; padding-left:10px !important; display: flex !important; align-items:center !important; flex-direction: row-reverse !important; justify-content:center !important; }
+    #localnav_actuator:after { padding-right:5px; content:"Resources"; font-size:14px; white-space:nowrap; }
+    #localnav_actuator .icon-kebab { position:relative; top:-1px; }
+    #localnav_actuator .icon-kebab:before { content: "\e60f" !important; font-size:16px; }
+}
+</style>
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+	
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/mathworks-aem.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/searchrefine.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/panel.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/card.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/search.min.20260513204911014.css" type="text/css"/>
+
+
+
+	
+
+
+
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+	
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/form.min.20260513204911014.css" type="text/css"/>
+
+
+
+	
+
+
+
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/nuggets.min.20260513204911014.css" type="text/css"/>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/handlebars.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/nuggets.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+	
+	
+
+
+
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+    
+
+
+
+	
+	
+
+
+
+</div>
+<div class="cssjs containsResourceName section resourceClass-cssjs">
+
+
+
+
+
+	
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/accordion.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/alert.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/band.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/blockquote.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/image.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/inpagenav.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/table.min.20260513204911014.css" type="text/css"/>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/accordion.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/panel.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+	
+	
+
+
+
+</div>
+<div class="targetcontainer containsResourceName resourceClass-targetcontainer section">
+
+
+
+<div class="personalization-container " id="web-application-body-container">
+
+
+
+
+
+
+<section xmlns="http://www.w3.org/1999/xhtml" id="doc_center_content" itemprop="content" lang="en" data-language="en" data-bs-spy="scroll" data-bs-target="#nav_scrollspy"><div id="pgtype-ref-function"><div class="function_ref"><span id="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5" class="anchor_target"></span><h1 class="r2026a notranslate" itemprop="title"><span class="refname">geoplot</span></h1><div class="doc_topic_desc"><div class="purpose_container"><p itemprop="purpose">Plot line in geographic coordinates</p><div class="switch"><a data-allexpanded="true1" href="javascript:void(0);" id="expandAllPage">collapse all in page</a></div></div></div><div class="function_icons"><ul class="list-unstyled"><li><img itemprop="thumbnailUrl" src="plottype-geoplot_60.png" alt="Plot line in geographic coordinates" height="40" width="60"/></li></ul></div>
+<span id="mw_73d9b68f-f374-494b-ad74-48aaa183f5fd" class="anchor_target"></span><div class="ref_sect"><h2 id="mw_73d9b68f-f374-494b-ad74-48aaa183f5fd">Syntax</h2><div class="syntax_signature"><div class="syntax_signature_module"><div class="code_responsive"><code class="synopsis"><a class="intrnllnk" href="#d127e648287">geoplot(lat,lon)</a></code></div><div class="code_responsive"><code class="synopsis"><a class="intrnllnk" href="#d127e648308">geoplot(lat,lon,LineSpec)</a></code></div><div class="code_responsive"><code class="synopsis"><a class="intrnllnk" href="#d127e648327">geoplot(lat1,lon1,...,latN,lonN)</a></code></div><div class="code_responsive"><code class="synopsis"><a class="intrnllnk" href="#d127e648348">geoplot(lat1,lon1,LineSpec1,...,latN,lonN,LineSpecN)</a></code></div></div><div class="syntax_signature_module"><div class="code_responsive"><code class="synopsis"><a class="intrnllnk" href="#d127e648379">geoplot(tbl,latvar,lonvar)</a></code></div></div><div class="syntax_signature_module"><div class="code_responsive"><code class="synopsis"><a class="intrnllnk" href="#d127e648419">geoplot(ax,<span class="argument_placeholder">___</span>)</a></code></div><div class="code_responsive"><code class="synopsis"><a class="intrnllnk" href="#d127e648435">geoplot(<span class="argument_placeholder">___</span>,Name,Value)</a></code></div><div class="code_responsive"><code class="synopsis"><a class="intrnllnk" href="#d127e648455">h = geoplot(<span class="argument_placeholder">___</span>)</a></code></div></div></div></div><div class="clear"></div><h2 id="description">Description</h2><div class="descriptions"><div class="description_module"><h3 id="mw_ca7355e8-55ff-4d45-9446-827ffbcd6f69">Vector Data</h3><div class="cshsummary" id="csh_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5"><div class="description_element"><div class="code_responsive"><p><span id="d127e648287" itemprop="syntax"><code class="synopsis">geoplot(<a class="intrnllnk" href="#mw_263267ff-3e1c-4ef3-afe6-51c418fb861c"><code class="argument">lat</code></a>,<a class="intrnllnk" href="#mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592"><code class="argument">lon</code></a>)</code></span>
+                    plots a line in geographic coordinates. Specify latitude coordinates in degrees
+                    using <code class="argument">lat</code>, and specify longitude coordinates in degrees
+                    using <code class="argument">lon</code>. If the current axes is not a geographic or map
+                    axes, or if there is no current axes, then the function plots the line in a new
+                    geographic axes.</p></div><p class="syntax_example"><a class="intrnllnk" href="geoplot.html#mw_5da29e5a-1b0f-436b-8bc0-74b5daa7ddde">example</a></p></div><div class="description_element"><div class="code_responsive"><p><span id="d127e648308" itemprop="syntax"><code class="synopsis">geoplot(<a class="intrnllnk" href="#mw_263267ff-3e1c-4ef3-afe6-51c418fb861c"><code class="argument">lat</code></a>,<a class="intrnllnk" href="#mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592"><code class="argument">lon</code></a>,<a class="intrnllnk" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8"><code class="argument">LineSpec</code></a>)</code></span>
+                    creates the plot using the specified line style, marker symbol, and
+                    color.</p></div><p class="syntax_example"><a class="intrnllnk" href="geoplot.html#mw_a6b6773b-219d-4827-b92d-480b6d6ba36d">example</a></p></div></div><div class="description_element"><div class="code_responsive"><p><span id="d127e648327" itemprop="syntax"><code class="synopsis">geoplot(<a class="intrnllnk" href="#mw_263267ff-3e1c-4ef3-afe6-51c418fb861c"><code class="argument">lat</code></a>1,<a class="intrnllnk" href="#mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592"><code class="argument">lon</code></a>1,...,<a class="intrnllnk" href="#mw_263267ff-3e1c-4ef3-afe6-51c418fb861c"><code class="argument">lat</code></a>N,<a class="intrnllnk" href="#mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592"><code class="argument">lon</code></a>N)</code></span>
+                    plots pairs of latitude and longitude coordinates using multiple lines on the
+                    same axes.</p></div><p class="syntax_example"><a class="intrnllnk" href="geoplot.html#mw_24aee5b3-b3ae-4a22-8fe2-9e4543ea87eb">example</a></p></div><div class="description_element"><div class="code_responsive"><p><span id="d127e648348" itemprop="syntax"><code class="synopsis">geoplot(<a class="intrnllnk" href="#mw_263267ff-3e1c-4ef3-afe6-51c418fb861c"><code class="argument">lat</code></a>1,<a class="intrnllnk" href="#mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592"><code class="argument">lon</code></a>1,<a class="intrnllnk" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8"><code class="argument">LineSpec</code></a>1,...,<a class="intrnllnk" href="#mw_263267ff-3e1c-4ef3-afe6-51c418fb861c"><code class="argument">lat</code></a>N,<a class="intrnllnk" href="#mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592"><code class="argument">lon</code></a>N,<a class="intrnllnk" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8"><code class="argument">LineSpec</code></a>N)</code></span>
+                    specifies the line style, marker symbol, and color for each line. You can
+                    specify <code class="argument">LineSpec</code> for some lines and omit it for others. For
+                    example, <code class="literal">geoplot(lat1,lon1,&#34;o&#34;,lat2,lon2)</code> specifies markers
+                    for the first line but not for the second line.</p></div></div></div><div class="description_module">
+            <h3 id="mw_383568f7-c8b9-42ad-8f79-4d2d11ea84d7">Table Data</h3>
+            <div class="description_element"><div class="code_responsive"><p><span id="d127e648379" itemprop="syntax"><code class="synopsis">geoplot(<a class="intrnllnk" href="#mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_1f5b8358-45d8-4c4d-8a0d-17e2da07c841"><code class="argument">tbl</code></a>,<a class="intrnllnk" href="#mw_b9ec206a-6174-47f6-be3a-89fcbb0b9242"><code class="argument">latvar</code></a>,<a class="intrnllnk" href="#mw_3122ae6e-7554-48f3-9790-9450787df047"><code class="argument">lonvar</code></a>)</code></span>
+                    plots the variables <code class="literal">latvar</code> and <code class="literal">lonvar</code> from
+                    the table <code class="literal">tbl</code>. To plot one data set, specify one variable for
+                        <code class="literal">latvar</code> and one variable for <code class="literal">lonvar</code>. To
+                    plot multiple data sets, specify multiple variables for
+                        <code class="literal">latvar</code>, <code class="literal">lonvar</code>, or both. If both
+                    arguments specify multiple variables, they must specify the same number of
+                    variables. <span class="emphasis"><em>(Since R2022b)</em></span>
+                </p></div><p class="syntax_example"><a class="intrnllnk" href="geoplot.html#mw_b976c7e1-6593-471c-9b99-5af6788b4881">example</a></p></div>
+        </div><div class="description_module">
+            <h3 id="mw_d37df527-a94a-48b4-8d57-84b88d81e708">Additional Options</h3>
+            <div class="description_element"><div class="code_responsive"><p><span id="d127e648419" itemprop="syntax"><code class="synopsis">geoplot(<a class="intrnllnk" href="#d127e649598"><code class="argument">ax</code></a>,<span class="argument_placeholder">___</span>)</code></span> displays
+                    the plot in the axes specified by <code class="argument">ax</code>. Specify the axes as
+                    the first argument in any of the previous syntaxes.</p></div></div>
+            <div class="description_element"><div class="code_responsive"><p><span id="d127e648435" itemprop="syntax"><code class="synopsis">geoplot(<span class="argument_placeholder">___</span>,<a class="intrnllnk" href="#namevaluepairarguments"><code class="argument">Name,Value</code></a>)</code></span>
+                    specifies properties of the chart line using one or more name-value arguments.
+                    The properties apply to all the plotted lines. For a list of properties, see
+                        <a href="matlab.graphics.chart.primitive.line-properties.html"><span class="property">Line Properties</span></a>.</p></div><p class="syntax_example"><a class="intrnllnk" href="geoplot.html#mw_4c23325c-0ef2-44a7-b4a2-c00d77970ae2">example</a></p></div>
+            <div class="description_element"><div class="code_responsive"><p><span id="d127e648455" itemprop="syntax"><code class="synopsis"><a class="intrnllnk" href="#mw_e48f21b1-2087-4547-8f24-a6e78dde0c66"><code class="argument">h</code></a> = geoplot(<span class="argument_placeholder">___</span>)</code></span> returns
+                    a column vector of chart line objects. Each object corresponds to a plotted
+                    line. Use <code class="argument">h</code> to modify the properties of the plot after
+                    creating it. For a list of properties, see <a href="matlab.graphics.chart.primitive.line-properties.html"><span class="property">Line Properties</span></a>.</p><p>
+                    </p>
+<div class="alert alert-info d-inline-block"><span class="alert_icon icon-alert-info-reverse"></span><p class="alert_heading"><strong>Note</strong></p><p><span>Mapping Toolbox™ extends the functionality of the <code class="function">geoplot</code> (MATLAB<sup>®</sup>) function. It adds support for displaying points, lines, and polygons with coordinates in any supported geographic or projected coordinate reference system (CRS).</span> For the <code class="function">geoplot</code> (Mapping Toolbox) page, see <a href="../../map/ref/geopointshape.geoplot.html"><code class="function">geoplot</code></a><span role="cross_prod"> (Mapping Toolbox)</span>.</p></div><p>
+
+                </p></div></div>
+        </div></div><div class="clear"></div><div class="examples"><h2 id="mw_9a518c8d-d12d-4f91-ac7e-8cc011fb27e7">Examples</h2><div class="expandableContent" id="expandableExamples"><p class="switch"><a class="expandAllLink" data-allexpanded="true3" href="javascript:void(0);">collapse all</a></p><div class="mw_ws_accordion_container"><div class="accordion" role="tablist" aria-multiselectable="true" id="expand_accordion_heading_mw_5da29e5a-1b0f-436b-8bc0-74b5daa7ddde"><div class="accordion-item "><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_5da29e5a-1b0f-436b-8bc0-74b5daa7ddde" data-bs-target="#expand_accordion_body_mw_5da29e5a-1b0f-436b-8bc0-74b5daa7ddde" aria-controls="expand_accordion_body_mw_5da29e5a-1b0f-436b-8bc0-74b5daa7ddde" class="accordion-button add_cursor_pointer" aria-expanded="true"><h3 id="mw_5da29e5a-1b0f-436b-8bc0-74b5daa7ddde">Create Geographic Line Plot</h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_5da29e5a-1b0f-436b-8bc0-74b5daa7ddde" aria-labelledby="expand_accordion_heading_mw_5da29e5a-1b0f-436b-8bc0-74b5daa7ddde" class="accordion-collapse collapse show"><div class="accordion-body"><div class="examples_short_list hidden_ios_android" data-products="ML"><div data-pane="metadata" class="card metadata_container"><div class="card-body metadata_content"><div class="d-grid"><a class="btn btn_color_blue" data-ex-genre="Live Script" href="matlab:openExample(&#39;graphics/CreateGeographicPlotrefpageExample&#39;)">Open Live Script</a></div></div></div></div><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "DigitalDocument",
+          "headline": "Create Geographic Line Plot",
+          "description": "Load a MAT file containing coordinates for the perimeter of the contiguous United States. The variables within the MAT file, uslat and uslon, specify latitude and longitude coordinates, respectively, in degrees. Display the coordinates over a topographic basemap.",
+          "thumbnailURL": "../../examples/graphics/win64/CreateGeographicPlotrefpageExample_01.png",
+          "genre": "Live Script",
+          "isPartOf": {
+          "@type": "CreativeWork",
+          "url": "geoplot.html"
+
+        },
+          "identifier": "graphics.CreateGeographicPlotrefpageExample",
+          "name": "CreateGeographicPlotrefpageExample",
+          "url": "geoplot.html#mw_5da29e5a-1b0f-436b-8bc0-74b5daa7ddde"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "PropertyValue",
+          "name": "open_command",
+          "value": "matlab:openExample('graphics/CreateGeographicPlotrefpageExample')"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "ItemList",
+          "name": "ExampleSourceFiles",
+
+        "itemListElement":
+        [
+        "CreateGeographicPlotrefpageExample.xml"
+        ],
+        "itemListOrder": "http://schema.org/ItemListOrderAscending"
+        }
+        </script><p class="shortdesc">Load a MAT file containing coordinates for the perimeter of the contiguous United States. The variables within the MAT file, <code class="literal">uslat</code> and <code class="literal">uslon</code>, specify latitude and longitude coordinates, respectively, in degrees. Display the coordinates over a topographic basemap.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>load <span style="color:var(--mw-color-matlabString)">usapolygon.mat</span>
+geoplot(uslat,uslon)
+geobasemap <span style="color:var(--mw-color-matlabString)">topographic</span></pre></div></div></div><div class="informalfigure"><div id="d127e648522" class="mediaobject"><p><img src="../../examples/graphics/win64/CreateGeographicPlotrefpageExample_01.png" width="560"/></p></div></div><div class="procedure"></div></div></div></div></div><div itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/Example" itemprop="example" class="em_example"><meta itemprop="exampleid" content="graphics-CreateGeographicPlotrefpageExample"/><meta itemprop="exampletitle" content="Create Geographic Line Plot"/></div><div class="accordion" role="tablist" aria-multiselectable="true" id="expand_accordion_heading_mw_24aee5b3-b3ae-4a22-8fe2-9e4543ea87eb"><div class="accordion-item "><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_24aee5b3-b3ae-4a22-8fe2-9e4543ea87eb" data-bs-target="#expand_accordion_body_mw_24aee5b3-b3ae-4a22-8fe2-9e4543ea87eb" aria-controls="expand_accordion_body_mw_24aee5b3-b3ae-4a22-8fe2-9e4543ea87eb" class="accordion-button add_cursor_pointer" aria-expanded="true"><h3 id="mw_24aee5b3-b3ae-4a22-8fe2-9e4543ea87eb">Plot Multiple Lines in Geographic Coordinates</h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_24aee5b3-b3ae-4a22-8fe2-9e4543ea87eb" aria-labelledby="expand_accordion_heading_mw_24aee5b3-b3ae-4a22-8fe2-9e4543ea87eb" class="accordion-collapse collapse show"><div class="accordion-body"><div class="examples_short_list hidden_ios_android" data-products="ML"><div data-pane="metadata" class="card metadata_container"><div class="card-body metadata_content"><div class="d-grid"><a class="btn btn_color_blue" data-ex-genre="Live Script" href="matlab:openExample(&#39;graphics/PlotTwoLinesOnMaprefpageExample&#39;)">Open Live Script</a></div></div></div></div><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "DigitalDocument",
+          "headline": "Plot Multiple Lines in Geographic Coordinates",
+          "description": "Load a MAT file containing coordinates for each contiguous US state. Extract the coordinates for Indiana, Tennessee, and West Virginia.",
+          "thumbnailURL": "../../examples/graphics/win64/PlotTwoLinesOnMaprefpageExample_01.png",
+          "genre": "Live Script",
+          "isPartOf": {
+          "@type": "CreativeWork",
+          "url": "geoplot.html"
+
+        },
+          "identifier": "graphics.PlotTwoLinesOnMaprefpageExample",
+          "name": "PlotTwoLinesOnMaprefpageExample",
+          "url": "geoplot.html#mw_24aee5b3-b3ae-4a22-8fe2-9e4543ea87eb"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "PropertyValue",
+          "name": "open_command",
+          "value": "matlab:openExample('graphics/PlotTwoLinesOnMaprefpageExample')"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "ItemList",
+          "name": "ExampleSourceFiles",
+
+        "itemListElement":
+        [
+        "PlotTwoLinesOnMaprefpageExample.xml"
+        ],
+        "itemListOrder": "http://schema.org/ItemListOrderAscending"
+        }
+        </script><p class="shortdesc">Load a MAT file containing coordinates for each contiguous US state. Extract the coordinates for Indiana, Tennessee, and West Virginia. </p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>load <span style="color:var(--mw-color-matlabString)">usastates.mat</span>
+
+lat1 = usastates(12).Lat;
+lon1 = usastates(12).Lon;
+
+lat2 = usastates(40).Lat;
+lon2 = usastates(40).Lon;
+
+lat3 = usastates(46).Lat;
+lon3 = usastates(46).Lon;</pre></div></div></div><p>Display the state outlines using three lines. Zoom out by changing the geographic limits. </p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>geoplot(lat1,lon1,lat2,lon2,lat3,lon3)
+geolimits([33.5 42.2],[-93.0 -75.5])</pre></div></div></div><div class="informalfigure"><div id="d127e648552" class="mediaobject"><p><img src="../../examples/graphics/win64/PlotTwoLinesOnMaprefpageExample_01.png" width="560"/></p></div></div><div class="procedure"></div></div></div></div></div><div itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/Example" itemprop="example" class="em_example"><meta itemprop="exampleid" content="graphics-PlotTwoLinesOnMaprefpageExample"/><meta itemprop="exampletitle" content="Plot Multiple Lines in Geographic Coordinates"/></div><div class="accordion" role="tablist" aria-multiselectable="true" id="expand_accordion_heading_mw_a6b6773b-219d-4827-b92d-480b6d6ba36d"><div class="accordion-item "><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_a6b6773b-219d-4827-b92d-480b6d6ba36d" data-bs-target="#expand_accordion_body_mw_a6b6773b-219d-4827-b92d-480b6d6ba36d" aria-controls="expand_accordion_body_mw_a6b6773b-219d-4827-b92d-480b6d6ba36d" class="accordion-button add_cursor_pointer" aria-expanded="true"><h3 id="mw_a6b6773b-219d-4827-b92d-480b6d6ba36d">Specify Line Style, Color, and Marker</h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_a6b6773b-219d-4827-b92d-480b6d6ba36d" aria-labelledby="expand_accordion_heading_mw_a6b6773b-219d-4827-b92d-480b6d6ba36d" class="accordion-collapse collapse show"><div class="accordion-body"><div class="examples_short_list hidden_ios_android" data-products="ML"><div data-pane="metadata" class="card metadata_container"><div class="card-body metadata_content"><div class="d-grid"><a class="btn btn_color_blue" data-ex-genre="Live Script" href="matlab:openExample(&#39;graphics/SpecifyLineStyleColorAndMarkerWithGeoplotExample&#39;)">Open Live Script</a></div></div></div></div><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "DigitalDocument",
+          "headline": "Specify Line Style, Color, and Marker",
+          "description": "Specify the latitude and longitude coordinates of several points along a highway in Germany. Display the points as a line over the streets basemap using a black dashed line with circle markers.",
+          "thumbnailURL": "../../examples/graphics/win64/SpecifyLineStyleColorAndMarkerWithGeoplotExample_01.png",
+          "genre": "Live Script",
+          "isPartOf": {
+          "@type": "CreativeWork",
+          "url": "geoplot.html"
+
+        },
+          "identifier": "graphics.SpecifyLineStyleColorAndMarkerWithGeoplotExample",
+          "name": "SpecifyLineStyleColorAndMarkerWithGeoplotExample",
+          "url": "geoplot.html#mw_a6b6773b-219d-4827-b92d-480b6d6ba36d"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "PropertyValue",
+          "name": "open_command",
+          "value": "matlab:openExample('graphics/SpecifyLineStyleColorAndMarkerWithGeoplotExample')"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "ItemList",
+          "name": "ExampleSourceFiles",
+
+        "itemListElement":
+        [
+        "SpecifyLineStyleColorAndMarkerWithGeoplotExample.xml"
+        ],
+        "itemListOrder": "http://schema.org/ItemListOrderAscending"
+        }
+        </script><p class="shortdesc">Specify the latitude and longitude coordinates of several points along a highway in Germany. Display the points as a line over the <code class="literal">streets</code> basemap using a black dashed line with circle markers.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>lat = [48.915 48.907 48.901 48.893 48.887 48.881 48.875 48.869 48.865];
+lon = [10.192 10.188 10.182 10.171 10.166 10.165 10.167 10.173 10.184];
+
+geoplot(lat,lon,<span style="color:var(--mw-color-matlabString)">&#34;k--o&#34;</span>)
+geobasemap <span style="color:var(--mw-color-matlabString)">streets</span></pre></div></div></div><div class="informalfigure"><div id="d127e648581" class="mediaobject"><p><img src="../../examples/graphics/win64/SpecifyLineStyleColorAndMarkerWithGeoplotExample_01.png" width="560"/></p></div></div><div class="procedure"></div></div></div></div></div><div itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/Example" itemprop="example" class="em_example"><meta itemprop="exampleid" content="graphics-SpecifyLineStyleColorAndMarkerWithGeoplotExample"/><meta itemprop="exampletitle" content="Specify Line Style, Color, and Marker"/></div><div class="accordion" role="tablist" aria-multiselectable="true" id="expand_accordion_heading_mw_4c23325c-0ef2-44a7-b4a2-c00d77970ae2"><div class="accordion-item "><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_4c23325c-0ef2-44a7-b4a2-c00d77970ae2" data-bs-target="#expand_accordion_body_mw_4c23325c-0ef2-44a7-b4a2-c00d77970ae2" aria-controls="expand_accordion_body_mw_4c23325c-0ef2-44a7-b4a2-c00d77970ae2" class="accordion-button add_cursor_pointer" aria-expanded="true"><h3 id="mw_4c23325c-0ef2-44a7-b4a2-c00d77970ae2">Specify Line Width, Marker Size, and Marker Color</h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_4c23325c-0ef2-44a7-b4a2-c00d77970ae2" aria-labelledby="expand_accordion_heading_mw_4c23325c-0ef2-44a7-b4a2-c00d77970ae2" class="accordion-collapse collapse show"><div class="accordion-body"><div class="examples_short_list hidden_ios_android" data-products="ML"><div data-pane="metadata" class="card metadata_container"><div class="card-body metadata_content"><div class="d-grid"><a class="btn btn_color_blue" data-ex-genre="Live Script" href="matlab:openExample(&#39;graphics/UseChartLinePropsToCustomizeAppearanceLineExample&#39;)">Open Live Script</a></div></div></div></div><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "DigitalDocument",
+          "headline": "Specify Line Width, Marker Size, and Marker Color",
+          "description": "Specify the latitude and longitude coordinates of several points along the Mississippi River.",
+          "thumbnailURL": "../../examples/graphics/win64/UseChartLinePropsToCustomizeAppearanceLineExample_01.png",
+          "genre": "Live Script",
+          "isPartOf": {
+          "@type": "CreativeWork",
+          "url": "geoplot.html"
+
+        },
+          "identifier": "graphics.UseChartLinePropsToCustomizeAppearanceLineExample",
+          "name": "UseChartLinePropsToCustomizeAppearanceLineExample",
+          "url": "geoplot.html#mw_4c23325c-0ef2-44a7-b4a2-c00d77970ae2"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "PropertyValue",
+          "name": "open_command",
+          "value": "matlab:openExample('graphics/UseChartLinePropsToCustomizeAppearanceLineExample')"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "ItemList",
+          "name": "ExampleSourceFiles",
+
+        "itemListElement":
+        [
+        "UseChartLinePropsToCustomizeAppearanceLineExample.xml"
+        ],
+        "itemListOrder": "http://schema.org/ItemListOrderAscending"
+        }
+        </script><p class="shortdesc">Specify the latitude and longitude coordinates of several points along the Mississippi River. </p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>lat = [32.30 33.92 35.17 36.98 37.69 38.34];
+lon = [-91.05 -91.18 -90.09 -89.11 -89.52 -90.37];</pre></div></div></div><p>Create a line plot from the data. Use the <code class="literal">LineSpec</code> option to specify a dashed green line with square markers. Use name-value arguments to specify the line width, marker size, and marker colors.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>geoplot(lat,lon,<span style="color:var(--mw-color-matlabString)">&#34;--gs&#34;</span>,LineWidth=2, <span style="color:var(--mw-color-matlabKeyword)">...</span>
+    MarkerSize=10,MarkerEdgeColor=<span style="color:var(--mw-color-matlabString)">&#34;b&#34;</span>, <span style="color:var(--mw-color-matlabKeyword)">...</span>
+    MarkerFaceColor=[0.5 0.5 0.5])</pre></div></div></div><p>Zoom out by adjusting the latitude and longitude limits of the plot. Then, change the basemap to a terrain basemap.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>geolimits([31.6 38.8],[-97 -83])
+geobasemap <span style="color:var(--mw-color-matlabString)">grayterrain</span></pre></div></div></div><div class="informalfigure"><div id="d127e648617" class="mediaobject"><p><img src="../../examples/graphics/win64/UseChartLinePropsToCustomizeAppearanceLineExample_01.png" width="560"/></p></div></div><div class="procedure"></div></div></div></div></div><div itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/Example" itemprop="example" class="em_example"><meta itemprop="exampleid" content="graphics-UseChartLinePropsToCustomizeAppearanceLineExample"/><meta itemprop="exampletitle" content="Specify Line Width, Marker Size, and Marker Color"/></div><div class="accordion" role="tablist" aria-multiselectable="true" id="expand_accordion_heading_mw_af1a2640-8a31-4c6a-8441-d14edc89b347"><div class="accordion-item "><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_af1a2640-8a31-4c6a-8441-d14edc89b347" data-bs-target="#expand_accordion_body_mw_af1a2640-8a31-4c6a-8441-d14edc89b347" aria-controls="expand_accordion_body_mw_af1a2640-8a31-4c6a-8441-d14edc89b347" class="accordion-button add_cursor_pointer" aria-expanded="true"><h3 id="mw_af1a2640-8a31-4c6a-8441-d14edc89b347">Add Text to Geographic Plot</h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_af1a2640-8a31-4c6a-8441-d14edc89b347" aria-labelledby="expand_accordion_heading_mw_af1a2640-8a31-4c6a-8441-d14edc89b347" class="accordion-collapse collapse show"><div class="accordion-body"><div class="examples_short_list hidden_ios_android" data-products="ML"><div data-pane="metadata" class="card metadata_container"><div class="card-body metadata_content"><div class="d-grid"><a class="btn btn_color_blue" data-ex-genre="Live Script" href="matlab:openExample(&#39;graphics/AddTextToGeographicPlotExample&#39;)">Open Live Script</a></div></div></div></div><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "DigitalDocument",
+          "headline": "Add Text to Geographic Plot",
+          "description": "Specify the geographic coordinates and names of several places in Boston.",
+          "thumbnailURL": "../../examples/graphics/win64/AddTextToGeographicPlotExample_01.png",
+          "genre": "Live Script",
+          "isPartOf": {
+          "@type": "CreativeWork",
+          "url": "geoplot.html"
+
+        },
+          "identifier": "graphics.AddTextToGeographicPlotExample",
+          "name": "AddTextToGeographicPlotExample",
+          "url": "geoplot.html#mw_af1a2640-8a31-4c6a-8441-d14edc89b347"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "PropertyValue",
+          "name": "open_command",
+          "value": "matlab:openExample('graphics/AddTextToGeographicPlotExample')"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "ItemList",
+          "name": "ExampleSourceFiles",
+
+        "itemListElement":
+        [
+        "AddTextToGeographicPlotExample.xml"
+        ],
+        "itemListOrder": "http://schema.org/ItemListOrderAscending"
+        }
+        </script><p class="shortdesc">Specify the geographic coordinates and names of several places in Boston.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>lat = [42.3501 42.3598 42.3626 42.3668 42.3557];
+lon = [-71.0870 -71.0662 -71.0789 -71.0801 -71.0662];
+n = [<span style="color:var(--mw-color-matlabString)">&#34; BACK BAY&#34;</span>,<span style="color:var(--mw-color-matlabString)">&#34; BEACON HILL&#34;</span>,<span style="color:var(--mw-color-matlabString)">&#34; BROAD CANAL&#34;</span>,<span style="color:var(--mw-color-matlabString)">&#34; EAST CAMBRIDGE&#34;</span>,<span style="color:var(--mw-color-matlabString)">&#34; FLAGSTAFF HILL&#34;</span>];</pre></div></div></div><p>Plot the locations using black star markers over the <code class="literal">topographic</code> basemap. Zoom out of the plot by adjusting the limits.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>geoplot(lat,lon,<span style="color:var(--mw-color-matlabString)">&#34;k*&#34;</span>)
+geobasemap <span style="color:var(--mw-color-matlabString)">topographic</span>
+geolimits([42.3456 42.3694],[-71.0977 -71.0489])</pre></div></div></div><p>Display the place names at the same locations.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>text(lat,lon,n)</pre></div></div></div><div class="informalfigure"><div id="d127e648653" class="mediaobject"><p><img src="../../examples/graphics/win64/AddTextToGeographicPlotExample_01.png" width="560"/></p></div></div><div class="procedure"></div></div></div></div></div><div itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/Example" itemprop="example" class="em_example"><meta itemprop="exampleid" content="graphics-AddTextToGeographicPlotExample"/><meta itemprop="exampletitle" content="Add Text to Geographic Plot"/></div><div class="accordion" role="tablist" aria-multiselectable="true" id="expand_accordion_heading_mw_b976c7e1-6593-471c-9b99-5af6788b4881"><div class="accordion-item "><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_b976c7e1-6593-471c-9b99-5af6788b4881" data-bs-target="#expand_accordion_body_mw_b976c7e1-6593-471c-9b99-5af6788b4881" aria-controls="expand_accordion_body_mw_b976c7e1-6593-471c-9b99-5af6788b4881" class="accordion-button add_cursor_pointer" aria-expanded="true"><h3 id="mw_b976c7e1-6593-471c-9b99-5af6788b4881">Plot Data from Table</h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_b976c7e1-6593-471c-9b99-5af6788b4881" aria-labelledby="expand_accordion_heading_mw_b976c7e1-6593-471c-9b99-5af6788b4881" class="accordion-collapse collapse show"><div class="accordion-body"><div class="examples_short_list hidden_ios_android" data-products="ML"><div data-pane="metadata" class="card metadata_container"><div class="card-body metadata_content"><div class="d-grid"><a class="btn btn_color_blue" data-ex-genre="Live Script" href="matlab:openExample(&#39;graphics/GeoplotTableDataExample&#39;)">Open Live Script</a></div></div></div></div><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "DigitalDocument",
+          "headline": "Plot Data from Table",
+          "description": "Since R2022b",
+          "thumbnailURL": "../../examples/graphics/win64/GeoplotTableDataExample_01.png",
+          "genre": "Live Script",
+          "isPartOf": {
+          "@type": "CreativeWork",
+          "url": "geoplot.html"
+
+        },
+          "identifier": "graphics.GeoplotTableDataExample",
+          "name": "GeoplotTableDataExample",
+          "url": "geoplot.html#mw_b976c7e1-6593-471c-9b99-5af6788b4881"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "PropertyValue",
+          "name": "open_command",
+          "value": "matlab:openExample('graphics/GeoplotTableDataExample')"
+
+        }</script><script type="application/ld+json">
+        {
+        "@context": "http://schema.org",
+        "@type": "ItemList",
+          "name": "ExampleSourceFiles",
+
+        "itemListElement":
+        [
+        "GeoplotTableDataExample.xml",
+        "cycloneTracks.mat"
+        ],
+        "itemListOrder": "http://schema.org/ItemListOrderAscending"
+        }
+        </script><p class="shortdesc"><span class="emphasis"><em>Since R2022b</em></span></p><p>A convenient way to plot data from a table is to pass the table to the <code class="literal">geoplot</code> function and specify the variables to plot.</p><p>Load a MAT file containing cyclone data [<a class="intrnllnk" href="geoplot.html#mw_rtc_GeoplotTableDataExample_M_6feb">1</a>] into the workspace. Create a table using a subset of the data. The table includes latitude and longitude coordinates in the table variables <code class="literal">Latitude</code> and <code class="literal">Longitude</code>, respectively.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>load <span style="color:var(--mw-color-matlabString)">cycloneTracks.mat</span>
+tbl = cycloneTracks(cycloneTracks.ID == 1320,:);</pre></div></div></div><p>Plot the latitude and longitude coordinates over a topographic basemap. Return the <code class="literal">Line</code> object as <code class="literal">h</code>.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>h = geoplot(tbl,<span style="color:var(--mw-color-matlabString)">&#34;Latitude&#34;</span>,<span style="color:var(--mw-color-matlabString)">&#34;Longitude&#34;</span>);
+geobasemap <span style="color:var(--mw-color-matlabString)">topographic</span></pre></div></div></div><p>Change the marker style and color of the plot by setting the <code class="literal">Marker</code> and <code class="literal">Color</code> properties.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>h.Marker = <span style="color:var(--mw-color-matlabString)">&#34;.&#34;</span>;
+h.Color = <span style="color:var(--mw-color-matlabString)">&#34;m&#34;</span>;</pre></div></div></div><div class="informalfigure"><div id="d127e648710" class="mediaobject"><p><img src="../../examples/graphics/win64/GeoplotTableDataExample_01.png" alt="Figure contains an axes object with type geoaxes. The geoaxes object contains an object of type line." width="560"/></p></div></div><span id="mw_rtc_GeoplotTableDataExample_M_6feb" class="anchor_target"></span><p>[1] This example uses modified RSMC Best Track Data from the <a href="https://www.jma.go.jp/jma/jma-eng/jma-center/rsmc-hp-pub-eg/RSMC_HP.htm" target="_blank">Japan Meteorological Agency</a>.</p><div class="procedure"></div></div></div></div></div><div itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/Example" itemprop="example" class="em_example"><meta itemprop="exampleid" content="graphics-GeoplotTableDataExample"/><meta itemprop="exampletitle" content="Plot Data from Table"/></div></div></div></div><div class="ref_sect"><h2 id="d127e648722">Input Arguments</h2><div class="expandableContent"><p class="switch "><a class="expandAllLink" data-allexpanded="true" href="javascript:void(0);">collapse all</a></p><div class="mw_ws_accordion_container" id="d127e648722_accordion-group" role="tablist" aria-multiselectable="true"><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NamedInputArgument" itemid="mw_263267ff-3e1c-4ef3-afe6-51c418fb861c"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_263267ff-3e1c-4ef3-afe6-51c418fb861c" data-bs-target="#expand_accordion_body_mw_263267ff-3e1c-4ef3-afe6-51c418fb861c" aria-controls="expand_accordion_body_mw_263267ff-3e1c-4ef3-afe6-51c418fb861c" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_lat" class="anchor_target"></span><h3 id="mw_263267ff-3e1c-4ef3-afe6-51c418fb861c"><code itemprop="name">lat</code> — <span itemprop="purpose">Latitude coordinates in degrees</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue">vector with elements in range [–90, 90]</span></span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_263267ff-3e1c-4ef3-afe6-51c418fb861c" aria-labelledby="expand_accordion_heading_mw_263267ff-3e1c-4ef3-afe6-51c418fb861c" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_263267ff-3e1c-4ef3-afe6-51c418fb861c"><p>Latitude coordinates in degrees, specified as a vector with elements in
+                        the range [–90, 90]. </p><p>Create breaks in the lines using <code class="literal">NaN</code> values. For
+                        example, this code plots the first two elements, skips the third element,
+                        and then plots another line using the last two
+                        elements.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>geoplot([10 20 NaN 30 40],[10 20 NaN 30 40])
+</pre></div></div></div><p></p></div><p>The sizes of <code class="argument">lat</code> and <a class="intrnllnk" href="#mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592"><code class="argument">lon</code></a> must
+                        match.</p><p class="description_valueexample"><strong>Example: </strong><code class="literal">[43.0327 38.8921 44.0435]</code></p><p class="datatypelist"><strong>Data Types: </strong><code itemprop="datatype">single</code> | <code itemprop="datatype">double</code></p></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NamedInputArgument" itemid="mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592" data-bs-target="#expand_accordion_body_mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592" aria-controls="expand_accordion_body_mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_lon" class="anchor_target"></span><h3 id="mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592"><code itemprop="name">lon</code> — <span itemprop="purpose">Longitude coordinates in degrees</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue">vector </span></span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592" aria-labelledby="expand_accordion_heading_mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_974d2941-98e9-4aa7-b1ec-7f5024c0a592"><p>Longitude coordinates in degrees, specified as a vector. </p><p>Create breaks in the lines using <code class="literal">NaN</code> values. For
+                        example, this code plots the first two elements, skips the third element,
+                        and then plots another line using the last two
+                        elements.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>geoplot([10 20 NaN 30 40],[10 20 NaN 30 40])
+</pre></div></div></div><p></p></div><p>The sizes of <a class="intrnllnk" href="#mw_263267ff-3e1c-4ef3-afe6-51c418fb861c"><code class="argument">lat</code></a> and <code class="argument">lon</code> must
+                        match.</p><p class="description_valueexample"><strong>Example: </strong><code class="literal">[-107.5556 -77.0269 -72.5565]</code></p><p class="datatypelist"><strong>Data Types: </strong><code itemprop="datatype">single</code> | <code itemprop="datatype">double</code></p></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NamedInputArgument" itemid="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8" data-bs-target="#expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8" aria-controls="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_LineSpec" class="anchor_target"></span><h3 id="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8"><code itemprop="name">LineSpec</code> — <span itemprop="purpose">Line style, marker, and color</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue">string scalar</span> | <span itemprop="inputvalue">character vector</span></span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8" aria-labelledby="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5.mw_3a76f056-2882-44d7-8e73-c695c0c54ca8"><p>Line style, marker, and color, specified as a string scalar or character vector containing
+                        symbols. The symbols can appear in any order. You do not need to specify all
+                        three characteristics (line style, marker, and color). For example, if you
+                        omit the line style and specify the marker, then the plot shows only the
+                        marker and no line.</p><p class="description_valueexample"><strong>Example: </strong><code class="literal">&#34;--or&#34;</code> is a red dashed line with circle markers.</p></div><div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="33%"/><col class="tcol2" width="33%"/><col class="tcol3" width="33%"/></colgroup><thead><tr><th>Line Style</th><th>Description</th><th>Resulting Line</th></tr></thead><tbody><tr><td><code class="literal">&#34;-&#34;</code></td><td>Solid line</td><td><p></p>
+<div class="informalfigure"><div id="d127e648846" class="mediaobject"><p><img src="linestyle_solid.png" alt="Sample of solid line" height="20" width="70"/></p></div></div><p></p></td></tr><tr><td><code class="literal">&#34;--&#34;</code></td><td>Dashed line</td><td><p></p>
+<div class="informalfigure"><div id="d127e648858" class="mediaobject"><p><img src="linestyle_dashed.png" alt="Sample of dashed line" height="20" width="70"/></p></div></div><p></p></td></tr><tr><td><code class="literal">&#34;:&#34;</code></td><td>Dotted line</td><td><p></p>
+<div class="informalfigure"><div id="d127e648870" class="mediaobject"><p><img src="linestyle_dotted.png" alt="Sample of dotted line" height="20" width="70"/></p></div></div><p></p></td></tr><tr><td><code class="literal">&#34;-.&#34;</code></td><td>Dash-dotted line</td><td><p></p>
+<div class="informalfigure"><div id="d127e648882" class="mediaobject"><p><img src="linestyle_dashdotted.png" alt="Sample of dash-dotted line, with alternating dashes and dots" height="20" width="70"/></p></div></div><p></p></td></tr></tbody></table></div><div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="33%"/><col class="tcol2" width="33%"/><col class="tcol3" width="33%"/></colgroup><thead><tr><th>Marker</th><th>Description</th><th>Resulting Marker</th></tr></thead><tbody><tr><td><code class="literal">&#34;o&#34;</code></td><td>Circle</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e648910" class="mediaobject"><p><img src="marker_o.png" alt="Sample of circle marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;+&#34;</code></td><td>Plus sign</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e648924" class="mediaobject"><p><img src="marker_plus.png" alt="Sample of plus sign marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;*&#34;</code></td><td>Asterisk</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e648938" class="mediaobject"><p><img src="marker_asterisk.png" alt="Sample of asterisk marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;.&#34;</code></td><td>Point</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e648952" class="mediaobject"><p><img src="marker_point.png" alt="Sample of point marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;x&#34;</code></td><td>Cross</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e648966" class="mediaobject"><p><img src="marker_x.png" alt="Sample of cross marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;_&#34;</code></td><td>Horizontal line</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e648980" class="mediaobject"><p><img src="marker_hline.png" alt="Sample of horizontal line marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;|&#34;</code></td><td>Vertical line</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e648994" class="mediaobject"><p><img src="marker_vline.png" alt="Sample of vertical line marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;square&#34;</code></td><td>Square</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e649008" class="mediaobject"><p><img src="marker_s.png" alt="Sample of square marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;diamond&#34;</code></td><td>Diamond</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e649022" class="mediaobject"><p><img src="marker_d.png" alt="Sample of diamond marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;^&#34;</code></td><td>Upward-pointing triangle</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e649036" class="mediaobject"><p><img src="marker_uptriangle.png" alt="Sample of upward-pointing triangle marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;v&#34;</code></td><td>Downward-pointing triangle</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e649050" class="mediaobject"><p><img src="marker_downtriangle.png" alt="Sample of downward-pointing triangle marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;&gt;&#34;</code></td><td>Right-pointing triangle</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e649065" class="mediaobject"><p><img src="marker_righttriangle.png" alt="Sample of right-pointing triangle marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;&lt;&#34;</code></td><td>Left-pointing triangle</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e649079" class="mediaobject"><p><img src="marker_lefttriangle.png" alt="Sample of left-pointing triangle marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;pentagram&#34;</code></td><td>Pentagram</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e649093" class="mediaobject"><p><img src="marker_p.png" alt="Sample of pentagram marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;hexagram&#34;</code></td><td>Hexagram</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e649107" class="mediaobject"><p><img src="marker_h.png" alt="Sample of hexagram marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr></tbody></table></div><div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="19%"/><col class="tcol2" width="19%"/><col class="tcol3" width="25%"/><col class="tcol4" width="38%"/></colgroup><thead><tr><th>Color Name</th><th>Short Name</th><th>RGB Triplet</th><th>Appearance</th></tr></thead><tbody><tr><td><code class="literal">&#34;red&#34;</code></td><td><code class="literal">&#34;r&#34;</code></td><td><code class="literal">[1 0 0]</code></td><td>
+                                                  <div class="informalfigure"><div id="d127e649141" class="mediaobject"><p><img src="hg_red.png" alt="Sample of the color red" height="27" width="159"/></p></div></div>
+                                                  </td></tr><tr><td><code class="literal">&#34;green&#34;</code></td><td><code class="literal">&#34;g&#34;</code></td><td><code class="literal">[0 1 0]</code></td><td>
+                                                  <div class="informalfigure"><div id="d127e649156" class="mediaobject"><p><img src="hg_green.png" alt="Sample of the color green" height="27" width="159"/></p></div></div>
+                                                  </td></tr><tr><td><code class="literal">&#34;blue&#34;</code></td><td><code class="literal">&#34;b&#34;</code></td><td><code class="literal">[0 0 1]</code></td><td>
+                                                  <div class="informalfigure"><div id="d127e649171" class="mediaobject"><p><img src="hg_blue.png" alt="Sample of the color blue" height="27" width="159"/></p></div></div>
+                                                  </td></tr><tr><td><code class="literal">&#34;cyan&#34;</code>
+                                                  </td><td><code class="literal">&#34;c&#34;</code></td><td><code class="literal">[0 1 1]</code></td><td>
+                                                  <div class="informalfigure"><div id="d127e649187" class="mediaobject"><p><img src="hg_cyan.png" alt="Sample of the color cyan" height="27" width="159"/></p></div></div>
+                                                  </td></tr><tr><td><code class="literal">&#34;magenta&#34;</code></td><td><code class="literal">&#34;m&#34;</code></td><td><code class="literal">[1 0 1]</code></td><td>
+                                                  <div class="informalfigure"><div id="d127e649202" class="mediaobject"><p><img src="hg_magenta.png" alt="Sample of the color magenta" height="27" width="159"/></p></div></div>
+                                                  </td></tr><tr><td><code class="literal">&#34;yellow&#34;</code></td><td><code class="literal">&#34;y&#34;</code></td><td><code class="literal">[1 1 0]</code></td><td>
+                                                  <div class="informalfigure"><div id="d127e649217" class="mediaobject"><p><img src="hg_yellow.png" alt="Sample of the color yellow" height="27" width="159"/></p></div></div>
+                                                  </td></tr><tr><td><code class="literal">&#34;black&#34;</code></td><td><code class="literal">&#34;k&#34;</code></td><td><code class="literal">[0 0 0]</code></td><td>
+                                                  <div class="informalfigure"><div id="d127e649232" class="mediaobject"><p><img src="hg_black.png" alt="Sample of the color black" height="27" width="160"/></p></div></div>
+                                                  </td></tr><tr><td><code class="literal">&#34;white&#34;</code></td><td><code class="literal">&#34;w&#34;</code></td><td><code class="literal">[1 1 1]</code></td><td>
+                                                  <div class="informalfigure"><div id="d127e649247" class="mediaobject"><p><img src="hg_white.png" alt="Sample of the color white" height="28" width="160"/></p></div></div>
+                                                  </td></tr></tbody></table></div></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NamedInputArgument" itemid="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_1f5b8358-45d8-4c4d-8a0d-17e2da07c841"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_1f5b8358-45d8-4c4d-8a0d-17e2da07c841" data-bs-target="#expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_1f5b8358-45d8-4c4d-8a0d-17e2da07c841" aria-controls="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_1f5b8358-45d8-4c4d-8a0d-17e2da07c841" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_tbl" class="anchor_target"></span><h3 id="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_1f5b8358-45d8-4c4d-8a0d-17e2da07c841"><code itemprop="name">tbl</code> — <span itemprop="purpose">Source table</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue">table</span> | <span itemprop="inputvalue">timetable</span></span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_1f5b8358-45d8-4c4d-8a0d-17e2da07c841" aria-labelledby="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_mw_1f5b8358-45d8-4c4d-8a0d-17e2da07c841" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5.mw_1f5b8358-45d8-4c4d-8a0d-17e2da07c841"><p>Source table containing the data to plot, specified as a table or timetable.</p></div></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NamedInputArgument" itemid="mw_b9ec206a-6174-47f6-be3a-89fcbb0b9242"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_b9ec206a-6174-47f6-be3a-89fcbb0b9242" data-bs-target="#expand_accordion_body_mw_b9ec206a-6174-47f6-be3a-89fcbb0b9242" aria-controls="expand_accordion_body_mw_b9ec206a-6174-47f6-be3a-89fcbb0b9242" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_latvar" class="anchor_target"></span><h3 id="mw_b9ec206a-6174-47f6-be3a-89fcbb0b9242"><code itemprop="name">latvar</code> — <span itemprop="purpose">Table variables containing latitude coordinates</span><br/>
+<span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue">string array</span> | <span itemprop="inputvalue">character vector</span> | <span itemprop="inputvalue">cell array</span> | <span itemprop="inputvalue">pattern</span> | <span itemprop="inputvalue">numeric scalar or vector</span> | <span itemprop="inputvalue">logical vector</span> | <span itemprop="inputvalue"><code class="literal">vartype()</code></span></span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_b9ec206a-6174-47f6-be3a-89fcbb0b9242" aria-labelledby="expand_accordion_heading_mw_b9ec206a-6174-47f6-be3a-89fcbb0b9242" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_b9ec206a-6174-47f6-be3a-89fcbb0b9242"><p>Table variables containing the latitude coordinates, specified using one
+                        of the indexing schemes from the table. </p>
+<div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="50%"/><col class="tcol2" width="50%"/></colgroup><thead><tr><th>Indexing Scheme</th><th>Examples</th></tr></thead><tbody><tr><td><p>Variable names:</p>
+<div class="itemizedlist"><ul><li><p>A string array, character vector, or cell array.</p></li><li><p>A <a href="pattern.html"><code class="function">pattern</code></a> object.</p></li></ul></div><p>
+</p></td><td><p></p>
+<div class="itemizedlist"><ul><li><p><code class="literal">&#34;A&#34;</code> or <code class="literal">&#39;A&#39;</code> — A variable
+                                    named <code class="literal">A</code></p></li><li><p><code class="literal">[&#34;A&#34;,&#34;B&#34;]</code> or <code class="literal">{&#39;A&#39;,&#39;B&#39;}</code> —
+                                    Two variables named <code class="literal">A</code> and
+                                        <code class="literal">B</code></p></li><li><p><code class="literal">&#34;Var&#34;+digitsPattern(1)</code> — Variables named
+                                        <code class="literal">&#34;Var&#34;</code> followed by a single digit</p></li></ul></div><p>
+</p></td></tr><tr><td><p>Variable indices:</p>
+<div class="itemizedlist"><ul><li><p>An index number that refers to the location of a variable in
+                                    the table.</p></li><li><p>A vector of numbers.</p></li><li><p>A logical vector. Typically, this vector is the same length as
+                                    the number of variables, but you can omit trailing
+                                        <code class="literal">0</code> or <code class="literal">false</code>
+                                    values.</p></li></ul></div><p>
+</p></td><td><p></p>
+<div class="itemizedlist"><ul><li><p><code class="literal">3</code> — The third variable from the
+                                    table</p></li><li><p><code class="literal">[2 3]</code> — The second and third variables from
+                                    the table</p></li><li><p><code class="literal">[false false true]</code> — The third
+                                    variable</p></li></ul></div><p>
+</p></td></tr><tr><td><p>Variable type:</p>
+<div class="itemizedlist"><ul><li><p>A <a href="vartype.html"><code class="function">vartype</code></a> subscript
+                                    that selects variables of a specified type.</p></li></ul></div><p>
+</p></td><td><p></p>
+<div class="itemizedlist"><ul><li><p><code class="literal">vartype(&#34;categorical&#34;)</code> — All the variables
+                                    containing categorical values</p></li></ul></div><p>
+</p></td></tr></tbody></table></div><p>
+</p><p>Regardless of variable names, the axis label on the plot is always
+                            <code class="literal">Latitude</code>.</p></div><p>The variables must contain numeric data of type <code class="literal">single</code>
+                        or <code class="literal">double</code>. The data must be in the range [–90, 90]. </p><p>If <code class="literal">latvar</code> and <code class="literal">lonvar</code> both specify
+                        multiple variables, the number of variables must be the same.</p><p class="description_valueexample"><strong>Example: </strong><code class="literal">geoplot(tbl,[&#34;lat1&#34;,&#34;lat2&#34;],&#34;lon&#34;)</code> specifies
+                        the table variables named <code class="literal">lat1</code> and
+                            <code class="literal">lat2</code> for the latitude coordinates.</p><p class="description_valueexample"><strong>Example: </strong><code class="literal">geoplot(tbl,2,&#34;lon&#34;)</code> specifies the second
+                        variable for the latitude coordinates.</p><p class="description_valueexample"><strong>Example: </strong><code class="literal">geoplot(tbl,vartype(&#34;numeric&#34;),&#34;lon&#34;)</code> specifies
+                        all numeric variables for the latitude coordinates.</p></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NamedInputArgument" itemid="mw_3122ae6e-7554-48f3-9790-9450787df047"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_3122ae6e-7554-48f3-9790-9450787df047" data-bs-target="#expand_accordion_body_mw_3122ae6e-7554-48f3-9790-9450787df047" aria-controls="expand_accordion_body_mw_3122ae6e-7554-48f3-9790-9450787df047" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_lonvar" class="anchor_target"></span><h3 id="mw_3122ae6e-7554-48f3-9790-9450787df047"><code itemprop="name">lonvar</code> — <span itemprop="purpose">Table variables containing longitude coordinates</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue">string array</span> | <span itemprop="inputvalue">character vector</span> | <span itemprop="inputvalue">cell array</span> | <span itemprop="inputvalue">pattern</span> | <span itemprop="inputvalue">numeric scalar or vector</span> | <span itemprop="inputvalue">logical vector</span> | <span itemprop="inputvalue"><code class="literal">vartype()</code></span></span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_3122ae6e-7554-48f3-9790-9450787df047" aria-labelledby="expand_accordion_heading_mw_3122ae6e-7554-48f3-9790-9450787df047" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_3122ae6e-7554-48f3-9790-9450787df047"><p>Table variables containing the longitude coordinates, specified using one
+                        of the indexing schemes from the table.</p>
+<div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="50%"/><col class="tcol2" width="50%"/></colgroup><thead><tr><th>Indexing Scheme</th><th>Examples</th></tr></thead><tbody><tr><td><p>Variable names:</p>
+<div class="itemizedlist"><ul><li><p>A string array, character vector, or cell array.</p></li><li><p>A <a href="pattern.html"><code class="function">pattern</code></a> object.</p></li></ul></div><p>
+</p></td><td><p></p>
+<div class="itemizedlist"><ul><li><p><code class="literal">&#34;A&#34;</code> or <code class="literal">&#39;A&#39;</code> — A variable
+                                    named <code class="literal">A</code></p></li><li><p><code class="literal">[&#34;A&#34;,&#34;B&#34;]</code> or <code class="literal">{&#39;A&#39;,&#39;B&#39;}</code> —
+                                    Two variables named <code class="literal">A</code> and
+                                        <code class="literal">B</code></p></li><li><p><code class="literal">&#34;Var&#34;+digitsPattern(1)</code> — Variables named
+                                        <code class="literal">&#34;Var&#34;</code> followed by a single digit</p></li></ul></div><p>
+</p></td></tr><tr><td><p>Variable indices:</p>
+<div class="itemizedlist"><ul><li><p>An index number that refers to the location of a variable in
+                                    the table.</p></li><li><p>A vector of numbers.</p></li><li><p>A logical vector. Typically, this vector is the same length as
+                                    the number of variables, but you can omit trailing
+                                        <code class="literal">0</code> or <code class="literal">false</code>
+                                    values.</p></li></ul></div><p>
+</p></td><td><p></p>
+<div class="itemizedlist"><ul><li><p><code class="literal">3</code> — The third variable from the
+                                    table</p></li><li><p><code class="literal">[2 3]</code> — The second and third variables from
+                                    the table</p></li><li><p><code class="literal">[false false true]</code> — The third
+                                    variable</p></li></ul></div><p>
+</p></td></tr><tr><td><p>Variable type:</p>
+<div class="itemizedlist"><ul><li><p>A <a href="vartype.html"><code class="function">vartype</code></a> subscript
+                                    that selects variables of a specified type.</p></li></ul></div><p>
+</p></td><td><p></p>
+<div class="itemizedlist"><ul><li><p><code class="literal">vartype(&#34;categorical&#34;)</code> — All the variables
+                                    containing categorical values</p></li></ul></div><p>
+</p></td></tr></tbody></table></div><p>
+</p><p>Regardless of variable names, the axis label on the plot is always
+                            <code class="literal">Longitude</code>.</p></div><p>The variables you specify must contain numeric data of type
+                            <code class="literal">single</code> or <code class="literal">double</code>. </p><p>If <code class="literal">latvar</code> and <code class="literal">lonvar</code> both specify
+                        multiple variables, the number of variables must be the same.</p><p class="description_valueexample"><strong>Example: </strong><code class="literal">geoplot(tbl,&#34;lat&#34;,[&#34;lon1&#34;,&#34;lon2&#34;])</code> specifies
+                        the table variables named <code class="literal">lon1</code> and
+                            <code class="literal">lon2</code> for the longitude coordinates.</p><p class="description_valueexample"><strong>Example: </strong><code class="literal">geoplot(tbl,&#34;lat&#34;,2)</code> specifies the second
+                        variable for the longitude coordinates.</p><p class="description_valueexample"><strong>Example: </strong><code class="literal">geoplot(tbl,&#34;lat&#34;,vartype(&#34;numeric&#34;))</code> specifies
+                        all numeric variables for the longitude coordinates.</p></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NamedInputArgument" itemid="d127e649598"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_d127e649598" data-bs-target="#expand_accordion_body_d127e649598" aria-controls="expand_accordion_body_d127e649598" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_ax" class="anchor_target"></span><h3 id="d127e649598"><code itemprop="name">ax</code> — <span itemprop="purpose">Target axes</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue"><code class="object">GeographicAxes</code> object</span> | <span itemprop="inputvalue"><code class="object">MapAxes</code> object</span></span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_d127e649598" aria-labelledby="expand_accordion_heading_d127e649598" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5"><p>Target axes, specified as a <code class="object">GeographicAxes</code>
+                            object<sup class="footnote"><a class="intrnllnk" href="#ftn.d127e649621" id="d127e649621">1</a></sup>
+       or <code class="object">MapAxes</code> (Mapping Toolbox) object. If you do not specify this argument, then the
+                            <code class="function">geoplot</code> function plots into the current axes,
+                        provided that the current axes is a geographic or map axes object.</p></div></div></div></div></div></div></div></div></div><div class="ref_sect"><span id="namevaluepairarguments" class="anchor_target"></span><h2 id="namevaluepairs">Name-Value Arguments</h2><div class="expandableContent"><p class="switch "><a class="expandAllLink" data-allexpanded="true" href="javascript:void(0);">collapse all</a></p><div class="mw_ws_accordion_container" id="d127e649638_accordion-group" role="tablist" aria-multiselectable="true"><div class="namevaluecontainer"><p class="neqvpair_boilerplate">Specify optional pairs of arguments as
+      <code class="argument">Name1=Value1,...,NameN=ValueN</code>, where <code class="literal">Name</code> is
+      the argument name and <code class="literal">Value</code> is the corresponding value.
+      Name-value arguments must appear after other arguments, but the order of the
+      pairs does not matter.
+    </p><p><span class="example_desc"><strong>Example: </strong><code class="literal">geoplot(lat,lon,LineWidth=2)</code> plots a line with a line
+                width of 2 points.</span></p><p class="nvpaircompat_boilerplate"><span class="emphasis"><em>
+      Before R2021a, use commas to separate each name and value, and enclose</em></span> 
+      <code class="literal">Name</code> <span class="emphasis"><em>in quotes.</em></span>
+    </p><p><span class="example_desc"><strong>Example: </strong><code class="literal">geoplot(lat,lon,&#34;LineWidth&#34;,2)</code> plots a line with a line
+                width of 2 points.</span></p></div><div class="alert alert-info d-inline-block"><span class="alert_icon icon-alert-info-reverse"></span><p class="alert_heading"><strong>Note</strong></p><p>Use name-value arguments to specify values for the properties of the
+                        <code class="object">Line</code> objects created by this function. The properties
+                    listed here are only a subset. For a full list, see <a href="matlab.graphics.chart.primitive.line-properties.html"><span class="property">Line Properties</span></a>.</p><p>Property settings apply to all lines in the plot. To set the properties of an
+                    individual line, get a handle to the line by specifying the output argument
+                        <code class="argument">h</code>. Then, use dot notation to set properties for an
+                    individual line.</p></div><div class="ref_sect"><div class="expandableContent"><div class="mw_ws_accordion_container" id="d127e649675_accordion-group" role="tablist" aria-multiselectable="true"><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NameValuePairInputArgument" itemid="mw_a250ef5d-2f7c-4707-a0d4-2707d33061fa"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_a250ef5d-2f7c-4707-a0d4-2707d33061fa" data-bs-target="#expand_accordion_body_mw_a250ef5d-2f7c-4707-a0d4-2707d33061fa" aria-controls="expand_accordion_body_mw_a250ef5d-2f7c-4707-a0d4-2707d33061fa" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_Color" class="anchor_target"></span><h3 id="mw_a250ef5d-2f7c-4707-a0d4-2707d33061fa"><code itemprop="name">Color</code> — <span itemprop="purpose">Line color</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue defaultvalue"><code class="literal">[0 0.4470 0.7410]</code></span> (default) | <span itemprop="inputvalue">RGB triplet</span> | <span itemprop="inputvalue">hexadecimal color code</span> | <span itemprop="inputvalue"><code class="literal">&#34;r&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;g&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;b&#34;</code></span> | ...</span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_a250ef5d-2f7c-4707-a0d4-2707d33061fa" aria-labelledby="expand_accordion_heading_mw_a250ef5d-2f7c-4707-a0d4-2707d33061fa" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_a250ef5d-2f7c-4707-a0d4-2707d33061fa"><p>Line color, specified as an RGB triplet, a hexadecimal color code, a
+                            color name, or a short name.</p><p>For a custom color, specify an RGB triplet or a hexadecimal color code.</p>
+<div class="itemizedlist"><ul><li><p>An RGB triplet is a three-element row vector whose elements
+                                        specify the intensities of the red, green, and blue
+                                        components of the color. The intensities must be in the
+                                        range <code class="literal">[0,1]</code>, for example, <code class="literal">[0.4
+                                                0.6 0.7]</code>. </p></li><li><p>A hexadecimal color code is a string scalar or character
+                                        vector that starts with a hash symbol (<code class="literal">#</code>)
+                                        followed by three or six hexadecimal digits, which can range
+                                        from <code class="literal">0</code> to <code class="literal">F</code>. The
+                                        values are not case sensitive. Therefore, the color codes
+                                                <code class="literal">&#34;#FF8800&#34;</code>,
+                                                <code class="literal">&#34;#ff8800&#34;</code>,
+                                                <code class="literal">&#34;#F80&#34;</code>, and
+                                                <code class="literal">&#34;#f80&#34;</code> are equivalent.</p></li></ul></div><p>
+</p></div><p>Alternatively, you can specify some common colors by name. This table lists the named color
+                options, the equivalent RGB triplets, and the hexadecimal color codes.</p><div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="15%"/><col class="tcol2" width="15%"/><col class="tcol3" width="20%"/><col class="tcol4" width="20%"/><col class="tcol5" width="30%"/></colgroup><thead><tr><th>Color Name</th><th>Short Name</th><th>RGB Triplet</th><th>Hexadecimal Color Code</th><th>Appearance</th></tr></thead><tbody><tr><td><code class="literal">&#34;red&#34;</code></td><td><code class="literal">&#34;r&#34;</code></td><td><code class="literal">[1 0 0]</code></td><td><code class="literal">&#34;#FF0000&#34;</code></td><td><div class="informalfigure"><div id="d127e649771" class="mediaobject"><p><img src="hg_red.png" alt="Sample of the color red" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;green&#34;</code></td><td><code class="literal">&#34;g&#34;</code></td><td><code class="literal">[0 1 0]</code></td><td><code class="literal">&#34;#00FF00&#34;</code></td><td><div class="informalfigure"><div id="d127e649786" class="mediaobject"><p><img src="hg_green.png" alt="Sample of the color green" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;blue&#34;</code></td><td><code class="literal">&#34;b&#34;</code></td><td><code class="literal">[0 0 1]</code></td><td><code class="literal">&#34;#0000FF&#34;</code></td><td><div class="informalfigure"><div id="d127e649801" class="mediaobject"><p><img src="hg_blue.png" alt="Sample of the color blue" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;cyan&#34;</code>
+                                                  </td><td><code class="literal">&#34;c&#34;</code></td><td><code class="literal">[0 1 1]</code></td><td><code class="literal">&#34;#00FFFF&#34;</code></td><td><div class="informalfigure"><div id="d127e649817" class="mediaobject"><p><img src="hg_cyan.png" alt="Sample of the color cyan" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;magenta&#34;</code></td><td><code class="literal">&#34;m&#34;</code></td><td><code class="literal">[1 0 1]</code></td><td><code class="literal">&#34;#FF00FF&#34;</code></td><td><div class="informalfigure"><div id="d127e649832" class="mediaobject"><p><img src="hg_magenta.png" alt="Sample of the color magenta" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;yellow&#34;</code></td><td><code class="literal">&#34;y&#34;</code></td><td><code class="literal">[1 1 0]</code></td><td><code class="literal">&#34;#FFFF00&#34;</code></td><td><div class="informalfigure"><div id="d127e649847" class="mediaobject"><p><img src="hg_yellow.png" alt="Sample of the color yellow" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;black&#34;</code></td><td><code class="literal">&#34;k&#34;</code></td><td><code class="literal">[0 0 0]</code></td><td><code class="literal">&#34;#000000&#34;</code></td><td><div class="informalfigure"><div id="d127e649862" class="mediaobject"><p><img src="hg_black.png" alt="Sample of the color black" height="27" width="160"/></p></div></div></td></tr><tr><td><code class="literal">&#34;white&#34;</code></td><td><code class="literal">&#34;w&#34;</code></td><td><code class="literal">[1 1 1]</code></td><td><code class="literal">&#34;#FFFFFF&#34;</code></td><td><div class="informalfigure"><div id="d127e649877" class="mediaobject"><p><img src="hg_white.png" alt="Sample of the color white" height="28" width="160"/></p></div></div></td></tr><tr><td><code class="literal">&#34;none&#34;</code></td><td>Not applicable</td><td>Not applicable</td><td>Not applicable</td><td>No color</td></tr></tbody></table></div><p>This table lists the default color palettes for plots in the light and dark themes.</p><div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="50%"/><col class="tcol2" width="50%"/></colgroup><thead><tr><th>Palette</th><th>Palette Colors</th></tr></thead><tbody><tr><td><p><code class="literal">&#34;gem&#34;</code> — Light theme default</p><p><em>Before R2025a: Most plots
+                                                  use these colors by default.</em></p></td><td><p></p>
+<div class="informalfigure"><div id="d127e649917" class="mediaobject"><p><img src="colordots-gem.png" alt="Sample of the &#34;gem&#34; color palette" height="35" width="450"/></p></div></div><p></p></td></tr><tr><td><p><code class="literal">&#34;glow&#34;</code> — Dark theme default</p></td><td><p></p>
+<div class="informalfigure"><div id="d127e649929" class="mediaobject"><p><img src="colordots-glow.png" alt="Sample of the &#34;glow&#34; color palette" height="35" width="450"/></p></div></div><p></p></td></tr></tbody></table></div><p>You can get the RGB triplets and hexadecimal color codes for these palettes using the <a href="orderedcolors.html"><code class="function">orderedcolors</code></a> and <a href="rgb2hex.html"><code class="function">rgb2hex</code></a> functions. For example, get the RGB triplets for the <code class="literal">&#34;gem&#34;</code> palette and convert them to hexadecimal color codes.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>RGB = orderedcolors(<span style="color:var(--mw-color-matlabString)">&#34;gem&#34;</span>);
+H = rgb2hex(RGB);</pre></div></div></div><p></p><p><em>Before R2023b: Get the RGB triplets using <code class="literal">RGB =
+            get(groot,&#34;FactoryAxesColorOrder&#34;)</code>.</em></p><p><em>Before R2024a: Get the hexadecimal color codes using <code class="literal">H =
+            compose(&#34;#%02X%02X%02X&#34;,round(RGB*255))</code>.</em></p><p class="description_valueexample"><strong>Example: </strong><code class="literal">&#34;blue&#34;</code></p><p class="description_valueexample"><strong>Example: </strong><code class="literal">[0 0 1]</code></p><p class="description_valueexample"><strong>Example: </strong><code class="literal">&#34;#0000FF&#34;</code></p></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NameValuePairInputArgument" itemid="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineStyle"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineStyle" data-bs-target="#expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineStyle" aria-controls="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineStyle" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_LineStyle" class="anchor_target"></span><h3 id="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineStyle"><code itemprop="name">LineStyle</code> — <span itemprop="purpose">Line style</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue defaultvalue"><code class="literal">&#34;-&#34;</code></span> (default) | <span itemprop="inputvalue"><code class="literal">&#34;--&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;:&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;-.&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;none&#34;</code></span></span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineStyle" aria-labelledby="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineStyle" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5.shared-LineStyle"><p>Line style, specified as one of the options listed in this table.</p>
+<div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="33%"/><col class="tcol2" width="33%"/><col class="tcol3" width="33%"/></colgroup><thead><tr><th>Line Style</th><th>Description</th><th>Resulting Line</th></tr></thead><tbody><tr><td><code class="literal">&#34;-&#34;</code></td><td>Solid line</td><td><p></p>
+<div class="informalfigure"><div id="d127e650020" class="mediaobject"><p><img src="linestyle_solid.png" alt="Sample of solid line" height="20" width="70"/></p></div></div><p></p></td></tr><tr><td><code class="literal">&#34;--&#34;</code></td><td>Dashed line</td><td><p></p>
+<div class="informalfigure"><div id="d127e650032" class="mediaobject"><p><img src="linestyle_dashed.png" alt="Sample of dashed line" height="20" width="70"/></p></div></div><p></p></td></tr><tr><td><code class="literal">&#34;:&#34;</code></td><td>Dotted line</td><td><p></p>
+<div class="informalfigure"><div id="d127e650044" class="mediaobject"><p><img src="linestyle_dotted.png" alt="Sample of dotted line" height="20" width="70"/></p></div></div><p></p></td></tr><tr><td><code class="literal">&#34;-.&#34;</code></td><td>Dash-dotted line</td><td><p></p>
+<div class="informalfigure"><div id="d127e650056" class="mediaobject"><p><img src="linestyle_dashdotted.png" alt="Sample of dash-dotted line, with alternating dashes and dots" height="20" width="70"/></p></div></div><p></p></td></tr><tr><td><code class="literal">&#34;none&#34;</code></td><td>No line</td><td>No line</td></tr></tbody></table></div><p>
+</p></div></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NameValuePairInputArgument" itemid="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineWidth"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineWidth" data-bs-target="#expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineWidth" aria-controls="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineWidth" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_LineWidth" class="anchor_target"></span><h3 id="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineWidth"><code itemprop="name">LineWidth</code> — <span itemprop="purpose">Line width</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue defaultvalue"><code class="literal">0.5</code></span> (default) | <span itemprop="inputvalue">positive value</span></span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineWidth" aria-labelledby="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-LineWidth" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5.shared-LineWidth"><p>Line width, specified as a positive value in points, where 1 point = 1/72 of an inch. If the
+                                    line has markers, then the line width also affects the marker
+                                    edges.</p><p>The line width cannot be thinner than the width of a pixel. If you set the line width
+            to a value that is less than the width of a pixel on your system, the line is displayed
+            as one pixel wide.</p></div></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NameValuePairInputArgument" itemid="mw_13e4a702-e44e-4460-8231-b2d89e05c29d"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_13e4a702-e44e-4460-8231-b2d89e05c29d" data-bs-target="#expand_accordion_body_mw_13e4a702-e44e-4460-8231-b2d89e05c29d" aria-controls="expand_accordion_body_mw_13e4a702-e44e-4460-8231-b2d89e05c29d" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_Marker" class="anchor_target"></span><h3 id="mw_13e4a702-e44e-4460-8231-b2d89e05c29d"><code itemprop="name">Marker</code> — <span itemprop="purpose">Marker symbol</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue defaultvalue"><code class="literal">&#34;none&#34;</code></span> (default) | <span itemprop="inputvalue"><code class="literal">&#34;o&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;+&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;*&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;.&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;x&#34;</code></span> | ...</span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_13e4a702-e44e-4460-8231-b2d89e05c29d" aria-labelledby="expand_accordion_heading_mw_13e4a702-e44e-4460-8231-b2d89e05c29d" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_13e4a702-e44e-4460-8231-b2d89e05c29d"><p>Marker symbol, specified as one of the markers in this table. By
+                            default, a chart line does not have markers. Add markers at each data
+                            point along the line by specifying a marker symbol.</p><div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="33%"/><col class="tcol2" width="33%"/><col class="tcol3" width="33%"/></colgroup><thead><tr><th>Marker</th><th>Description</th><th>Resulting Marker</th></tr></thead><tbody><tr><td><code class="literal">&#34;o&#34;</code></td><td>Circle</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650146" class="mediaobject"><p><img src="marker_o.png" alt="Sample of circle marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;+&#34;</code></td><td>Plus sign</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650160" class="mediaobject"><p><img src="marker_plus.png" alt="Sample of plus sign marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;*&#34;</code></td><td>Asterisk</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650174" class="mediaobject"><p><img src="marker_asterisk.png" alt="Sample of asterisk marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;.&#34;</code></td><td>Point</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650188" class="mediaobject"><p><img src="marker_point.png" alt="Sample of point marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;x&#34;</code></td><td>Cross</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650202" class="mediaobject"><p><img src="marker_x.png" alt="Sample of cross marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;_&#34;</code></td><td>Horizontal line</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650216" class="mediaobject"><p><img src="marker_hline.png" alt="Sample of horizontal line marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;|&#34;</code></td><td>Vertical line</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650230" class="mediaobject"><p><img src="marker_vline.png" alt="Sample of vertical line marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;square&#34;</code></td><td>Square</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650244" class="mediaobject"><p><img src="marker_s.png" alt="Sample of square marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;diamond&#34;</code></td><td>Diamond</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650258" class="mediaobject"><p><img src="marker_d.png" alt="Sample of diamond marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;^&#34;</code></td><td>Upward-pointing triangle</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650272" class="mediaobject"><p><img src="marker_uptriangle.png" alt="Sample of upward-pointing triangle marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;v&#34;</code></td><td>Downward-pointing triangle</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650286" class="mediaobject"><p><img src="marker_downtriangle.png" alt="Sample of downward-pointing triangle marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;&gt;&#34;</code></td><td>Right-pointing triangle</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650301" class="mediaobject"><p><img src="marker_righttriangle.png" alt="Sample of right-pointing triangle marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;&lt;&#34;</code></td><td>Left-pointing triangle</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650315" class="mediaobject"><p><img src="marker_lefttriangle.png" alt="Sample of left-pointing triangle marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;pentagram&#34;</code></td><td>Pentagram</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650329" class="mediaobject"><p><img src="marker_p.png" alt="Sample of pentagram marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;hexagram&#34;</code></td><td>Hexagram</td><td><p>
+                        </p>
+<div class="informalfigure"><div id="d127e650343" class="mediaobject"><p><img src="marker_h.png" alt="Sample of hexagram marker" height="21" width="57"/></p></div></div><p>
+                    </p></td></tr><tr><td><code class="literal">&#34;none&#34;</code></td><td>No markers</td><td>Not applicable</td></tr></tbody></table></div></div></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NameValuePairInputArgument" itemid="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerFaceColor"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerFaceColor" data-bs-target="#expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerFaceColor" aria-controls="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerFaceColor" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_MarkerFaceColor" class="anchor_target"></span><h3 id="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerFaceColor"><code itemprop="name">MarkerFaceColor</code> — <span itemprop="purpose">Marker fill color</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue defaultvalue"><code class="literal">&#34;none&#34;</code></span> (default) | <span itemprop="inputvalue"><code class="literal">&#34;auto&#34;</code></span> | <span itemprop="inputvalue">RGB triplet</span> | <span itemprop="inputvalue">hexadecimal color code</span> | <span itemprop="inputvalue"><code class="literal">&#34;r&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;g&#34;</code></span> | <span itemprop="inputvalue"><code class="literal">&#34;b&#34;</code></span> | ...</span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerFaceColor" aria-labelledby="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerFaceColor" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5.shared-MarkerFaceColor"><p>Marker fill color, specified as <code class="literal">&#34;auto&#34;</code>, an RGB triplet, a hexadecimal
+        color code, a color name, or a short name. The <code class="literal">&#34;auto&#34;</code> option uses the
+        same color as the <a class="intrnllnk" href="#mw_a250ef5d-2f7c-4707-a0d4-2707d33061fa"><code class="argument">Color</code></a> property of the parent axes. If you specify
+            <code class="literal">&#34;auto&#34;</code> and the axes plot box is invisible, the marker fill color is
+        the color of the figure.</p><p>For a custom color, specify an RGB triplet or a hexadecimal color code.</p>
+<div class="itemizedlist"><ul><li><p>An RGB triplet is a three-element row vector whose elements
+                                        specify the intensities of the red, green, and blue
+                                        components of the color. The intensities must be in the
+                                        range <code class="literal">[0,1]</code>, for example, <code class="literal">[0.4
+                                                0.6 0.7]</code>. </p></li><li><p>A hexadecimal color code is a string scalar or character
+                                        vector that starts with a hash symbol (<code class="literal">#</code>)
+                                        followed by three or six hexadecimal digits, which can range
+                                        from <code class="literal">0</code> to <code class="literal">F</code>. The
+                                        values are not case sensitive. Therefore, the color codes
+                                                <code class="literal">&#34;#FF8800&#34;</code>,
+                                                <code class="literal">&#34;#ff8800&#34;</code>,
+                                                <code class="literal">&#34;#F80&#34;</code>, and
+                                                <code class="literal">&#34;#f80&#34;</code> are equivalent.</p></li></ul></div><p>
+</p></div><p>Alternatively, you can specify some common colors by name. This table lists the named color
+                options, the equivalent RGB triplets, and the hexadecimal color codes.</p><div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="15%"/><col class="tcol2" width="15%"/><col class="tcol3" width="20%"/><col class="tcol4" width="20%"/><col class="tcol5" width="30%"/></colgroup><thead><tr><th>Color Name</th><th>Short Name</th><th>RGB Triplet</th><th>Hexadecimal Color Code</th><th>Appearance</th></tr></thead><tbody><tr><td><code class="literal">&#34;red&#34;</code></td><td><code class="literal">&#34;r&#34;</code></td><td><code class="literal">[1 0 0]</code></td><td><code class="literal">&#34;#FF0000&#34;</code></td><td><div class="informalfigure"><div id="d127e650463" class="mediaobject"><p><img src="hg_red.png" alt="Sample of the color red" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;green&#34;</code></td><td><code class="literal">&#34;g&#34;</code></td><td><code class="literal">[0 1 0]</code></td><td><code class="literal">&#34;#00FF00&#34;</code></td><td><div class="informalfigure"><div id="d127e650478" class="mediaobject"><p><img src="hg_green.png" alt="Sample of the color green" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;blue&#34;</code></td><td><code class="literal">&#34;b&#34;</code></td><td><code class="literal">[0 0 1]</code></td><td><code class="literal">&#34;#0000FF&#34;</code></td><td><div class="informalfigure"><div id="d127e650493" class="mediaobject"><p><img src="hg_blue.png" alt="Sample of the color blue" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;cyan&#34;</code>
+                                                  </td><td><code class="literal">&#34;c&#34;</code></td><td><code class="literal">[0 1 1]</code></td><td><code class="literal">&#34;#00FFFF&#34;</code></td><td><div class="informalfigure"><div id="d127e650509" class="mediaobject"><p><img src="hg_cyan.png" alt="Sample of the color cyan" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;magenta&#34;</code></td><td><code class="literal">&#34;m&#34;</code></td><td><code class="literal">[1 0 1]</code></td><td><code class="literal">&#34;#FF00FF&#34;</code></td><td><div class="informalfigure"><div id="d127e650524" class="mediaobject"><p><img src="hg_magenta.png" alt="Sample of the color magenta" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;yellow&#34;</code></td><td><code class="literal">&#34;y&#34;</code></td><td><code class="literal">[1 1 0]</code></td><td><code class="literal">&#34;#FFFF00&#34;</code></td><td><div class="informalfigure"><div id="d127e650539" class="mediaobject"><p><img src="hg_yellow.png" alt="Sample of the color yellow" height="27" width="159"/></p></div></div></td></tr><tr><td><code class="literal">&#34;black&#34;</code></td><td><code class="literal">&#34;k&#34;</code></td><td><code class="literal">[0 0 0]</code></td><td><code class="literal">&#34;#000000&#34;</code></td><td><div class="informalfigure"><div id="d127e650554" class="mediaobject"><p><img src="hg_black.png" alt="Sample of the color black" height="27" width="160"/></p></div></div></td></tr><tr><td><code class="literal">&#34;white&#34;</code></td><td><code class="literal">&#34;w&#34;</code></td><td><code class="literal">[1 1 1]</code></td><td><code class="literal">&#34;#FFFFFF&#34;</code></td><td><div class="informalfigure"><div id="d127e650569" class="mediaobject"><p><img src="hg_white.png" alt="Sample of the color white" height="28" width="160"/></p></div></div></td></tr><tr><td><code class="literal">&#34;none&#34;</code></td><td>Not applicable</td><td>Not applicable</td><td>Not applicable</td><td>No color</td></tr></tbody></table></div><p>This table lists the default color palettes for plots in the light and dark themes.</p><div class="table-responsive"><table class="table table-condensed"><colgroup><col class="tcol1" width="50%"/><col class="tcol2" width="50%"/></colgroup><thead><tr><th>Palette</th><th>Palette Colors</th></tr></thead><tbody><tr><td><p><code class="literal">&#34;gem&#34;</code> — Light theme default</p><p><em>Before R2025a: Most plots
+                                                  use these colors by default.</em></p></td><td><p></p>
+<div class="informalfigure"><div id="d127e650609" class="mediaobject"><p><img src="colordots-gem.png" alt="Sample of the &#34;gem&#34; color palette" height="35" width="450"/></p></div></div><p></p></td></tr><tr><td><p><code class="literal">&#34;glow&#34;</code> — Dark theme default</p></td><td><p></p>
+<div class="informalfigure"><div id="d127e650621" class="mediaobject"><p><img src="colordots-glow.png" alt="Sample of the &#34;glow&#34; color palette" height="35" width="450"/></p></div></div><p></p></td></tr></tbody></table></div><p>You can get the RGB triplets and hexadecimal color codes for these palettes using the <a href="orderedcolors.html"><code class="function">orderedcolors</code></a> and <a href="rgb2hex.html"><code class="function">rgb2hex</code></a> functions. For example, get the RGB triplets for the <code class="literal">&#34;gem&#34;</code> palette and convert them to hexadecimal color codes.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>RGB = orderedcolors(<span style="color:var(--mw-color-matlabString)">&#34;gem&#34;</span>);
+H = rgb2hex(RGB);</pre></div></div></div><p></p><p><em>Before R2023b: Get the RGB triplets using <code class="literal">RGB =
+            get(groot,&#34;FactoryAxesColorOrder&#34;)</code>.</em></p><p><em>Before R2024a: Get the hexadecimal color codes using <code class="literal">H =
+            compose(&#34;#%02X%02X%02X&#34;,round(RGB*255))</code>.</em></p></div></div></div></div></div><div class="accordion"><div class="accordion-item "><div itemscope="" itemprop="inputargument" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/NameValuePairInputArgument" itemid="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerSize"><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerSize" data-bs-target="#expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerSize" aria-controls="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerSize" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="inputarg_MarkerSize" class="anchor_target"></span><h3 id="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerSize"><code itemprop="name">MarkerSize</code> — <span itemprop="purpose">Marker size</span><br/> <span class="add_font_color_general remove_bold"><span class="example_desc"><span itemprop="inputvalue defaultvalue"><code class="literal">6</code></span> (default) | <span itemprop="inputvalue">positive value</span></span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerSize" aria-labelledby="expand_accordion_heading_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_sep_shared-MarkerSize" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5.shared-MarkerSize"><p>Marker size, specified as a positive value in points, where 1 point = 1/72 of an inch.</p></div></div></div></div></div></div></div></div></div></div></div></div><div class="ref_sect"><h2 id="mw_0a808154-e062-4482-91cc-9c47bf11bc6d">Output Arguments</h2><div class="expandableContent"><p class="switch "><a class="expandAllLink" data-allexpanded="true" href="javascript:void(0);">collapse all</a></p><div class="mw_ws_accordion_container" id="mw_0a808154-e062-4482-91cc-9c47bf11bc6d_accordion-group" role="tablist" aria-multiselectable="true"><div class="accordion"><div class="accordion-item "><div class="accordion-header"><button role="tab" data-bs-toggle="collapse" id="expand_accordion_heading_mw_e48f21b1-2087-4547-8f24-a6e78dde0c66" data-bs-target="#expand_accordion_body_mw_e48f21b1-2087-4547-8f24-a6e78dde0c66" aria-controls="expand_accordion_body_mw_e48f21b1-2087-4547-8f24-a6e78dde0c66" class="accordion-button add_cursor_pointer" aria-expanded="true"><span id="outputarg_h" class="anchor_target"></span><h3 id="mw_e48f21b1-2087-4547-8f24-a6e78dde0c66"><code class="name">h</code> — Geographic plot<br/>
+<span class="add_font_color_general remove_bold"><span class="example_desc">column vector of <code class="literal">Line</code> objects</span></span></h3></button></div><div role="tabpanel" id="expand_accordion_body_mw_e48f21b1-2087-4547-8f24-a6e78dde0c66" aria-labelledby="expand_accordion_heading_mw_e48f21b1-2087-4547-8f24-a6e78dde0c66" class="accordion-collapse collapse show"><div class="accordion-body"><div class="cshsummary" id="csh_mw_e48f21b1-2087-4547-8f24-a6e78dde0c66"><p>Geographic plot, returned as a column vector of <code class="object">Line</code>
+                        objects. Each object corresponds to a plotted line. Use
+                            <code class="argument">h</code> to modify the properties of the objects after
+                        they are created.</p></div></div></div></div></div></div></div></div><div class="ref_sect"><h2 id="d127e650701">Tips</h2><div class="itemizedlist"><ul><li><p>Plot 3-D geographic data using <a href="../../map/ref/geoglobe.html"><code class="function">geoglobe</code></a><span role="cross_prod"> (Mapping Toolbox)</span> and <a href="../../map/ref/geoplot3.html"><code class="function">geoplot3</code></a><span role="cross_prod"> (Mapping Toolbox)</span>.</p></li><li><p>When you plot on geographic axes, the
+        <code class="function">geoplot</code> function assumes that coordinates are referenced to the
+    WGS84 coordinate reference system. If you plot using coordinates that are referenced to a
+    different coordinate reference system, then the coordinates might appear misaligned.</p></li><li><p>The <code class="function">geoplot</code> function uses colors and line styles based on
+                    the <code class="literal"><a href="matlab.graphics.axis.geographicaxes-properties.html#mw_cb1bf581-e380-47ce-8a37-d286ad2eca19_sep_shared-ColorOrder"><span class="property">ColorOrder</span></a></code> and <code class="literal"><a href="matlab.graphics.axis.geographicaxes-properties.html#mw_cb1bf581-e380-47ce-8a37-d286ad2eca19_sep_shared-LineStyleOrder"><span class="property">LineStyleOrder</span></a></code> properties of the axes. The
+                    function cycles through the colors with the first line style. Then, it cycles
+                    through the colors again with each additional line style.</p></li><li><p>Plotting data that requires Cartesian axes into a geographic axes or map axes
+                    is not supported.</p></li><li><p>To plot additional data into the axes, use the <code class="literal">hold on</code>
+                    command.</p></li></ul></div></div><div class="ref_sect"><h2 id="mw_44fabc4e-3d1b-45e2-9db0-d60017fe31d4">Version History</h2><strong>Introduced in R2018b</strong><div class="expandableContent"><p class="switch"><a class="expandAllLink" href="javascript:void(0);">expand all</a></p><div class="mw_ws_accordion_container"><div class="accordion -presentation_expander -presentation_condensed"><div class="accordion-item"><div class="accordion-header"><button data-bs-toggle="collapse" data-bs-target="#expand_body_mw_8150642f-5e99-4832-841c-59c73b78aa7e" aria-controls="expand_body_mw_8150642f-5e99-4832-841c-59c73b78aa7e" class="accordion-button collapsed" aria-expanded="false"><h3 id="mw_8150642f-5e99-4832-841c-59c73b78aa7e">R2022b: <span class="remove_bold">Pass tables directly to <code class="function">geoplot</code></span></h3></button></div><div id="expand_body_mw_8150642f-5e99-4832-841c-59c73b78aa7e" class="accordion-collapse collapsed collapse"><div class="accordion-body"><p>Create a plot by passing a table to the <code class="function">geoplot</code> function
+                followed by the variables you want to plot. </p></div></div></div></div><div class="accordion -presentation_expander -presentation_condensed"><div class="accordion-item"><div class="accordion-header"><button data-bs-toggle="collapse" data-bs-target="#expand_body_mw_192ecb33-cb65-40aa-860f-30b7456dcf69" aria-controls="expand_body_mw_192ecb33-cb65-40aa-860f-30b7456dcf69" class="accordion-button collapsed" aria-expanded="false"><h3 id="mw_192ecb33-cb65-40aa-860f-30b7456dcf69">R2022b: <span class="remove_bold">Adding new plots to geographic axes does not reset basemap</span><span class="icon-alert-warning icon_alert_color"></span></h3></button></div><div id="expand_body_mw_192ecb33-cb65-40aa-860f-30b7456dcf69" class="accordion-collapse collapsed collapse"><div class="accordion-body"><p>When you plot into geographic axes by using functions such as <code class="function">geoplot</code> or
+            <code class="function">geoscatter</code>, MATLAB does not reset the basemap. In R2022a and earlier releases, the basemap resets
+        when you add new plots.</p><p>As a result, you can specify a basemap and then visualize data without using the <code class="function">hold</code> function between commands. For example, this code creates a map using the <code class="literal">streets</code> basemap. Then it displays a plot over the basemap. In R2022b, the basemap does not reset. In R2022a and earlier releases, the basemap resets to the default <code class="literal">streets-light</code>.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>lat = [35 -22 51 39 37 42 47 -33];
+lon = [139 -43 0 116 23 -71 -122 18];
+ 
+figure
+geobasemap <span style="color:var(--mw-color-matlabString)">streets</span>
+geoplot(lat,lon,<span style="color:var(--mw-color-matlabString)">&#34;m*&#34;</span>)</pre></div></div></div><div class="informalfigure"><div id="d127e650773" class="mediaobject"><p><img src="geoplot-basemap-change767de4fb0402f5d1d515c869add49b4a.png" alt="Two geographic plots. The first plot was created in R2022b, and it displays the specified streets basemap. The second plot was created in R2022a, and it displays the streets-light basemap." height="295" width="714"/></p></div></div><p>This change does not affect existing code that sets the <code class="literal">hold</code> state to <code class="literal">&#34;on&#34;</code> between commands.</p><p>To reset the basemap when you add a new plot, use the <code class="literal">cla reset</code> syntax of
+        the <a href="cla.html"><code class="function">cla</code></a> function before you create the plot.
+        For example, to update the preceding code, use <code class="literal">cla reset</code> between the
+        calls to <code class="function">geobasemap</code> and <code class="function">geoplot</code>.</p><div class="code_responsive" translate="no"><div class="programlisting"><div class="codeinput"><pre>lat = [35 -22 51 39 37 42 47 -33];
+lon = [139 -43 0 116 23 -71 -122 18];
+ 
+figure
+geobasemap <span style="color:var(--mw-color-matlabString)">streets</span>
+cla <span style="color:var(--mw-color-matlabString)">reset</span>
+geoplot(lat,lon,<span style="color:var(--mw-color-matlabString)">&#34;m*&#34;</span>)</pre></div></div></div><p>Alternatively, you can change the basemap to the default <code class="literal">streets-light</code> by using the <a href="geobasemap.html"><code class="function">geobasemap</code></a> function. For more information about changing the basemap of geographic axes, see <a class="a" href="../creating_plots/access-basemaps-in-matlab.html">Access Basemaps for Geographic Axes and Charts</a>.</p></div></div></div></div></div></div></div><div class="ref_sect"><h2 id="mw_72cdff48-e02c-4af9-9960-1bacb7aa52c5_seealso">See Also</h2><h3>Functions</h3><ul class="list-unstyled margined_10"><li><span itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/SeeAlso" itemprop="seealso"><a href="geoscatter.html" itemprop="url"><span itemprop="name"><code class="function">geoscatter</code></span></a></span> | <span itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/SeeAlso" itemprop="seealso"><a href="geobubble.html" itemprop="url"><span itemprop="name"><code class="function">geobubble</code></span></a></span> | <span itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/SeeAlso" itemprop="seealso"><a href="plot.html" itemprop="url"><span itemprop="name"><code class="function">plot</code></span></a></span> | <span itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/SeeAlso" itemprop="seealso"><a href="geobasemap.html" itemprop="url"><span itemprop="name"><code class="function">geobasemap</code></span></a></span> | <span itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/SeeAlso" itemprop="seealso"><a href="../../map/ref/geopointshape.geoplot.html" itemprop="url"><span itemprop="name"><code class="function">geoplot</code></span></a> (Mapping Toolbox)</span></li></ul><h3>Properties</h3><ul class="list-unstyled margined_10"><li><span itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/SeeAlso" itemprop="seealso"><a href="matlab.graphics.chart.primitive.line-properties.html" itemprop="url"><span itemprop="name"><span class="property">Line Properties</span></span></a></span> | <span itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/SeeAlso" itemprop="seealso"><a href="matlab.graphics.axis.geographicaxes-properties.html" itemprop="url"><span itemprop="name"><span class="property">GeographicAxes Properties</span></span></a></span> | <span itemscope="" itemtype="http://www.mathworks.com/help/schema/MathWorksDocPage/SeeAlso" itemprop="seealso"><a href="../../map/ref/map.graphics.axis.mapaxes-properties.html" itemprop="url"><span itemprop="name"><span class="property">MapAxes Properties</span></span></a> (Mapping Toolbox)</span></li></ul><div class="examples_container"><h3 class="remove_border">Topics</h3><div itemprop="content"><ul class="list-unstyled"><li><a class="a" href="../creating_plots/plots-that-support-tables.html">Plots That Support Tables</a></li><li><a class="a" href="../creating_plots/plot-in-geographic-coordinates.html">Create Maps Using Latitude and Longitude Data</a></li></ul></div></div></div><hr/><p><sup><a class="intrnllnk" href="#d127e649621" id="ftn.d127e649621">1</a></sup> Alignment of boundaries and region labels are a presentation of the feature provided by the
+        data vendors and do not imply endorsement by MathWorks<sup>®</sup>.</p>
+    </div></div></section><div class="clearfix"></div>
+<div align="center" class="feedbackblock" id="mw_docsurvey"><script src="/help/includes/shared/docsurvey/docfeedback.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script nonce="rngGPzngNfYNK6JBJd/IuTu2">loadSurveyHidden();</script>
+<link rel="stylesheet" href="/help/includes/shared/docsurvey/release/index-css.css" type="text/css"/>
+<script src="/help/includes/shared/docsurvey/release/bundle.index.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script nonce="rngGPzngNfYNK6JBJd/IuTu2">initDocSurvey();</script></div>
+
+
+
+
+<div class="modal fade" id="matlab-command-dialog" tabindex="-1" role="dialog" aria-labelledby="matlabCommandDialogLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">MATLAB Command</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="dialog-body">
+        <p>You clicked a link that corresponds to this MATLAB command: </p>
+        <pre id="dialog-matlab-command"></pre>
+        <p>Run the command by entering it in the MATLAB Command Window.
+        Web browsers do not support MATLAB commands.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn_color_blue" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+	<div><div class="targetContent parsys containsResourceName resourceClass-parsys"><div class="cqColumns containsResourceName section resourceClass-columns"><div class="row  ">
+
+	
+		<div class=" col-12 "><div class="2420e633-83fe-4c2d-9b62-4248985f27d2 parsys containsResourceName resourceClass-parsys">
+</div>
+</div>
+	
+</div>
+</div>
+
+</div>
+</div>
+</div></div>
+
+</div>
+</section>
+	
+	
+	
+		
+
+<div><div class="modalParsys parsys containsResourceName resourceClass-parsys">
+</div>
+</div>
+
+		
+
+
+	<div id="location_content" style="display:none;"></div>
+
+	<div class="modal fade" id="country-unselected" tabindex="-1" aria-labelledby="domain_selector_label" style="padding-left: 0px; display:none;" aria-modal="true" role="dialog">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<img src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/images/mathworks-logo.20260513204911014.svg" class="mw_logo theme_light" alt="MathWorks" width="173" height="35"/>
+					<img src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/resources/images/mathworks-logo-rev.20260513204911014.svg" class="mw_logo theme_dark" alt="MathWorks" width="173" height="35" style="display:none;"/>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<p class="h1 icon-globe" id="domain_selector_label">Select a Web Site</p>
+					<p>Choose a web site to get translated content where available and see local events and offers. Based on your location, we recommend that you select: <strong class="recommended-country"></strong>.</p>
+					<div class="default-recommendation">
+						<p><a class="btn btn_color_blue" data-lang="en" href="#" id="recommended_domain_button"><span class="recommended-country"></span></a></p>
+					</div>
+
+					<div class="ch-recommendation" style="display:none;">
+						<ul class="list-inline">
+							<li class="list-inline-item add_margin_5 d-block d-md-inline-block"><a class="recommendation-button btn btn-outline btn_color_blue" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="Switzerland" data-subdomain="ch" href="//ch.mathworks.com"><strong class="recommended-country"></strong> (English)</a></li>
+							<li class="list-inline-item add_margin_5 d-block d-md-inline-block"><a class="recommendation-button btn btn-outline btn_color_blue" data-do-not-rewrite="true" data-lang="de" data-recommended-text="Schweiz" data-subdomain="ch" href="//ch.mathworks.com"><strong class="recommended-country"></strong> (Deutsch)</a></li>
+							<li class="list-inline-item add_margin_5 d-block d-md-inline-block"><a class="recommendation-button btn btn-outline btn_color_blue" data-do-not-rewrite="true" data-lang="fr" data-recommended-text="Suisse" data-subdomain="ch" href="//ch.mathworks.com"><strong class="recommended-country"></strong> (Français)</a></li>
+						</ul>
+					</div>
+					<div class="zh-recommendation" style="display:none;">
+						<ul class="list-inline">
+							<li class="list-inline-item"><a class="recommendation-button btn btn-outline btn_color_blue" data-default-lang="true" data-do-not-rewrite="true" data-lang="zh" data-recommended-text="中国" data-subdomain="ww2" href="//ww2.mathworks.cn"><strong class="recommended-country"></strong>（简体中文）</a></li>
+							<li class="list-inline-item"><a class="recommendation-button btn btn-outline btn_color_blue" data-do-not-rewrite="true" data-lang="en" data-recommended-text="China" data-subdomain="ww2" href="//ww2.mathworks.cn"><strong class="recommended-country"></strong> (English)</a></li>
+						</ul>
+					</div>
+
+					<p>You can also select a web site from the following list</p>
+					<div class="alert alert-warning" role="alert" id="china_performance_alert" style="display:none;"> <span class="alert_icon icon-alert-warning"></span>
+						<p class="alert_heading"><strong>How to Get Best Site Performance</strong></p>
+						<p>Select the China site (in Chinese or English) for best site performance. Other MathWorks country sites are not optimized for visits from your location.</p>
+					</div>
+					<div class="row add_margin_30">
+						<div class="col-12 col-sm-4 col-lg-3">
+							<p class="h3 add_bottom_rule">Americas</p>
+							<ul class="list-unstyled">
+								<li><a class="domain_selector_link" data-country-code="LA" data-default-lang="true" data-do-not-rewrite="true" data-lang="es" data-recommended-text="América Latina" data-selected-text="América Latina" data-subdomain="la" href="//la.mathworks.com">América Latina</a> (Español)</li>
+								<li><a class="domain_selector_link" data-country-code="CA" data-do-not-rewrite="true" data-lang="en" data-subdomain="www" href="//www.mathworks.com">Canada</a> (English)</li>
+								<li><a class="domain_selector_link" data-country-code="US" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="United States" data-selected-text="United States" data-subdomain="www" href="//www.mathworks.com">United States</a> (English)</li>
+							</ul>
+						</div>
+						<div class="col-12 col-sm-4 col-lg-6">
+							<p class="h3 add_bottom_rule">Europe</p>
+							<div class="row">
+								<div class="col-6 col-sm-12 col-lg-6">
+									<ul class="list-unstyled">
+										<li><a class="domain_selector_link" data-country-code="BE" data-do-not-rewrite="true" data-lang="en" data-subdomain="nl" href="//nl.mathworks.com">Belgium</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="DK" data-do-not-rewrite="true" data-lang="en" data-subdomain="se" href="//se.mathworks.com">Denmark</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="DE" data-default-lang="true" data-do-not-rewrite="true" data-lang="de" data-recommended-text="Deutschland" data-selected-text="Deutschland" data-subdomain="de" href="//de.mathworks.com">Deutschland</a> (Deutsch)</li>
+										<li><a class="domain_selector_link" data-country-code="ES" data-default-lang="true" data-do-not-rewrite="true" data-lang="es" data-recommended-text="España" data-selected-text="España" data-subdomain="es" href="//es.mathworks.com">España</a> (Español)</li>
+										<li><a class="domain_selector_link" data-country-code="FI" data-do-not-rewrite="true" data-lang="en" data-subdomain="se" href="//se.mathworks.com">Finland</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="FR" data-default-lang="true" data-do-not-rewrite="true" data-lang="fr" data-recommended-text="France" data-selected-text="France" data-subdomain="fr" href="//fr.mathworks.com">France</a> (Français)</li>
+										<li><a class="domain_selector_link" data-country-code="IE" data-do-not-rewrite="true" data-lang="en" data-subdomain="uk" href="//uk.mathworks.com">Ireland</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="IT" data-default-lang="true" data-do-not-rewrite="true" data-lang="it" data-recommended-text="Italia" data-selected-text="Italia" data-subdomain="it" href="//it.mathworks.com">Italia</a> (Italiano)</li>
+										<li><a class="domain_selector_link" data-country-code="LU" data-do-not-rewrite="true" data-lang="en" data-subdomain="nl" href="//nl.mathworks.com">Luxembourg</a> (English)</li>
+									</ul>
+								</div>
+								<div class="col-6 col-sm-12 col-lg-6">
+									<ul class="list-unstyled">
+										<li><a class="domain_selector_link" data-country-code="NL" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="Netherlands" data-selected-text="Benelux" data-subdomain="nl" href="//nl.mathworks.com">Netherlands</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="NO" data-do-not-rewrite="true" data-lang="en" data-subdomain="se" href="//se.mathworks.com">Norway</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="AT" data-do-not-rewrite="true" data-lang="de" data-subdomain="de" href="//de.mathworks.com">Österreich</a> (Deutsch)</li>
+										<li><a class="domain_selector_link" data-country-code="PT" data-do-not-rewrite="true" data-lang="en" data-subdomain="www" href="//www.mathworks.com">Portugal</a> (English)</li>
+										<li><a class="domain_selector_link" data-country-code="SE" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="Sweden" data-selected-text="Nordic" data-subdomain="se" href="//se.mathworks.com">Sweden</a> (English)</li>
+										<li>Switzerland
+											<ul class="list-unstyled add_indent_20">
+												<li><a class="domain_selector_link" data-country-code="CH" data-do-not-rewrite="true" data-lang="de" data-recommended-text="Schweiz" data-selected-text="Schweiz" data-subdomain="ch" href="//ch.mathworks.com">Deutsch</a></li>
+												<li><a class="domain_selector_link" data-country-code="CH" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="Switzerland" data-selected-text="Switzerland" data-subdomain="ch" href="//ch.mathworks.com" id="swiss_english">English</a></li>
+												<li><a class="domain_selector_link" data-country-code="CH" data-do-not-rewrite="true" data-lang="fr" data-recommended-text="Suisse" data-selected-text="Suisse" data-subdomain="ch" href="//ch.mathworks.com">Français</a></li>
+											</ul>
+										</li>
+										<li><a class="domain_selector_link" data-country-code="GB" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="United Kingdom" data-selected-text="United Kingdom" data-subdomain="uk" href="//uk.mathworks.com">United Kingdom</a> (English)</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-sm-4 col-lg-3">
+							<p class="h3 add_bottom_rule">Asia Pacific</p>
+							<ul class="list-unstyled">
+								<li><a class="domain_selector_link" data-country-code="AU" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="Australia" data-selected-text="Australia" data-subdomain="au" href="//au.mathworks.com">Australia</a> (English)</li>
+								<li><a class="domain_selector_link" data-country-code="IN" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="India" data-selected-text="India" data-subdomain="in" href="//in.mathworks.com">India</a> (English)</li>
+								<li><a class="domain_selector_link" data-country-code="NZ" data-do-not-rewrite="true" data-lang="en" data-subdomain="au" href="//au.mathworks.com">New Zealand</a> (English)</li>
+								<li>中国
+									<ul class="list-unstyled add_indent_20">
+										<li><a class="domain_selector_link" data-country-code="CN" data-default-lang="true" data-do-not-rewrite="true" data-lang="zh" data-recommended-text="中国" data-selected-text="中国" data-subdomain="ww2" href="//ww2.mathworks.cn">简体中文</a></li>
+										<li><a class="domain_selector_link" data-country-code="CN" data-default-lang="true" data-do-not-rewrite="true" data-lang="en" data-recommended-text="China" data-selected-text="China" data-subdomain="ww2" href="//ww2.mathworks.cn">English</a></li>
+									</ul>
+								</li>
+								<li><a class="domain_selector_link" data-country-code="JP" data-default-lang="true" data-do-not-rewrite="true" data-lang="ja" data-recommended-text="日本" data-selected-text="日本" data-subdomain="jp" href="//jp.mathworks.com">日本</a> (日本語)</li>
+								<li><a class="domain_selector_link" data-country-code="KR" data-default-lang="true" data-do-not-rewrite="true" data-lang="ko" data-recommended-text="한국" data-selected-text="한국" data-subdomain="kr" href="//kr.mathworks.com">한국</a> (한국어)</li>
+							</ul>
+						</div>
+					</div>
+					<p class="text-center"><a class="worldwide_link" data-do-not-rewrite="true" href="#">Contact your local office</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+    
+
+
+
+
+
+
+
+
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/domainselector.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+	
+</main>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
+<footer id="footer">
+	
+		<div class="primary_footer" id="primary_footer">
+			<div class="container-fluid container-lg">
+				<div class="row align-items-start">
+					<div class="col-12 col-md-9">
+						<nav>
+							
+							<div class="footerNavigation footernavigation containsResourceName resourceClass-footernavigation">
+
+
+
+	<ul class="list-inline " id="footernav" data-privacy="Your Privacy Choices">
+		<li class="list-inline-item" id="footernav_footernav_patents">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="/company/trust-center.html?s_tid=gf_tc">
+
+		
+
+		
+			
+			Trust Center</a>
+
+		
+		
+	
+
+		</li>
+	
+		<li class="list-inline-item" id="footernav_footernav_trademarks">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="/company/trust-center/trademarks.html?s_tid=gf_trd">
+
+		
+
+		
+			
+			Trademarks</a>
+
+		
+		
+	
+
+		</li>
+	
+		<li class="list-inline-item" id="footernav_footernav_privacy">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="/company/trust-center/privacy-policy.html?s_tid=gf_priv">
+
+		
+
+		
+			
+			Privacy Policy</a>
+
+		
+		
+	
+
+		</li>
+	
+		<li class="list-inline-item" id="footernav_footernav_piracy">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="/company/trust-center/piracy.html?s_tid=gf_pir">
+
+		
+
+		
+			
+			Preventing Piracy</a>
+
+		
+		
+	
+
+		</li>
+	
+		<li class="list-inline-item" id="footernav_footernav_status">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="https://status.mathworks.com/?s_tid=gf_application">
+
+		
+
+		
+			
+			Application Status</a>
+
+		
+		
+	
+
+		</li>
+	
+		<li class="list-inline-item" id="footernav_footernav_contactus">
+			
+	
+	
+	
+
+	
+
+	<a class=" " href="/company/aboutus/contact_us.html?s_tid=gf_contact">
+
+		
+
+		
+			
+			Contact Us</a>
+
+		
+		
+	
+
+		</li>
+	</ul>
+
+
+
+
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/footernavigation.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+</div>
+
+						</nav>
+						<p class="copyright">© 1994-2026 The MathWorks, Inc.</p>
+					</div>
+					<div class="col-12 col-md-3">
+						<div id="countrynav" class="d-flex justify-content-end">
+							<button class="btn btn-outline btn_countrynav companion_btn add_margin_20" id="domainButton" data-toggle="modal" data-bs-toggle="modal" data-target="#country-unselected" data-bs-target="#country-unselected">
+								<span class="visually-hidden sr-only">Select a Web Site</span>
+								<span class="icon-globe"></span>
+								<span id="countrySelectorButtonText">United States</span>
+							</button>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	
+	
+</footer>
+
+
+		</div>
+	</div>
+</div>
+
+		
+		
+		
+
+		
+			
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/button.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/downsize.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/upsize.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/tags.min.20260513204911014.css" type="text/css"/>
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/bs5-footer.min.20260513204911014.css" type="text/css"/>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/substitutepricing.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/tags.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+
+			
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/domainredirect.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+
+			
+    
+
+
+
+
+			
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/bootstrap5.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+			
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/signinanalytics.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/spotlight.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/templates/common/bs5.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+			
+			
+				
+    
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/corporatenav.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+				<div class="modal-backdrop fade show" id="corporate_nav_modal"></div>
+			
+			
+
+			
+			<a aria-hidden="true" aria-label="Back to top" class="btn btn_color_mediumgray" href="#" id="go-top" tabindex="0"><span class="icon-arrow-open-up icon_24"></span></a>
+			<div id="web-application-footer-assets"></div>
+
+			
+    
+<link rel="stylesheet" href="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/matrixmenu.min.20260513204911014.css" type="text/css"/>
+<script src="https://au.mathworks.com/etc.clientlibs/mathworks/clientlibs/customer-ui/components/matrixmenu.min.20260513204911014.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+
+
+
+
+			
+
+		
+
+	
+
+
+
+
+<script src="/help/releases/R2026a/includes/shared/scripts/saxonjs/SaxonJS2.rt.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script src="/help/releases/R2026a/includes/shared/scripts/product_group.js" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script>
+<script nonce="rngGPzngNfYNK6JBJd/IuTu2">
+        window.history.replaceState(window.location.href, null, ""); // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+        mystylesheetLocation = "/help/releases/R2026a/includes/shared/scripts/product_group-sef.json";
+        mysourceLocation = "/help/releases/R2026a/docset.xml";
+        product_help_location = "matlab";
+        pagetype = "module";
+        doccentertype = "web";
+        langcode = "";
+        getProductFilteredList(mystylesheetLocation, mysourceLocation, product_help_location, pagetype, doccentertype, langcode);
+        });
+      </script>
+<script src="/help/includes/web/scripts/livecontrolpopoverhandler.js?202409" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script><script src="/help/includes/web/scripts/livetaskpopoverhandler.js?202409" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script><script src="https://matlab.mathworks.com/open/openwith.js?202403" nonce="rngGPzngNfYNK6JBJd/IuTu2"></script><style>.examples_short_list a.btn {display: none;}</style><script type="text/javascript" nonce="b67d3baa971b5a7098a936b549da4b63" src="/k3q6RAQUqhN4/ioxP9U0OEy/uY/OJapmGp6JVcrrkOEib/Q3xo/Smt3/bmpeYgkB"></script><noscript><img src="https://au.mathworks.com/akam/13/pixel_3ecf1297?a=dD03M2I1ZTU4YjVhM2UwNzlmOGJhZjgyNDI2MTIzMzVmNDQzNWFkMmIxJmpzPW9mZg==" style="visibility: hidden; position: absolute; left: -999px; top: -999px;" /></noscript></body></html>

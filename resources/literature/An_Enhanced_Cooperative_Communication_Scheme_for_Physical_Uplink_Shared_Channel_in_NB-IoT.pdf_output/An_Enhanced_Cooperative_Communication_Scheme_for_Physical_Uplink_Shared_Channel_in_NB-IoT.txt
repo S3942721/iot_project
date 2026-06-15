@@ -1,0 +1,1094 @@
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-01..txt =====
+Wireless Personal Communications (2021) 120:2367-2386
+https://doi.org/10.1007/s11277-021-08067-1
+
+®
+
+Check for
+updates
+
+An Enhanced Cooperative Communication Scheme
+for Physical Uplink Shared Channel in NB-loT
+
+Mona Bakri Hassan’ - Sameer Alsharif? - Hesham Alhumyani? - Elmustafa Sayed Ali’ -
+Rania A. Mokhtar? - Rashid A. Saeed?
+
+Accepted: 7 January 2021 / Published online: 23 January 2021
+©The Author(s), under exclusive licence to Springer Science+Business Media, LLC part of Springer Nature 2021,
+corrected publication 2021
+
+Abstract
+
+Narrowband-IoT (NB-IoT) is a standard-based Low Power Wide Area Network technology
+developed to connect a wide range of new Internet of Things (IoT) devices and services.
+NB-IoT bandwidth is limited to a single narrow-band of 180 kHz. Although NB-IoT pro-
+vides low-cost connectivity, it provides channel to large number of smart IoT installed in
+households, building etc. However, in NB-IoT systems, repeating same signal over addi-
+tional period of time has been taken as a key technique to enhance radio coverage up to
+20 dB compared to the conventional LTE. Performance of NB-IoT system optimization and
+modeling are still challenging particularly coverage improvement in the case of real appli-
+cations. For example, the narrow bandwidth in IoT and low energy have led to problematic
+issues in communication between IoT devices and network station, which results in low
+transmitter channel quality. Repetition process is used in the paper to enhance coverage and
+throughput, however in mean time increase the number of repetitions demands high band-
+width. So, an enhanced cooperative relay is used with repetition to reduce the demanded
+bandwidth. In this paper, we proposed an enhanced repetitions cooperative process of nar-
+rowband physical uplink shared channel (NPUSCH). The NPUSCH is transmitted using
+one or more resource units (RUs) and each of these RUs are repeated up to 128 times to
+enhance coverage as well as to meet requirement of ultra-low end IoT, The optimum num-
+ber of repetitions of identical slots for NPUSCH per RUs is calculated and then simulated.
+In addition, the paper describes the analytical simulation to evaluate the proposed repeti-
+tion of cooperative process performance for LTE-NPUSCH channel. Results show dramati-
+cal enhancement of uplink NB-IoT channel quality where the performance evaluation met-
+rics were BLER, data rate, system throughput, spectral efficiency and transmission delay.
+The enhanced cooperative communication scheme for NPUSCH transmission channel in
+NB-IoT is achieved an average 23% enhancement in overall network throughput.
+
+Keywords Low power wide area network (LPWAN) - NPUSCH - Narrowband internet of
+things (NB-IoT) - Machine-to-machine (M2M) - Repetition of cooperative process (RCP) -
+Number of turbo decoder repetitions - Channel quality indicator (CQL)
+
+DI Rashid A. Saeed
+abdulhaleem@tu.edu.sa
+
+Extended author information available on the last page of the article
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-02..txt =====
+2368 M. B. Hassan et al.
+
+1 Introduction
+
+LPWAN is an emerging network technology for loT and M2M applications such as
+smart grid, cities, industry 4.0 and Internet of vehicular (loV), which suitable for long-
+rang performance and cellular Machine-to-Machine (M2M) networks. Traditional tech-
+nologies such as Short-range technologies like Bluetooth, Zigbee and Wi-Fi are not
+suitable for applications that require long range. therefore, cellular communication is
+used for long range connectivity. However, it consumes high-power consumption for
+long range IoT network [1]. Thus, LPWAN technologies develop to be able to provide a
+global IoT anywhere and anytime to interacts with any kind of environment. Issues such
+as range, penetrability of thick objects, long battery life, security and scalability all will
+be adequate by the LPWAN technologies. To support the future growth and develop-
+ment of (IoT), the mobile industry together with the third Generation Partnership Pro-
+ject (3GPP) has set standards for emerging technologies [2]. These standards are Long-
+Term Evolution for Machines (LTE-M) and NB-IoT for low power wide area network
+applications which also are refereed as mobile IoT.
+
+They are designed for licensed spectrum and to support massive number of devices,
+low power consumption, long range, low cost and security. With variety of low power
+wide area IoT applications are emerging and their requirements are also differing from
+each other, a single technology cannot address the requirements of all these applications.
+For these reasons, the two complementary licensed 3GPP standards: LTE-M and NB-
+IoT are used. Both standards are built on the LTE as the backbone of these standards.
+NB-IoT is a new standard known as massive LPWAN to support wide range and low
+data rate for IoT applications developed by 3GPP release 13 [3]. it operates in licensed
+spectrum means existing cellular spectrum. It has several characteristics such as ultra-
+low power consumption, wide coverage and massive connection [4]. Also, NB-IoT has
+a several novel characteristics for LPWAN deployment to overcome shortcomings such
+as poor security, poor reliability and high level of operational and maintenance costs.
+NB-IoT is able to be loaded by major mobile equipment and module manufacturers and
+indeed it will be existing to be adaptable with 2G, 3G, 4G and 5G cellular networks [5].
+
+2 Related Works
+
+In this section, we present some related literature that are used for network optimization
+and its corresponding performance analysis of cooperative schemes used in NB-IoT in
+term of BER, energy efficiency, delay transmission, throughput and probability of the
+message loss. In [6], the authors proposed analyzed NB-IoT uplink repetition number
+and bandwidth allocation. they presented analytic expressions in term of SNR, band-
+width, and energy per transmission bit that can be derived by Shannon theorem in order
+to illustrate the influence of the repetition number and bandwidth allocation to differ-
+ent User Equipment (UEs). Moreover, an algorithm for link adaptation was proposed to
+exploit resource unit (RU) number, bandwidth and repetition. Their numerical and sim-
+ulation results show that reducing bandwidth and performing repetition could enhance
+the coverage. However, this work did not determine the actual impact of channel param-
+eters as well as NB-IoT UE impairments [7, 8].
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-03..txt =====
+An Enhanced Cooperative Communication Scheme for Physical... 2369
+
+In [9, 10], the authors presented the idea of using number of repetitions in narrow-
+band physical uplink shared channel (NPDSCH) to enhance coverage at weak signal
+area to improve signal quality. Performance of NB-IoT system for NPDSCH is evalu-
+ated in three operation modes (standalone, guard band and in-band modes). When the
+number of repetitions increases, a better performance can be achieved where both stan-
+dalone and guard band modes perform better performance compared to in-band mode.
+In [11], the authors investigated an extended NB-IoT architecture and the adoption of
+cooperative relaying paradigm. It determines an optimal relay selection algorithm that
+minimizes the overall power consumed in a NB-IoT cell. Also, they proposed a greedy
+algorithm which reaches the same aim with a lower computational complexity. System
+level simulations has been clearly shown to demonstrate that cooperative relaying can
+boost the energy saving up to 30%. and the greedy approach achieves only 10% for the
+average overall energy consumption which is higher than the optimal strategy.
+
+In [12], the authors determine in details an opportunistic crowd-sensing application sce-
+nario in which traffic from a large number of connected sensors is transmitted over NB-IoT
+technology. They have presented analytical models across both urban and rural deploy-
+ments. Moving vehicles t in relaying sensor traffic to the NB-IoT BS was addressed
+to resolve difficulty of baseline infrastructure to handle the massive amounts of short mes-
+sages from thousands of battery-powered IoT devices [13]. The aim of their work is to
+bring significant improvements to both network-centric as well as device-centric perfor-
+mance indicators. Thus, a smart alternative to static NB-IoT deployments is offered. The
+simulation results showed the effects of vehicle-based relays on network performance,
+expressed in terms of connection reliability, transmission latency and communication
+energy efficiency.
+
+In [14], the authors presented a cooperative communication as a proposed scheme to
+increase the throughput and the transmission rate. It contains two terminals (terminal A
+and terminal B) and destination. There is a collaborate between two terminals in order to
+improve performance. They used OFDMA as a multiple access and channel is AWGN. A
+decoding scheme is proposed as well. In [15], the authors discussed solutions, challenges
+and future work in cooperative communications in M2M. The authors in [8] discussed the
+design of cooperative Device-to-Device (D2D) network by utilizing the advantages of NB-
+IoT. A relay-based cooperative communication structure was proposed for DZD communi-
+cation network performance enhancement so that the information, can be diffused effectiv-
+ity and consistently in NB-IoT.
+
+In [16] it considered the scenario deployed of NB-IoT, where the direct link quality
+between user equipment (UE) and serving base-station (BS) is not fulfilling the quality
+of service (QoS) requirements for transmission of vigorous sensing data. Consequently,
+device-to-device (D2D) communication is implemented as a network extension to NB-IoT.
+systems. The paper derived a model an opportunistic D2D communication schedule with
+set of UE relays with dynamic programming-based algorithm to optimized expected deliv-
+ery ratio (EDR) and Expected End-to-End Delay (EED), respectively. Experimental and
+numerical results determine that the proposed algorithm enhances the system performance
+benchmarked with other related counterpart algorithms. The EDR and EED have been
+improved using deterministic programming-based algorithm in [11] where simulation is
+conducted and results showed that the deterministic method gives better performance with
+a 10% enhancement in EDR and overcomes the additional delay.
+
+In [17] a repetition-dominated system model is developed and the link-level coverage
+performance of NB-IoT uplink systems is evaluated. In the model the channel estimation
+accuracy is used to control signal repetition where the coverage performance is examined.
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-04..txt =====
+2370 M. B. Hassan et al.
+
+Fig. 1 Narrowband demodulation 1 slot=0.5 ms 1 slot=2 ms
+reference signal (NDMRS) |
+
+7 [TT mt I
+
+3.75 KHz Subcarrier spacing
+
+oo
+
+12 Subcarriers=180 KHz
+
+[BB noms
+
+15 KHz Subcarrier spacing
+
+Fig.2 Decode-and-forward
+(DF) relaying M2M cooperative MR,
+system model
+MR:
+MR.
+MS MD
+
+Narrowband demodulation reference signal supported channel approximation and fre-
+quency-domain equalization are performed at the receiver side. For example, the NB-loT
+uplink resource grid mapping of NPUSCH format-1 including NDMRS, where a resource
+unit (RU), contains 12 subcarriers for 15 kHz subcarrier spacing and only one subcarrier
+for 3.75 subcarrier spacing. Link-level extensive experimental are conducted to confirm
+the uplink coverage performance for both single-tone and multitone transmissions (Fig. 1).
+
+In [18] the authors showed the analysis of symbol error probability average performance
+for decode and forward relaying in M2M system over N-Nakagami fading channels. The
+system modeled as multiple mobile station cooperation, namely, mobile destination (MD),
+mobile relay (MR), and mobile source (MS), as illustrated in Fig. 2. The nodes operate in
+half-duplex mode, which are equipped with a single pair of transmitter and receiver anten-
+nas. The proposed Moment Generating Function (MGF) algorithm is used to achieve the
+error probability for different modulation. A Monte Carlo simulation using MATLAB and
+MAPLE is exploited to validate the system model, where the parameters of fading coeffi-
+cient, number of cascaded components, relative geometrical gain, power-allocation param-
+eter, and number of mobile relays have been used in the simulation [19].
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-05..txt =====
+An Enhanced Cooperative Communication Scheme for Physical... 2371
+
+3 System Model
+
+In NB-IoT both uplink (UL) and downlink (DL) allocated by 180 kHz bandwidth. Dur-
+ing radio resource control (RRC), 3GPP provides three coverage enhancement (CE) levels
+where each UE can select a suitable CE level base on its link quality [20]. A user equipment
+(UE) with worse link quality has to select a higher CE level and use more repetitions to
+compensate the weak signal quality and attenuation. To transmit preamble during random
+access procedure, UEs used Narrowband physical random-access channel (NPRACH). The
+DL and UL data packet are carried by NPDSCH and NPUSCH, respectively. NPUSCH
+may support single-tone and multi-tone (i.e., 3, 6, and 12 tones are supported) transmis-
+sions. Each tone occupies 15 kHz bandwidth. A base station (i.e., eNB) uses a downlink
+control information (DCI) to specify the resource blocks allocation in NB-IoT.
+
+Resource allocation in cooperative process is identified by uplink (UL) DCI and down-
+link (DL) DCI, where both are carried in NPDCCH. In each NPDCCH, a maximum of 8
+DCI scan be transported, and each UE can receive up to one DCI. NPDCCH period is the
+time interval between two successive NPDCCH opportunities. Each UE will be assigned
+by a UE-specific NPDCCH period based on the chosen CE level during repetition coop-
+erative connection establishment procedure [21]. Repetition process is used in the paper
+to enhance coverage and throughput, however in mean time increase the number of repeti-
+tions demands high bandwidth. So, an enhanced cooperative relay with repetition is pro-
+posed to reduce the demanded bandwidth.
+
+In order to evaluate the performance of enhancing physical layer for NB-IoT when using
+repetition cooperative process (RCP), the system-level simulator has been developed to
+investigate the performance of the model. Figure 3 illustrates the simulation scenario topol-
+ogy model, where there are two end-IoT devices and one base station where radiation is
+uplink. One IoP device is in active mode that contains both user's data [22, 23]. Each user
+needs to fetch its own data according to its distance from BS. Moreover, Strong and weak
+signal user is simulated as near and far user depending on end-user position in the BS cell.
+The second IoT device in idle mode and act as cooperative-relay to help far UE to send the
+data. The baseband waveform passes through frequency-selective fading channel and Addi-
+tive White Gaussian Noise (AWGN) with — 174 dBm/Hz [23, 24].
+
+Fig.3 Proposed repetition coop-
+erative process (RCP) system
+
+model
+craisia)
+4 hop
+Severe ae
+DirecthoP
+nbecteoeico [1273] 4)
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-06..txt =====
+2372 M. B. Hassan et al.
+
+4 Repetition Cooperative Process in NB-IOT
+
+Repetition Cooperative Process (RCP) is a new technique developed to achieve enhanced
+coverage with low complexity in NB-IoT [25, 26]. Also, Repetition of the transmission
+can be applied for both data transmission and signal transmission control. In NB-IoT sys-
+tems, before each NPUSCH transmission, related to control information like RU number,
+selected Modulation and Coding Scheme (MCS) and repetition, should first be transmitted
+through a Narrowband Physical Downlink Control Channel (NPDCCH). In the RCP, the
+modulation coding scheme (MCS) used for a UE in downlink can be determined based
+on the CE level chosen by the UE and the power header room (PHR) reported by the UE
+during initial random access [27]. In particular, repetition for NB-IoT uplink can only be
+selected among {1; 2; 4; 8; 16; 32; 64; 128}. This number of repetitions indicates rep-
+etition number of the same transmission block as shown in Fig. 4 [28]. subframe n is the
+last subframe in which the NPDCCH is transmitted and is determined from the starting
+subframe of NPDCCH transmission and the downlink control information (DCI) subframe.
+repetition number field in the corresponding DCI.
+
+NPUSCH is transmitted using one or more resource units (RUs) and each of these RUs
+are repeated up to 128 times to enhance coverage and to meet requirement of ultra-low end
+ToT. RU is a smallest mapping unit in NPUSCH which computed as follows [29, 30]:
+
+RU intime domain = 7 x NU“ ()
+
+slots
+
+where NU is Number of SC-FDMA symbols in an uplink slot in time domain. Equation 2
+shows the frequency domain of RU formula in where N®Y is consecutive subcarriers in
+the frequency domain [30] while Eq. (3) depicts Number of repetition of identical slots for
+
+NPUSCH, MNPUSCH with respect to NRU
+
+identical
+
+RU in frequency domain = N&Y (2)
+
+3)
+
+identical
+
+Npusct — min (aaneeser j2,a]), for NRU > 1
+1, for NRU =]
+
+The NB-IoT Uplink Shared Channel (UL-SCH) may carries Common Control Channel
+(CCCH), Dedicated Control Channel (DCCH) or Dedicated Traffic Channel (DTCH), to
+be mapped to the NPUSCH physical channel [31, 32]. The NPUSCH itself can be mapped
+
+max{3ms,time until the beginning
+of the next search space}
+' NPOCCH repetition b
+rie \ jNPOCCH
+H \
+Hf T :
+e “ns I H Time
+v
+‘ NPUSCH repetition !
+
+{8,16,32,64}ms as indicated in DCI
+
+Fig.4 Repetition cooperative process (RCP)
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-07..txt =====
+An Enhanced Cooperative Communication Scheme for Physical... 2373
+
+Different RVs for different blocks, each of which has Nay x Nie. X min([Naep/2].4) time slots
+nu -2. 925. = 2060 Na
+
+L 1*block 284block !
+
+| Netors = 4)
+
+=2, UL, = = =
+Nay=2, Nitoes = 2, Nstocs = 2, Nrep = +
+
+‘A block with repetition
+‘Mizeneicar = min ([Naep/2]-4)
+
+Npu=l. Nites = 4 Netote = 1) Nrep = +
+
+‘Ablec i t
+Migeneicar1 time
+
+f— tcf 2P4ttock of — 3*4block psec 4
+
+Scrambling sequences (over Nay x NYbes time slots) are i
+
+Fig. 5 Repetition pattern with Np_)=4
+
+Table 1 Value of repetition 7 N
+number indicator (Jg,) Number” Rep
+of repetitions Ng,» for NPUSCH 1
+1 2
+2 4
+3 8
+4 16
+5 32
+6 64
+7 128
+
+to one RU or more. When number of repetitions increases the total duration will increase.
+In other words, total duration changes with number of repetitions. Number of consecu-
+tive slots and repetitions are identical in NPUSCH. Figure 5 shows the repetition pattern
+with Ng.p=4. Table | shows value for Npey which depends on Ipep.
+
+In NB-IoT uplink communication, total duration for transmitting a block of data is given
+as [33]:
+
+al duration = UL /NPUSCH
+Total duration = Ney X Nevis X Mideniical (4)
+
+where Ney is the number of scheduled UL resource units for NB-IoT, NU". is the num-
+ber of consecutive slots in UL resource unit (RU). In the first case, each transport block
+is transmitted over Ngy=2 and each of these NRU consists of two UL slots determined
+by NUL. After mapping to N,j.;z, these slots will be repeated MNPUSCH —2 times, which
+
+is proposed number of consecutive subcarriers. For the second case, when N®Y=1 then
+MNPUSCH — | and integrates with Ny,.=1 results in the transmission pattern where each
+
+identical
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-08..txt =====
+2374 M.B. Hassan et al.
+
+block is transmitted without internal repetitions [34]. In all cases, the scrambling sequence
+is reset at the start of codeword (transmission or retransmission).
+
+5 Simulation Setup
+
+Flowchart in Fig. 6 shows sequence of calculations during simulation running time. First,
+input simulation parameters such as SINR with repetition, cooperative relay and NB-IoT
+bandwidth. We arbitrary set number of repetitions to be 4, 16 and 24 modulated with
+QPSK. Then, establish uplink channel to connect IoT devices with eNB. NPUSCH is the
+physical channel that used for uplink to transfer data from UE to eNB [35]. If repetition
+used with a cooperative relay, then calculate free-space path loss, received power and
+SINR for cooperative relay. Next, calculate the BLER, data rate, throughput, spectral effi-
+ciency and transmission delay [36]. on the hand, if repetition used with SINR, calculate
+BLER, data rate, throughput, spectral efficiency and transmission delay. In both cases plot
+the results accordingly.
+
+In order to evaluate the performance of enhancing the physical layer for NB-IoT by
+using number of repetition with/without a cooperative relay, the system-level simulator has
+been implemented to inspect on the performance of this communication. The detailed sys-
+tem-level simulation chain and parameters are illustrated as in Fig. 7.
+
+Prrameters
+
+Start Uplink
+Protocol channel
+
+‘Use SINR
+
+input
+Repetition, coc papetoe
+Rep (1, Relay
+
+parameters
+
+Calculate PL, PR and
+SINR
+
+¥
+
+calculate BLER, OR,
+TH, SE and OT
+
+Calculate
+TH. SE
+
+Fig.6 The simulation process for the proposed cooperative communication scheme for physical uplink
+shared channel in NB-IoT
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-09..txt =====
+An Enhanced Cooperative Communication Scheme for Physical... 2375
+
+Fig.7 System-level simulator (an
+chain
+
+J in
+simltion
+Parameter
+
+Input
+NpuscH
+configuration
+
+ne ISCH for
+‘Data’?
+
+Infoten=1
+
+Input
+/ Propagation
+channel
+
+Configure Channel
+
+Estimator
+
+_epeton in
+tinue neg
+
+parameters
+No
+
+Calculate passloss.
+Power receiver and
+'SINR-Co-Relay
+
+simulated sot
+
+analysis of system
+
+®D Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-10..txt =====
+2376 M. B. Hassan et al.
+
+The simulation models of our proposed contribution are to implement number of repeti-
+tion (1, 16 and 32) with/without a cooperative relay and to do comparison between them to
+show when using the repetition only, number of repetition increase, the performance of the
+overall network will increase but there is a threshold value for number of repetition when
+it increased than this value the performance will degrade. Moreover, when using repetition
+with a cooperative relay, fewer number of repetitions will give the high performance of the
+network.
+
+We calculate the performance of overall network in NPUSCH only. The performance
+that we calculated are block error rate, data rate, throughput, spectral efficiency and delay
+transmission [37, 38]. The system of NPUSCH built in the transmitter and receiver sides
+and the signal will pass through noisy channel (AWGN and fading channel). According to
+specification and features that specified by 3GPP for release 13 and 14, NB-IoT is simu-
+lated by listed parameters in Table 2.
+
+In order to evaluate the performance of enhancing the physical layer for NB-IoT by
+using number of repetition with/without a cooperative relay, the system-level simulator has
+been implemented to inspect on the performance of this communication [39, 40]. In this
+study, we confined in NPUSCH only and number of repetitions that used are 1, 16 and 32.
+We calculate the performance of repetition with cooperative relay communications in NB-
+oT evaluated to improve Generate Block Error Rate (BLER), spectrum efficiency, delay,
+throughput, data rate and signal-to-interference-pulse-noise ratio. Random access—Radio
+Network Temporary Identifier range, specifies the range of RNTI values that are assumed
+to be RA -RNTIs when decoding NPUSCH transmissions. This parameter is needed to
+unambiguously decode the contents of DCI Format 1A decoded as [41]:
+
+Default: Max =0
+Min=0
+Range: 0-60 (0 x 003C)
+
+Table 2 System simulation
+
+parameters assumptions Parameter Values
+Bandwidth (KHz) 180
+Number of simulated transport blocks 5
+Subcarrier spacing (kHz) 15
+Number of allocated subcarriers 12
+Modulation QPSK
+NPUSCH payload type Data
+RNTI value 16
+Number of turbo decoder repetitions 5
+Receive antennas 2
+Power transmit for IoT in cooperative relay (dBm) 23.
+Base Station (BS) gain 17
+IoP gain 10
+Minimum distance between user | and user2(m) 0.5
+Frequency (MHz) 2100
+No. of IoF nodes per cooperative channel 4
+CQI Index 1:8
+White noise power density — 174 dBm/Hz
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-11..txt =====
+An Enhanced Cooperative Communication Scheme for Physical... 2377
+
+Noted that zero is not a valid RA RNTI value but is used to indicate that there are no
+RA RNTI contained in the LTE signal when both the Min and Max values are set to 0.
+Any NPUSCH whose CRC is scrambled with an RNTI will be demodulated as a C-RNTI
+NPUSCH. The cell-RNTI (C-RNTI) has a 16-bit numeric value [42-44].
+
+6 Simulation Results and Discussion
+
+Simulation runs with two different scenarios, repetition in NB-IoT channels only, and repe-
+tition for cooperative relay in NB-IoT uplink channels. The results and discussion are illus-
+trated according to evaluation metrics as follows;
+
+6.1 Data Rate
+
+Repetition with cooperative relay utilized to be a trade-off between data rate, throughput
+and BLER. The following flowchart Fig. 8 explains an NB-IoT NPUSCH BLER. Data
+rate (DR) metric shows the average number of bits per unit time unit (bits/second). As
+shown in the Figs. 9 and 10, if Number of repetition decreases, the data rate increases
+causing BLER performance degradation as it significantly increases. On the other hand,
+
+Fig.8 Generate NB-IoT
+NPUSCH block error rate
+(BLER)
+
+oT Asti)
+
+¥
+
+¥
+allocation and
+‘oct
+
+- ay
+
+modulation ane
+
+¥
+
+sc-roma
+emodulation
+
+¥
+
+Estimate and
+equalized by nanse
+
+¥
+
+ecode
+
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-12..txt =====
+2378 M. B. Hassan et al.
+
+Fig.9 Data rate for repetition 80 Data Rate Channel
+without cooperative relay fewest
+NRep:
+70 |B nRep=32
+60
+850
+=
+9 40
+z
+£30
+&
+20
+10
+20 15 “10 5
+SINR (dB)
+Fig. 10 Data rate for repetition 200 Data Rate channel
+with cooperative relay a= NRep=1 with Co-Relay
+180 —Q—nrep=16 with Co-Relay| —_AN
+EI netep=22 wih Co-Relay
+Z
+©
+it
+
+SINR (dB)
+
+when using repetition with cooperative relay, BLER improved where data rate increased
+by=60%. Note that data rate for SINR in the range (from —20 to — 10 dB) has almost the
+same values due to condition of AMI-CQI thresholds.
+
+6.2 System Throughput
+
+System throughput which is defined as the total number of bits correctly
+received by all users. Mathematical expression of Throughput (TH) is given as
+TH = Y"_, (DR(1) + DR(2) + + + DR(n)) Bits/S [42]. Where Figs. 11 and 12 show
+Performance of NB-IoT system in terms of throughput due to repetition effect with
+and without using cooperative relay. In case of using repetition only, the throughput is
+zero when NRep= 1, which means there is no corrected received bits, thus number of
+
+repetitions must be increased. However, number of repetitions has a threshold value to
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-13..txt =====
+An Enhanced Cooperative Communication Scheme for Physical... 2379
+
+Fig. 11 Throughput for repetition Throughput vs SINR
+without cooperative relay BS Neo
+e =SB= Nrop=t6
+Ee Nope
+7
+ge
+6
+E
+8
+zs
+2
+1
+°
+20 "1 “S
+SINR (8)
+Fig.12 Throughput for repetition 550 Throughput ve SINR
+with cooperative relay 500 TBSathopstcwnn co
+Be Nieepase who.
+450
+2 200
+™ 50
+100
+o
+20 15 “10 6
+SINR (aB)
+
+avoid system throughput degradation. When NRep = 16 system throughput maximized
+and hence the best performance obtained. When the repetition used with cooperative
+relay, optimal throughput achieved with minimum repetition. The repetition with coop-
+erative relay enhanced system throughput approximately by 74% compared to using
+repetition without relay.
+
+6.3 Spectral Efficiency
+
+Spectral Efficiency refers to the number of bits per time that can be transmitted over a
+given bandwidth in a given system (bit/s). Figures 13 and 14 show that in case of using
+repetition without relay, spectral efficiency directly proportional with system through-
+put, there is a threshold value to achieve high spectral efficiency. The best value of
+spectral efficiency achieved at NRep= 16. Whereas when using repetition with a coop-
+erative relay the best value of spectral efficiency in NRep=1 which means in case of
+using repetition with cooperative relay no need to increase number of repetitions to
+get better spectral efficiency. Indeed, repetition with cooperative relay enhances system
+performance and increases spectrum efficiency, up to 33%, with a smaller number of
+repetitions.
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-14..txt =====
+2380
+
+M.B. Hassan et al.
+
+Fig. 13 Spectral efficiency for
+repetition without cooperative
+relay
+
+Fig. 14 Spectral efficiency for
+repetition with cooperative relay
+
+Fig. 15. Delay transmission for
+repetition without cooperative
+relay
+
+6.4 Delay Transmission
+
+Spectrum Efficiency vs SINR
+
+aos
+Bae NRep=t
+| —G— NRep=16,
+3
+3B ooz
+§ 0015
+3
+° ue A
+SINR (a)
+7 Spectrum Efficiency vs SINR
+1
+_09
+Zoe
+Zor
+Bos
+Sos
+© oa
+Bo.
+8
+02
+o4
+0
+20 1S “40 .
+SINR (48)
+Dolay vs SINR
+os
+{ Biron
+OF - NRep=16,
+os
+eos
+=
+S04
+s ¢
+Sos
+
+SINR (48)
+
+System delay gives the average of the total queuing delay of all packets in the buffers at
+the NB-IoT eNBs. As shown in the Figs. 15 and 16 respectively, the delay transmission
+is directly proportional to data rate that is when the number of repetitions increases the
+delay transmission increases. Delay transmission has the same values when SINR in the
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-15..txt =====
+An Enhanced Cooperative Communication Scheme for Physical... 2381
+
+Fig. 16 Delay transmission for Delay vs SINR
+
+repetition with cooperative relay ES Nitopat with Go-Raiay
+with Co-Relay
+
+Delay in (ms)
+
+SINR (48)
+
+range from — 20 to — 10 dB due to delay in the cooperative nodes. In case of using rep-
+etition with a cooperative relay, NRep=1 results in the best result in terms of transmis-
+sion latency with total improvement around 45%.
+
+7 Conclusion
+
+LPWAN technologies develop to be able to provide a global IoT anywhere and anytime
+to interacts with any kind of environment. To support the future growth and develop-
+ment of (IoT), extensive research has been done to resolve the bandwidth scarcity due
+to the huge traffic that oT may inject to the network. In this paper, we utilize repetition
+with a cooperative relay scheme to enhanced system performance of NPUSCH. Perfor-
+mance evaluated in terms of BLER, data rate, system throughput, spectral efficiency
+and delay transmission. We apply number of repetition (1, 16 and 32), with and without
+cooperative relay, to the same signal and compare the results. We observed that in case
+of using repetition only, when number of repetition increase, the BLER will enhance
+but degrades the data rate. Additionally, there is an optimal value for repetition num-
+ber to achieve better system throughput. However, when number of repetitions increase
+from this optimal value, it leads to degrade the network performance. Spectral efficiency
+is directly proportional with system throughput and number of repetitions are directly
+proportional with delay transmission and data rate. In case of using repetition with a
+cooperative relay, no need to increase number of repetitions for achieving better results.
+Based on the insights we have gained on enhanced NB-IoT physical layer. We found
+that repetition with cooperative relay results in better performance in terms of afore-
+mentioned metrics with minimum number of repetitions with average 23% enhance-
+ment in overall network throughput. We identified a number of issues that need to be
+addressed in future research such as that a several NB-IoT end device need to access
+the network dynamically, so implementation of multi-player scenario can improve the
+system throughput. Also addressing the Internet of Vehicles (loVs) could raise many
+issues in cooperative relay scheme for physical uplink shared channel in NB-IoT due to
+the dynamic nature of the network topology, while taking into consideration communi-
+cation models, power control mechanisms, delay transmission, packet scheduling and
+number of repetitions.
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-16..txt =====
+2382 M. B. Hassan et al.
+
+Acknowledgements This research was supported by Taif University Researchers Supporting Project Num-
+ber (TURSP-2020/216), Taif University, Taif, Saudi Arabia.
+
+References
+
+1. https://www.3gpp.org/release-17.
+
+2. Mekki, K., Bajic, E., Chaxel, F., & Meyer, F. (2017). A comparative study of LPWAN technologies
+for large-scale IoT deployment. /CT Express, 5(1), 1-7.
+
+3. Zhai, W. (2017). Design of narrowband-IoT oriented wireless sensor network in urban smart park-
+ing. International Journal of Online and Biomedical Engineering (iJOE), 13(12), 16-126.
+
+4, Andres-Maldonado, P., et al. (2018). Analytic analysis of narrowband IoT coverage enhancement
+approaches. Global Internet of Things Summit (GIoTS). https://doi.org/10.1109/GIOTS.2018.85345
+39.
+
+5. Ahmad, N. A., & Razak, N. I. A. (2019). Performance of narrow-band internet of things (NB-IoT)
+based on repetition of downlink physical channel. In 20/9 26th international conference on tel-
+ecommunications (ICT).
+
+6. Abdelgadir, M., Saeed, R. A., & Babiker, A. (2018). Cross layer design approach for efficient data
+delivery based on IEEE 802.11P in vehicular ad-hoc networks (VANETS) for city scenarios. Inter-
+national Journal on Ad Hoc Networking Systems (IJANS), 8(4), 01-12.
+
+7. Lecce, D. D., et al. (2018). Boosting energy efficiency of NB-IoT cellular networks through cooper-
+ative relaying. In 2018 IEEE 29th annual international symposium on personal, indoor and mobile
+radio communications (PIMRC).
+
+8. Petrov, V,, et al. (2018). Vehicle-based relay assistance for opportunistic crowdsensing over nar-
+rowband IoT (NB-IoT). /EEE Internet of Things Journal, 5(5), 3710-3723.
+
+9. Yang, G., Liang, T., He, X., Song, Y., & Wu, C. (2019). Relay-based cooperative communication
+framework for narrowband internet of things. In 20/9 IEEE international conference
+
+10. Lee, E.-H., Ro, J.-H., & Song, H.-K. (2015). An improved cooperative communication scheme for
+IoT system. International Journal of Electronics and Communication Engineering, 9(8), 940-943.
+
+11. Li, Y., Chi, K., Chen, H., Wang, Z., & Zhu, Y. (2018). Narrowband internet of things systems with
+opportunistic D2D communication. /EEE Internet of Things Journal, 5(3), 1474-1484.
+
+12. Nauman, A., Jamshed, M. A., Ahmad, Y., Ali, R., Zikria, Y. B., & Kim, S. W. (2019). An intel-
+ligent deterministic D2D communication in narrow-band internet of things. In 2019 15th interna-
+tional wireless communications and mobile computing conference (IWCMC).
+
+13. Ali, M. S., Li, Y., Chen, S., & Lin, F. (2018). Narrowband internet of things: Repetition-based cov-
+erage performance analysis of uplink systems. Journal of Communications, 13(6), 293-302.
+
+Xu, L., Dong, X., Wang, X., Shi, W., & Gulliver, T. A. (2016). Performance analysis of
+
+ig cooperative systems. JEICE Transactions on Communications, E99(B7), 1577-1583.
+
+15. Raymond, J. W., Olwal, T. ©., & Kurien, A. M. (2018). cooperative communications in machine-
+to-machine (M2M): Solutions, challenges and future work. IEEE Access, 6, 9750-9766.
+
+16. Eltahir, A. A., Saeed, R. A., Mukherjee, A., & Hasan, M. K. (2016). Evaluation and analysis of an
+enhanced hybrid wireless mesh protocol for vehicular ad-hoc network. EURASIP Journal on Wire-
+less Communications and Networking, 2016(1), 1-11
+
+17. Changsheng, Y., Li, Y., Yuan, W., Lu, Q., & He, Y. (2017). Uplink scheduling and link adaptation
+for narrowband internet of things systems. IEEE ACCESS, 5, 1724-1734.
+
+18. Hassan, M. B., Ali, E. S., Mokhtar, R. A., Saeed, R. A., & Chaudhari, B. S. (2020). NB-IoT: Con-
+cepts, applications, and deployment challenges, Book Chapter (Ch 6). In B. S. Chaudhari, M. Zen-
+naro, (Eds.), LPWAN technologies for loT and M2MApplications. Elsevier, ISBN: 9780128188804
+
+19. Dubey, A., & Bhalla, A. (2017). A review of relay selection based cooperative wireless network for
+capacity enhancement. International Research Journal of Engineering and Technology (IRJET),
+4(1), 629-633.
+
+20. Setiawan, D. P., & Zhao, H.-A. (2017). Performance analysis of hybrid AF and DF protocol for
+relay networks. In International conference on control, electronics, renewable energy and commu-
+nications (ICCREC), 2017.
+
+21. Miao, Y., et al. (2018). Narrow band internet of things: Simulation. IEEE Internet of Things Jour-
+nal, 5(4), 2304-2314.
+
+22. Lujan, E., Mellino, J. A. Z., Otero, A. D., Vega, L. R., & Galarza, C. G. (2020). Extreme coverage
+in 5G Narrowband IoT: A LUT-based strategy to optimize shared channels. [EEE Internet of Things
+Journal, 7(3), 2129-2136.
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-17..txt =====
+An Enhanced Cooperative Communication Scheme for Physical... 2383
+
+23.
+
+24.
+
+33.
+
+37.
+
+40.
+
+41.
+
+42.
+
+43.
+
+Hu, Q-S., & Fan, X.-N. (2019). A simple and efficient link adaptation method for narrowband
+internet of things, In 2019 IEEE 21st international conference on high performance computing and
+communications; IEEE 17th international conference on Smart City; IEEE Sth ‘international con-
+‘ference on data science and systems (HPCC/SmartCity/DSS)
+
+Gao, Y., Zhang, N., & Kang, G. (2018). Multiple resource units allocation and scheduling with QoS
+guarantees for NB-IoT systems. In 2018 IEEE/CIC international conference on communications in
+China (ICCC Workshops), 2018.
+
+Qin, A., Tang, R., Wu, P., & Xia, M. (2020). An efficient Npusch receiver design for Nb-Iot system. In
+2020 IEEE 91st vehicular technology conference (VTC2020-Spring)
+
+Lecce, D. D., Grassi, A., Piro, G., & Boggia, G. (2018). Boosting energy efficiency of NB-IoT cellular
+networks through cooperative relaying. In 20/8 IEEE 29h annual international symposium on per-
+sonal, indoor and mobile radio communications (PIMRC).
+
+Malik, H., Pervaiz, H., Alam, M. M., Moullec, Y. L., Kuusik, A., & Imran, M. A. (2018). radio
+resource management scheme in NB-IoT systems. [FFE Access, 6, 15051-15064.
+
+Shi, Y., Zhao, Y., Xie, R., & Han, G. (2019). Designing a structural health monitoring system for the
+large-scale crane with narrow band IoT. In 20/9 IEEE 23rd international conference on computer sup-
+ported cooperative work in design (CSCWD)
+
+Jiang, N., Deng, Y., Simeone, O., & Nallanathan, A. (2019). Cooperative deep reinforcement learning
+for multiple-group NB-IoT networks optimization. In 209 IEEE international conference on acous-
+tics, speech and signal processing (ICASSP).
+
+Malik, H., Sarmiento, J. L. R., Alam, M. M., & Imran, M. A. (2019), Narrowband-internet of things
+(NB-IoT): performance evaluation in 5G heterogeneous wireless networks. In 2019 IEEE 24th inter-
+national workshop on computer aided modeling and design of communication links and networks
+(CAMAD), 2019 on consumer electronics—Taiwan (ICCE-TW)
+
+Jiang, N., Deng, Y., Nallanathan, A., & Chambers, J. A. (2019). Reinforcement learning for real-
+time optimization in NB-IoT networks. IEEE Journal on Selected Areas in Communications, 37(6),
+1424-1440.
+
+Andres-Maldonado, P., Ameigeiras, P., Prados-Garzon, J., Ramos-Munoz, J. J., Navarro-Ortiz, J., &
+Lopez-Soler, J. M. (2018). Analytic analysis of narrowband IoT coverage enhancement approaches. In
+2018 Global internet of things summit (GIoTS).
+
+Garefa-Martin, J. P., & Torralba, A. (2019). On the combination of LR-WPAN and LPWA technolo-
+gies to provide a collaborative wireless solution for diverse oT. In 2019 International conference on
+wireless and mobile computing, networking and communications (WiMob).
+
+Malik, H., Mahtab Alam, M., Pervaiz, H., Moullec, Y. L., Al-Dulaimi, A., Parand, S., & Reggiani, L.
+(2020). Radio resource management in NB-IoT systems: Empowered by interference prediction and
+flexible duplexing. /EEE Network, 34(1), 144-151
+
+Ning, Z., Wang, X., Kong, X., & Hou, W. (2018). A social-aware group formation framework for infor-
+mation diffusion in narrowband internet of things. IEEE Internet of Things Journal, 5(3), 1527-1538.
+Hejselbeek, J., Nielsen, J. @., Fan, W., & Pedersen, G. F. (2018). Empirical study of near ground propa-
+gation in forest terrain for internet-of-things type device-to-device communication, JEFE Access, 6,
+54052-54063.
+
+Hejselbak, J., Nielsen, J. D., Drewes, C., Fan, W., & Pedersen, G. F. (2018). Propagation measure-
+ments for device-to-device communication in forest terrain. In 12h European conference on antennas
+and propagation (EuCAP 2018).
+
+EL Fawal, A. H., Mansour, A., Najem, M., Le Roy, F., & Le Jeune, D. (2018). CTMC modeling for
+M2M/H2H coexistence in a NB-IoT adaptive eNodeB. In 2018 IEEE international conference on
+internet of things (iThings) and IEEE green computing and communications (GreenCom) and IEEE
+cyber, physical and social computing (CPSCom) and IEEE smart data (SmartData).
+
+Qu, Z., Zhang, G., Cao, H., & Xie, J. (2017). LEO satellite constellation for internet of things. /EEE
+Access, 5, 18391-18401.
+
+Chafii, M., Bader, F., & Palicot J. (2018). SC-FDMA with index modulation for M2M and IoT uplink
+applications, In 2018 IEEE wireless communications and networking conference (WCNC)
+Manco-Vasquez, J., Chafii, M., & Bader, F, (2019). Tailoring index-modulation for uplink IoT and
+M2M Networks. In 20/9 IEEE wireless communications and networking conference (WCNC).
+
+Vidhya, R., & Karthik, P. (2016). Coexistence of cellular IOT and 4G networks. In 20/6 International
+conference on advanced communication control and computing technologies (ICACCCT).
+
+Chen, T-H., Chang, J.-W., & Wei, H.-Y. (2016). Dynamic inter-channel resource allocation for mas-
+sive M2M control signaling storm mitigation. In 2016 IEEE 84th vehicular technology conference
+(VIC-Fall).
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-18..txt =====
+2384 M. B. Hassan et al.
+
+44, Persia, S., & Rea, L. (2016). Next generation M2M cellular networks: LTE-MTC and NB-IoT capacity
+analysis for smart grids applications. In 20/6 AEIT international annual conference (AEIT).
+
+Publisher's Note Springer Nature remains neutral with regard to jurisdictional claims in published maps and
+institutional affiliations.
+
+Mona Bakri Hassan received her the M.Sc. degree in electronics engi-
+neering, Telecommunication in 2018, and B.Sc. (Honor) degree in
+electronics engineering, Telecommunication in 2013. She has com-
+pleted CCNP Routing and Switching course and passed the CCNA
+Routing and Switching. She has gained experience in network opera-
+tions center as network engineer in back office department in Sudatel
+and in vision valley as well. She has also worked as a teacher assistant
+in Sudan University of Science and Technology, which has given her a
+great opportunity to gain teaching experience. . She published book
+chapters, and paper in wireless communications and networking in
+peer reviewed academic international journals. Her areas of research
+interest include Cellular LPWAN, IoT and wireless communication.
+
+Dr. Sameer Alsharif, Ph.D., he is a Chair, Computer Engineering
+Department, College of Computers and Information Technology, Taif
+University, Saudi Arabia. He has obtained his Ph.D. Degree from Uni-
+versity of Connecticut Storrs, USA. His research interests are Wireless
+Sensor Networks, [oT (Internet of Things), and fuzzy logic and control
+system, Dr. Sameer Alsharif, has involved in many research papers in
+distinctive journals and conferences.
+
+Dr. Hesham Alhumyani is working in Department of Computer Engi-
+neering in College of Computers and Information Technology Taif
+University at Taif Saudi Arabia. He has appointed as a faculty Dean in
+2019. He has obtained his Ph.D. Degree from University of Connecti-
+cut Storrs, USA. His research interests are Wireless Sensor Networks,
+Underwater Sensing, lof (Internet of Things), and Cloud Computing.
+Dr. Hesham Alhumyani has published many research papers in distine-
+tive journals and conferences.
+
+® Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-19..txt =====
+‘An Enhanced Cooperative Communication Scheme for Physical... 2385
+
+Elmustafa Sayed Ali, received his M.Sc. in Electronics and Communi-
+cation Engineering, Sudan University of Science & technology in
+2012. Worked (former) as a senior engineer in Sudan Sea Port Corpo-
+ration (5 years) as a team leader of new projects in wireless networks
+includes (Tetra system, Wi-Fi, Wi-Max, and CCTV). Currently he is a
+head of marine systems department in Sudan marine industries. He is
+also working in Electrical and Electronics Engineering Department in
+the Red Sea University as a senior lecturer. Elmustafa published
+papers, and book chapters in wireless communications, computer and
+networking in peer reviewed academic international journals. His areas
+of research interest include, routing protocols, computer and wireless
+networks, and IoT. He is a member of IEEE Communication Society
+(ComSoc), International Association of Engineers (IAENG), Six
+Sigma Yellow Belt (SSYB), and Scrum Fundamentals certified (SFC).
+
+Rania A. Mokhtar (IEEE member since 2003) received the B.Sc.
+degree in Electronics Engineering (Computer Engineering) from the
+Sudan University of Science and Technology (SUST), Khartoum,
+Sudan, in 2001, and the Postgraduate Diploma in Information Technol-
+ogy (Advanced Networking and Telecommunications) from the Inter-
+national Institute of Information Technology (I2IT), Pune, India, in
+2003, and the M.Sc. and Ph.D. degrees from the University Putra
+Malaysia (UPM), Kuala Lumpur, Malaysia, in 2005 and 2010, respec-
+tively. In May 2009, she earned the IEEE Wireless Communication
+Professional (IEEE WCP) certificate of the Wireless Communication
+Engineering Technology (WCET) Exam. Currently, she is an associate
+professor and Director, Electronics System Research Centre, Faculty
+of Engineering, Sudan University of Science and Technology, Khar-
+toum, Sudan, She has been award Elsevier Foundation Award for
+women in Engineering in 2017. She published over 30 scientific papers
+and two books.
+
+Rashid A. Saeed (M’02-SM’07) received his PhD in Communications
+and Network Engineering, Universiti Putra Malaysia (UPM). Currently
+he is a professor in Computer Engineering Department, Taif Univer-
+sity. He was also working in Electronics Department, Sudan University
+of Science and Technology (SUST) since 1999. He was senior
+researcher in Telekom Malaysia’ Research and Development
+(TMRND) and MIMOS. Rashid published more than 150 research
+papers, books and book chapters on wireless communications and net-
+working in peer-reviewed academic journals and conferences. His
+areas of research interest include computer network, cognitive comput-
+ing, computer engineering, wireless broadband, WiMAX Femtocell.
+He is successfully awarded 3 U.S patents in these areas. He supervised
+more 50 MSc/PhD students. Rashid is a Senior member IEEE, Mem-
+ber in IEM (LE.M), SigmaXi, and SEC.
+
+®D Springer
+
+===== An_Enhanced_Cooperative_Communication_Scheme_for_Physical_Uplink_Shared_Channel_in_NB-IoT-20..txt =====
+2386 M. B. Hassan et al.
+
+Authors and Affiliations
+
+Mona Bakri Hassan’ - Sameer Alsharif? - Hesham Alhumyani? - Elmustafa Sayed Ali’ -
+
+Rania A. Mokhtar? - Rashid A. Saeed”?
+
+Department of Electronics Engineering, Sudan University of Science and Technology (SUST),
+1111 Khartoum, Sudan
+
+2 Department of Computer Engineering, Taif University (TU), P.O. Box 11099, Taif 21944,
+Saudi Arabia
+
+® Springer
+

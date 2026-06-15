@@ -1,0 +1,1100 @@
+===== 3GPP_Release-17_Physical_Layer_Enhancements_for_LTE-M_and_NB-IoT-1..txt =====
+1OT AND MACHINE-TYPE COM
+
+AT.
+
+3GPP RELEASE-17 PHYSICAL LAYER
+ENHANCEMENTS FOR LTE-M AND NB-IoOT
+
+G. A. Medina-Acosta, Liping Zhang, Jie Chen, Kazuyoshi Uesaka, Yuan Wang, Ola Lundqvist, and Johan Bergman
+
+ Rel-13 introduced an LTEM
+device category M1 (Cat-
+M1) with lower-complexity
+for low-end MTC applica-
+tions requiring extended cov-
+erage functionality [1]
+
+Digital Objet dentin:
+tosT09/NicoMsTO.o001 2100099
+
+ABSTRACT
+
+The 3rd Generation Partnership Project
+(3GPP) introduced Long-Term Evolution (LTE) for
+Machine-Type Communications (LTE-M) and Nar-
+rowband Internet of Things (NB-loT) in Release
+13 (Rel-13) as part of the fourth generation LTE.
+Both technologies provide wide-area connectiv-
+ity to “things” that benefit from being connect-
+ed including sensors, machines, actuators, and
+so on. LTE-M and NB-loT continued their evolu-
+tion across successive 3GPP releases providing
+higher data rates, power saving features, coexis-
+tence with the fifth generation New Radio (NR),
+and so on. In Release-17 (Rel-17), 16-quadrature
+amplitude modulation (16-QAM) in uplink (UL)
+and downlink (DL) for NB-loT, as well as the sup-
+port of up to 14 hybrid automatic repeat request
+(HARQ) processes and a new maximum DL trans-
+porting block size (TBS) for half duplex frequen-
+cy-division duplexing (HD-FDD) LTE-M devices
+were standardized. This article provides an over-
+view of the Rel-17 physical layer enhancements
+according to the 3GPP specifications, including
+descriptions of their technical components, qual-
+itative gains, and performance evaluations. For
+NB-loT, 16-QAM in DL nearly doubles the peak
+data rate using a larger maximum DL TBS, where-
+as 16-QAM in UL allows transmitting the largest
+TBS available for quadrature phase shift keying
+using half of the resources in the time domain.
+For LTE-M, for HD-FDD Category M1 (Cat-M1)
+UEs, the 14 HARQ processes feature adds full
+support for handling the presence of invalid sub-
+frames and increases the DL peak data rate by
+20 percent, whereas the introduction of a larger
+maximum DL TBS further increases the DL peak
+data rate by 73.6 percent.
+
+INTRODUCTION
+
+The LTE-M and narrowband Internet of Things
+(NB-loT) technologies were introduced as cellu-
+lar loT solutions providing a guaranteed quality of
+service (QoS) in licensed spectrums, targeting the
+support of massive machine-type communications
+(mMTC), using low-cost, low-complexity devices,
+providing enhanced coverage and longer battery
+life [1]. From their introduction in Third Generation
+Partnership Project (3GPP) Release 13 (Rel-13),
+the main differentiator between LTE-M and NB-loT
+is that the latter concerns ultra-low-complexity
+devices using a very narrow bandwidth (180 kHz),
+whereas LTE-M operates over a wider bandwidth
+(1.4 MHz or 5 MHz), which allows higher data
+
+rates to be achieved, supporting voice calls, and
+connected mode mobility [1]. Both LTE-M and
+NBHoT continued to evolve over subsequent 3GPP
+Releases; for example, Rel-15 incorporated sever-
+al improvements in terms of latency, power con-
+sumption, and spectral efficiency, and its baseline
+meets the mMTC requirements established for a
+5G communications system in 3GPP and in the
+International Telecommunications Union Radio-
+communication Standardization Sector (ITU-R) [2].
+In Rel-16, the evolution continued introducing fea-
+tures such as transmissions over pre-configured
+uplink resources [3], more efficient scheduling of
+multiple transport blocks, improvements for the
+coexistence with 5G NR [3], and so on. In ReF-17,
+according to the Work Item Description (WID),
+the motivation to additionally enhance LTE-M and
+NB-loT mainly relied on broadening use cases for
+cellular low power wide area (LPWA) loT and sup-
+porting the long-term life cycle of the two technol
+ogies [4]. In this article, we present an overview
+of the physical layer enhancements introduced
+in Rel-17 for both LTE-M and NB-loT, providing a
+first-hand descriptive analysis upon having actively
+participated during the standardization process of
+all features, including examples, and both analyt-
+ical and simulation results that can serve as com-
+plementary knowledge to better understand the
+procedures described in the 3GPP technical spec-
+ifications.
+
+This article is organized as follows. In the next
+section, we provide the technical background
+of the Rel-17 enhancements of NB-loT and LTE-
+M. Following that, we describe the Rel-17 physi-
+cal layer enhancements including 16-quadrature
+amplitude modulation (QAM) in uplink (UL) and
+downlink (DL) for NB4oT, as well as the support
+of up to 14 hybrid automatic request (HARQ)
+processes and a new maximum DL TBS for
+HD-FDD Cat-M1 UEs.! Then we present evalua-
+tion results including gain estimates (e.g., achiev-
+able peak data rate) and performance evaluations
+(e.g., 10 percent block error rate [BLER]), utilizing
+an analytical framework and link-level simulations.
+Finally, we provide conclusions and future work.
+
+TECHNICAL BACKGROUND OF THE
+REL-17 ENHANCEMENTS
+
+TECHNICAL BACKGROUND ON NB-IoT
+
+NB+loT overall aims to provide deep coverage for
+loT scenarios with relaxed requirements in terms
+
+The authors are with Ericsson.
+
+80
+
+2471-2825/22/$25.00 © 2022 IEEE
+
+&
+
+TEEE Communications Standards Magazine + December 2022
+
+| Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:33:26 UTC from IEEE Xplore. Restrictions apply.
+
+===== 3GPP_Release-17_Physical_Layer_Enhancements_for_LTE-M_and_NB-IoT-2..txt =====
+of latency, data rate, and mobility. Moreover,
+NB+loT is aimed at being deployed in a narrow
+system bandwidth of 200 kHz to facilitate the
+re-farming of the Global System for Mobile Com-
+munications (GSM) frequency bands. In terms
+of modulation schemes, the subsection below
+describes the reference framework as available
+until Rel-16, since the physical layer enhancement
+for NB-loT in Rel-17 refers to the support of a
+higher order modulation scheme, 16-QAM for
+NB-IoT in both UL and DL.
+
+NB-IoT: MODULATION SCHEMES IN UL AND DL
+
+In UL, Narrowband Physical Uplink Shared Chan-
+nel (NPUSCH) Format 1 using a 15 kHz subcar-
+rier spacing is used for data transmissions which
+can be scheduled to use a single-tone alloca-
+tion (x/2-Binary Phase Shift Keying (x/2-BPSK),
+/4-QPSK) or a multi-tone allocation (QPSK) con-
+sisting of either 3, 6, or 12 subcarriers. In the
+time domain, a given TBS depending on its size
+is mapped over one resource unit (RU) or more
+than one RU, consisting each of 8 ms for a sin-
+gle-tone allocation, and 4 ms, 2 ms, and 1 ms for
+3, 6 or 12 subcarrier allocations, respectively.
+
+In DL, Narrowband Physical Downlink Shared
+Channel (NPDSCH) using a 15 kHz subcarrier
+spacing is used for data transmissions utilizing
+a 12-subcarrier allocation (QPSK). In the time
+domain, a TBS can be scheduled via Narrow-
+band Physical Control Channel (NPDCCH) to be
+mapped over one or more subframes (SF), con-
+sisting each of 1 ms.
+
+Both UL and DL overall follow the same proce-
+dures toward performing a data transmission. That
+is, a “Transport Block Size (TBS)/Modulation and
+Coding Scheme (MCS) Table” is used to sched-
+ule a given transport block (segmented user data
+from higher layers) through the selection of a pair
+of indices “Iygs” and “I,y” for UL and “Iygs” and
+“Ise” for DL [5]. In UL, the transport block index
+ranges from Irgs = 0 to Itgs = 13, whereas the RU
+index ranges from Igy = 0 to Igy = 7, the largest
+schedulable transport block is TBS = 2536 bits.
+In DL, in an “in-band deployment” there are less
+resource elements available for NB-loT because
+some of them are reserved for the LTE system
+(e.g, Cell-Specific Reference Signals (CRS), Phys-
+ical Downlink Control Channel (PDCCH)), hence
+in an “in-band deployment” the transport block
+index ranges from Ips = 0 to Iygs = 10, whereas
+the subframe index ranges from Isp = 0 to Isp =
+7, the largest schedulable transport block is TBS
+= 1736 bits. On the other hand, for “stand-alone
+and guard-band deployments” the transport block
+index ranges from Irs = 0 to Iygs = 13, whereas
+the subframe index ranges from Isr = 0 to Isp = 7,
+the largest schedulable transport block is TBS =
+2536 bits. In Rel-17, 16-QAM in both UL and DL
+was standardized with different design guidelines
+for UL and DL as described below.
+
+TECHNICAL BACKGROUND ON LTE-M
+LTE-M introduced a low-complexity User Equip-
+ment (UE) Category M1 (including half-duplex
+operation and lower power classes) that with
+respect to LTE UE Category 1 provides reduction
+in terms of peak rate, bandwidth, and number
+of antennas to lower the device's cost while tar-
+geting a reduced power consumption through
+
+Subframe# 0 T 2 3 zy
+
+MPDCCH Mo | MI | M2 | M3 | M4 | MS
+
+Mo | M7 | M8
+
+PDSCH | __ Pi [ 2 |p3 | Pa | Ps | Po
+PUCCH# *
+
+Subframe# | S9 | S10 | S11 | S12 | S13 | Si4
+
+sis | Sie | SI7
+
+MPDCCH M9
+
+MO
+
+PDSCH P7 | P& P9
+PUCCH#: BO | BI B2
+
+FIGURE 1. 10 HARQ processes and HARQ-ACK bundling combined.
+
+extended discontinuous reception (eDRX) cycles,
+and two coverage enhancement (CE) modes. CE
+mode A is mandatorily supported to entitle mod-
+erately enhanced coverage, whereas CE mode
+B support is optional, targeting deep coverage.
+The physical layer enhancement for LTE-M in Rel-
+17 was aimed at increasing the peak data rates
+through the support of up to 14 HARQ process-
+es and a larger maximum DL TBS for HD-FDD
+Cat-M1 UEs; hence, in the subsections below, we
+describe the baseline until Rel-16 in relation to the
+Rel-17 enhancements for LTE-M.
+
+LTE-M: 10 HARQ Processes and HARQ-ACK
+Bundling for HD-FDD Cat-Mi UEs: In Rel-14,
+two features that complement each other were
+introduced: The possibility of using up to 10
+HARQ processes in DL along with the HARQ-
+ACK bundling feature, which basically allows
+the positive or negative acknowledgment (ACK/
+NACK) feedback of up to four different HARQ
+processes to be bundled into a single physical
+uplink control channel (PUCCH) transmission.
+Figure 1 illustrates the presence of 10 HARQ pro-
+cesses using the HARQ-ACK bundling feature.
+
+In Fig. 1, MO and PO refer to the control chan-
+nel (i.e, MTC physical downlink control channel
+[MPDCCHI) and corresponding user data (i.e.,
+physical downlink shared channel [PDSCHI) asso-
+ciated with HARQ Process #0 which are transmit-
+ted in subframes SO and $2, respectively. $12 is
+used by the UE as a guard-time to perform DL-+to-
+UL switching; thereafter, PUCCH £0 represented
+as BO in $13 bundles three ACKs/NACKs asso-
+ciated to multiple HARQ processes,” and $16 is
+used as another guard-time to perform UL-to-DL
+switching, Other HARQ processes in the diagram
+follow the same logic and corresponding termi-
+nology. Moreover, the blue dashed and green
+dotted arrows refer to the PDSCH scheduling
+delay and HARQ-ACK delay respectively.
+
+PDSCH Scheduling Delay: It refers to the
+number of subframes that need to pass before
+transmitting the user data once the control infor-
+mation has been transmitted. The PDSCH sched-
+uling delay has been defined as 2 BL/CE3 DL
+subframes. For example, the blue dotted arrow
+in Fig. 1 illustrates the PDSCH scheduling delay
+
+? ACK/NACK as bundled
+on PUCCH?: 0(0, 1, 2}, 1(3,
+4, 5}, and 2(6, 7, 8, 9}. The
+numbers inside the curly
+brackets refer to the HARQ
+processes into which ACK/
+NACK is being bundled.
+
+IEEE Communications Standards Magazine « December 2022
+
+81
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:33:26 UTC from IEEE Xplore. Restrictions apply.
+
+&
+
+===== 3GPP_Release-17_Physical_Layer_Enhancements_for_LTE-M_and_NB-IoT-3..txt =====
+Subframe# so
+
+SI [S82 ]S3 [s4 [ss [so [87 | s8
+
+MPDCCH MO
+
+Mi | M2 | M3 | M4 | M5 | Mo | M7 | M8
+
+PDSCH | Pr | P2 | P3 | Ps [PS | PO
+>
+
+PUCCH# 4 : sesteedestatacheseseefeneenefeseeneafeatees
+0,1,2.
+Subframe# | S9 S10 SIL $12 S13 | S14 | S15 | S16 Si7
+MPDCCH | M9 M0
+g g
+PDSCH py | ps fp | 5 a 20
+a 4+ 38]--+--|--/oei>
+PUCCH#: a 2] Bo | Br | B2 3 2
+O12. freteespeeseeepeeetees peste Eos 3
+be
+
+FIGURE 2. 14 HARQ processes and HARQ-ACK bundling combined.
+
+3 BL/CE: Bandwidth-reduced
+low-complexity or coverage
+enhanced.
+
+4 ACK/NACK as bundled on
+PUCCH#: 0{12, 13, 0, 1),
+1{2, 3, 4, 5}, and 2(6, 7, 8, 9).
+The numbers inside the curly
+brackets refer to the HARQ
+processes which ACK/NACK
+is being bundled.
+
+for the first HARQ process; that is, once MO was
+transmitted in SO, subframe $1 is the 1st out of 2
+BL/CE subframes, whereas $2 is the 2nd out of 2
+BL/CE DL subframes where PO is transmitted.
+
+HARQ-ACK Delay: It refers to the number of
+subframes that need to pass before transmitting
+the ACK/NACK once the corresponding user
+data has been transmitted. The HARQ-ACK delay
+has been defined in terms of absolute subframes,
+being any of the values in the HARQ-ACK delay
+set = (4, 5, 6, 7, 8, 9, 10, 11}, a selectable delay.
+For example, the green dotted arrow in Fig, 1 illus-
+trates the HARQ-ACK delay for the first HARQ
+process: once PO was transmitted in $2, subframe
+$3 is the Ist out of 11 absolute subframes, and
+the counting continues until $13, which is the
+11th out of 11 absolute subframes where the
+ACK/NACK for PO is transmitted over PUCCH#0.
+
+Thus, assuming a TBS = 1000 bits and 10
+HARQ processes along with HARQ-ACK bun-
+dling, a peak data rate of 588 kb/s can be
+achieved. In Rel-17, the unused subframes in the
+legacy framework (i,e., shadowed subframes to
+the left of PO and to the right of M9 in Fig. 1)
+were exploited to introduce the use of up to 14
+HARQ processes as elaborated below.
+
+LTE-M: Max DL TBS for HD-FDD Cat-M1
+UEs: The maximum DL TBS for HD-FDD Cat-
+M1 UEs is 1000 bits, since larger transport block
+sizes (available in the TBS/MCS tables reused
+from LTE) are not selectable for HD-FDD Cat-
+M1 UEs. As part of the Rel-17 preparations, a
+set of use cases were discussed to justify the
+support of a larger DL TBS. The discussed use
+cases included “watches and wearables,” “high
+data rate music,” “small-format video,” “firmware
+download,” and “point-of-sale transactions.” As
+a conclusion, watches/wearables and small-for-
+mat video, which require a peak data rate of
+around 1 Mb/s in the physical layer, were iden-
+tified as relevant use cases to be delivered by
+an HD-FDD Cat-M1 UEs [6]. Thus, in Rel-17 a
+maximum DL TBS of 1736 bits was made avail-
+able as an enhancement for HD-FDD Cat-M1
+UEs in CE mode A, which required a soft-buffer
+size recalculation to provide higher throughput
+(around 73.6 percent increase) and other bene-
+fits described below.
+
+3GPP REL-17
+PHYSICAL LAYER ENHANCEMENTS
+
+NB-IoT: 16-QAM IN UL AND DL
+
+The introduction of 16-QAM in DL overall consid-
+ered the following design guidelines [4]:
++ Increase the maximum TBS (e.g., 2x com-
+pared to Rel-16) and soft-buffer size.
++ Perform required modifications on the DL
+power control equation for NPDSCH.
++ Extend the channel quality reporting to sup-
+port 16-QAM.
+The initial step toward introducing 16-QAM in
+DL was to build the TBS/MCS table accounting
+for achievable code rates (including standalone/
+guard-band and in-band deployments), avoidance
+of link adaptation issues (which refers to avoiding
+unstable performance between adjacent opera-
+tion points in the TBS/MCS table), breaking point
+between modulation schemes, downlink control
+information (DCI) impact (e.g., how to indicate
+the usage of 16-QAM), and so on. The TBS/MCS
+table for 16-QAM in DL can be found in [5]. For
+standalone/guard-band deployments, the TBS/
+MCS table ranges from Irgs = 14 to Iygs = 21, and
+from Isp = 0 to Ise = 7; the largest schedulable TBS
+= 4968 bits. For in-band deployment, the TBS/
+MCS table ranges from Its = 11 to Iygs = 17, and
+from Isp = 0 to Isp = 7; the largest schedulable TBS
+= 3624 bits. The largest TBS usable with 16-QAM
+in DL (i.e., TBS = 4968 bits for standalone/guard-
+band deployments) previously had been used in
+LTE and was the closest value to twice the max-
+imum TBS available in Rel-16. Later, we present
+the 10 percent BLER performance for all the TBS
+entries usable for 16-QAM in DL for standalone/
+guard-band deployments. Moreover, 16-QAM
+NPDSCH transmissions do not support the use
+of repetitions. The DL power allocation accounts
+for the differences in the deployment modes and
+includes signaling of data-to-pilot power ratios as
+described in [5]. The DL channel quality report-
+ing for 16-QAM is based on NPDSCH transport
+blocks achieving an error probability not exceed-
+ing 10 percent BLER; the channel quality informa-
+tion (CQ) mapping table including the 16-QAM
+reports can be found in [7]. The soft-buffer size for
+supporting 16-QAM consists of 12,800 bits (.e.,
+the size was doubled with respect to the size used
+for quadrature phase shift keying [QPSKI) [8].
+
+The introduction of 16-QAM in UL considered
+a single design guideline [4]: The maximum TBS
+available in legacy (i.e., Rel-16) is not increased.
+The same technical considerations as in DL were
+used for designing the TBS/MCS table, except
+that in UL there is no need to consider different
+Ings ranges as a function of deployment modes.
+The TBS/MCS table for 16-QAM in UL can be
+found in [5], and ranges from Iygs = 14 to Iyps =
+21, and from Igy = 0 to Ipy = 6; the largest sched-
+ulable TBS = 2536 bits.
+
+For 16-QAM in UL, aiming at doubling the
+throughput with respect to QPSK, the TBS/MCS
+table was designed to allow transmitting the
+TBS = 2536 bits with half the number of RUs as
+compared to QPSK when scheduling (“Ipgs=21,”
+“Ipu=4”). Moreover, 16-QAM NPUSCH format
+1 transmissions do not support the use of rep-
+etitions, so a new term (i.e., Arp) in the NPUS-
+
+82
+
+TEEE Communications Standards Magazine + December 2022
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:33:26 UTC from IEEE Xplore. Restrictions apply.
+
+&
+
+===== 3GPP_Release-17_Physical_Layer_Enhancements_for_LTE-M_and_NB-IoT-4..txt =====
+CH power control equation was introduced to
+account for the higher modulation scheme [5],
+and only multi-tones (3, 6, and 12 subcarriers) are
+schedulable for 16-QAM in UL.
+
+LTE-M: 14 HARQ PROCESSES FOR
+HD-FDD Cat-M1 UEs
+
+In Rel-17, the number of HARQ processes were
+increased from 10 to 14 for an HD-FDD Cat-M1
+UE. The framework utilized to introduce 10 HARQ
+processes left two subframes per scheduling cycle
+unused (i.e., every 10 HARQ processes, there are
+two subframes with the potential to be used for
+transmitting user data in DL). The introduction of
+14 HARQ processes aimed to exploit those unused
+subframes (i.e., shadowed subframes to the left of
+PO and to the right of M9 in Fig. 1), increasing the
+peak data rate from 588 kb/s to 706 kb/s.
+
+From Fig. 2, it can be observed that the two
+subframes to the right of M9 in S9 (i.e., shadowed
+subframes) were utilized to incorporate two addi-
+tional HARQ processes through M10 and M11
+with their associated P10 and P11 being transmit-
+ted along with their corresponding ACK/NACK in
+the subsequent scheduling cycle. Such a schedul-
+ing cycle starts from $17 upon transmitting MO,
+M1, ..., M9 along with another two HARQ pro-
+cesses corresponding to M12 and M13. In other
+words, in Rel-17 it is possible to use up to 14
+HARQ processes through scheduling 12 HARQ
+processes per scheduling cycle (i.e., MO to M9
+appending in an alternating manner, either “M10
+and M11” or “M12 and M13”) exploiting the
+unused resources in the legacy framework. This is
+possible because the HARQ-ACK bundling allows
+up to 4 ACKs/NACKs to be bundled per PUCCH,
+which means that 3 PUCCHs are sufficient to sup-
+port 12 HARQ processes per scheduling cycle.
+Moreover, the support of 14 HARQ processes
+has side implications on both the PDSCH sched-
+uling delay and HARQ-ACK delay. In Fig, 2, the
+blue dash-dotted arrow illustrates that a PDSCH
+scheduling delay longer than 2 BL/CE DL sub-
+frames is required (i.e., ideally a delay of 7 BL/
+CE DL subframes is required). Similarly, for the
+HARQ-ACK delay, the green solid arrow in Fig.
+2 shows that the maximum available delay in the
+HARQ-ACK delay set that equals 11 subframes
+is no longer sufficient (ie., ideally 13 subframes
+are required). Figure 2 assumes a scenario where
+all the subframes are valid subframes; hence, it
+depicts the ideally required delays. A subframe is
+determined to be a valid subframe or an invalid
+subframe using DL and UL bitmaps configured
+via network's higher layer signaling (i.e., radio
+resource control [RRC] signaling). In an invalid
+DL subframe (i.e., non-BL/CE DL subframe), an
+HD-FDD Cat-M1 UE can only transmit in UL or
+perform either a DL-to-UL switching or a UL-to-
+DL switching, whereas in an invalid UL subframe
+(i.e., non-BL/CE UL subframe) an HD-FDD Cat-
+M1 UE can optionally transmit PUCCH without
+repetition. Otherwise, it can only transmit in DL
+or perform either a DL-to-UL switching or a UL-+to-
+DL switching. Real network deployments usually
+configure invalid subframes, and because of that
+in Rel-17 both the PDSCH scheduling delay and
+the HARQ-ACK delay were enhanced.
+
+PDSCH Scheduling Delay: A PDSCH scheduling
+delay expressed in terms of several subframe types
+
+was standardized as described in Table 5.3.3.1.12-3
+of 3GPP Technical Specification (TS) 36.212 [9].
+
+HARQ-ACK Delay: For the HARQ-ACK delay,
+two solutions were standardized either of them to
+be used based on the configuration provided via
+RRC signaling:
+
++ HARQ-ACK delay solution 1: It is determined
+through an expression consisting of different
+subframe types (using a similar principle as for
+the PDSCH scheduling delay) as described
+in Table 5.3.3.1.12-2 of [9]. This future-proof
+solution envisions a large presence of inva
+id subframes, which will allow, for example,
+more efficient coexistence with 5G NR.
+HARQ-ACK delay solution 2: The HARQ-
+ACK delay is expressed in terms of absolute
+subframes, which includes the minimum
+delay required (13 subframes) to support 14
+HARQ processes and other delays (see the
+full HARQ-ACK delay set in Table 5.3.3.1.12-
+
+1 of [9]). This solution is intended to be used
+for scenarios when there is low (or no) pres-
+ence of invalid subframes.
+
+The PDSCH scheduling delay solution can be
+used along with either of the HARQ-ACK delay
+solutions configured using RRC signaling. More-
+over, the PDSCH scheduling delay and HARQ-
+ACK delay are jointly encoded as described in [9]
+and are provided to the UE using physical layer
+signaling on MPDCCH. Figure 3 depicts a scenar-
+io with 14 HARQ processes in the presence of
+invalid subframes according to the DL bitmap “1
+111111001,” where for illustration purposes
+“0” refers to a non-BL/CE DL subframe.
+
+To illustrate how the 14 HARQ processes
+feature operates in the presence of non-BL/CE
+DL subframes, let us focus on one of the newly
+added HARQ processes, for example, the 11th
+HARQ process scheduled with M10 in subframe
+S12. The PDSCH scheduling delay expressed
+in terms of different subframe types is used to
+avoid skipping subframes unnecessarily (which
+otherwise would result in a loss of throughput);
+hence, for the 11th HARQ process under anal-
+ysis, the PDSCH scheduling delay option 1 in
+Table 5.3.3.1.12-3 of [9] applies, where the first
+term in the expression (i.e., 1 BL/CE DL subframe)
+is counted in $13, the second term (i.e., 1 sub-
+frame) is counted in $14, the third term (i.e., 3
+BL/CE UL subframes) is counted through $15,
+S16, and $17, respectively, the fourth term (ie.,
+1 subframe) is counted in $18, and finally, the
+fifth term (ie,, 1 BL/CE DL subframe) takes us to
+transmit P10 in $19 to provide a peak data rate
+of 631.5 kb/s. If instead the PDSCH scheduling
+delay had been defined simply as 7 BL/CE DL
+subframes, a lower peak data rate of 571.5 kb/s
+would have been achieved since P10 would have
+been transmitted in $21. The HARQ-ACK delay as
+in Table 5.3.3.1.12-2 of [9] required in this case
+y= 11 and z = 1. Later, we present a table with
+more peak data rates estimates as a function of
+the presence of invalid subframes.
+
+LTE-M: Max DL TBS oF 1736 BITS FOR
+HD-FDD Cat-M1 UEs
+In Rel-17, the maximum DL TBS for HD-FDD Cat-
+M1 UEs in CE mode A was increased from 1000
+bits to 1736 bits. Equation 1 was used to calculate
+the required number of soft channel bits.
+
+The initial step toward
+introducing 16-QAM in
+
+DL was to build the TBS/
+MCS table accounting
+
+for achievable code rates
+(including standalone/
+guard-band and in-band
+deployments), avoidance
+of link adaptation issues
+(which refers to avoiding
+an unstable performance
+between adjacent oper-
+ation points in the TBS/
+MCS table), breaking
+point between modulation
+schemes, downlink control
+information (DCI) impact
+(e.g., how to indicate the
+usage of 16-QAM), and
+soon.
+
+9 The terms “non-BL/CE DL
+subframes” and “non-BL/
+
+CE UL subjrames” were
+recently updated in the
+3GPP specifications as “DL
+subframes that are not BL/
+CE DL subframes” and “UL
+subframes that are not BL/CE
+UL subframes’.
+
+IEEE Communications Standards Magazine « December 2022
+
+83
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:33:26 UTC from IEEE Xplore. Restrictions apply.
+
+&
+
+===== 3GPP_Release-17_Physical_Layer_Enhancements_for_LTE-M_and_NB-IoT-5..txt =====
+DL bitmap | 1
+
+Subframe# so
+
+si | s2 [s3 [s4 | ss | s6
+
+MPDCCH MO
+
+MI | M2 | M3 | M4 | MS | M6
+
+PDSCH PO Pl P2 P3 P4
+RSs
+
+PUCCH#!:
+
+0, 1, and 2.
+
+DL bitmap | 1 T T T T T T T
+
+Subframe# | 89 | si0 [sii | si2 | si3 [sia | sis | si6
+
+MPDCCH | M7 | M8 | M9 NQNY
+
+PDSCH ps | Po | P7 | Ps | Po
+
+PUCCH#:
+
+O,1,and 2. prey
+
+DL bitmap
+
+Subframe#
+
+si9 | $20 | s21 | $22 | 823 | s24 | $25
+
+MPDCCH
+
+mo | Mi | M2 | M3 | M4 | M5 | Mo
+
+PDSCH
+
+Pio | Pil | P12 | P13 | Pi4 | PIs | P16
+>
+
+PUCCH#:
+0, 1, and 2.
+
+Figure 3. 14 HARQ processes and HARQ-ACK bundling combined in
+presence of invalid downlink subframes.
+
+16
+
+SINR (dB) @ 10% BLER
+
+~o Ireses4
+
+~ hresess Le
+
+~ > resets
+
++
+
+a hase7
+~-O~ Irasers
+sod
+
+~tres=20
+
+hese2t
+
+res=19
+
+Number of NPDSCH Subframes (NSF)
+
+4 5 6 7 8 9 10
+
+FIGURE 4. 10 % BLER TBS/MCS table for standalone/guard-band
+
+deployments.
+
+® ACK/NACK as bundled on
+PUCCH#: 0{12, 13, 0, 1),
+1{2, 3, 4, 5}, and 2(6, 7, 8, 9}.
+The numbers inside the curly
+brackets refer to the HARQ
+processes which ACK/NACK
+is being bundled.
+
+Soft Buffer Size = (N)(32)(3)(T(X + 24 + 4)/321)
+(a)
+
+In Eq. 1, Nis the number of HARQ processes,
+32 ensures that the soft buffer size is a multiple of
+32 bits, 3 relates to the coding rate of the turbo
+encoder, 24 relates to the cyclic redundancy check
+
+(CRC) size, 4 relates to the tail bits of the turbo
+encoder [9], and X is the TBS (X < 6120). More-
+over, [ .] is the ceiling function, which rounds the
+value toward positive infinity. In Rel-17, X is the
+new maximum DL TBS of 1736 bits, whereas to
+find a suitable value for N, a set of link-level simu-
+lations were performed comparing throughput vs.
+signal-to-noise ratio (SNR) assuming different soft
+buffer sizes. As shown below, N = 8 was identified
+as a suitable value, which allowed using Eq. 1 to
+determine a soft buffer size of 43,008 soft channel
+bits. Moreover, it was concluded that the new max-
+imum DL TBS of 1736 bits is compatible with all
+other LTE-M features applicable for HD-FDD Cat-
+M1 UEs in CE mode A, and that the feature will be
+enabled using unicast RRC signaling.
+
+EVALUATION RESULTS
+
+Below, we present evaluation results for the physi-
+cal layer enhancements introduced for LTE-M and
+NB-loT in Rel-17.
+
+NB-IoT: 16-QAM IN UL AND DL
+
+Figure 1 shows the 10 percent BLER performance
+for all transport blocks in the TBS/MCS table stan-
+dardized for 16-QAM in DL applicable for stand
+alone/guard-band deployments [9], where BLER is
+defined as the ratio between the incorrectly received
+transport blocks and all the transport blocks sent.
+The simulation assumptions can be found in [10].
+
+In Fig. 4, each operation point resembles the
+performance of the transport block entries in the
+TBS/MCS table for standalone/guard-band deploy-
+ments, which spans from Irgs = 14 to Ings = 21 and
+from Isp = 0 to Is = 7 [5]. Figure 4 already includes
+in the x-axis the mapping of subframe index (ie.,
+cp) to number of NPDSCH subframes [5]. The per-
+formance in Fig. 4 shows that the curves from the
+smallest schedulable TBSs (Irgs = 14) to the largest
+schedulable TBSs (Irs = 21) appear in ascending
+order without incurring any performance crossing,
+which reflects no link adaptation issues.
+
+LTE-M: 14 HARQ PROCESSES FOR
+HD-FDD Cat-M1 UEs
+Previously, the 14 HARQ processes feature for
+HD-FDD Cat-M1 UEs was described, which was
+designed to avoid unnecessary loss of throughput
+due to the presence of invalid subframes. Table 1
+summarizes the achievable peak data rates when
+there are 14 HARQ processes in use in the pres-
+ence of different amounts of invalid subframes.
+
+In Table 1, DL transmissions are assumed to
+start at the subframe where the leftmost bit in
+the bitmap applies. The presence of invalid sub-
+frames assumed in Table 1 results in an inevita-
+ble loss of throughput, which is kept to what is
+strictly unavoidable through the PDSCH sched-
+uling delay and HARQ-ACK delay solutions stan-
+dardized in Rel-17 for the 14 HARQ processes
+feature [9]. The enhanced PDSCH scheduling
+delay and HARQ-ACK delay allow transmitting at
+the most immediately available valid subframe to
+avoid any unnecessary loss of throughput; oth-
+erwise, the observable loss of throughput would
+be larger than what is inherently unavoidable.
+Moreover, Table | includes estimates for a TBS
+equal to 1736 bits since this is the new maxi-
+mum DL TBS that became available for HD-FDD
+Cat-M1 UEs in Rel-17.
+
+84
+
+TEEE Communications Standards Magazine + December 2022
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:33:26 UTC from IEEE Xplore. Restrictions apply.
+
+&
+
+===== 3GPP_Release-17_Physical_Layer_Enhancements_for_LTE-M_and_NB-IoT-6..txt =====
+Number of invalid subframes (denoted by o in the bitmaps) cyclically present every 10 ms,
+
+Scenarios without causing a transmission postponement
+
+presence of invalid
+subframes
+
+DL bitmap: “tr11111001.” | DL bitmap: “1111110000.”
+
+DL bitmap: “1111110000.”
+UL bitmap: “1111111101.”
+
+TBS =1000 bits ~ 706 kb/s ~ 632 kb/s
+
+TBS=1736 bits ~ 1.225 Mb/s ~ 1.096 Mb/s
+
+~ 571 kb/s ~ 545 kb/s
+~ 992 kb/s ~ 947 kb/s
+
+TABLE 1. Achievable peak data rates over one scheduling cycle: 14 HARQ processes with and without presence of invalid subframes.
+
+LTE-M: Max DL TBS oF 1736 Bits
+FOR HD-FDD Cat-M1 UEs
+
+The support of a new maximum DL TBS of 1736
+bits for HD-FDD Cat-M1 UEs in CE mode A
+required an increase in the soft-buffer size, which
+calculation depends on the number of assumed
+HARQ processes (N in Eq. 1). In Fig. 5, we pres-
+ent link-level simulations comparing throughput
+vs. SNR assuming different soft buffer sizes.
+
+From Fig. 5, the achievable throughput assum-
+ing 8 HARQ processes (43,008 soft channel bits)
+is comparable to the performance when the
+assumption is 10 HARQ processes (53,760 soft
+channel bits), whereas using a number of HARQ
+processes < 8 HARQ processes (e.g., N = 6 to
+obtain 32,256 soft channel bits or N = 4 to obtain
+21,504 soft channel bits) results in throughput
+degradation. Thus, using N = 8 (i.e, 8 HARQ pro-
+cesses) is a suitable choice for TBS = 1736 bits.
+
+CONCLUSIONS AND FUTURE WoRK
+
+In this article, we provide an overview of the Rel-
+17 physical layer enhancements standardized for
+NB-loT and LTE-M:
+
++ 16-QAM in UL and DL for NB-loT: In DL, a
+TBS of 4968 bits was introduced to provide
+~ 2x the maximum achievable throughput
+with respect to QPSK. The TBS/MCS tables
+for standalone/guard-band and in-band
+deployments consist of 64 TBS entries and
+56 TBS entries, respectively. Moreover,
+16-QAM in DL used at most one repetition
+and included support for channel quali-
+ty reporting and DL power allocation. On
+the other hand, the design guideline for
+16-QAM in UL did not allow increasing the
+largest TBS (2536 bits) available for QPSK,
+so such a TBS was designed to be transmit-
+ted using half of the time-domain resources.
+Moreover, the TBS/MCS table for UL has 49
+TBS entries that are applicable for all deploy-
+ment modes, at most one repetition is used,
+multi-tone allocation is supported (3, 6, and
+12 subcarriers), and one power boosting
+term (i.e., At-) was added into the UE's trans-
+mit power control equation.
+
++ 14 HARQ processes in DL for HD-FDD Cat-
+M1 UEs exploits the unused transmission
+opportunities in the 10 HARQ processes/
+HARQ bundling framework to add four addi-
+tional HARQ processes, which increases the
+peak data rate from 588 kb/s to 706 kb/s.
+Moreover, the PDSCH scheduling delay and
+HARQ-ACK delay were designed to deal
+with the presence of invalid subframes to
+avoid unnecesary loss of throughput derived
+from skipping unnecessarily valid subframes.
+
++ Anew maximum DL TBS of 1736 bits was stan-
+
+Throughput (Mbps)
+
+-—<— Soft channel bits = 21504
+—4— Soft channel bits = 32256
+7 Soft channel bits = 43008
+—+— Soff channel bits = 53760
+
+SNR (dB)
+
+10 15
+
+25
+
+Figure 5. Throughput for different soft-buffer sizes from 4, 6, 8, and 10 HARQ
+
+processes, 16-QAM, and a 4-physical resource block (PRB) allocation.
+
+dardized for HD-FDD Cat-M1 UEs in CE Mode
+A, which provides ~ 73.6 percent through-
+put increase. The new TBS is applicable for all
+HD-FDD Cat-M1 UEs features in CE mode A.
+In terms of future work:
+
+-For 16-QAM for NB-loT, enabling an earlier
+usage of 16-QAM transmissions can be con-
+sidered, for example, during random access
+procedure.
+
+-The 14 HARQ processes framework for
+LTE-M could be enhanced to reduce the
+unnecessary loss of throughput derived from
+the presence of measurement gaps.
+
+Finally, LTE-M and NB-loT are nowadays envi-
+sioned to be focused on adding support for
+
+non-terrestrial networks.
+
+REFERENCES
+
+{11 O. Liberg et al,, Cellular Internet of Things, Elsevier Academic
+
+Press, Nov. 2019. ISBN: 9780081029022
+
+[2] O. Liberg et al., “Narrowband Internet of Things 5G Perfor
+
+mance,” Proc. IEEE VTC-Fall ‘29), Honolulu, Hl, 2019.
+
+[3] A. Hoglund et al,, “3GPP Release-16 Preconfigured Uplink
+Resources for LTE-M and NB4oT,” IEEE Commun. Stds. Mag.,
+
+vol. 4, no. 2, June 2020, pp. 50-56.
+
+[4] 3GPP Tdoc RP-201306, “Additional Enhancements for
+NB4oT and LTE-MTC,” RAN Meeting 288e June/July 2020.
+volved Universal Terrestrial Radio Access
+
+[5] 3GPP TS 36.213,
+(E-UTRA); Physical Layer Procedures,” v. 17.0.0.
+
+[6] 3GPP Tdoc RP-201 288, “Intermediate Summary of [R17_
+NBIOT_eMTC] Email Discussion,” RAN Meeting 788e June/
+
+July 2020.
+
+[7] 3GPP TS 36.133, “Evolved Universal Terrestrial Radio Access
+(E-UTRA); Requirements for Support of Radio Resource
+
+Management,” v. 17.5.0.
+
+IEEE Communications Standards Magazine « December 2022
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:33:26 UTC from IEEE Xplore. Restrictions apply.
+
+&
+
+85
+
+===== 3GPP_Release-17_Physical_Layer_Enhancements_for_LTE-M_and_NB-IoT-7..txt =====
+[8] 3GPP TS 36.306, “Evolved Universal Terrestrial Radio Access
+(E-UTRA); User Equipment (UE) Radio Access Capabilities,”
+v.17.1.0.
+
+[9] 3GPP TS 36.212, “Evolved Universal Terrestrial Radio Access
+(EUTRA); Multiplexing and Channel Coding,” v. 17.1.0.
+
+[10] 3GPP T-doc R1-2007387, “Session Notes for 8.9 (Rel-17
+Enhancements for NB-loT and LTE-MTC),” RANI 102-e,
+Aug, 2020.
+
+BIOGRAPHIES
+
+GeRARDO AGNI MEDINA ACOSTA (gerardo.agni.medina.acos-
+ta@ericsson.com) received his B.E. in electrical engineering
+and communications (2007) and M.Sc. in engineering science
+(2009) from ITESM-CEM, Mexico, After a doctoral stay (2011)
+at Aalto University, Finland, in 2012, he received a Ph.D. degree
+in signal theory and communications from the Polytechnic Uni-
+versity of Catalyuna (UPC), Spain. He was the recipient of apto
+cum laude in both his M.Sc. and Ph.D. degrees and obtained
+the distinction of International Doctor of Philosophy. He cur-
+rently works at Ericsson on MTC, NB4OT, their integration to 5G
+and satellites, and 5G physical layer.
+
+LiPING ZHANG (li.ping zhang@ericsson.com) received her Mas-
+ter’s degree in communication engineering from the China
+Academy of Telecommunication Technology (CATT). She
+joined Ericsson in 2011, and is a senior system developer con-
+tributing to standardization and product system implementation
+in machine type communications, the Internet of Things, Red-
+Cap, and small data transmission.
+
+Jie CHEN (Jason.x.chen@ericsson) is a senior specialist for loT
+solutions at Ericsson Business Unit Networks. He received his
+B.Sc. in information engineering and M.Sc. in signal and infor-
+mation processing from Beijing University of Post and Telecom-
+munication, China. He joined Ericsson in 2012 and started with
+
+LTE baseband software developing, and since 2016 has been
+primarily working on the RAN product solutions for NB-loT and
+machinetype communications.
+
+KAZUYOSHI UESAKA (kazuyoshi.uesaka@ericsson.com) has a Mas-
+ter of Engineering degree in communication engineering (1998)
+and a Ph.D. in electronic engineering (2001) from Tohoku Uni-
+versity, Japan. He is a researcher at Ericsson and a 3GPP RAN4
+delegate with focus on UE performance standardization includ-
+ing LTE-MTC and NB-oT.
+
+YUAN WANG (yuanawang@ericsson.com) received her Master's
+degree in communication and information engineering from Be
+jing Institute of Technology, China in 2011. In 2017, she joined
+Ericsson to work with baseband process design and enhance-
+ment for LTE and NB-loT. From 2020 to 2021, she was involved
+in research and standardization of RAN1 Rel-17 NB-lT. She is
+currently a senior system engineer at Business Area Networks,
+Development Unit Networks, Beijing, China
+
+OLA LUNDQVIST (ola.lundqvist@ericsson.com) has an M.Sc.
+degree in information technology (2004) from Linkping Uni-
+versity, Sweden. Since 2016, he has primarily worked with LTE
+MTC (Cat-M1) feature development, and since 2021 also NR
+feature development.
+
+JOHAN BERGMAN received his Master's degree in engineering
+physics from Chalmers University of Technology, Gothenburg,
+Sweden. In 1997, he joined Ericsson to work with baseband
+receiver algorithm design. Since 2005, he has been working
+with 3G/4G/5G physical layer standardization in 3GPP TSG
+RAN Working Group 1. He is currently a master researcher at
+Ericsson Business Unit Networks, Stockholm, Sweden. He is a
+coauthor of the book Cellular Internet of Things: From Massive
+Deployments to Critical 5G Applications. He was a co-recipient
+of Ericsson’s Inventor of the Year award for 2017.
+
+86
+
+&
+
+TEEE Communications Standards Magazine + December 2022
+
+Authorized licensed use limited to: RMIT University Library. Downloaded on June 14,2026 at 23:33:26 UTC from IEEE Xplore. Restrictions apply.
+

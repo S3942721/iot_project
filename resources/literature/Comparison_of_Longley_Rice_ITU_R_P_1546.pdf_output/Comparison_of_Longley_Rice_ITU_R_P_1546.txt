@@ -1,0 +1,471 @@
+===== Comparison_of_Longley_Rice_ITU_R_P_1546-1..txt =====
+IEEE BMSB 2014
+
+Comparison of Longley-Rice, ITU-R P.1546 and
+Hata-Davidson propagation models for DVB-T
+coverage prediction
+
+Stylianos Kasampalis, Pavlos I. Lazaridis, Zaharias D. Zaharis, Aristotelis Bizopoulos, Spyridon
+Zettas, and John Cosmas, Senior Member IEEE
+
+Abstract— This paper compares precision field-strength
+measurements taken by a Rohde & Schwarz FSH-3
+portable spectrum analyzer with simulation results derived
+from the ITM coverage prediction model (Irregular
+Terrain Model), also known as NTIA-ITS Longley-Rice
+model, in conjunction with the 3-are-second SRTM
+(Satellite Radar Topography Mission) geographical data,
+the propagation predictions of ITU-R Recommendation
+P.1546 and those of the empirical Hata-Davidson model
+using HAAT. ITU-R P.1546 and Hata-Davidson models
+exhibit higher errors at longer distances and therefore
+necessary corrections should be introduced in the models
+in order to increase propagation prediction accuracy.
+Especially, measurements results show that ITU-R P.1546,
+on average, underestimates the field strength at distances
+longer than 50 km. The Longley-Rice model using the
+terrain digital elevations is more accurate, as expected,
+and its results are closer to the measurement data,
+
+Keywords—DVB-T, HAAT, Hata-Davidson model, ITM,
+ITU-R.1546, Longley-Rice, NTIA-ITS, , SRTM.
+
+I. INTRODUCTION
+
+The huge increase in designing broadcast systems for
+
+digital TV and cellular systems necessitates the development
+of accurate point-to-area prediction tools. In electromagnetic
+wave propagation theory there is a great number of coverage
+prediction models for DVB-T coverage and, more specifically,
+there are three main types of propagation models: empirical
+models that are based on measurement data, they are simple
+and use statistical data but they are not very accurate, semi-
+deterministic models that are based on empirical data and
+deterministic aspects, and deterministic models that are based
+on theory and require a lot of geometrical information about
+the site and the terrain, need a very significant computational
+effort, but they are more accurate.
+The aim of this research is to provide coverage prediction
+results for DVB-T services, in the region of Thessaloniki —
+Greece, and compare the simulation results produced by the
+propagation prediction software with field measurements
+taken by our measurement equipment. It is well known that
+
+the use of prediction models becomes a necessity, because
+making on-site measurements costs in time and money.
+
+The Radio Mobile program [1-2], (Radio Propagation and
+Virtual Mapping Freeware) is based on the Longley-Rice
+Model ITM [3] and uses the 3-arc-second Satellite Radar
+Terrain Mission SRTM maps, [4]. The Radio communication
+Sector of ITU proposed the Recommendation ITU-R P.1546,
+[5]. It is a method for point-to-area-prediction for terrestrial
+services in the frequency range 30MHz to 3GHz. This method
+is based on empirically derived field-strength curves and has
+replaced the older ITU-R 370 Recommendation. These curves
+are functions of frequency, antenna height, distance and time
+percentage. Extrapolation and interpolation methods are used
+to derive data from these empirical curves. The field strength
+(dBuV/m) is calculated for 1 kW ERP (Effective Radiated
+Power). The latest version is ITU-R P.1546-5, Sept. 2013.
+
+The empirical Hata model, [6], on the other hand, uses
+mathematical equations that involve antenna heights of
+transmitter and receiver, frequency 150MHz to 1500MHz,
+distance from the base station ranges from 1Km to 20Km in
+urban, suburban and open area environments. It is an
+extension of Okumura’s method and it is based on Okumura’s
+field test results for the city of Tokyo, Japan, [7-9].
+
+The Telecommunications Industry Association (TIA)
+recommended a modification to the Hata model in order to
+cover a broader range of input parameters and distances. The
+model is known as Hata-Davidson model and provides
+corrections for links up to 300km distance and transmitters at
+an altitude up to 2500m. It was published in TSB-88A, [10].
+The formulas of the Hata-Davidson model are:
+
+PLiyp = PL tata + ACs, dem) -S1 (dim) “S21, dim) ~ Ssfsee)~
+S4 atts dim).
+
+where: PL aia = 69.55+26.16log jofun.-13.82log jh - a (hy)
++ (44.9-6.5 Slog igh) log im
+a(h,), is the correction factor for the mobile antenna height:
+
+(110g sof iz 9.7)*hy(1.56log sof iz 0.8).
+for medium small city quasi open, open area
+
+8.29(log io(1.54*hy)?-1.1
+for large city and f-<300MHz
+
+ath.)
+
+3.2(log (1 1.75*hz))°-4.97
+for large city and f>300MHz
+
+===== Comparison_of_Longley_Rice_ITU_R_P_1546-2..txt =====
+IEEE BMSB 2014
+
+where,
+
+funz: is the carrier frequency (30-1500MHz.)
+
+hy, is the base station antenna height HAAT (20-2500m).
+
+hy, is the mobile station antenna height (1-10m).
+
+dxm; is the transmission distance (1-300km).
+
+A and §;, are factors that extend the distance to 300Km
+
+S»: is a correction factor for the height h; of the base
+station antenna extending the value of h, to 2500m,
+
+S; and S,, are correction factors that extend the
+frequency to 1500MHz.
+
+Definitions of the terms are given below.
+
+Distance din Ay, din) Si(din)
+im <20 0 0
+
+20 < dim < 0.62137 (dim -20)[0.5+ |0
+
+64.38 0.15 logio(h/121.92)]
+
+64.38 < din < {0.62137 (dim -20)[0.5 + —}0.174 (dim -64.38)
+300 0.15 logio(h)/121.92)]
+
+S2(Ut 15 dig)= 0.00784log 1o(9.98/dim )\(h 1-300) for h > 300m
+
+S'a(fimttz)= futz!250108; o(1500/frmrz)
+
+Sa(futis dam)~ [0.11 2logio(1500/fists)(din-64.38) for
+dim > 64.38 Km.
+
+Field strength is calculated from the formula below:
+E(dBuV/m) = ERP (dBW) - PLup (dB) + 20logiofan, +
+109.35
+
+Free Space Loss is calculated from the well known formula:
+PLenee space toss= 32.44 + 20logio( fiat) + 2010gi0( dk).
+Field-strength is not allowed to assume values higher than the
+free-space values.
+
+II. MEASUREMENTS AND COMPARISONS
+
+In order to measure the signal strength of DVB-T
+transmissions, a measurement campaign was carried out
+around the city of Thessaloniki, [11-12], located in the north
+of Greece. A point-to-point analysis for Greek public TV
+ERT, Channel UHF 23 (f= 490MHz & P,= 1600W = 32dBW
+and ERP = 42dBW) is made for the measurement points
+shown in Table I.
+
+One of main correction factors that Davidson added to
+Hata's formulas is the HAAT factor (antenna Height Above
+Average Terrain). In the Hata model formulas are limited in
+their applicability to:
+
+Range from Base, 1-20 Km.
+Frequency Range, 150-1500 MHz.
+© Base HAAT, 20-200 meters.
+In the Hata-Davidson model these limits are extended to:
+« Range from Base, 1-300 Km.
+© Frequency Range, 30-1500 MHz.
+© Base HAAT, 20-2500 meters.
+
+Table I. Measurements points and HAAT.
+
+No en’ | am | Lar | LoNG | pEGs | NAAT
+1 | PROFITIS ELIAS 7 40.640411 | 23.039927 | 313 487.2
+2 | THESSALONIKI 12.3 40.615822 | 22.955735 | 279 784.8
+3 | LAKE VOLVI 143 | 40707102 | 23.188914| 31 | 788.8
+4 | PEREA 16.7 | 40813489 | 22.937471| 236 | 815.5
+5 | METHONI 47 | 40469402 | 99 s74711| 252, | 799.7
+6 | KORINOS 52 40.307130 | 22.618620 | 232 810.7
+7 | BORDER EVZONI 68.8 41.081410 | 22.588160 | 321 479.5
+8 | POLIKASTRO 69 41.081190 | 22.588360 | 320 475.9
+9 | SOUMELA 86 | 4.410086 | 29116606 | 256 | 789.8
+10 | LOUTRAKI 107 | 40.966160 | 21.923630 | 293 | 629.4
+
+There are many programs that can calculate HAAT. Radio
+Mobile (that uses the Longley-Rice model) is also one of
+them. In this paper, HAAT was calculated using
+NAD83/WGS84, FCC's terrain database, and the GLOBE 1
+km database, [13]. We should clarify that the term "HAAT"
+refers to the HAAT in the direction of the radial under
+consideration and not to the overall site HAAT. HAAT values
+are shown in Table I and Fig. 1 for the 10 measurements
+points.
+
+AAT 479.5
+
+PWR 813.5
+
+Fig. 1. Measurement points and HAAT.
+
+Propagation curves of Recommendation ITU-R P.1546 that
+are used for the calculation of field strength, with the proper
+interpolations, are shown in Fig. 2. We have used these curves
+and the appropriate equations to obtain our calculated results.
+The propagation curves are designed for 1 kW effective
+radiated power (ERP) and the ERP of the transmitter under
+study is 16 kW, so that 12dB have to be added to the values of
+field strength produced by the propagation curves.
+
+===== Comparison_of_Longley_Rice_ITU_R_P_1546-3..txt =====
+IEEE BMSB 2014 3
+600 MHz, land, 50% time Table III. Measurements and simulations.
+E(@BuVim)
+120
+110 DVB-T IM ITU-R | Hata.
+1% Hy Measurements Longley- | P.tsd6 | pavipson
+3 80 No. Points LAT | pcg | Rice With
+Z 70 CH23-490MHz | LONG HAAT
+= 60
+5 50 ,
+= 40 Ree. Ree. Ree.
+§ 30 (052.5 m) | 10m sm
+3 20
+B10
+= 5 40.640411
+€ 1 | PROFITIS
+Ee Okm31saegs) | 23.039927 | 1019 95.3 96.1 978
+s-30 u THESSALONIKI | 40.615822
+3 2
+z2 (i2aKm279deqs) | 22.958735 | 47 98.2 93.5 95.6
+60 40.707102
+3 | LAKE VOLVI
+oo I (143Km/S3idegs) _|23.188914 | 98? no 58 O42
+1 10 100 1000 40513489
+4 |PEREA
+Distance (km) (16,7Km236degs) | 22.937471 | 982 94.8 94.4 93.1
+Re ' 3. | METHONI 40469402
+Fig. 2. Sample propagation curves of Recommendation ITU-P. 1546. U7Km2s2degs) {22574711 | 81 82.4 84.2 n9
+6 | KORINOS 40307130
+In our data, produced by the ITU-R P.1546 curves, we used (S2Km/232degs) _ | 22.618620| 83-5 80.4 82.8 708
+paths and elevation profiles from Google Earth to compute the | 7 | BORD.EVZONI soe aa 23 554 a8
+heights Heff (m) and Hb (m). Data for Heff, Ha, Hb, and Path (688K m/321degs) aT
+js j i POLIKASTRO .
+Type are shown in Table II. The time percentage is assumed to | 8 (69Kv320degs) | 22.588360| 7-9 TA 55.3 TT
+be 50%, and the receiver antenna altitude is 10m. 9 |SOUMELA 40.410086
+(oKm/2S6degs) | 22116606 | 77-9 79 7S 80.2
+Table II. Values of Heff, Ha, Hb, and Path Type. 19 | LOUTRAKI 40.966160
+Measurements | Path (aorkma9saegs) _|21928630) 73 m a ms
+No| Pointe (hm | PEGS | Hettemy | HaGm J HbEm | re ; ;
+The Hata-Davidson computed loss is not allowed to be less
+1 | PROFITI: S| 7 | 313 | 4440 | 940 | 392 | Land than the Free-Space loss. Errors between measurements (FSH-
+2 |THESSALONIKT | 45] 79 | a370 | ogo | 96.5 and 3) and simulations from the Longley-Rice ITM model (Radio
+Mobile), from the ITU-R P.1546-5 model and from the Hata-
+3 | LAKE VOLVI 143) 31 29.5 940 | 618.5 | ColdSea | Davidson model with average error, average absolute error,
+and standard deviation are shown in Table IV and Fig. 4.
+4 |PEREA 16.7 | 236 | 728 - - | Cold Sea
+5 | METHONI 47 | 252 | 737.0 - - | Cold Sea 40,0
+(dB)
+6 | KORINOS sz | 232 | 7125 - - | Cold Sea 35,0
+7 | BORDER EVZONI | 68.8 | 321 526.5 - - Land 30,0 ‘Radio Mobile
+mP-1546
+8 | POLIKASTRO 69 | 320 | 5260 - - Land 25,0
+mHATA-DAVIDSON
+9 | souMELA 86 | 256 | 740.0 - - 200
+10 | LOUTRAKI 107 | 293 703.5 - - 15,0
+10,0
+Measurements and simulations are shown in Table III. We 5,0
+have to mention that for our measurements the equipment . hk "| a
+used consists of a Rohde & Schwarz FSH-3, portable 0,0 r
+spectrum analyzer with tracking generator (100 kHz — 3 50 1 3 4 5 6 U 8 9 10
+GHz), factory calibrated with + 0.7dB accuracy, two high- ~
+precision calibrated biconical antennas by Schwarzbeck, -10,0
+SBA 9113 (SO0MHz - 3GHz) and BBVU 9135 (30MHz -
+-15,0
+
+1000MHz), a log-periodic precision calibrated Schwarzbeck
+antenna (0.25 — 6 GHz), all factory calibrated to within +
+1.0dB accuracy, low-loss cable Huber-Suhner GX-07272-D
+50 Ohm, 1.8m long, with N-type low-loss connectors.
+
+Fig. 4. Errors between measurements and simulations.
+
+
+===== Comparison_of_Longley_Rice_ITU_R_P_1546-4..txt =====
+IEEE BMSB 2014
+
+Table IV. Errors, mean error, mean absolute error, and standard deviation.
+
+DVB-T Error.
+Measurements Error a nr
+No. Points ey FSH.3 &
+(CH23 - 490MHz Pisae
+LAT : 40.597648
+LONG :23.0997993
+PROFITIS ELIAS
+1
+(7Km/313degs) 6.6 58 4a
+2 | THESSALONIKI as D ”
+(123K m/279degs) -
+3 | LAKE VOLVI
+(143K m/3degs) 12 24 40
+4 | PEREA 1 7
+(16,7K m/236degs) 3 3.8 5
+METHONI
+5
+(7K m/252deg8) 67 49 16.2
+6 | KORINOS
+(62K m/232degs) 31 07 13.0
+7 BORDER EVZONI
+(68,8Km/32Idegs) 82 87 9.7
+8 POLIKASTRO-
+(69K m/320degs) 05 16.6 8
+9 | SOUMELA . 1 -
+(86K m/256degs) 0 6. 23
+10 | LOUTRAKI
+(107K m/293degs) 26 34.3 09
+Mean Ld 85 27
+‘Mean absolute 3.6 85 58
+Standard Deviation 45 10.2 16
+
+As expected, the Longley-Rice (ITM) model, using accurate
+terrain elevation data, is the most accurate but also the most
+computationally intensive, [11-12]. The ITU-R 1546-5 model
+while it is very accurate for shorter distances below 50 km, it
+becomes increasingly inaccurate for longer distances, severely
+underestimating the received signal strength, [14-17]. Finally,
+the Hata-Davidson model using HAAT, while being quite
+simple to implement and based on analytical approximate
+equations, is accurate enough, and on average more accurate
+than the ITU-R 1546 model. It could also be greatly improved
+by using different approximations for land paths and sea paths
+as in the ITU model.
+
+II]. CONCLUSIONS
+
+The Longley-Rice (ITM) model using worldwide SRTM 3-
+arc-second data for terrain elevation gives satisfactory results
+in comparison to the measurements, but is more
+computationally intensive than simple empirical models. The
+propagation curves in Recommendation ITU-R P.1546 give
+significant errors, mainly at distances longer than 50 km and
+need corrections, and the Hata-Davidson model with HAAT,
+despite being a very simple model, gives in our case
+reasonable results, and at longer distances better than the ITU-
+R P.1546 model.
+
+ACKNOWLEDGMENT
+
+This work is sponsored by NATO's Public Diplomacy
+Division in the framework of "Science for Peace" through the
+S{P-984409 ORCA project.
+
+REFERENCES
+
+[1] Roger Coudé, Webpage of Radio Mobile, site for downloads and How to
+http://vww.cplus.org/rmw/englishl html, freeware by VE2DBE.
+
+[2] Salamanca L. Murillo-Fuentes J.J. Olmos P. “Review of the Radio
+Mobile Software as a teaching tool for Radio planning” IEEE
+Multidisciplinary Engineering Education Magazine, Vol. 6, No. 2, June
+2011
+
+[3] P.L. Rice, A.G. Longley, K.A. Norton, and A.P. Barsis, “Transmission
+loss predictions for tropospheric communications circuits”, Technical
+Note 101, revised 1/1/1967, U.S. Dept. of Commerce NTIA-ITS,
+
+[4] NASA, “Shuttle Radar Topography Mission data”. Available on line at
+hitp:/www2.jplnasa. gov/srtm/
+
+[5] “Method for point-to area prediction for terrestrial services in the
+frequency range 30 MHz to 300MHz,” Recommendation ITU-R P.1546-
+5, 2013. http://www.itu.int.
+
+[6] M. Hata, “Empirical Formula for Propagation Loss in Land Mobile
+Radio Services”, IEEE Transactions on Vehicular Technology, Vol. VT-
+29, No. 3, August 1980.
+
+(7) Z. Nadir, N. Elfadhil, F. Tounti, “Path loss Determination Using
+Okumura-Hata Model And Spline Interpolation For Missing Data For
+Oman”, Proceedings of the World Congress on Engineering, Vol. I
+WCE 2008, July 2-4, 2008, London, U.K.
+
+[8] _V. Armoogum, K.M.S., N. Mohamudally, T, Fogarty, “Propagation
+Models and their Applications in Digital Television Broadcast Network
+Design and Implementation.”, Book “Trends in Telecommunications
+Technologies”, ISBN 978-953-307-072-8, Mar. 2010.
+
+(9]N. Faruk, Y.A. Adediran, A.A. Ayeni, “Optimization of Davidson
+
+Model based on RF measurement conducted in UHE/VHF bands”, ICIT
+
+2013, The 6" International Conference on Information Technology, May
+
+8, 2013,
+
+Hata/Davidson "A Report on Technology Independent Methodology for
+
+the Modeling, Simulation and Empirical Verification of Wireless
+
+Communications System Performance in Noise and Interference Limited
+
+Systems Operating on Frequencies between 30 and 1500MHz", TIA
+
+TR8 Working Group, IEEE Vehicular Technology Society Propagation
+
+Committee, May 1997.
+
+{11] S. Kasampalis, P. Lazaridis, Z. Zaharis, S. Zettas, J. Cosmas,
+
+“Comparison of ITM and ITWOM propagation models for DVB-T
+
+coverage prediction”, IEEE BMSB 2013 conference, London, June
+
+2013.
+
+S. Kasampalis, P. Lazaridis, Z. Zaharis, S. Zettas, J. Cosmas,
+
+“Comparison of Longley-Rice, ITM and ITWOM propagation models
+
+for DTV and FM broadcasting”, WMPC 2013 conference, Atlantic city,
+
+New Jersey, USA, June 24-27, 2013.
+
+[13] FCC's terrain database calculator, http://transition.fee, gov/mb/audio!
+bickel/haat_calculator.html
+
+[14] CH. Lee, N.R. Jeon, S.C. Kim, J. Lim, “Comparison of Measurement
+and Prediction of ITU-R Recommendation P.1546”, The 4th IEEE VTS
+Asia Pacific Wireless Communications Symposium (APWCS2007),
+2007-2008, http://hal handle.net/1037 1/7748.
+
+[15] K.W. Suh, H. Jung, J. H. Lee, J.S. Jang, “The Calculation of Field
+
+Strength for DTV Receiver by Rec. ITU-R P.1546", Applied
+
+Electromagnetics (APACE), 2010 IEEE Asia-Pacific Conference on, 9-
+
+11 Nov. 2010, pp. 1-4.
+
+E. Ostlin, H. Suzuki, H.J.Zepernick, “Comparison and Evaluation of
+
+ITU-R Recommendation P.1546 Versions”. 2006 IEEE 63rd Vehicular
+
+Technology Conference, 2006, ISBN 1780393929, Vol. 1, pp. 2896 ~
+
+2900.
+
+E. Ostlin, H, Suzuki, H.J.Zepernick, “Evaluation of the Propagation
+
+Model Recommendation ITU-R P.1546 for Mobile Services in Rural
+
+Australia", IEEE Transactions on Vehicular Technology, vol. 57, no. 1,
+
+Jan, 2008.
+
+(10:
+
+12
+
+(16
+
+U7
+
