@@ -1,0 +1,69 @@
+ Research Project
+Research Project
+Criteria 	Ratings 	Pts
+This criterion is linked to a learning outcome Abstract / Conclusion
+The Abstract
+Provide an interesting motivation for the reader to read the rest of the report !
+Include a quick background/ motivation
+Include a summary of the main contributions of your assignment
+Include the main take-away results
+Conclusion
+Summary of the paper
+Take away message
+Future work that can be done on this topic
+	
+2 Pts Excellent
+1.5 Pts Good
+1 Pts Acceptable
+0 Pts Not satisfactory
+	
+2 pts
+This criterion is linked to a learning outcome Literature review
+Literature review on the general subject
+Literature review on your particular topic
+(if applicable) Comparison between the literature qualitatively and/ or quantitatively
+Include comparison tables when applicable
+Avoid using too generic literate that is not related to the topic
+	
+7 Pts Excellent
+5 Pts Good
+3.5 Pts Acceptable
+0 Pts Not satisfactory
+	
+7 pts
+This criterion is linked to a learning outcome Results and Discussions
+Observations, results or discussions should be both accurate and may show innovation. Observations should thorough and may recognize possible errors in simulation. Work should be neat and organized. Includes appropriate symbols, labels, units and significant digits, where appropriate.
+Graphs / plots should be neat. Labels are added to the x-axis y-axis. properly annotated with legends, units, clear x and y axis ticks, etc..
+	
+8 Pts Excellent
+6 Pts Good
+4 Pts Acceptable
+0 Pts Not satisfactory
+	
+8 pts
+This criterion is linked to a learning outcome System Model
+The assumptions should be sound and referenced
+The utilized models should be well explained and references including (examples – when applicable: Channel models, fading, packet error rate, error models, etc.. )
+Sufficient diagram(s) for your system – should be neatly drawn using professional tools such as Visio, Power point, etc..
+Equations and derivation are well explained and free of errors
+Analytic results are well derived and explained when applicable
+Graphs / plots are neat. Labels are added to the x-axis y-axis.
+	
+8 Pts Excellent
+6 Pts Good
+4 Pts Acceptable
+0 Pts Not satisfactory
+	
+8 pts
+This criterion is linked to a learning outcome Simulation code
+The code should have novel aspects,
+Should be well annotated and clearly organized
+The code need to be well explained in the system model
+	
+5 Pts Excellent
+3.5 Pts Good
+2.5 Pts Acceptable
+0 Pts Not satisfactory
+	
+5 pts
+Total points: 30

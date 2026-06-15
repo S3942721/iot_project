@@ -1,0 +1,213 @@
+® RMIT
+
+UNIVERSITY
+
+EEET2370/EEET2371
+Assessment Task 3: Project Assignment (30%)
+
+Project Assignment Instructions
+
+e Start working on this assignment as soon as possible !
+Check canvas for the due date of this assignment (Research Project)
+This written assignment (Research Project) worth 30% of the total mark
+This assignment is individual
+This assignment gives a large room for the student to be innovative and to propose their
+own ideas
+e Marks will be awarded as follows (details is in the rubric on Canvas)
+o Depth of literature review
+Figures, plots and illustrations (drawn by the student)
+Clarity of writing and equations
+Novelty and innovation
+Sound assumptions and parameters
+Simulation code
+Proper references
+¢ The assignment should be written in LaTeX format using IEEE Conference Template. It is
+suggested to use the online Overleaf editor on: https://www.overleaf.com/project. Feel free
+to use any other LaTeX editor (online or offline).
+e Use IEEE citation style
+e It is expected to have a document of 4-6 pages long - double column format (3000-4500
+words) — excluding the code which should be submitted separately
+e The student is expected to develop a code to simulate/analyze the selected concept, the code
+needs to be neatly written with clear annotation (comments). Also, it needs to be
+consistent with the assignment text and well explained.
+o The code needs to be (written in ASCII format) with sufficient annotation to allow
+the examiner to understand the code.
+o Coding/scripting language needs to be either in Matlab (or Simulink), Python, or
+C/C++
+o It is indeed allowed to use libraries and functions (both built-in and external),
+however it should be clearly identified in the code which part was developed by the
+student and which part was taken from other sources.
+o The code contribution of the student should be significant and not just adjusting
+available online codes
+e State your assumptions inside the assignment document! Marks are awarded to sound
+assumptions
+¢ Important note about plagiarism:
+o You should write the assignment yourself. Under no circumstances any 1
+
+oo0o0o000
+
+part of this assignment can be written by anyone else (unless otherwise
+some quoted text is clearly stated and referenced)
+
+o Plagiarism will not be tolerated and heavy loss of marks (or zero mark) will be
+incurred with possible wider academic penalties.
+
+o. The rules apply similarly to the developed codes
+
+EEET2370/EEET2371 Research Project. Dr A. Al-Hourani, RMIT University Page 1 of 5
+® RMIT
+
+UNIVERSITY
+
+Report structure
+Following is the recommended report structure,
+
+e Abstract (min 150 words)
+o. Provide an interesting motivation for the reader to read the rest of the report !
+o Include a quick background/ motivation
+o Include a summary of the main contributions of your assignment
+co. Include the main take-away results
+e Introduction and Background (min 400 words)
+o Background on your topic
+o Motivation for studying your topic
+o Main contribution of your work (dot points) and how it is different from the
+literature (novelty)
+e Literature review (min 1000 words)
+o. Literature review on the general subject
+o Literature review on your particular topic
+o. (if applicable) Comparison between the literature qualitatively and/ or quantitatively
+o Include comparison tables when applicable
+e System model*
+o. Feel free to call this section something else (for example network model, simulator
+model, ... ) or to split this section into multiple sections / subsections
+o Also feel free to take some of these points to the next section when needed
+o Main assumptions for your work
+o Utilized models (examples — when applicable: Channel models, fading, packet error
+rate, error models, etc.. )
+o Include explanation / justification on why did you pick up this model / modelling
+approach
+A diagram for your system (or diagrams) — neatly drawn using professional tools
+such as Visio, Power point, etc..
+Equations and derivation
+Analytic results when applicable
+Add graphs, plots
+o Explain your code / algorithms
+e Results and performance*
+o. Feel free to call this section something else or to split it into multiple sections /
+subsections
+o Simulation numerical inputs and parameters (why did you pick up these parameters,
+add references)
+o Figures graphs of your results, properly annotated with legends, units, clear x and y
+axis ticks, etc..
+o (bonus) to compare your results with existing literature
+¢ Conclusion (min 150 words)
+o Summary of the paper
+o Take away message
+o Future work that can be done on this topic
+
+fe}
+
+oo°o
+
+*System Model and Results sections both minimum 1300 words
+
+EEET2370/EEET2371 Research Project. Dr A. Al-Hourani, RMIT University Page 2 of 5
+® RMIT
+
+UNIVERSITY
+
+Topics
+Below are the topics that will be allocated to students,
+
+Topic 1 Radio coverage designs for LPWAN access network (undergraduates)
+
+The objective is to design radio coverage (downlink) for a NB-IoT access network to cover
+Melbourne metropolitan area. The project will use existing cellular tower locations as provided on
+Canvas (“TowersLocations.csv”, assume the tower height as 30 m). The main outcomes of the
+project are:
+
+Hints:
+
+The project will provide literature review for (but not limited to):
+o Brief overview of NB-IoT standard
+o NB-IoT coverage and performance
+o NB-IoT limitations
+o State-of-the-art coverage design approaches for NB-IoT (or in Cellular coverage in
+general)
+Map(s) showing the locations of the import sites locations
+Graph(s) for the Block error rate (BLER) vs. SNR (for two repetition rates | and 32)
+Graph (s) for the radio coverage of NB-IoT (in terms of the received signal strength — dBm)
+Graph (s) for the radio coverage of NB-IoT (in terms of the signal to noise ratio)
+Two plots for coverage contour for two different repetition rates 1 and 32. Take 5% BLER
+as the threshold
+Additional figures and results as needed
+
+In order to get more realistic coverage, assume an average background interference power =
+-85 dBm and use this as
+equivalent to noise, i.e.
+Effective noise power =
+N_thermal + average
+interference power. Make
+sure to have __ this
+summation in linear 37°44'S
+You could make use of
+Matlab NB-IoT package to It X i
+extract the block error rate . Sa fey ere 2 Ran
+(BLER) vs. SNR and utilize 37°46'S eo! : -
+
+37°42'S
+
+Latitude
+
+this for mapping the SNR : a wa
+
+into coverage. See this ‘ a ‘
+
+tutorial. :
+
+You could make use of  37°48S fae.
+
+Matlab “RF Propagation” 77a ET ae
+. 144°55'E 145°E 145°05'E
+
+toolbox. See this example. Longitude
+
+You could make use of
+
+geoplot function in Matlab to Figure 1 Tower locations on Canvas, file name:
+
+show the location of the towers "TowersLocations.csv"
+
+See 3GPP recommendations for
+
+NB-IoT design parameters (noise floor
+
+Use transmit power of 40 watts with 3 directional antennas (120° spaced) at each site (each
+having gain of 12 dBi) — You could use the antenna pattern uploaded in Canvas
+‘Directional 12dBi.mat’, or create your own antenna pattern.
+
+Use frequency 900 MHz for the simulation
+
+EEET2370/EEET2371 Research Project. Dr A. Al-Hourani, RMIT University Page 3 of 5
+® RMIT
+
+UNIVERSITY
+
+Use Longley-Rice model as your radio propagation model
+
+Recommended reading on a similar practical project in Victoria conducted by RMIT University
+team and 5 Victorian councils.
+
+If something is not stated in the question use your own assumptions and explain the reason for
+such selection.
+
+EEET2370/EEET2371 Research Project. Dr A. Al-Hourani, RMIT University Page 4 of 5
+
+® RMIT
+
+UNIVERSITY
+
+## IMPORTANT ##
+If something is not stated in the question use your own assumptions and explain the reason for such selection
+
+EEET2370/EEET2371 Research Project. Dr A. Al-Hourani, RMIT University Page 5 of 5
