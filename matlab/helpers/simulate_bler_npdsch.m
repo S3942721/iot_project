@@ -19,7 +19,7 @@ function blerOut = simulate_bler_npdsch(requiredRepetitions, cacheFile, requeste
 %     .curves     nRep x nSNR BLER matrix
 
 if nargin < 2 || isempty(cacheFile),       cacheFile = "";          end
-if nargin < 3 || isempty(requestedSNRdB),  requestedSNRdB = [-25,-22,-20,-18,-16,-14,-12,-10,-8,-6,-4,-2,0]; end
+if nargin < 3 || isempty(requestedSNRdB),  requestedSNRdB = [-25,-22,-20,-18,-16,-14,-12,-10,-8,-6,-4,-2,0,1,2,3,4,5,6,8,10]; end
 if nargin < 4 || isempty(numTrBlks),       numTrBlks = 100;         end
 requestedSNRdB = unique(requestedSNRdB(:).', "stable");
 

@@ -32,7 +32,7 @@ cfg.noise.interferenceDbm = -85;
 cfg.bler.targetThreshold = 0.05;
 cfg.bler.requiredRepetitions = [1, 32];
 cfg.bler.strictContourCrossing = false;
-cfg.bler.snrSweepDb = [-25, -22, -20, -18, -16, -14, -12, -10, -8, -6, -4, -2, 0];
+cfg.bler.snrSweepDb = [-25, -22, -20, -18, -16, -14, -12, -10, -8, -6, -4, -2, 0, 1, 2, 3, 4, 5, 6, 8, 10];
 
 cfg.sensitivity.interferenceOffsetDb = [-5, 0, 5];
 
