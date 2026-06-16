@@ -22,6 +22,7 @@ cfg.radio.sectorAzimuthDeg = [0, 120, 240];
 
 cfg.grid.spacingM = 100;
 cfg.grid.marginM = 2000;
+cfg.grid.marginCandidatesM = [2000];
 
 cfg.noise.temperatureK = 290;
 cfg.noise.bandwidthHz = 180e3;
@@ -30,6 +31,8 @@ cfg.noise.interferenceDbm = -85;
 
 cfg.bler.targetThreshold = 0.05;
 cfg.bler.requiredRepetitions = [1, 32];
+cfg.bler.strictContourCrossing = false;
+cfg.bler.snrSweepDb = [-25, -22, -20, -18, -16, -14, -12, -10, -8, -6, -4, -2, 0];
 
 cfg.sensitivity.interferenceOffsetDb = [-5, 0, 5];
 

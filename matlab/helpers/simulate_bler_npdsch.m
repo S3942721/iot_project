@@ -1,63 +1,52 @@
-function blerOut = simulate_bler_npdsch(requiredRepetitions, cacheFile)
-%SIMULATE_BLER_NPDSCH Run MathWorks NPDSCH BLER example and extract curves.
+function blerOut = simulate_bler_npdsch(requiredRepetitions, cacheFile, requestedSNRdB, numTrBlks)
+%SIMULATE_BLER_NPDSCH  Self-contained NB-IoT NPDSCH BLER simulation.
+%
+%   Uses MATLAB LTE Toolbox physical-layer functions directly.
+%   Does NOT depend on any MathWorks example scripts.
+%   Reference: 3GPP TS 36.211 / 36.213 Release 13.
+%
+%   Inputs
+%     requiredRepetitions  1-D array of NRep values (e.g. [1 32])
+%     cacheFile            Path to .mat cache file.  Re-used when the SNR
+%                          vector matches and numTrBlks is not greater.
+%     requestedSNRdB       Row vector of SNR points (dB).
+%     numTrBlks            Transport blocks per SNR point.  Default 100.
+%                          BLER resolution = 1/numTrBlks.
+%
+%   Output  blerOut struct with fields:
+%     .SNRdB      SNR vector used (dB)
+%     .repValues  NRep values that were simulated
+%     .curves     nRep x nSNR BLER matrix
 
-if nargin < 2
-    cacheFile = "";
-end
+if nargin < 2 || isempty(cacheFile),       cacheFile = "";          end
+if nargin < 3 || isempty(requestedSNRdB),  requestedSNRdB = [-25,-22,-20,-18,-16,-14,-12,-10,-8,-6,-4,-2,0]; end
+if nargin < 4 || isempty(numTrBlks),       numTrBlks = 100;         end
+requestedSNRdB = unique(requestedSNRdB(:).', "stable");
 
-if exist("NPDSCHBlockErrorRateExample", "file") == 2
-    runResult = evalc("NPDSCHBlockErrorRateExample;"); %#ok<NASGU>
-elseif strlength(cacheFile) > 0 && exist(cacheFile, "file") == 2
+useCache = false;
+if strlength(cacheFile) > 0 && exist(cacheFile, "file") == 2
     loaded = load(cacheFile);
-    if ~isfield(loaded, "blerCache")
-        error("BLER cache file exists but does not contain 'blerCache' struct.");
-    end
-    SNRdB = loaded.blerCache.SNRdB;
-    repValues = loaded.blerCache.repValues;
-    curves = loaded.blerCache.curves;
-elseif ~isempty(cacheFile)
-    localExampleDir = fullfile(fileparts(cacheFile), ".example_cache");
-    localExamplePath = ensure_local_npdsch_example(localExampleDir);
-    runResult = evalc(sprintf("run('%s');", localExamplePath)); %#ok<NASGU>
-else
-    error(['NPDSCHBlockErrorRateExample is unavailable and no BLER cache was found. ' ...
-        'Install LTE Toolbox support and ensure openExample is available.']);
-end
-
-if exist("SNRdB", "var") ~= 1 || exist("repValues", "var") ~= 1 || exist("curves", "var") ~= 1
-    snrCandidates = {"SNRdB", "snr", "snrDb", "snrVec"};
-    repCandidates = {"ireps", "reps", "NRep", "nRep"};
-    blerCandidates = {"BLER", "bler", "blerResults", "simBLER", "blerOut", "blerVec"};
-
-    SNRdB = pull_vector_from_workspace(snrCandidates);
-    repRaw = pull_vector_from_workspace(repCandidates);
-    blerMatrix = pull_matrix_from_workspace(blerCandidates);
-
-    if isempty(SNRdB) || isempty(repRaw) || isempty(blerMatrix)
-        error(['Could not extract SNR/BLER outputs from NPDSCHBlockErrorRateExample. ' ...
-            'Check the downloaded script output variable names in your MATLAB release.']);
-    end
-
-    SNRdB = SNRdB(:).';
-    repRaw = repRaw(:).';
-
-    if max(repRaw) <= 15
-        repValues = 2 .^ repRaw;
-    else
-        repValues = repRaw;
-    end
-
-    try
-        [curves, repValues] = orient_curves(blerMatrix, SNRdB, repValues);
-    catch
-        [curves, repValues] = extract_bler_curves_from_figures(SNRdB, repValues);
+    if isfield(loaded, "blerCache")
+        bc = loaded.blerCache;
+        if isfield(bc,"SNRdB") && isfield(bc,"repValues") && ...
+           isfield(bc,"curves") && isfield(bc,"numTrBlks")
+            if vectors_equal(bc.SNRdB(:).', requestedSNRdB) && ...
+               bc.numTrBlks >= numTrBlks
+                SNRdB = bc.SNRdB; repValues = bc.repValues;
+                curves = bc.curves; useCache = true;
+            end
+        end
     end
 end
 
-if ~isempty(cacheFile)
-    blerCache.SNRdB = SNRdB; %#ok<STRNU>
-    blerCache.repValues = repValues;
-    blerCache.curves = curves;
+if ~useCache
+    [SNRdB, repValues, curves] = ...
+        run_npdsch_bler_awgn(requestedSNRdB, numTrBlks, requiredRepetitions);
+end
+
+if strlength(cacheFile) > 0
+    blerCache.SNRdB = SNRdB; blerCache.repValues = repValues; %#ok<STRNU>
+    blerCache.curves = curves; blerCache.numTrBlks = numTrBlks;
     save(cacheFile, "blerCache");
 end
 
@@ -65,151 +54,152 @@ repIdx = zeros(size(requiredRepetitions));
 for i = 1:numel(requiredRepetitions)
     idx = find(repValues == requiredRepetitions(i), 1);
     if isempty(idx)
-        error("Repetition %d was not found in NPDSCH example output.", requiredRepetitions(i));
+        error("NRep=%d not found in simulated output.", requiredRepetitions(i));
     end
     repIdx(i) = idx;
 end
-
-blerOut.SNRdB = SNRdB;
-blerOut.repValues = repValues(repIdx);
-blerOut.curves = curves(repIdx, :);
+blerOut.SNRdB = SNRdB; blerOut.repValues = repValues(repIdx);
+blerOut.curves = curves(repIdx,:);
 end
 
-function scriptPath = ensure_local_npdsch_example(exampleDir)
-if ~exist(exampleDir, "dir")
-    mkdir(exampleDir);
-end
+% =========================================================================
+function [SNRdB, repValues, curves] = run_npdsch_bler_awgn(snrPoints, numBlocks, nrepValues)
+%RUN_NPDSCH_BLER_AWGN  Core NPDSCH BLER simulation (AWGN channel).
+%
+%   Physical-layer chain (3GPP TS 36.211/36.213 Release 13):
+%     lteNDLSCH        - CRC + convolutional encoding + rate matching
+%     lteNPDSCH        - QPSK modulation with bundled repetitions
+%     lteNPDSCHDecode  - coherent soft-bit combining across NRep subframes
+%                        via stateful decoder (dstate)
+%     lteNDLSCHDecode  - Viterbi decoding + CRC verification
+%
+%   Channel model: AWGN in frequency domain (H=1, perfect CSI).
+%   Appropriate for the SNR-to-coverage mapping used in this project.
+%
+%   NPSS (subframe 5) and NSSS subframes are detected by lteNPSS/lteNSSS
+%   and skipped per 3GPP TS 36.211.
+%
+%   Parameters (3GPP TS 36.213 Tables 16.4.1.3-1 and 16.4.1.5.1-1):
+%     IMCS=4, ISF=0 -> QPSK, TBS=56 bits, NSF=1 subframe per rep unit
+%
+%   NRep->IRep lookup (3GPP TS 36.213 Table 16.4.1.3-2):
+%     NRep:   1   2   4   8  16  32  64  128  256  512  1024
+%     IRep:   0   1   2   3   4   5   6    7    8    9    10
 
-scriptPath = fullfile(exampleDir, "NPDSCHBlockErrorRateExample.m");
-if exist(scriptPath, "file") == 2
-    return;
-end
+% --- NB-IoT eNB configuration (in-band, different PCI) ------------------
+enb_base.NFrame            = 0;
+enb_base.NSubframe         = 0;
+enb_base.NNCellID          = 0;
+enb_base.NBRefP            = 2;           % 2 NRS ports -> SFBC transmit diversity
+enb_base.OperationMode     = 'Inband-DifferentPCI';
+enb_base.CellRefP          = 4;
+enb_base.NCellID           = 1;
+enb_base.ControlRegionSize = 3;
 
-evalc(sprintf("openExample('lte/NPDSCHBlockErrorRateExample', workDir='%s');", exampleDir));
+% --- NPDSCH base configuration ------------------------------------------
+npdsch_base.NPDSCHDataType = 'NotBCCH';
+npdsch_base.Modulation     = 'QPSK';
+npdsch_base.RNTI           = 1;
+npdsch_base.NSF            = 1;           % NSF=1 per ISF=0
 
-if exist(scriptPath, "file") ~= 2
-    files = dir(fullfile(exampleDir, "**", "NPDSCHBlockErrorRateExample.m"));
-    if ~isempty(files)
-        scriptPath = fullfile(files(1).folder, files(1).name);
-    else
-        error(["Could not download NPDSCHBlockErrorRateExample.m via openExample. " ...
-            "Verify LTE Toolbox installation and network access for examples."]);
-    end
-end
-end
+% Physical layer constants for this configuration
+trblklen = 56;    % TBS: IMCS=4, NSF=1 (3GPP TS 36.213 Table 16.4.1.5.1-1)
+rmoutlen = 200;   % Coded block size: Gd=100 QPSK symbols -> G=200 bits
 
-function [curves, repValues] = orient_curves(blerMatrix, SNRdB, repValues)
-[nRows, nCols] = size(blerMatrix);
-if nCols == numel(SNRdB)
-    curves = blerMatrix;
-elseif nRows == numel(SNRdB)
-    curves = blerMatrix.';
-else
-    error("BLER matrix dimensions are incompatible with extracted SNR vector.");
-end
+% Perfect channel estimate (AWGN, H=1): shape [nSC, nSym, NBRefP, NRxAnts]
+% SFBC with NBRefP=2 requires NRxAnts >= 2
+nRx  = enb_base.NBRefP;
+estH = ones(12, 14, enb_base.NBRefP, nRx);
 
-if numel(repValues) ~= size(curves, 1)
-    error("Number of repetition entries does not match BLER matrix rows.");
-end
-end
+nSnr   = numel(snrPoints);
+nReps  = numel(nrepValues);
+curves = zeros(nReps, nSnr);
+repValues = nrepValues(:).';
 
-function vec = pull_vector_from_workspace(names)
-vec = [];
-for i = 1:numel(names)
-    if evalin("caller", sprintf("exist('%s','var')", names{i}))
-        value = evalin("caller", names{i});
-        if isnumeric(value) && isvector(value)
-            vec = value;
-            return;
-        end
-    end
-end
-end
+for rIdx = 1:nReps
+    nRep        = nrepValues(rIdx);
+    npdsch      = npdsch_base;
+    npdsch.NRep = nRep;
 
-function mat = pull_matrix_from_workspace(names)
-mat = [];
-for i = 1:numel(names)
-    if evalin("caller", sprintf("exist('%s','var')", names{i}))
-        value = evalin("caller", names{i});
-        if isnumeric(value) && ndims(value) == 2 && ~isscalar(value)
-            mat = value;
-            return;
-        end
-    end
-end
+    fprintf("  NRep=%-4d: TBS=%d bits, simulating %d SNR points x %d blocks...\n", ...
+        nRep, trblklen, nSnr, numBlocks);
 
-vars = evalin("caller", "whos");
-for i = 1:numel(vars)
-    if strcmp(vars(i).class, "double") && numel(vars(i).size) == 2 && all(vars(i).size > 1)
-        candidate = evalin("caller", vars(i).name);
-        if all(candidate(:) >= 0) && all(candidate(:) <= 1)
-            mat = candidate;
-            return;
-        end
-    end
-end
+    for snrIdx = 1:nSnr
+        noiseVar  = 1 / 10^(snrPoints(snrIdx) / 10);
+        numErrors = 0;
 
-end
+        for blkIdx = 1:numBlocks
+            rng(blkIdx + snrIdx * 10000 + rIdx * 1000000, "combRecursive");
 
-function [curves, repValues] = extract_bler_curves_from_figures(SNRdB, repValuesHint)
-curves = [];
-repValues = [];
+            txTrBlk = randi([0, 1], trblklen, 1);
+            txCW    = lteNDLSCH(rmoutlen, txTrBlk);
 
-figs = findall(groot, "Type", "figure");
-for f = 1:numel(figs)
-    ax = findall(figs(f), "Type", "axes");
-    for a = 1:numel(ax)
-        yl = get(get(ax(a), "YLabel"), "String");
-        if iscell(yl)
-            yl = strjoin(string(yl), " ");
-        end
-        if ~contains(string(yl), "BLER", "IgnoreCase", true)
-            continue;
-        end
+            estate = [];   % NPDSCH encoder state
+            dstate = [];   % NPDSCH decoder state (accumulates LLRs across reps)
+            rxcw   = [];   % Final combined soft bits from lteNPDSCHDecode
+            sfIdx  = 0;
+            dstate.EndOfTx = 0;   % Initialise so while guard is valid first pass
 
-        lineObjs = flipud(findall(ax(a), "Type", "line"));
-        tmpCurves = [];
-        for l = 1:numel(lineObjs)
-            y = get(lineObjs(l), "YData");
-            x = get(lineObjs(l), "XData");
-            if isnumeric(y) && isnumeric(x) && numel(y) == numel(SNRdB) && numel(x) == numel(SNRdB)
-                tmpCurves(end + 1, :) = y(:).'; %#ok<AGROW>
-            end
-        end
+            % --- Subframe loop until bundle complete ----------------------
+            while ~dstate.EndOfTx
+                enb           = enb_base;
+                enb.NSubframe = mod(sfIdx, 10);
+                enb.NFrame    = floor(sfIdx / 10);
 
-        if ~isempty(tmpCurves)
-            curves = tmpCurves;
+                % Skip NPSS and NSSS subframes (per 3GPP TS 36.211)
+                if isempty(lteNPSS(enb)) && isempty(lteNSSS(enb))
+                    % Allocate resource grid for this subframe
+                    subgrid   = lteNBResourceGrid(enb);
+                    npdschIdx = lteNPDSCHIndices(enb, npdsch);
 
-            lg = legend(ax(a));
-            if ~isempty(lg) && isprop(lg, "String")
-                repValues = parse_rep_values_from_legend(lg.String);
-            end
-            if isempty(repValues)
-                if nargin >= 2 && ~isempty(repValuesHint) && numel(repValuesHint) == size(curves, 1)
-                    repValues = repValuesHint;
-                else
-                    repValues = 1:size(curves, 1);
+                    % NPDSCH encoding for this subframe (stateful across reps)
+                    [txSym, estate] = lteNPDSCH(enb, npdsch, txCW, estate);
+                    subgrid(npdschIdx) = txSym;
+
+                    % NRS pilots required for correct scrambling reference
+                    subgrid(lteNRSIndices(enb)) = lteNRS(enb);
+
+                    % AWGN in frequency domain (H=1, no fading)
+                    rxgrid = subgrid + sqrt(noiseVar / 2) * ...
+                             (randn(size(subgrid)) + 1j * randn(size(subgrid)));
+
+                    % Extract NPDSCH REs; use perfect H=1 channel estimate
+                    [rxSym, hest] = lteExtractResources(npdschIdx, rxgrid, estH);
+
+                    % Soft demapping + coherent LLR combining (via dstate)
+                    % rxcw is non-empty only after all NRep subframes (EndOfTx)
+                    [rxcw, dstate] = lteNPDSCHDecode( ...
+                        enb, npdsch, rxSym, hest, noiseVar, dstate);
+                end
+
+                sfIdx = sfIdx + 1;
+                if sfIdx > (nRep + 20) * 3
+                    break;   % Safety guard: should not normally trigger
                 end
             end
-            return;
-        end
-    end
+
+            if ~isempty(rxcw)
+                % Viterbi decode + CRC check
+                [~, blkCRCErr] = lteNDLSCHDecode(trblklen, rxcw);
+                if blkCRCErr
+                    numErrors = numErrors + 1;
+                end
+            else
+                numErrors = numErrors + 1;   % Safety guard triggered = block error
+            end
+        end   % blkIdx
+
+        curves(rIdx, snrIdx) = numErrors / numBlocks;
+        fprintf("    SNR=%+6.1f dB  BLER=%.4f  (%3d/%d)\n", ...
+            snrPoints(snrIdx), curves(rIdx, snrIdx), numErrors, numBlocks);
+    end   % snrIdx
+end   % rIdx
+
+SNRdB = snrPoints;
 end
 
-error("Could not extract BLER curves from NPDSCH example outputs.");
-end
-
-function repValues = parse_rep_values_from_legend(legendStrings)
-repValues = [];
-if ischar(legendStrings)
-    legendStrings = {legendStrings};
-end
-
-for i = 1:numel(legendStrings)
-    txt = string(legendStrings{i});
-    token = regexp(txt, "NRep\s*=\s*(\d+)", "tokens", "once");
-    if ~isempty(token)
-        repValues(end + 1) = str2double(token{1}); %#ok<AGROW>
-    end
-end
+% =========================================================================
+function tf = vectors_equal(a, b)
+a = a(:).';  b = b(:).';
+tf = numel(a) == numel(b) && all(abs(a - b) < 1e-10);
 end

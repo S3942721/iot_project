@@ -27,9 +27,15 @@
 % scalar. The simulation is performed over different repetition values to
 % compare the performance improvement with repetitions.
 
-numTrBlks = 4;        % Number of simulated transport blocks 
-SNRdB = -32:4:0;      % SNR range in dB
-ireps = [0 5 9];      % Range of reps simulated
+if ~exist('numTrBlks','var')
+    numTrBlks = 100;      % Number of simulated transport blocks (100 = 1% BLER resolution)
+end
+if ~exist('SNRdB','var')
+    SNRdB = -32:4:0;      % SNR range in dB
+end
+if ~exist('ireps','var')
+    ireps = [0 5 9];      % Range of reps simulated
+end
 
 %% Setup Higher Layer Parameters 
 % Setup the following higher layer parameters which are used to configure
