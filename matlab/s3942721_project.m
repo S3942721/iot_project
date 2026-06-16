@@ -352,7 +352,7 @@ expectedOutputs = [ ...
 missing = strings(0, 1);
 for i = 1:numel(expectedOutputs)
 	if exist(expectedOutputs(i), "file") ~= 2
-		missing(end + 1, 1) = expectedOutputs(i); %#ok<SAGROW>
+		missing(end + 1, 1) = expectedOutputs(i);
 	end
 end
 
