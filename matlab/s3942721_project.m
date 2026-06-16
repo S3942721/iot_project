@@ -5,7 +5,7 @@
 clear;
 clc;
 
-addpath(fullfile(fileparts(mfilename("fullpath")), "helpers"));
+addpath(fullfile(pwd, "helpers"));
 
 cfg = project_config();
 if ~exist(cfg.paths.figureDir, "dir")
