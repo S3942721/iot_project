@@ -111,91 +111,116 @@ rmoutlen = 200;   % Coded block size: Gd=100 QPSK symbols -> G=200 bits
 nRx  = enb_base.NBRefP;
 estH = ones(12, 14, enb_base.NBRefP, nRx);
 
-nSnr   = numel(snrPoints);
-nReps  = numel(nrepValues);
-curves = zeros(nReps, nSnr);
+nSnr      = numel(snrPoints);
+nReps     = numel(nrepValues);
 repValues = nrepValues(:).';
 
+try
+    useParallel = license("test", "Distrib_Computing_Toolbox") && ~isempty(ver("parallel"));
+catch
+    useParallel = false;
+end
+
+taskCount = nReps * nSnr;
+blerFlat = zeros(1, taskCount);
+
+if useParallel
+    parfor taskIdx = 1:taskCount
+        [rIdx, snrIdx] = ind2sub([nReps, nSnr], taskIdx);
+        blerFlat(taskIdx) = simulate_bler_point( ...
+            enb_base, npdsch_base, estH, trblklen, rmoutlen, ...
+            snrPoints(snrIdx), numBlocks, nrepValues(rIdx), rIdx, snrIdx);
+    end
+else
+    for taskIdx = 1:taskCount
+        [rIdx, snrIdx] = ind2sub([nReps, nSnr], taskIdx);
+        blerFlat(taskIdx) = simulate_bler_point( ...
+            enb_base, npdsch_base, estH, trblklen, rmoutlen, ...
+            snrPoints(snrIdx), numBlocks, nrepValues(rIdx), rIdx, snrIdx);
+    end
+end
+
+curves = reshape(blerFlat, [nReps, nSnr]);
+
 for rIdx = 1:nReps
-    nRep        = nrepValues(rIdx);
-    npdsch      = npdsch_base;
-    npdsch.NRep = nRep;
-
-    fprintf("  NRep=%-4d: TBS=%d bits, simulating %d SNR points x %d blocks...\n", ...
-        nRep, trblklen, nSnr, numBlocks);
-
-    for snrIdx = 1:nSnr
-        noiseVar  = 1 / 10^(snrPoints(snrIdx) / 10);
-        numErrors = 0;
-
-        for blkIdx = 1:numBlocks
-            rng(blkIdx + snrIdx * 10000 + rIdx * 1000000, "combRecursive");
-
-            txTrBlk = randi([0, 1], trblklen, 1);
-            txCW    = lteNDLSCH(rmoutlen, txTrBlk);
-
-            estate = [];   % NPDSCH encoder state
-            dstate = [];   % NPDSCH decoder state (accumulates LLRs across reps)
-            rxcw   = [];   % Final combined soft bits from lteNPDSCHDecode
-            sfIdx  = 0;
-            dstate.EndOfTx = 0;   % Initialise so while guard is valid first pass
-
-            % --- Subframe loop until bundle complete ----------------------
-            while ~dstate.EndOfTx
-                enb           = enb_base;
-                enb.NSubframe = mod(sfIdx, 10);
-                enb.NFrame    = floor(sfIdx / 10);
-
-                % Skip NPSS and NSSS subframes (per 3GPP TS 36.211)
-                if isempty(lteNPSS(enb)) && isempty(lteNSSS(enb))
-                    % Allocate resource grid for this subframe
-                    subgrid   = lteNBResourceGrid(enb);
-                    npdschIdx = lteNPDSCHIndices(enb, npdsch);
-
-                    % NPDSCH encoding for this subframe (stateful across reps)
-                    [txSym, estate] = lteNPDSCH(enb, npdsch, txCW, estate);
-                    subgrid(npdschIdx) = txSym;
-
-                    % NRS pilots required for correct scrambling reference
-                    subgrid(lteNRSIndices(enb)) = lteNRS(enb);
-
-                    % AWGN in frequency domain (H=1, no fading)
-                    rxgrid = subgrid + sqrt(noiseVar / 2) * ...
-                             (randn(size(subgrid)) + 1j * randn(size(subgrid)));
-
-                    % Extract NPDSCH REs; use perfect H=1 channel estimate
-                    [rxSym, hest] = lteExtractResources(npdschIdx, rxgrid, estH);
-
-                    % Soft demapping + coherent LLR combining (via dstate)
-                    % rxcw is non-empty only after all NRep subframes (EndOfTx)
-                    [rxcw, dstate] = lteNPDSCHDecode( ...
-                        enb, npdsch, rxSym, hest, noiseVar, dstate);
-                end
-
-                sfIdx = sfIdx + 1;
-                if sfIdx > (nRep + 20) * 3
-                    break;   % Safety guard: should not normally trigger
-                end
-            end
-
-            if ~isempty(rxcw)
-                % Viterbi decode + CRC check
-                [~, blkCRCErr] = lteNDLSCHDecode(trblklen, rxcw);
-                if blkCRCErr
-                    numErrors = numErrors + 1;
-                end
-            else
-                numErrors = numErrors + 1;   % Safety guard triggered = block error
-            end
-        end   % blkIdx
-
-        curves(rIdx, snrIdx) = numErrors / numBlocks;
-        fprintf("    SNR=%+6.1f dB  BLER=%.4f  (%3d/%d)\n", ...
-            snrPoints(snrIdx), curves(rIdx, snrIdx), numErrors, numBlocks);
-    end   % snrIdx
-end   % rIdx
+    fprintf("  NRep=%-4d done: BLER range [%.4f, %.4f]\n", ...
+        repValues(rIdx), min(curves(rIdx, :)), max(curves(rIdx, :)));
+end
 
 SNRdB = snrPoints;
+end
+
+% =========================================================================
+function bler = simulate_bler_point(enb_base, npdsch_base, estH, trblklen, rmoutlen, snrDb, numBlocks, nRep, rIdx, snrIdx)
+%SIMULATE_BLER_POINT  One independent repetition/SNR simulation point.
+
+npdsch = npdsch_base;
+npdsch.NRep = nRep;
+noiseVar = 1 / 10^(snrDb / 10);
+numErrors = 0;
+
+for blkIdx = 1:numBlocks
+    rng(blkIdx + snrIdx * 10000 + rIdx * 1000000, "combRecursive");
+
+    txTrBlk = randi([0, 1], trblklen, 1);
+    txCW    = lteNDLSCH(rmoutlen, txTrBlk);
+
+    estate = [];   % NPDSCH encoder state
+    dstate = [];   % NPDSCH decoder state (accumulates LLRs across reps)
+    rxcw   = [];   % Final combined soft bits from lteNPDSCHDecode
+    sfIdx  = 0;
+    dstate.EndOfTx = 0;   % Initialise so while guard is valid first pass
+
+    % --- Subframe loop until bundle complete ---------------------------
+    while ~dstate.EndOfTx
+        enb           = enb_base;
+        enb.NSubframe = mod(sfIdx, 10);
+        enb.NFrame    = floor(sfIdx / 10);
+
+        % Skip NPSS and NSSS subframes (per 3GPP TS 36.211)
+        if isempty(lteNPSS(enb)) && isempty(lteNSSS(enb))
+            % Allocate resource grid for this subframe
+            subgrid   = lteNBResourceGrid(enb);
+            npdschIdx = lteNPDSCHIndices(enb, npdsch);
+
+            % NPDSCH encoding for this subframe (stateful across reps)
+            [txSym, estate] = lteNPDSCH(enb, npdsch, txCW, estate);
+            subgrid(npdschIdx) = txSym;
+
+            % NRS pilots required for correct scrambling reference
+            subgrid(lteNRSIndices(enb)) = lteNRS(enb);
+
+            % AWGN in frequency domain (H=1, no fading)
+            rxgrid = subgrid + sqrt(noiseVar / 2) * ...
+                     (randn(size(subgrid)) + 1j * randn(size(subgrid)));
+
+            % Extract NPDSCH REs; use perfect H=1 channel estimate
+            [rxSym, hest] = lteExtractResources(npdschIdx, rxgrid, estH);
+
+            % Soft demapping + coherent LLR combining (via dstate)
+            % rxcw is non-empty only after all NRep subframes (EndOfTx)
+            [rxcw, dstate] = lteNPDSCHDecode( ...
+                enb, npdsch, rxSym, hest, noiseVar, dstate);
+        end
+
+        sfIdx = sfIdx + 1;
+        if sfIdx > (nRep + 20) * 3
+            break;   % Safety guard: should not normally trigger
+        end
+    end
+
+    if ~isempty(rxcw)
+        % Viterbi decode + CRC check
+        [~, blkCRCErr] = lteNDLSCHDecode(trblklen, rxcw);
+        if blkCRCErr
+            numErrors = numErrors + 1;
+        end
+    else
+        numErrors = numErrors + 1;   % Safety guard triggered = block error
+    end
+end
+
+bler = numErrors / numBlocks;
 end
 
 % =========================================================================
